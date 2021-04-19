@@ -1,15 +1,14 @@
 Package: canaper
-Title: What the Package Does (One Line, Title Case)
+Title: Categorical Analysis of Neo- and Paleo-endemism in R
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Joel",
+           family = "Nitta",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+           email = "joelnitta@gmail.com",
+           comment = c(ORCID = "0000-0003-4719-7472"))
+Description: Provides functions to conduct categorical analysis of neo- and paleo-endemism (CANAPE) in R..
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
