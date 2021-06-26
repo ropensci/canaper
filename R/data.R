@@ -1,0 +1,20 @@
+#' Community matrix and phylogeny of Acacia in Australia
+#'
+#' Dataset of Australian \emph{Acacia} from Mishler et al. 2014 (Nat. Comm.)
+#'
+#' @format A list with two elements:
+#' \describe{
+#'   \item{phy}{Phylogeny of Australian \emph{Acacia} (list of class "DNAbin"). Tip
+#'   labels are specific epithet, except for the outgroup, which includes genus
+#'   and specific epithet. Includes 508 ingroup taxa (genus \emph{Acacia}) and two
+#'   outgroup taxa.}
+#'   \item{comm}{Community matrix of Australian \emph{Acacia} (dataframe). Column names
+#'   are specific epithet of each species. Row names are centroids of 50km grid
+#'   cells in Australian Albers equal area EPSG:3577 projection. 3037 rows
+#'   (sites) x 506 columns (species). Each species is scored as present (1)
+#'   or absent (0) for a given site.}
+#' }
+#' @source Mishler, B., Knerr, N., González-Orozco, C. et al. Phylogenetic
+#' measures of biodiversity and neo- and paleo-endemism in Australian Acacia.
+#' Nat Commun 5, 4473 (2014). \url{https://doi.org/10.1038/ncomms5473}
+"acacia"
