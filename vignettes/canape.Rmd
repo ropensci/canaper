@@ -1,0 +1,42 @@
+---
+title: "CANAPE example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{CANAPE example}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette replicate the analysis of Mishler 2014, where CANAPE was originally defined. Let's load `canaper` and some other packages we will use for this vignette.
+
+```{r setup}
+library(canaper)
+library(ape)
+```
+
+The data are included in the `canaper` package. Let's load the data into memory.
+
+```{r load-data}
+data(acacia)
+```
+
+The `acacia` dataset is a list including a phylogeny of *Acacia* species in Australia and a community dataframe with species as columns and rows as sites. The row names correspond to the centroids of 50 x 50 km grid cells covering Australia.
+
+```{r inspect-data}
+acacia$phy
+
+# The community matrix is too large to print out in its entirety, so
+# we will just take a look at the first 8 rows and columns
+dim(acacia$comm)
+acacia$comm[1:8,1:8]
+```
+
