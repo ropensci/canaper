@@ -14,8 +14,8 @@ outgroup taxa.}
 \item{comm}{Community matrix of Australian \emph{Acacia} (dataframe). Column names
 are specific epithet of each species. Row names are centroids of 50km grid
 cells in Australian Albers equal area EPSG:3577 projection. 3037 rows
-(sites) x 506 columns (species). Each species is scored as present (1)
-or absent (0) for a given site.}
+(sites) x 506 columns (species). Data are counts, i.e., the number of times
+a species was observed in a grid cell.}
 }
 }
 \source{
