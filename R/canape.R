@@ -201,7 +201,7 @@ get_ses <- function(random_vals, obs_vals, metric) {
 #' comm <- phylocom$sample
 #' canape(phylocom$sample, phylocom$phy)
 #' @export
-canape <- function(comm, phy = NULL, null_model = "independentswap", n_reps = 100, n_iterations = 10000, metrics = c("pd", "rpd", "pe", "rpe")) {
+cpr_rand_test <- function(comm, phy = NULL, null_model = "independentswap", n_reps = 100, n_iterations = 10000, metrics = c("pd", "rpd", "pe", "rpe")) {
 
 	# Match tips of tree and column names of community data frame:
 	# Use only taxa that are in common between phylogeny and community
@@ -317,7 +317,7 @@ canape <- function(comm, phy = NULL, null_model = "independentswap", n_reps = 10
 #'
 #' @return Dataframe with areas of endemism categorized.
 #' @export
-categorize_endemism <- function(df) {
+cpr_classify_endem <- function(df) {
 	df |>
 		dplyr::mutate(
 			# Categorize endemism by CANAPE scheme
