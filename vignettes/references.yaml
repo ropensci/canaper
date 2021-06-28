@@ -1,0 +1,42 @@
+references:
+- id: Gotelli2000
+  author:
+  - family: Gotelli
+    given: Nicholas J
+  container-title: Ecology
+  DOI: 10.2307/177478
+  ISSN: 00129658
+  issue: '9'
+  issued:
+  - year: 2000
+    month: 9
+  page: 2606-2621
+  title: Null model analysis of species co-occurrence patterns
+  type: article-journal
+  URL: http://www.jstor.org/stable/177478?origin=crossref
+  volume: '81'
+- id: Mishler2014
+  author:
+  - family: Mishler
+    given: Brent D
+  - family: Knerr
+    given: Nunzio
+  - family: González-Orozco
+    given: Carlos E.
+  - family: Thornhill
+    given: Andrew H.
+  - family: Laffan
+    given: Shawn W.
+  - family: Miller
+    given: Joseph T.
+  container-title: Nature Communications
+  DOI: 10.1038/ncomms5473
+  ISSN: 2041-1723
+  issued:
+  - year: 2014
+  page: '4473'
+  title: Phylogenetic measures of biodiversity and neo- and paleo-endemism in Australian
+    Acacia
+  type: article-journal
+  URL: http://www.nature.com/doifinder/10.1038/ncomms5473
+  volume: '5'

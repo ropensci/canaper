@@ -5,6 +5,7 @@ vignette: >
   %\VignetteIndexEntry{CANAPE example}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
+bibliography: references.yaml
 editor_options: 
   chunk_output_type: console
 ---
@@ -16,27 +17,52 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette replicate the analysis of Mishler 2014, where CANAPE was originally defined. Let's load `canaper` and some other packages we will use for this vignette.
+This vignette replicates the analysis of @Mishler2014, where CANAPE was originally defined. 
+
+## Setup
+
+Start by loading `canaper` and some other packages we will use for this vignette:
 
 ```{r setup}
 library(canaper)
 library(ape)
 ```
 
-The data are included in the `canaper` package. Let's load the data into memory.
+## Dataset
+
+The `canaper` package comes with the dataset used in @Mishler2014. Let's load the data into memory:
 
 ```{r load-data}
 data(acacia)
 ```
 
-The `acacia` dataset is a list including a phylogeny of *Acacia* species in Australia and a community dataframe with species as columns and rows as sites. The row names correspond to the centroids of 50 x 50 km grid cells covering Australia.
+The `acacia` dataset is a list including two items. The first, `phy`, is a phylogeny of *Acacia* species in Australia:
 
-```{r inspect-data}
+```{r inspect-data-phy}
 acacia$phy
+```
 
-# The community matrix is too large to print out in its entirety, so
-# we will just take a look at the first 8 rows and columns
+The second, `comm`, is a community dataframe with species as columns and rows as sites. The row names (sites) correspond to the centroids of 50 x 50 km grid cells covering Australia. The community matrix is too large to print out in its entirety, so we will just take a look at the first 8 rows and columns:
+
+```{r inspect-data-comm}
 dim(acacia$comm)
 acacia$comm[1:8,1:8]
 ```
 
+## Randomization test
+
+There are many metrics that describe the phylogenetic diversity of ecological communities. But how do we know if a given metric is statistically significant? One way is with a randomization test. The general process is:
+
+1. Generate a "null distribution" of random communities
+2. Calculate the metric of interest for each random community
+3. Compare the observed values to the random values
+
+Observed values that are in the extremes (e.g, the top or lower 5% for a one-sided test, or either the top or bottom 2.5% for a two-sided test) would be considered significantly more or less diverse than random. 
+
+The main purpose of `canaper` is to perform these randomization tests. 
+
+`canper` performs community matrix randomizations available in the [`picante`](https://CRAN.R-project.org/package=picante) package, including `frequency`, `richness`, `independentswap` and `trialswap`. For details about these algorithms, see [`picante::randomizeMatrix`](https://rdrr.io/cran/picante/man/randomizeSample.html).
+
+The default setting in `canaper` is to use `independentswap`, which maintains species richness and abundance patterns while randomizing species identity [@Gotelli2000].
+
+## References
