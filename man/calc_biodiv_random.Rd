@@ -9,7 +9,8 @@ calc_biodiv_random(
   phy,
   phy_alt,
   null_model = c("frequency", "richness", "independentswap", "trialswap"),
-  n_iterations = 1000
+  n_iterations = 1000,
+  metrics
 )
 }
 \arguments{
@@ -21,6 +22,8 @@ species as columns, with row names and column names)}
 \item{phy_alt}{Alternative phylogeny where all branches are of equal length, scaled to 1}
 
 \item{n_iterations}{Number of iterations to use when shuffling random community}
+
+\item{metrics}{Character vector; names of metrics to calculate}
 }
 \value{
 List of vectors. Each vector is a biodiversity metric measured on the

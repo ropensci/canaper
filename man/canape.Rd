@@ -10,8 +10,7 @@ canape(
   null_model = "independentswap",
   n_reps = 100,
   n_iterations = 10000,
-  categorize = TRUE,
-  simplify = TRUE
+  metrics = c("pd", "rpd", "pe", "rpe")
 )
 }
 \arguments{
@@ -28,9 +27,7 @@ species as columns, with row names and column names)}
 \item{n_iterations}{Number of iterations to use when swapping occurrences to
 generate each random community}
 
-\item{categorize}{Logical; should CANAPE categorization be performed?}
-
-\item{simplify}{Logical; should only a subset of columns be returned?}
+\item{metrics}{Character vector; names of metrics to calculate}
 }
 \value{
 Tibble. For each of the biodiversity metrics, the observed value (_obs),

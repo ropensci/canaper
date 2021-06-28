@@ -12,6 +12,7 @@
 #' @param phy Input phylogeny with total branch length scaled to 1
 #' @param phy_alt Alternative phylogeny where all branches are of equal length, scaled to 1
 #' @param n_iterations Number of iterations to use when shuffling random community
+#' @param metrics Character vector; names of metrics to calculate
 #'
 #' @return List of vectors. Each vector is a biodiversity metric measured on the
 #' random community, in the same order as the rows in the input community.
@@ -35,7 +36,7 @@
 calc_biodiv_random <- function(
 	comm, phy, phy_alt,
 	null_model = c("frequency", "richness", "independentswap", "trialswap"),
-	n_iterations = 1000) {
+	n_iterations = 1000, metrics) {
 
 	assertthat::assert_that(is.character(null_model))
 	assertthat::assert_that(
@@ -53,8 +54,8 @@ calc_biodiv_random <- function(
 	))
 
 	# Make sure phylogeny has been rescaled to total branch length of 1 for RPE or RFD
-	assertthat::assert_that(isTRUE(all.equal(sum(phy$edge.length), 1)))
-	assertthat::assert_that(isTRUE(all.equal(sum(phy_alt$edge.length), 1)))
+	if (any(metrics %in% c("rpe", "rpd"))) assertthat::assert_that(isTRUE(all.equal(sum(phy$edge.length), 1)))
+	if (any(metrics %in% c("rpe", "rpd"))) assertthat::assert_that(isTRUE(all.equal(sum(phy_alt$edge.length), 1)))
 
 	# Convert comm to sparse matrix format for phyloregions
 	comm_sparse <- phyloregion::dense2sparse(comm)
@@ -64,20 +65,35 @@ calc_biodiv_random <- function(
 	random_comm_sparse <- phyloregion::dense2sparse(random_comm)
 
 	# Calculate statistics for random community
+	# - set up null vectors first
+	pd <- NULL
+	pd_alt <- NULL
+	rpd <- NULL
+	pe <- NULL
+	pe_alt <- NULL
+	rpe <- NULL
 
 	# - calculate selected metrics
-	pe <- phyloregion::phylo_endemism(random_comm_sparse, phy, weighted = TRUE)
-	pe_alt <- phyloregion::phylo_endemism(random_comm_sparse, phy_alt, weighted = TRUE)
-	rpe <- pe / pe_alt
+	if ("pd" %in% metrics) pd <- phyloregion::PD(random_comm_sparse, phy)
+	if ("rpd" %in% metrics) {
+		pd_alt <- phyloregion::PD(random_comm_sparse, phy_alt)
+		rpd <- pd / pd_alt}
+	if ("pe" %in% metrics) pe <- phyloregion::phylo_endemism(random_comm_sparse, phy, weighted = TRUE)
+	if ("rpe" %in% metrics) {
+		pe_alt <- phyloregion::phylo_endemism(random_comm_sparse, phy_alt, weighted = TRUE)
+		rpe <- pe / pe_alt}
 
-	# Output results
-	list(
-		pe = pe,
-		pe_alt = pe_alt,
-		rpe = rpe
-	) |>
-		# Only keep non-NULL results
-		purrr::compact()
+	# Output results, only keep non-NULL results
+	purrr::compact(
+		list(
+			pd = pd,
+			pd_alt = pd_alt,
+			rpd = rpd,
+			pe = pe,
+			pe_alt = pe_alt,
+			rpe = rpe
+		)
+	)
 
 }
 
@@ -118,8 +134,8 @@ get_ses <- function(random_vals, obs_vals, metric) {
 	assertthat::assert_that(assertthat::is.string(metric))
 
 	assertthat::assert_that(
-		all(metric %in% c("pe", "pe_alt", "rpe")),
-		msg = "Biodiversity metrics may only be selected from 'pe', 'pe_alt', or 'rpe'"
+		all(metric %in% c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")),
+		msg = "Biodiversity metrics may only be selected from 'pe', 'rpd', or 'pe', or 'rpe'"
 	)
 
 	random_vals_trans <- purrr::transpose(random_vals)
@@ -172,8 +188,7 @@ get_ses <- function(random_vals, obs_vals, metric) {
 #' @param n_reps Number of random communities to replicate
 #' @param n_iterations Number of iterations to use when swapping occurrences to
 #' generate each random community
-#' @param categorize Logical; should CANAPE categorization be performed?
-#' @param simplify Logical; should only a subset of columns be returned?
+#' @param metrics Character vector; names of metrics to calculate
 #'
 #' @return Tibble. For each of the biodiversity metrics, the observed value (_obs),
 #' mean of the random values (_rand_mean), SD of the random values (_rand_sd),
@@ -186,7 +201,7 @@ get_ses <- function(random_vals, obs_vals, metric) {
 #' comm <- phylocom$sample
 #' canape(phylocom$sample, phylocom$phy)
 #' @export
-canape <- function(comm, phy = NULL, null_model = "independentswap", n_reps = 100, n_iterations = 10000, categorize = TRUE, simplify = TRUE) {
+canape <- function(comm, phy = NULL, null_model = "independentswap", n_reps = 100, n_iterations = 10000, metrics = c("pd", "rpd", "pe", "rpe")) {
 
 	# Match tips of tree and column names of community data frame:
 	# Use only taxa that are in common between phylogeny and community
@@ -228,32 +243,54 @@ canape <- function(comm, phy = NULL, null_model = "independentswap", n_reps = 10
 				calc_biodiv_random(
 					comm, phy, phy_alt,
 					null_model = null_model,
-					n_iterations = n_iterations)
+					n_iterations = n_iterations,
+					metrics = metrics)
 			},
 			.options = furrr::furrr_options(seed = TRUE)
 		)
 
-	# Calculate SES and observed values
-	pe_obs <- phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
-	ses_pe <- get_ses(random_vals, pe_obs, "pe")
-	pe_alt_obs <- phyloregion::phylo_endemism(comm_sparse, phy_alt, weighted = TRUE)
-	ses_pe_alt <- get_ses(random_vals, pe_alt_obs, "pe_alt")
-	rpe_obs <- pe_obs / pe_alt_obs
-	ses_rpe <- get_ses(random_vals, rpe_obs, "rpe")
+
+	# Calculate biodiversity metrics for observed community
+	# - set up null vectors first
+	ses_pd <- NULL
+	ses_pd_alt <- NULL
+	ses_rpd <- NULL
+	ses_pe <- NULL
+	ses_pe_alt <- NULL
+	ses_rpe <- NULL
+
+	# - calculate selected metrics
+	if ("pd" %in% metrics) {
+		pd_obs <- phyloregion::PD(comm_sparse, phy)
+		ses_pd <- get_ses(random_vals, pd_obs, "pd")}
+
+	if ("rpd" %in% metrics) {
+		pd_alt_obs <- phyloregion::PD(comm_sparse, phy_alt)
+		ses_pd_alt <- get_ses(random_vals, pd_alt_obs, "pd_alt")
+		rpd_obs <- pd_obs / pd_alt_obs
+		ses_rpd <- get_ses(random_vals, rpd_obs, "rpd")}
+
+	if ("pe" %in% metrics) {
+		pe_obs <- phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
+		ses_pe <- get_ses(random_vals, pe_obs, "pe")}
+
+	if ("rpe" %in% metrics) {
+		pe_alt_obs <- phyloregion::phylo_endemism(comm_sparse, phy_alt, weighted = TRUE)
+		ses_pe_alt <- get_ses(random_vals, pe_alt_obs, "pe_alt")
+		rpe_obs <- pe_obs / pe_alt_obs
+		ses_rpe <- get_ses(random_vals, rpe_obs, "rpe")}
 
 	# Combine results
-	res <- dplyr::bind_cols(
+	dplyr::bind_cols(
+		ses_pd,
+		ses_pd_alt,
+		ses_rpd,
 		ses_pe,
 		ses_pe_alt,
 		ses_rpe
 	) |>
 		dplyr::mutate(site = rownames(comm)) |>
 		dplyr::select(site, everything())
-
-	# Optional early exit without categorizing endemism
-	if (!isTRUE(categorize)) return(res)
-
-	categorize_endemism(res)
 
 }
 
