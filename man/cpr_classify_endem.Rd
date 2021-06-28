@@ -2,33 +2,38 @@
 % Please edit documentation in R/canape.R
 \name{cpr_classify_endem}
 \alias{cpr_classify_endem}
-\title{Categorize phylogenetic endemism}
+\title{Classify phylogenetic endemism}
+\source{
+Mishler, B., Knerr, N., González-Orozco, C. et al. Phylogenetic measures
+of biodiversity and neo- and paleo-endemism in Australian Acacia.
+Nat Commun 5, 4473 (2014). \url{https://doi.org/10.1038/ncomms5473}
+}
 \usage{
 cpr_classify_endem(df)
 }
 \arguments{
-\item{df}{Input data frame. Must have p-values for pe, pe_alt, and rpe.}
+\item{df}{Input data frame. Must have the following columns:
+\itemize{
+\item \code{pe_obs_p_upper}: Upper \emph{p}-value comparing observed phylogenetic endemism to random values
+\item \code{pe_alt_obs_p_upper}: Upper \emph{p}-value comparing observed phylogenetic endemism on alternate tree to random values
+\item \code{rpe_obs_p_upper}: Upper \emph{p}-value comparing observed relative phylogenetic endemism to random values
+}}
 }
 \value{
-Dataframe with areas of endemism categorized.
+Dataframe with column \code{endem_type} (character) added. Values of \code{endem_type} type
+include \code{paleo} (paleoendemic), \code{neo} (neoendemic), \verb{not significant} (what it says), \code{mixed} (mixed endemism),
+and \code{super} (super-endemic; both \code{pe_obs} and \code{pe_obs_alt} are highly significant).
 }
 \description{
-see:
-http://biodiverse-analysis-software.blogspot.com/2014/11/canape-categorical-analysis-of-palaeo.html
+Given the results of \code{\link{cpr_rand_test}()}, classifies phylogenetic endemism according to
+CANAPE scheme of Mishler 2014.
 }
 \details{
-(here, PE_orig = pe_obs_p, PE_alt = pe_alt_obs_p, and RPE = rpe_obs_p)
-(don't consider 'super endemism' as it doesn't add much meaning)
-\enumerate{
-\item If either PE_orig or PE_alt are significantly high then we look for palaeo or neo endemism
-a)    If RPE is significantly high then we have palaeo-endemism
-(PE_orig is consistently higher than PE_alt across the random realisations)
-b)    Else if RPE is significantly low then we have neo-endemism
-(PE_orig is consistently lower than PE_alt across the random realisations)
-c)    Else we have mixed age endemism in which case
-i)    If both PE_orig and PE_alt are highly significant (p<0.01) then we
-have super endemism (high in both palaeo and neo)
-ii)   Else we have mixed (some mixture of palaeo, neo and non endemic)
-\item Else if neither PE_orig or PE_alt are significantly high then we have a non-endemic cell
+For a summary of the classification scheme, see:
+\url{http://biodiverse-analysis-software.blogspot.com/2014/11/canape-categorical-analysis-of-palaeo.html}
 }
+\examples{
+library(picante)
+data(phylocom)
+cpr_rand_test(phylocom$sample, phylocom$phy) |> cpr_classify_endem()
 }

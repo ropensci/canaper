@@ -6,7 +6,7 @@
 \usage{
 cpr_rand_test(
   comm,
-  phy = NULL,
+  phy,
   null_model = "independentswap",
   n_reps = 100,
   n_iterations = 10000,
@@ -27,24 +27,33 @@ species as columns, with row names and column names)}
 \item{n_iterations}{Number of iterations to use when swapping occurrences to
 generate each random community}
 
-\item{metrics}{Character vector; names of metrics to calculate}
+\item{metrics}{Character vector; names of biodiversity metrics to calculate}
 }
 \value{
-Tibble. For each of the biodiversity metrics, the observed value (_obs),
-mean of the random values (_rand_mean), SD of the random values (_rand_sd),
-rank of the observed value vs. the random values (_obs_rank), standard effect size
-(_obs_z), and p-value (_obs_p) are given.
+Dataframe. For each of the biodiversity metrics, the following 9 columns
+will be produced:
+\describe{
+\item{\verb{*_obs}}{Observed value}
+\item{\verb{*_obs_c_lower}}{Count of times observed value was lower than random values}
+\item{\verb{*_obs_c_upper}}{Count of times observed value was higher than random values}
+\item{\verb{*_obs_p_lower}}{Percentage of times observed value was lower than random values}
+\item{\verb{*_obs_p_upper}}{Percentage of times observed value was higher than random values}
+\item{\verb{*_obs_q}}{Count of the non-NA random values used for comparison}
+\item{\verb{*_obs_z}}{Standard effect size (z-score)}
+\item{\verb{*_rand_mean}}{Mean of the random values}
+\item{\verb{*_rand_sd}}{Standard deviation of the random values}
+}
+So if you included \code{pd} in \code{metrics}, the output columns would include \code{pd_obs},
+\code{pd_obs_c_lower}, etc...
 }
 \description{
 The biodiversity metrics analyzed include:
-\itemize{
-\item pd: Phylogenetic diversity (Faith 1992 https://doi.org/10.1016/0006-3207(92)91201-3)
-\item rpd: Relative phylogenetic diversity (Mishler 2014 https://doi.org/10.1038/ncomms5473)
-\item pe: Phylogenetic endemism (Rosauer 2009 https://doi.org/10.1111/j.1365-294x.2009.04311.x)\
-\item rpe: Relative phylogenetic endemism (Mishler 2014 https://doi.org/10.1038/ncomms5473)
+\describe{
+\item{\code{pd}}{Phylogenetic diversity (Faith 1992 https://doi.org/10.1016/0006-3207(92)91201-3)}
+\item{\code{rpd}}{Relative phylogenetic diversity (Mishler 2014 https://doi.org/10.1038/ncomms5473)}
+\item{\code{pe}}{Phylogenetic endemism (Rosauer 2009 https://doi.org/10.1111/j.1365-294x.2009.04311.x)}
+\item{\code{rpe}}{Relative phylogenetic endemism (Mishler 2014 https://doi.org/10.1038/ncomms5473)}
 }
-}
-\details{
 The default method for generating random communities is the independent swap
 method of Gotelli (2000), which randomizes the community matrix while maintaining
 species occurrence frequency and sample species richness.
@@ -52,7 +61,5 @@ species occurrence frequency and sample species richness.
 \examples{
 library(picante)
 data(phylocom)
-phy <- phylocom$phy
-comm <- phylocom$sample
-canape(phylocom$sample, phylocom$phy)
+cpr_rand_test(phylocom$sample, phylocom$phy)
 }

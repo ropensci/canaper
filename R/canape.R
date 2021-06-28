@@ -135,7 +135,7 @@ get_ses <- function(random_vals, obs_vals, metric) {
 
 	assertthat::assert_that(
 		all(metric %in% c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")),
-		msg = "Biodiversity metrics may only be selected from 'pe', 'rpd', or 'pe', or 'rpe'"
+		msg = "Biodiversity metrics may only be selected from 'pd', 'rpd', 'pe', or 'rpe'"
 	)
 
 	random_vals_trans <- purrr::transpose(random_vals)
@@ -171,11 +171,13 @@ get_ses <- function(random_vals, obs_vals, metric) {
 #' Run randomization analysis for a set of biodiversity metrics
 #'
 #' The biodiversity metrics analyzed include:
-#'   - pd: Phylogenetic diversity (Faith 1992 https://doi.org/10.1016/0006-3207(92)91201-3)
-#'   - rpd: Relative phylogenetic diversity (Mishler 2014 https://doi.org/10.1038/ncomms5473)
-#'   - pe: Phylogenetic endemism (Rosauer 2009 https://doi.org/10.1111/j.1365-294x.2009.04311.x)\
-#'   - rpe: Relative phylogenetic endemism (Mishler 2014 https://doi.org/10.1038/ncomms5473)
-#'
+#' \describe{
+#'   \item{`pd`}{Phylogenetic diversity (Faith 1992 https://doi.org/10.1016/0006-3207(92)91201-3)}
+#'   \item{`rpd`}{Relative phylogenetic diversity (Mishler 2014 https://doi.org/10.1038/ncomms5473)}
+#'   \item{`pe`}{Phylogenetic endemism (Rosauer 2009 https://doi.org/10.1111/j.1365-294x.2009.04311.x)}
+#'   \item{`rpe`}{Relative phylogenetic endemism (Mishler 2014 https://doi.org/10.1038/ncomms5473)}
+#' }
+
 #' The default method for generating random communities is the independent swap
 #' method of Gotelli (2000), which randomizes the community matrix while maintaining
 #' species occurrence frequency and sample species richness.
@@ -188,20 +190,30 @@ get_ses <- function(random_vals, obs_vals, metric) {
 #' @param n_reps Number of random communities to replicate
 #' @param n_iterations Number of iterations to use when swapping occurrences to
 #' generate each random community
-#' @param metrics Character vector; names of metrics to calculate
+#' @param metrics Character vector; names of biodiversity metrics to calculate
 #'
-#' @return Tibble. For each of the biodiversity metrics, the observed value (_obs),
-#' mean of the random values (_rand_mean), SD of the random values (_rand_sd),
-#' rank of the observed value vs. the random values (_obs_rank), standard effect size
-#' (_obs_z), and p-value (_obs_p) are given.
+#' @return Dataframe. For each of the biodiversity metrics, the following 9 columns
+#' will be produced:
+#' \describe{
+#'   \item{`*_obs`}{Observed value}
+#'   \item{`*_obs_c_lower`}{Count of times observed value was lower than random values}
+#'   \item{`*_obs_c_upper`}{Count of times observed value was higher than random values}
+#'   \item{`*_obs_p_lower`}{Percentage of times observed value was lower than random values}
+#'   \item{`*_obs_p_upper`}{Percentage of times observed value was higher than random values}
+#'   \item{`*_obs_q`}{Count of the non-NA random values used for comparison}
+#'   \item{`*_obs_z`}{Standard effect size (z-score)}
+#'   \item{`*_rand_mean`}{Mean of the random values}
+#'   \item{`*_rand_sd`}{Standard deviation of the random values}
+#' }
+#' So if you included `pd` in `metrics`, the output columns would include `pd_obs`,
+#' `pd_obs_c_lower`, etc...
+#'
 #' @examples
 #' library(picante)
 #' data(phylocom)
-#' phy <- phylocom$phy
-#' comm <- phylocom$sample
-#' canape(phylocom$sample, phylocom$phy)
+#' cpr_rand_test(phylocom$sample, phylocom$phy)
 #' @export
-cpr_rand_test <- function(comm, phy = NULL, null_model = "independentswap", n_reps = 100, n_iterations = 10000, metrics = c("pd", "rpd", "pe", "rpe")) {
+cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 100, n_iterations = 10000, metrics = c("pd", "rpd", "pe", "rpe")) {
 
 	# Match tips of tree and column names of community data frame:
 	# Use only taxa that are in common between phylogeny and community
@@ -249,7 +261,6 @@ cpr_rand_test <- function(comm, phy = NULL, null_model = "independentswap", n_re
 			.options = furrr::furrr_options(seed = TRUE)
 		)
 
-
 	# Calculate biodiversity metrics for observed community
 	# - set up null vectors first
 	ses_pd <- NULL
@@ -290,46 +301,135 @@ cpr_rand_test <- function(comm, phy = NULL, null_model = "independentswap", n_re
 		ses_rpe
 	) |>
 		dplyr::mutate(site = rownames(comm)) |>
-		dplyr::select(site, everything())
+		tibble::column_to_rownames("site")
 
 }
 
-#' Categorize phylogenetic endemism
+#' Classify phylogenetic endemism
 #'
-#' see:
-#' http://biodiverse-analysis-software.blogspot.com/2014/11/canape-categorical-analysis-of-palaeo.html
+#' Given the results of \code{\link{cpr_rand_test}()}, classifies phylogenetic endemism according to
+#' CANAPE scheme of Mishler 2014.
 #'
-#' (here, PE_orig = pe_obs_p, PE_alt = pe_alt_obs_p, and RPE = rpe_obs_p)
-#' (don't consider 'super endemism' as it doesn't add much meaning)
+#' For a summary of the classification scheme, see:
+#' \url{http://biodiverse-analysis-software.blogspot.com/2014/11/canape-categorical-analysis-of-palaeo.html}
 #'
-#' 1)    If either PE_orig or PE_alt are significantly high then we look for palaeo or neo endemism
-#'   a)    If RPE is significantly high then we have palaeo-endemism
-#'         (PE_orig is consistently higher than PE_alt across the random realisations)
-#'   b)    Else if RPE is significantly low then we have neo-endemism
-#'         (PE_orig is consistently lower than PE_alt across the random realisations)
-#'     c)    Else we have mixed age endemism in which case
-#'        i)    If both PE_orig and PE_alt are highly significant (p<0.01) then we
-#'              have super endemism (high in both palaeo and neo)
-#'        ii)   Else we have mixed (some mixture of palaeo, neo and non endemic)
-#' 2)    Else if neither PE_orig or PE_alt are significantly high then we have a non-endemic cell
+#' @param df Input data frame. Must have the following columns:
+#' - `pe_obs_p_upper`: Upper *p*-value comparing observed phylogenetic endemism to random values
+#' - `pe_alt_obs_p_upper`: Upper *p*-value comparing observed phylogenetic endemism on alternate tree to random values
+#' - `rpe_obs_p_upper`: Upper *p*-value comparing observed relative phylogenetic endemism to random values
 #'
-#' @param df Input data frame. Must have p-values for pe, pe_alt, and rpe.
+#' @return Dataframe with column `endem_type` (character) added. Values of `endem_type` type
+#' include `paleo` (paleoendemic), `neo` (neoendemic), `not significant` (what it says), `mixed` (mixed endemism),
+#' and `super` (super-endemic; both `pe_obs` and `pe_obs_alt` are highly significant).
 #'
-#' @return Dataframe with areas of endemism categorized.
+#' @source Mishler, B., Knerr, N., González-Orozco, C. et al. Phylogenetic measures
+#' of biodiversity and neo- and paleo-endemism in Australian Acacia.
+#' Nat Commun 5, 4473 (2014). \url{https://doi.org/10.1038/ncomms5473}
+#'
+#' @examples
+#' library(picante)
+#' data(phylocom)
+#' cpr_rand_test(phylocom$sample, phylocom$phy) |> cpr_classify_endem()
 #' @export
 cpr_classify_endem <- function(df) {
-	df |>
-		dplyr::mutate(
-			# Categorize endemism by CANAPE scheme
-			endem_type = dplyr::case_when(
-				(pe_obs_p_upper >= 0.95 | pe_alt_obs_p_upper >= 0.95) & rpe_obs_p_upper >= 0.975 ~ "paleo",
-				(pe_obs_p_upper >= 0.95 | pe_alt_obs_p_upper >= 0.95) & rpe_obs_p_lower >= 0.975~ "neo",
-				pe_obs_p_upper >= 0.99 | pe_alt_obs_p_upper >= 0.99 ~ "super",
-				pe_obs_p_upper >= 0.95 | pe_alt_obs_p_upper >= 0.95 ~ "mixed",
-				TRUE ~ "not significant"
-			),
-			endem_type = factor(endem_type, levels = c("paleo", "neo", "not significant", "mixed", "super")),
-			# Categorize phy. endem. as significant or not
-			pe_obs_signif = dplyr::if_else(pe_obs_p_upper > 0.95, TRUE, FALSE)
+	dplyr::mutate(
+		df,
+		# Categorize endemism by CANAPE scheme
+		# (here, PE_orig = pe_obs_p, PE_alt = pe_alt_obs_p, and RPE = rpe_obs_p)
+		#
+		# 1)    If either PE_orig or PE_alt are significantly high then we look for palaeo or neo endemism
+		#   a)    If RPE is significantly high then we have palaeo-endemism
+		#         (PE_orig is consistently higher than PE_alt across the random realisations)
+		#   b)    Else if RPE is significantly low then we have neo-endemism
+		#         (PE_orig is consistently lower than PE_alt across the random realisations)
+		#     c)    Else we have mixed age endemism in which case
+		#        i)    If both PE_orig and PE_alt are highly significant (p<0.01) then we
+		#              have super endemism (high in both palaeo and neo)
+		#        ii)   Else we have mixed (some mixture of palaeo, neo and non endemic)
+		# 2)    Else if neither PE_orig or PE_alt are significantly high then we have a non-endemic cell
+		endem_type = dplyr::case_when(
+			(pe_obs_p_upper >= 0.95 | pe_alt_obs_p_upper >= 0.95) & rpe_obs_p_upper >= 0.975 ~ "paleo",
+			(pe_obs_p_upper >= 0.95 | pe_alt_obs_p_upper >= 0.95) & rpe_obs_p_lower >= 0.975~ "neo",
+			pe_obs_p_upper >= 0.99 | pe_alt_obs_p_upper >= 0.99 ~ "super",
+			pe_obs_p_upper >= 0.95 | pe_alt_obs_p_upper >= 0.95 ~ "mixed",
+			TRUE ~ "not significant"
 		)
+	)
 }
+
+#' Classify statistical significance
+#'
+#' Given the results of \code{\link{cpr_rand_test}()}, classifies statistical significance
+#' of a biodiversity metric. The null hypothesis is that observed value does not
+#' lie in the extreme of the random values.
+#'
+#' @details  For metrics like `pe`, you probably want to consider a one-sided
+#' hypothesis testing values in the upper extreme (i.e., we are interested in
+#' areas that have higher than expected endemism). For this, you would set
+#' `one_sided = TRUE, upper = TRUE`. For metrics like `pd`, you
+#' probably want to consider a two-sided hypothesis (i.e., we are interested in
+#' areas that are either more diverse or less than diverse than expected at
+#' random). For this, set `one_sided = FALSE`.
+#'
+#' @param df  Input data frame.
+#' @param metric Selected metric to classify significance. May choose from
+#' `pd` (phylogenetic diversity), `rpd` (relative phylogenetic diversity),
+#' `pe` (phylogenentic endemism), `rpe` (relative phylogenetic endemism).
+#' @param one_sided Logical; is the null hypothesis one-sided? If `TRUE`, values
+#' will be classified as significant if they are in **either** the top 5% **or**
+#' bottom 5%. If `FALSE`, values will be classified as significant if they
+#' are in the top 2.5% or bottom 2.5%, combined.
+#' @param upper Logical; only applies if `one_sided` is `TRUE`. If `TRUE`,
+#' values in the top 5% will be classified as significant. If `FALSE`, values
+#' in the bottom 5% will be classified as significant.
+#'
+#' @return Dataframe with column added for stastistical significance of the
+#' selected metric. The new column name is the name of the metric with
+#' `_signif` appendend. The new column is a character that may contain the
+#' following values, depending on the null hypothesis:
+#' - `< 0.01`, `< 0.025`, `> 0.99`, `> 0.99`, `not significant` (two-sided)
+#' - `< 0.01`, `< 0.05`, `> 0.99`, `> 0.95`, `not significant` (one-sided)
+#'
+#' @examples
+#' library(picante)
+#' data(phylocom)
+#' cpr_rand_test(phylocom$sample, phylocom$phy) |> cpr_classify_signif("pd")
+#' @export
+cpr_classify_signif <- function(df, metric, one_sided = FALSE, upper = FALSE) {
+
+	assertthat::assert_that(
+		all(metric %in% c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")),
+		msg = "Biodiversity metrics may only be selected from 'pd', 'rpd', 'pe', or 'rpe'"
+	)
+
+	df[[paste0(metric, "_obs_p_lower")]]
+
+	if (!isTRUE(one_sided)) {
+	signif <- dplyr::case_when(
+		df[[paste0(metric, "_obs_p_lower")]] > 0.99 ~ "< 0.01",
+		df[[paste0(metric, "_obs_p_lower")]] > 0.975 ~ "< 0.025",
+		df[[paste0(metric, "_obs_p_upper")]] > 0.99 ~ "> 0.99",
+		df[[paste0(metric, "_obs_p_upper")]] > 0.975 ~ "> 0.975",
+		TRUE ~ "not significant"
+	) } else {
+		if (isTRUE(upper)) {
+			signif <- dplyr::case_when(
+				df[[paste0(metric, "_obs_p_upper")]] > 0.99 ~ "> 0.99",
+				df[[paste0(metric, "_obs_p_upper")]] > 0.95 ~ "> 0.95",
+				TRUE ~ "not significant"
+			)
+		} else {
+			signif <- dplyr::case_when(
+				df[[paste0(metric, "_obs_p_lower")]] > 0.99 ~ "< 0.01",
+				df[[paste0(metric, "_obs_p_lower")]] > 0.95 ~ "< 0.05",
+				TRUE ~ "not significant"
+			)
+		}
+	}
+
+	df[[paste0(metric, "_signif")]] <- signif
+
+	df
+
+}
+

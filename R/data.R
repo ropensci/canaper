@@ -18,3 +18,17 @@
 #' measures of biodiversity and neo- and paleo-endemism in Australian Acacia.
 #' Nat Commun 5, 4473 (2014). \url{https://doi.org/10.1038/ncomms5473}
 "acacia"
+
+#' Color palette for plotting results of randomization test
+#'
+#' Character vector with names corresponding to significance levels
+#' and values corresponding to color codes.
+#'
+"cpr_signif_cols"
+
+#' Color palette for plotting results of CANAPE
+#'
+#' Character vector with names corresponding to endemism types
+#' and values corresponding to color codes.
+#'
+"cpr_signif_cols"
