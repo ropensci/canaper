@@ -73,7 +73,7 @@ The default setting in `canaper` is to use `independentswap`, which maintains sp
 
 Let's perform a randomization test for the `acacia` dataset. This example also demonstrates one of the strengths of `canaper`: the ability to run randomizations in parallel. This is by far the most time-consuming part of CANAPE, since we have to repeat the calculations many (e.g., hundreds or more) times across the randomized communities to obtain reliable results. Here, we set the number of iterations (`n_iterations`; i.e., the number of swaps used to produce each randomized community) fairly high because this community matrix is large and includes many zeros; thorough mixing by swapping many times is required to completely randomize the matrix. We will use a low number of random communities (`n_reps`) so things finish relatively quickly; you should consider increasing `n_reps` for a "real" analysis.
 
-```{r acacia-rand, eval = FALSE}
+```{r acacia-rand}
 # Set a parallel back-end, with 4 CPUs running simultaneously
 plan(multisession, workers = 4)
 
@@ -82,12 +82,8 @@ plan(multisession, workers = 4)
 
 tic() # Set a timer
 # Run randomization test
-acacia_rand_res <- cpr_rand_test(acacia$comm, acacia$phy, n_reps = 100, n_iterations = 100000)
+acacia_rand_res <- cpr_rand_test(acacia$comm, acacia$phy, n_reps = 100, n_iterations = 1000)
 toc() # See how long it took
-```
-
-```{r acacia-rand-temp}
-acacia_rand_res <- readRDS(here::here("data-raw/acacia_rand_res.RDS"))
 ```
 
 If we hadn't run it in parallel, it would have taken 4 times longer!
@@ -95,7 +91,7 @@ If we hadn't run it in parallel, it would have taken 4 times longer!
 Let's take a peek at the output. `cpr_rand_test()` produces **a lot** of columns, so we'll view this as a tibble, which prints out more nicely than a plain `data.frame`.
 
 ```{r acacia-rand-res}
-tibble::as_tibble(acacia_rand_res, rownames = "site")
+as_tibble(acacia_rand_res, rownames = "site")
 ```
 
 For details about what each column means, see `?cpr_rand_test()`.
