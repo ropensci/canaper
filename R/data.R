@@ -31,4 +31,4 @@
 #' Character vector with names corresponding to endemism types
 #' and values corresponding to color codes.
 #'
-"cpr_signif_cols"
+"cpr_endem_cols"
