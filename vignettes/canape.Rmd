@@ -10,22 +10,28 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r, include = FALSE}
+```{r, include = FALSE, cache = TRUE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-This vignette replicates the analysis of @Mishler2014, where CANAPE was originally defined. 
+CANAPE stands for "Categorical Analysis of Neo- And Paleo-Endemism", and provides insight into the evolutionary processes underlying endemism [@Mishler2014]. The idea is basically that endemic regions may be so because either they contain range-restricted parts of a phylogeny that have unusually long branch lengths (paleoendemism), or unusually short branch lengths (neoendemism), or a mixture of both. Paleoendemism may reflect old lineages that have survived extinctions; neoendemism may reflect recently speciated lineages that have not yet dispersed. 
+
+This vignette replicates the [analysis of @Mishler2014](https://doi.org/10.1038/ncomms5473), where CANAPE was originally defined. 
 
 ## Setup
 
 Start by loading `canaper` and some other packages we will use for this vignette:
 
 ```{r setup}
-library(canaper)
-library(ape)
+library(canaper) # This package :)
+library(ape) # For handling phylogenetic trees
+library(future) # For parallel computing
+library(tictoc) # For timing things
+library(patchwork) # For composing mult-part plots
+library(tidyverse) # For data-wrangling and plotting
 ```
 
 ## Dataset
@@ -53,7 +59,7 @@ acacia$comm[1:8,1:8]
 
 There are many metrics that describe the phylogenetic diversity of ecological communities. But how do we know if a given metric is statistically significant? One way is with a randomization test. The general process is:
 
-1. Generate a "null distribution" of random communities
+1. Generate a set of random communities
 2. Calculate the metric of interest for each random community
 3. Compare the observed values to the random values
 
@@ -61,8 +67,136 @@ Observed values that are in the extremes (e.g, the top or lower 5% for a one-sid
 
 The main purpose of `canaper` is to perform these randomization tests. 
 
-`canper` performs community matrix randomizations available in the [`picante`](https://CRAN.R-project.org/package=picante) package, including `frequency`, `richness`, `independentswap` and `trialswap`. For details about these algorithms, see [`picante::randomizeMatrix`](https://rdrr.io/cran/picante/man/randomizeSample.html).
+`canaper` performs community matrix randomizations available in the [`picante`](https://CRAN.R-project.org/package=picante) package, including `frequency`, `richness`, `independentswap` and `trialswap`. For details about these algorithms, see [`picante::randomizeMatrix`](https://rdrr.io/cran/picante/man/randomizeSample.html).
 
 The default setting in `canaper` is to use `independentswap`, which maintains species richness and abundance patterns while randomizing species identity [@Gotelli2000].
+
+Let's perform a randomization test for the `acacia` dataset. This example also demonstrates one of the strengths of `canaper`: the ability to run randomizations in parallel. This is by far the most time-consuming part of CANAPE, since we have to repeat the calculations many (e.g., hundreds or more) times across the randomized communities to obtain reliable results. Here, we set the number of iterations (`n_iterations`; i.e., the number of swaps used to produce each randomized community) fairly high because this community matrix is large and includes many zeros; thorough mixing by swapping many times is required to completely randomize the matrix. We will use a low number of random communities (`n_reps`) so things finish relatively quickly; you should consider increasing `n_reps` for a "real" analysis.
+
+```{r acacia-rand, eval = FALSE}
+# Set a parallel back-end, with 4 CPUs running simultaneously
+plan(multisession, workers = 4)
+
+# Uncomment this to show a progress bar when running cpr_rand_test()
+# progressr::handlers(global = TRUE)
+
+tic() # Set a timer
+# Run randomization test
+acacia_rand_res <- cpr_rand_test(acacia$comm, acacia$phy, n_reps = 100, n_iterations = 100000)
+toc() # See how long it took
+```
+
+```{r acacia-rand-temp}
+acacia_rand_res <- readRDS(here::here("data-raw/acacia_rand_res.RDS"))
+```
+
+If we hadn't run it in parallel, it would have taken 4 times longer!
+
+Let's take a peek at the output. `cpr_rand_test()` produces **a lot** of columns, so we'll view this as a tibble, which prints out more nicely than a plain `data.frame`.
+
+```{r acacia-rand-res}
+tibble::as_tibble(acacia_rand_res, rownames = "site")
+```
+
+For details about what each column means, see `?cpr_rand_test()`.
+
+## Classify endemism
+
+The next step in CANAPE is to classify types of endemism. For a full description, see @Mishler2014. In short, this defines endemic regions based on combinations of the *p*-values of phylogenetic endemism (PE; `pe_obs`) and PE measured on an alternative tree with all branch lengths equal (`pe_alt`). Here is a summary [borrowed from the biodiverse blog](http://biodiverse-analysis-software.blogspot.com/2014/11/canape-categorical-analysis-of-palaeo.html), modified to use the variables as they are defined in `canaper`:
+
+1. If either `pe_obs` or `pe_alt_obs` are significantly high then we look for paleo- or neo-endemism  
+   a) If `rpe_obs` is significantly high then we have palaeo-endemism
+   b) Else if `rpe_obs` is significantly low then we have neo-endemism
+   c) Else we have mixed age endemism, in which case
+        i) If both `pe_obs` and `pe_alt_obs` are highly significant (*p* < 0.01) then we have super endemism (high in both paleo and neo)
+        ii) Else we have mixed (some mixture of paleo, neo and nonendemic)
+2. Else if neither `pe_obs` or `pe_alt_obs`are significantly high then we have a non-endemic cell
+
+`cpr_classify_endem()` carries this out automatically on the results from `cpr_rand_test()`, adding a factor called `endem_type`:
+
+```{r acacia-classify-res}
+acacia_canape <- cpr_classify_endem(acacia_rand_res)
+
+table(acacia_canape$endem_type)
+```
+
+## Classify signficance
+
+A similar function to `cpr_classify_endem()` is available to classify significance of the randomization test, `cpr_classify_signif()`. Note that both of these take a `data.frame` as input and return a `data.frame` as output, so they are "pipe-friendly". The second argument of `cpr_classify_signif()` is the name of the biodiversity metric that you want to classify. This will add a column `*_signif` with the significance relative to the random distribution for that metric. For example, `cpr_classify_signif(df, "pd")` will add the `pd_signif` column to `df`.
+
+We can chain them together as follows:
+
+```{r acacia-classify-signif}
+acacia_canape <-
+  cpr_classify_endem(acacia_rand_res) |> 
+  cpr_classify_signif("pd") |> 
+  cpr_classify_signif("rpd") |> 
+  cpr_classify_signif("pe") |> 
+  cpr_classify_signif("rpe")
+
+# Take a look at one of the significance classifications:
+table(acacia_canape$pd_signif)
+```
+
+## Visualize results
+
+With the randomizations and classification steps taken care of, we can now visualize the results to see how they match up with those of @Mishler2014.
+
+Note that the results will not be identical because we have used a different randomization algorithm from the paper and because of stochasticity in the random values.
+
+Here is Figure 2, showing the results of the randomization test for PE, RPE, PE, and RPE:
+
+```{r mishler2014-fig2, fig.height = 7, fig.width = 7}
+# Fist do some data wrangling to make the results easier to plot (add lat/long columns)
+acacia_canape <- as_tibble(acacia_canape, rownames = "site") |> 
+  separate(site, c("long", "lat"), sep = ":") |> 
+  mutate(across(c(long, lat), parse_number))
+
+a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = pd_signif)) + 
+  geom_tile() +
+  # cpr_signif_cols is a color palette in canaper for significance colors
+  scale_fill_manual(values = cpr_signif_cols, name = "Phylogenetic diversity") +
+  guides(fill = guide_legend(title.position = "top", label.position = "bottom"))
+
+b <- ggplot(acacia_canape, aes(x = long, y = lat, fill = rpd_signif)) + 
+  geom_tile() +
+  scale_fill_manual(values = cpr_signif_cols, name = "Relative phylogenetic diversity") +
+  guides(fill = guide_legend(title.position = "top", label.position = "bottom"))
+
+c <- ggplot(acacia_canape, aes(x = long, y = lat, fill = pe_signif)) + 
+  geom_tile() +
+  scale_fill_manual(values = cpr_signif_cols, name = "Phylogenetic endemism") +
+  guides(fill = guide_legend(title.position = "top", label.position = "bottom"))
+
+d <- ggplot(acacia_canape, aes(x = long, y = lat, fill = rpe_signif)) + 
+  geom_tile() +
+  scale_fill_manual(values = cpr_signif_cols, name = "Relative phylogenetic endemism") +
+  guides(fill = guide_legend(title.position = "top", label.position = "bottom"))
+
+a + b + c + d + plot_annotation(tag_levels = "a") & theme(legend.position = "top")
+```
+
+And here is Figure 3, showing the results of CANAPE:
+
+```{r,  mishler2014-fig3, fig.height = 10, fig.width = 6}
+a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = endem_type)) + geom_tile() +
+  # cpr_endem_cols is a color palette in canaper for endemism colors
+  scale_fill_manual(values = cpr_endem_cols) +
+  guides(fill = guide_legend(title.position = "top", label.position = "bottom")) +
+  theme(legend.position = "bottom", legend.title = element_blank())
+
+b <- ggplot(acacia_canape, aes(x = pe_alt_obs, y = pe_obs, color = endem_type)) + 
+  geom_abline(slope = 1, color = "darkgrey") +
+  geom_point() +
+  scale_color_manual(values = cpr_endem_cols) +
+  labs(
+    x = "Phylogenetic endemism on comparison tree",
+    y = "Phylogenetic endemism on actual tree"
+  ) +
+  theme_bw() +
+  theme(legend.position = "none")
+
+a + b + plot_layout(ncol = 1) + plot_annotation(tag_levels = "a")
+```
 
 ## References
