@@ -122,7 +122,7 @@ calc_biodiv_random <- function(
 #' 	random_vals <-
 #' 	purrr::rerun(
 #' 		100,
-#' 		calc_biodiv_random(comm, phy, phy_alt, "independentswap", 1000)
+#' 		calc_biodiv_random(comm, phy, phy_alt, "independentswap", 1000, metrics = "pe")
 #' 	)
 #' 	comm_sparse <- phyloregion::dense2sparse(comm)
 #' 	pe_obs <- phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
