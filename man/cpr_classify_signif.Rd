@@ -33,7 +33,7 @@ following values, depending on the null hypothesis:
 }
 }
 \description{
-Given the results of \code{\link{cpr_rand_test}()}, classifies statistical significance
+Given the results of \code{\link[=cpr_rand_test]{cpr_rand_test()}}, classifies statistical significance
 of a biodiversity metric. The null hypothesis is that observed value does not
 lie in the extreme of the random values.
 }

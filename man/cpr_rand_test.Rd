@@ -2,7 +2,22 @@
 % Please edit documentation in R/canape.R
 \name{cpr_rand_test}
 \alias{cpr_rand_test}
-\title{Run randomization analysis for a set of biodiversity metrics}
+\title{Run a randomization analysis for one or more biodiversity metrics}
+\source{
+Faith DP (1992) Conservation evaluation and phylogenetic diversity.
+Biological Conservation, 61:1–10. \url{https://doi.org/10.1016/0006-3207(92)91201-3}
+
+Gotelli, N.J. (2000) Null Model Analysis of Species Co-Occurrence
+Patterns. Ecology, 81: 2606-2621. \url{https://doi.org/10.1890/0012-9658(2000)081[2606:NMAOSC]2.0.CO;2}
+
+Rosauer, D., Laffan, S.W., Crisp, M.D., Donnellan, S.C. and Cook, L.G. (2009)
+Phylogenetic endemism: a new approach for identifying geographical concentrations of
+evolutionary history. Molecular Ecology, 18: 4061-4072. https://doi.org/10.1111/j.1365-294X.2009.04311.x
+
+Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014) Phylogenetic measures
+of biodiversity and neo- and paleo-endemism in Australian Acacia.
+Nat Commun, 5: 4473. \url{https://doi.org/10.1038/ncomms5473}
+}
 \usage{
 cpr_rand_test(
   comm,
@@ -14,46 +29,55 @@ cpr_rand_test(
 )
 }
 \arguments{
-\item{comm}{Input community matrix in data.frame format (communities as rows,
-species as columns, with row names and column names)}
+\item{comm}{Dataframe; input community matrix with communities as rows
+and species as columns, including row names and column names.}
 
-\item{phy}{Input phylogeny}
+\item{phy}{List of class \code{phylo}; input phylogeny.}
 
-\item{null_model}{Name of null model to use. Must choose from 'frequency', 'richness',
-'independentswap', or 'trialswap' (see picante::randomizeMatrix).}
+\item{null_model}{Name of null model to use. Must choose from \code{frequency}, \code{richness},
+\code{independentswap}, or \code{trialswap.} For details, see \code{\link[picante:randomizeSample]{picante::randomizeMatrix()}}.}
 
-\item{n_reps}{Number of random communities to replicate}
+\item{n_reps}{Number of random communities to replicate.}
 
 \item{n_iterations}{Number of iterations to use when swapping occurrences to
-generate each random community}
+generate each random community; only used if \code{null_model} is 'independentswap'
+or 'trialswap'.}
 
-\item{metrics}{Character vector; names of biodiversity metrics to calculate}
+\item{metrics}{Character vector; names of biodiversity metrics to calculate.
+May include one or more of: \code{pd}, \code{rpd}, \code{pe}, \code{rpe}.}
 }
 \value{
 Dataframe. For each of the biodiversity metrics, the following 9 columns
 will be produced:
-\describe{
-\item{\verb{*_obs}}{Observed value}
-\item{\verb{*_obs_c_lower}}{Count of times observed value was lower than random values}
-\item{\verb{*_obs_c_upper}}{Count of times observed value was higher than random values}
-\item{\verb{*_obs_p_lower}}{Percentage of times observed value was lower than random values}
-\item{\verb{*_obs_p_upper}}{Percentage of times observed value was higher than random values}
-\item{\verb{*_obs_q}}{Count of the non-NA random values used for comparison}
-\item{\verb{*_obs_z}}{Standard effect size (z-score)}
-\item{\verb{*_rand_mean}}{Mean of the random values}
-\item{\verb{*_rand_sd}}{Standard deviation of the random values}
+\itemize{
+\item \verb{*_obs}: Observed value
+\item \verb{*_obs_c_lower}: Count of times observed value was lower than random values
+\item \verb{*_obs_c_upper}: Count of times observed value was higher than random values
+\item \verb{*_obs_p_lower}: Percentage of times observed value was lower than random values
+\item \verb{*_obs_p_upper}: Percentage of times observed value was higher than random values
+\item \verb{*_obs_q}: Count of the non-NA random values used for comparison
+\item \verb{*_obs_z}: Standard effect size (z-score)
+\item \verb{*_rand_mean}: Mean of the random values
+\item \verb{*_rand_sd}: Standard deviation of the random values
 }
+
 So if you included \code{pd} in \code{metrics}, the output columns would include \code{pd_obs},
 \code{pd_obs_c_lower}, etc...
 }
 \description{
-The biodiversity metrics analyzed include:
-\describe{
-\item{\code{pd}}{Phylogenetic diversity (Faith 1992 https://doi.org/10.1016/0006-3207(92)91201-3)}
-\item{\code{rpd}}{Relative phylogenetic diversity (Mishler 2014 https://doi.org/10.1038/ncomms5473)}
-\item{\code{pe}}{Phylogenetic endemism (Rosauer 2009 https://doi.org/10.1111/j.1365-294x.2009.04311.x)}
-\item{\code{rpe}}{Relative phylogenetic endemism (Mishler 2014 https://doi.org/10.1038/ncomms5473)}
+The observed value of the biodiversity metric(s) will be calculated, then
+compared against a set of random communities. Various statistics are calculated
+from the comparison (see \strong{Value} below).
 }
+\details{
+The biodiversity metrics available for analysis include:
+\itemize{
+\item \code{pd}: Phylogenetic diversity (Faith 1992)
+\item \code{rpd}: Relative phylogenetic diversity (Mishler et al 2014)
+\item \code{pe}: Phylogenetic endemism (Rosauer et al 2009)
+\item \code{rpe}: Relative phylogenetic endemism (Mishler et al 2014)
+}
+
 The default method for generating random communities is the independent swap
 method of Gotelli (2000), which randomizes the community matrix while maintaining
 species occurrence frequency and sample species richness.
