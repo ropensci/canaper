@@ -225,7 +225,7 @@ get_ses <- function(random_vals, obs_vals, metric) {
 #' @examples
 #' library(picante)
 #' data(phylocom)
-#' cpr_rand_test(phylocom$sample, phylocom$phy)
+#' cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd")
 #' @export
 cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 100, n_iterations = 10000, metrics = c("pd", "rpd", "pe", "rpe")) {
 
@@ -343,7 +343,7 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 #' @examples
 #' library(picante)
 #' data(phylocom)
-#' cpr_rand_test(phylocom$sample, phylocom$phy) |> cpr_classify_endem()
+#' cpr_rand_test(phylocom$sample, phylocom$phy, metrics = c("pe", "rpe")) |> cpr_classify_endem()
 #' @export
 cpr_classify_endem <- function(df) {
 	dplyr::mutate(
@@ -407,7 +407,7 @@ cpr_classify_endem <- function(df) {
 #' @examples
 #' library(picante)
 #' data(phylocom)
-#' cpr_rand_test(phylocom$sample, phylocom$phy) |> cpr_classify_signif("pd")
+#' cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd") |> cpr_classify_signif("pd")
 #' @export
 cpr_classify_signif <- function(df, metric, one_sided = FALSE, upper = FALSE) {
 

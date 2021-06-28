@@ -35,5 +35,5 @@ For a summary of the classification scheme, see:
 \examples{
 library(picante)
 data(phylocom)
-cpr_rand_test(phylocom$sample, phylocom$phy) |> cpr_classify_endem()
+cpr_rand_test(phylocom$sample, phylocom$phy, metrics = c("pe", "rpe")) |> cpr_classify_endem()
 }

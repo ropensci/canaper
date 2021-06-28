@@ -49,5 +49,5 @@ random). For this, set \code{one_sided = FALSE}.
 \examples{
 library(picante)
 data(phylocom)
-cpr_rand_test(phylocom$sample, phylocom$phy) |> cpr_classify_signif("pd")
+cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd") |> cpr_classify_signif("pd")
 }

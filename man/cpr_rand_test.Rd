@@ -85,5 +85,5 @@ species occurrence frequency and sample species richness.
 \examples{
 library(picante)
 data(phylocom)
-cpr_rand_test(phylocom$sample, phylocom$phy)
+cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd")
 }

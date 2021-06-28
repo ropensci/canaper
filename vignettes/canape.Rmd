@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 CANAPE stands for "Categorical Analysis of Neo- And Paleo-Endemism", and provides insight into the evolutionary processes underlying endemism [@Mishler2014]. The idea is basically that endemic regions may be so because either they contain range-restricted parts of a phylogeny that have unusually long branch lengths (paleoendemism), or unusually short branch lengths (neoendemism), or a mixture of both. Paleoendemism may reflect old lineages that have survived extinctions; neoendemism may reflect recently speciated lineages that have not yet dispersed. 
 
-This vignette replicates the [analysis of @Mishler2014](https://doi.org/10.1038/ncomms5473), where CANAPE was originally defined. 
+This vignette replicates the [analysis of Mishler et al. 2014](https://doi.org/10.1038/ncomms5473), where CANAPE was originally defined.
 
 ## Setup
 
