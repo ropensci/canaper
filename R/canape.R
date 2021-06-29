@@ -142,10 +142,14 @@ get_ses <- function(random_vals, obs_vals, metric) {
 
 	results <-
 		tibble::tibble(
-			random_values = purrr::transpose(random_vals_trans[[metric]]) |> purrr::map(purrr::as_vector),
+			random_values = purrr::map(
+				purrr::transpose(random_vals_trans[[metric]]),
+				as_vector),
 			obs_val = obs_vals
-		) |>
-		dplyr::transmute(
+		)
+
+	results <- dplyr::transmute(
+			results,
 			obs = obs_val,
 			# Calculate SES
 			rand_mean = purrr::map_dbl(random_values, ~mean(., na.rm = TRUE)),
@@ -156,7 +160,7 @@ get_ses <- function(random_vals, obs_vals, metric) {
 			# Count number of times observed value is lower than random values
 			obs_c_lower = purrr::map2_dbl(.x = obs_val, .y = random_values, ~count_lower(.x, .y)),
 			# Count the number of non-NA random values used for comparison
-			obs_q = purrr::map_dbl(random_values, ~magrittr::extract(., !is.na(.)) |> length()),
+			obs_q = purrr::map_dbl(random_values, ~length(magrittr::extract(., !is.na(.)))),
 			# Calculate p-value for upper tail
 			obs_p_upper = obs_c_upper / obs_q,
 			# Calculate p-value for lower tail
@@ -306,16 +310,18 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 		ses_rpe <- get_ses(random_vals, rpe_obs, "rpe")}
 
 	# Combine results
-	dplyr::bind_cols(
+	results <- dplyr::bind_cols(
 		ses_pd,
 		ses_pd_alt,
 		ses_rpd,
 		ses_pe,
 		ses_pe_alt,
 		ses_rpe
-	) |>
-		dplyr::mutate(site = rownames(comm)) |>
-		tibble::column_to_rownames("site")
+	)
+
+	results <- dplyr::mutate(results, site = rownames(comm))
+
+	tibble::column_to_rownames(results, "site")
 
 }
 
@@ -343,7 +349,8 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 #' @examples
 #' library(picante)
 #' data(phylocom)
-#' cpr_rand_test(phylocom$sample, phylocom$phy, metrics = c("pe", "rpe")) |> cpr_classify_endem()
+#' rand_test <- cpr_rand_test(phylocom$sample, phylocom$phy, metrics = c("pe", "rpe"))
+#' cpr_classify_endem(rand_test)
 #' @export
 cpr_classify_endem <- function(df) {
 	dplyr::mutate(
@@ -407,7 +414,8 @@ cpr_classify_endem <- function(df) {
 #' @examples
 #' library(picante)
 #' data(phylocom)
-#' cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd") |> cpr_classify_signif("pd")
+#' rand_test <- cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd")
+#' cpr_classify_signif(rand_test, "pd")
 #' @export
 cpr_classify_signif <- function(df, metric, one_sided = FALSE, upper = FALSE) {
 
