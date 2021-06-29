@@ -30,7 +30,7 @@
 #' phy_alt$edge.length <- rep(x = 1, times = length(phy_alt$edge.length))
 #' phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length)
 #' phy$edge.length <- phy$edge.length / sum(phy$edge.length)
-#' calc_biodiv_random(comm, phy, phy_alt, "independentswap")
+#' calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = "pd")
 #' }
 #' @keywords internal
 calc_biodiv_random <- function(
@@ -120,9 +120,9 @@ calc_biodiv_random <- function(
 #' phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length)
 #' phy$edge.length <- phy$edge.length / sum(phy$edge.length)
 #' 	random_vals <-
-#' 	purrr::rerun(
-#' 		100,
-#' 		calc_biodiv_random(comm, phy, phy_alt, "independentswap", 1000, metrics = "pe")
+#' 	purrr::map(
+#' 		1:100,
+#' 		~calc_biodiv_random(comm, phy, phy_alt, "independentswap", 1000, metrics = "pe")
 #' 	)
 #' 	comm_sparse <- phyloregion::dense2sparse(comm)
 #' 	pe_obs <- phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
