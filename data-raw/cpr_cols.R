@@ -1,3 +1,4 @@
+# all significance colors are from colorbrewer https://colorbrewer2.org
 cpr_signif_cols <- c(
 	"< 0.01" = "#a50f15", # dark red
 	"< 0.025" = "#de2d26", # light red
@@ -8,12 +9,13 @@ cpr_signif_cols <- c(
 
 usethis::use_data(cpr_signif_cols, overwrite = TRUE)
 
+# endemism colors are from microshades or colorbrewer (https://karstenslab.github.io/microshades/)
 cpr_endem_cols <- c(
-	"paleo" = "#4876fd", # blue
-	"neo" = "#fe0000", # red
-	"not significant" = "#ffffcc", # off-white
-	"mixed" = "#cc7efd", # light purple
-	"super" = "#9d00ff" # dark purple
+	"paleo" = "#7DCCFF", # blue (microshades)
+	"neo" = "#F09163", # orange (microshades)
+	"not significant" = "#ffffcc", # off-white (colorbrewer)
+	"mixed" = "#CC79A7", # light purple (microshades)
+	"super" = "#E794C1" # dark purple (microshades)
 )
 
 usethis::use_data(cpr_endem_cols, overwrite = TRUE)
