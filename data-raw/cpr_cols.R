@@ -14,8 +14,8 @@ cpr_endem_cols <- c(
 	"paleo" = "#7DCCFF", # blue (microshades)
 	"neo" = "#F09163", # orange (microshades)
 	"not significant" = "#ffffcc", # off-white (colorbrewer)
-	"mixed" = "#CC79A7", # light purple (microshades)
-	"super" = "#E794C1" # dark purple (microshades)
+	"mixed" = "#E794C1", # light purple (microshades)
+	"super" = "#CC79A7"  # dark purple (microshades)
 )
 
 usethis::use_data(cpr_endem_cols, overwrite = TRUE)
