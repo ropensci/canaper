@@ -22,6 +22,8 @@ knitr::opts_chunk$set(
 
 The goal of canaper is to enable categorical analysis of neo- and paleo-endemism (CANAPE) in R.
 
+**NOTE**: This package is in early development. There may be major, breaking changes to functionality in the near future. If you use this package, I highly recommend using a package manager like [renv](https://rstudio.github.io/renv/articles/renv.html).
+
 ## Installation
 
 You can install canaper from [GitHub](https://github.com/) with:

@@ -10,6 +10,11 @@
 The goal of canaper is to enable categorical analysis of neo- and
 paleo-endemism (CANAPE) in R.
 
+**NOTE**: This package is in early development. There may be major,
+breaking changes to functionality in the near future. If you use this
+package, I highly recommend using a package manager like
+[renv](https://rstudio.github.io/renv/articles/renv.html).
+
 ## Installation
 
 You can install canaper from [GitHub](https://github.com/) with:
@@ -86,19 +91,19 @@ let’s just look at a subset of them:
 ``` r
 rand_test_results[,1:9]
 #>            pd_obs pd_rand_mean pd_rand_sd  pd_obs_z pd_obs_c_upper
-#> clump1  0.3018868    0.4694340 0.03489188 -4.801896              0
-#> clump2a 0.3207547    0.4688679 0.03417284 -4.334237              0
-#> clump2b 0.3396226    0.4683019 0.03073875 -4.186223              0
-#> clump4  0.4150943    0.4656604 0.03515881 -1.438218              6
-#> even    0.5660377    0.4696226 0.03576872  2.695514            100
-#> random  0.5094340    0.4647170 0.03722303  1.201326             80
+#> clump1  0.3018868    0.4724528 0.03115012 -5.475614              0
+#> clump2a 0.3207547    0.4688679 0.03448708 -4.294744              0
+#> clump2b 0.3396226    0.4628302 0.03470329 -3.550314              0
+#> clump4  0.4150943    0.4715094 0.03333333 -1.692453              4
+#> even    0.5660377    0.4643396 0.03137728  3.241138            100
+#> random  0.5094340    0.4579245 0.03810143  1.351903             87
 #>         pd_obs_c_lower pd_obs_q pd_obs_p_upper pd_obs_p_lower
 #> clump1             100      100           0.00           1.00
 #> clump2a            100      100           0.00           1.00
 #> clump2b            100      100           0.00           1.00
-#> clump4              91      100           0.06           0.91
+#> clump4              92      100           0.04           0.92
 #> even                 0      100           1.00           0.00
-#> random               4      100           0.80           0.04
+#> random               4      100           0.87           0.04
 ```
 
 This is a summary of the columns:
