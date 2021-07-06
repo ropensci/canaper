@@ -84,6 +84,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 <p>The goal of canaper is to enable categorical analysis of neo- and paleo-endemism (CANAPE) in R.</p>
+<p><strong>NOTE</strong>: This package is in early development. There may be major, breaking changes to functionality in the near future. If you use this package, I highly recommend using a package manager like <a href="https://rstudio.github.io/renv/articles/renv.html">renv</a>.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -146,19 +147,19 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rand_test_results</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span>
 <span class="co">#&gt;            pd_obs pd_rand_mean pd_rand_sd  pd_obs_z pd_obs_c_upper</span>
-<span class="co">#&gt; clump1  0.3018868    0.4694340 0.03489188 -4.801896              0</span>
-<span class="co">#&gt; clump2a 0.3207547    0.4688679 0.03417284 -4.334237              0</span>
-<span class="co">#&gt; clump2b 0.3396226    0.4683019 0.03073875 -4.186223              0</span>
-<span class="co">#&gt; clump4  0.4150943    0.4656604 0.03515881 -1.438218              6</span>
-<span class="co">#&gt; even    0.5660377    0.4696226 0.03576872  2.695514            100</span>
-<span class="co">#&gt; random  0.5094340    0.4647170 0.03722303  1.201326             80</span>
+<span class="co">#&gt; clump1  0.3018868    0.4724528 0.03115012 -5.475614              0</span>
+<span class="co">#&gt; clump2a 0.3207547    0.4688679 0.03448708 -4.294744              0</span>
+<span class="co">#&gt; clump2b 0.3396226    0.4628302 0.03470329 -3.550314              0</span>
+<span class="co">#&gt; clump4  0.4150943    0.4715094 0.03333333 -1.692453              4</span>
+<span class="co">#&gt; even    0.5660377    0.4643396 0.03137728  3.241138            100</span>
+<span class="co">#&gt; random  0.5094340    0.4579245 0.03810143  1.351903             87</span>
 <span class="co">#&gt;         pd_obs_c_lower pd_obs_q pd_obs_p_upper pd_obs_p_lower</span>
 <span class="co">#&gt; clump1             100      100           0.00           1.00</span>
 <span class="co">#&gt; clump2a            100      100           0.00           1.00</span>
 <span class="co">#&gt; clump2b            100      100           0.00           1.00</span>
-<span class="co">#&gt; clump4              91      100           0.06           0.91</span>
+<span class="co">#&gt; clump4              92      100           0.04           0.92</span>
 <span class="co">#&gt; even                 0      100           1.00           0.00</span>
-<span class="co">#&gt; random               4      100           0.80           0.04</span></code></pre></div>
+<span class="co">#&gt; random               4      100           0.87           0.04</span></code></pre></div>
 <p>This is a summary of the columns:</p>
 <ul>
 <li>
