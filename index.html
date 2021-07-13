@@ -82,9 +82,13 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#canaper" class="anchor"></a>canaper</h1></div>
 <!-- badges: start -->
-<!-- badges: end -->
+
 <p>The goal of canaper is to enable categorical analysis of neo- and paleo-endemism (CANAPE) in R.</p>
-<p><strong>NOTE</strong>: This package is in early development. There may be major, breaking changes to functionality in the near future. If you use this package, I highly recommend using a package manager like <a href="https://rstudio.github.io/renv/articles/renv.html">renv</a>.</p>
+<div id="important-note" class="section level2">
+<h2 class="hasAnchor">
+<a href="#important-note" class="anchor"></a>Important note</h2>
+<p><strong>This package is in early development.</strong> There may be major, breaking changes to functionality in the near future. If you use this package, I highly recommend using a package manager like <a href="https://rstudio.github.io/renv/articles/renv.html">renv</a> so that later updates won’t break your code.</p>
+</div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -147,19 +151,19 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rand_test_results</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span>
 <span class="co">#&gt;            pd_obs pd_rand_mean pd_rand_sd  pd_obs_z pd_obs_c_upper</span>
-<span class="co">#&gt; clump1  0.3018868    0.4724528 0.03115012 -5.475614              0</span>
-<span class="co">#&gt; clump2a 0.3207547    0.4688679 0.03448708 -4.294744              0</span>
-<span class="co">#&gt; clump2b 0.3396226    0.4628302 0.03470329 -3.550314              0</span>
-<span class="co">#&gt; clump4  0.4150943    0.4715094 0.03333333 -1.692453              4</span>
-<span class="co">#&gt; even    0.5660377    0.4643396 0.03137728  3.241138            100</span>
-<span class="co">#&gt; random  0.5094340    0.4579245 0.03810143  1.351903             87</span>
+<span class="co">#&gt; clump1  0.3018868    0.4681132 0.03614873 -4.598403              0</span>
+<span class="co">#&gt; clump2a 0.3207547    0.4650943 0.03767624 -3.831051              0</span>
+<span class="co">#&gt; clump2b 0.3396226    0.4622642 0.03386896 -3.621059              0</span>
+<span class="co">#&gt; clump4  0.4150943    0.4722642 0.03311253 -1.726531              4</span>
+<span class="co">#&gt; even    0.5660377    0.4686792 0.03634961  2.678392            100</span>
+<span class="co">#&gt; random  0.5094340    0.4669811 0.03490167  1.216355             82</span>
 <span class="co">#&gt;         pd_obs_c_lower pd_obs_q pd_obs_p_upper pd_obs_p_lower</span>
 <span class="co">#&gt; clump1             100      100           0.00           1.00</span>
 <span class="co">#&gt; clump2a            100      100           0.00           1.00</span>
 <span class="co">#&gt; clump2b            100      100           0.00           1.00</span>
-<span class="co">#&gt; clump4              92      100           0.04           0.92</span>
+<span class="co">#&gt; clump4              93      100           0.04           0.93</span>
 <span class="co">#&gt; even                 0      100           1.00           0.00</span>
-<span class="co">#&gt; random               4      100           0.87           0.04</span></code></pre></div>
+<span class="co">#&gt; random               7      100           0.82           0.07</span></code></pre></div>
 <p>This is a summary of the columns:</p>
 <ul>
 <li>
@@ -192,7 +196,7 @@
 <span class="co">#&gt; clump2b not significant</span>
 <span class="co">#&gt; clump4  not significant</span>
 <span class="co">#&gt; even              super</span>
-<span class="co">#&gt; random            super</span></code></pre></div>
+<span class="co">#&gt; random            mixed</span></code></pre></div>
 <p>This data set is very small, so it doesn’t include all possible endemism types. In total, they include:</p>
 <ul>
 <li>
@@ -212,6 +216,29 @@
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
 <p>Mishler, B., Knerr, N., González-Orozco, C. <em>et al</em>. Phylogenetic measures of biodiversity and neo- and paleo-endemism in Australian <em>Acacia</em>. <em>Nat Commun</em> 5, 4473 (2014). <a href="https://doi.org/10.1038/ncomms5473" class="uri">https://doi.org/10.1038/ncomms5473</a></p>
+</div>
+<div id="citing-this-package" class="section level2">
+<h2 class="hasAnchor">
+<a href="#citing-this-package" class="anchor"></a>Citing this package</h2>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span><span class="op">(</span><span class="st">"canaper"</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; To cite canaper in publications use:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;   Nitta JH, Iwasaki W. (2021) canaper: Categorical analysis of neo- and</span>
+<span class="co">#&gt;   paleo-endemism in R. doi: 10.5281/zenodo.5094033, R package version</span>
+<span class="co">#&gt;   0.0.0.9000</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; A BibTeX entry for LaTeX users is</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;   @Manual{,</span>
+<span class="co">#&gt;     title = {canaper: Categorical analysis of neo- and paleo-endemism in {R}},</span>
+<span class="co">#&gt;     author = {Joel H. Nitta and Wataru Iwasaki},</span>
+<span class="co">#&gt;     year = {2021},</span>
+<span class="co">#&gt;     url = {https://github.com/joelnitta/canaper},</span>
+<span class="co">#&gt;     note = {R package version 0.0.0.9000},</span>
+<span class="co">#&gt;     doi = {10.5281/zenodo.5094033},</span>
+<span class="co">#&gt;   }</span></code></pre></div>
 </div>
 </div>
   </div>
@@ -233,6 +260,12 @@
 <li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+<div class="citation">
+<h2>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html">Citing canaper</a></li>
+</ul>
+</div>
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
@@ -240,7 +273,13 @@
 </ul>
 </div>
 
-  </div>
+  <div class="dev-status">
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://doi.org/10.5281/zenodo.5094033"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.5094033.svg" alt="DOI"></a></li>
+</ul>
+</div>
+</div>
 </div>
 
 
