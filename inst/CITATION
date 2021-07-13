@@ -1,0 +1,14 @@
+citHeader("To cite canaper in publications use:")
+
+citEntry(
+  entry    = "Manual",
+  title    = "canaper: Categorical analysis of neo- and paleo-endemism in {R}",
+  author   = personList(as.person("Joel H. Nitta"),
+                     as.person("Wataru Iwasaki")
+          ),
+  year     = "2021",
+  url      = "https://github.com/joelnitta/canaper",
+  note = "R package version 0.0.0.9000",
+  doi = "10.5281/zenodo.5094033",
+  textVersion = paste("Nitta JH, Iwasaki W. (2021) canaper: Categorical analysis of neo- and paleo-endemism in R. doi: 10.5281/zenodo.5094033, R package version 0.0.0.9000")
+)

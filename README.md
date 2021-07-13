@@ -5,15 +5,20 @@
 # canaper
 
 <!-- badges: start -->
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5094033.svg)](https://doi.org/10.5281/zenodo.5094033)
 <!-- badges: end -->
 
 The goal of canaper is to enable categorical analysis of neo- and
 paleo-endemism (CANAPE) in R.
 
-**NOTE**: This package is in early development. There may be major,
-breaking changes to functionality in the near future. If you use this
-package, I highly recommend using a package manager like
-[renv](https://rstudio.github.io/renv/articles/renv.html).
+## Important note
+
+**This package is in early development.** There may be major, breaking
+changes to functionality in the near future. If you use this package, I
+highly recommend using a package manager like
+[renv](https://rstudio.github.io/renv/articles/renv.html) so that later
+updates won’t break your code.
 
 ## Installation
 
@@ -91,19 +96,19 @@ let’s just look at a subset of them:
 ``` r
 rand_test_results[,1:9]
 #>            pd_obs pd_rand_mean pd_rand_sd  pd_obs_z pd_obs_c_upper
-#> clump1  0.3018868    0.4724528 0.03115012 -5.475614              0
-#> clump2a 0.3207547    0.4688679 0.03448708 -4.294744              0
-#> clump2b 0.3396226    0.4628302 0.03470329 -3.550314              0
-#> clump4  0.4150943    0.4715094 0.03333333 -1.692453              4
-#> even    0.5660377    0.4643396 0.03137728  3.241138            100
-#> random  0.5094340    0.4579245 0.03810143  1.351903             87
+#> clump1  0.3018868    0.4681132 0.03614873 -4.598403              0
+#> clump2a 0.3207547    0.4650943 0.03767624 -3.831051              0
+#> clump2b 0.3396226    0.4622642 0.03386896 -3.621059              0
+#> clump4  0.4150943    0.4722642 0.03311253 -1.726531              4
+#> even    0.5660377    0.4686792 0.03634961  2.678392            100
+#> random  0.5094340    0.4669811 0.03490167  1.216355             82
 #>         pd_obs_c_lower pd_obs_q pd_obs_p_upper pd_obs_p_lower
 #> clump1             100      100           0.00           1.00
 #> clump2a            100      100           0.00           1.00
 #> clump2b            100      100           0.00           1.00
-#> clump4              92      100           0.04           0.92
+#> clump4              93      100           0.04           0.93
 #> even                 0      100           1.00           0.00
-#> random               4      100           0.87           0.04
+#> random               7      100           0.82           0.07
 ```
 
 This is a summary of the columns:
@@ -136,7 +141,7 @@ canape_results[, "endem_type", drop = FALSE]
 #> clump2b not significant
 #> clump4  not significant
 #> even              super
-#> random            super
+#> random            mixed
 ```
 
 This data set is very small, so it doesn’t include all possible endemism
@@ -157,3 +162,26 @@ Mishler, B., Knerr, N., González-Orozco, C. *et al*. Phylogenetic
 measures of biodiversity and neo- and paleo-endemism in Australian
 *Acacia*. *Nat Commun* 5, 4473 (2014).
 <https://doi.org/10.1038/ncomms5473>
+
+## Citing this package
+
+``` r
+citation("canaper")
+#> 
+#> To cite canaper in publications use:
+#> 
+#>   Nitta JH, Iwasaki W. (2021) canaper: Categorical analysis of neo- and
+#>   paleo-endemism in R. doi: 10.5281/zenodo.5094033, R package version
+#>   0.0.0.9000
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Manual{,
+#>     title = {canaper: Categorical analysis of neo- and paleo-endemism in {R}},
+#>     author = {Joel H. Nitta and Wataru Iwasaki},
+#>     year = {2021},
+#>     url = {https://github.com/joelnitta/canaper},
+#>     note = {R package version 0.0.0.9000},
+#>     doi = {10.5281/zenodo.5094033},
+#>   }
+```
