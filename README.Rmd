@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 # canaper
 
 <!-- badges: start -->
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5094033.svg)](https://doi.org/10.5281/zenodo.5094033)
+[![DOI](https://zenodo.org/badge/359280907.svg)](https://zenodo.org/badge/latestdoi/359280907)
 <!-- badges: end -->
 
 The goal of canaper is to enable categorical analysis of neo- and paleo-endemism (CANAPE) in R.
@@ -57,6 +57,7 @@ phylocom$phy
 The main "workhorse" function of `canaper` is `cpr_rand_test()`, which conducts a randomization test to determine if observed values of phylogenetic diversity (PD) and phylogenetic endemism (PE) are significantly different from random. It also calculates the same values on an alternative phylogeny where all branch lengths have been set equal (alternative PD, alternative PE) as well as the ratio of the original value to the alternative value (relative PD, relative PE).
 
 ```{r rand-test-example}
+set.seed(071421)
 rand_test_results <- cpr_rand_test(phylocom$sample, phylocom$phy)
 ```
 
@@ -96,13 +97,22 @@ This data set is very small, so it doesn't include all possible endemism types. 
 
 For a more complete example, please [see the vignette](https://joelnitta.github.io/canaper/articles/canape.html)
 
+## Citing this package
+
+If you use this package, please cite it! Here is an example:
+
+```
+Nitta JH, Iwasaki W. (2021) canaper: Categorical analysis of neo- and paleo-endemism in R. doi: 10.5281/zenodo.5094032
+```
+
+The example DOI above is for the overall package. 
+
+Here is the latest DOI, which you should use if you are using the latest version of the package:
+
+[![DOI](https://zenodo.org/badge/359280907.svg)](https://zenodo.org/badge/latestdoi/359280907)
+
+You can find DOIs for older versions by viewing the "Releases" menu on the right.
+
 ## References
 
 Mishler, B., Knerr, N., González-Orozco, C. *et al*. Phylogenetic measures of biodiversity and neo- and paleo-endemism in Australian *Acacia*. *Nat Commun* 5, 4473 (2014). https://doi.org/10.1038/ncomms5473
-
-## Citing this package
-
-```{r citation}
-citation("canaper")
-```
-
