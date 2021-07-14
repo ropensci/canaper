@@ -179,7 +179,7 @@
 <span class="co">#&gt; [1] "Pararchidendron_pruinosum" "Paraserianthes_lophantha" </span>
 <span class="co">#&gt; [3] "saligna"                   "clunies-rossiae"</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># See how long it took</span>
-<span class="co">#&gt; 1062.533 sec elapsed</span></code></pre></div>
+<span class="co">#&gt; 1110.027 sec elapsed</span></code></pre></div>
 <p>If we hadn’t run it in parallel, it would have taken 4 times longer!</p>
 <p>Let’s take a peek at the output. <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> produces <strong>a lot</strong> of columns, so we’ll view this as a tibble, which prints out more nicely than a plain <code>data.frame</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -187,16 +187,16 @@
 <span class="co">#&gt; # A tibble: 3,037 x 55</span>
 <span class="co">#&gt;    site    pd_obs pd_rand_mean pd_rand_sd pd_obs_z pd_obs_c_upper pd_obs_c_lower</span>
 <span class="co">#&gt;    &lt;chr&gt;    &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 '-1025… 0.0145       0.0224    0.00421 -1.87                 1             99</span>
-<span class="co">#&gt;  2 '-1025… 0.0383       0.0503    0.00658 -1.82                 4             96</span>
-<span class="co">#&gt;  3 '-1025… 0.0379       0.0361    0.00610  0.289               64             36</span>
-<span class="co">#&gt;  4 '-1025… 0.0571       0.0623    0.00782 -0.665               30             70</span>
-<span class="co">#&gt;  5 '-1025… 0.0410       0.0410    0.00525 -0.0122              53             47</span>
-<span class="co">#&gt;  6 '-1025… 0.0100       0.0100    0.00185 -0.00820             52             48</span>
-<span class="co">#&gt;  7 '-1025… 0.0188       0.0223    0.00412 -0.853               14             86</span>
-<span class="co">#&gt;  8 '-1025… 0.0435       0.0530    0.00677 -1.41                 7             93</span>
-<span class="co">#&gt;  9 '-1025… 0.0111       0.0103    0.00227  0.346               73             27</span>
-<span class="co">#&gt; 10 '-1025… 0.0905       0.0865    0.00988  0.410               68             32</span>
+<span class="co">#&gt;  1 '-1025… 0.0145       0.0220    0.00344  -2.18                0            100</span>
+<span class="co">#&gt;  2 '-1025… 0.0383       0.0497    0.00784  -1.45                6             94</span>
+<span class="co">#&gt;  3 '-1025… 0.0379       0.0382    0.00694  -0.0456             51             49</span>
+<span class="co">#&gt;  4 '-1025… 0.0571       0.0624    0.00956  -0.548              29             71</span>
+<span class="co">#&gt;  5 '-1025… 0.0410       0.0419    0.00785  -0.118              50             50</span>
+<span class="co">#&gt;  6 '-1025… 0.0100       0.0103    0.00241  -0.128              48             52</span>
+<span class="co">#&gt;  7 '-1025… 0.0188       0.0225    0.00405  -0.918              18             82</span>
+<span class="co">#&gt;  8 '-1025… 0.0435       0.0533    0.00821  -1.19               13             87</span>
+<span class="co">#&gt;  9 '-1025… 0.0111       0.0103    0.00268   0.316              84             16</span>
+<span class="co">#&gt; 10 '-1025… 0.0905       0.0881    0.0108    0.222              61             39</span>
 <span class="co">#&gt; # … with 3,027 more rows, and 48 more variables: pd_obs_q &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   pd_obs_p_upper &lt;dbl&gt;, pd_obs_p_lower &lt;dbl&gt;, pd_alt_obs &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   pd_alt_rand_mean &lt;dbl&gt;, pd_alt_rand_sd &lt;dbl&gt;, pd_alt_obs_z &lt;dbl&gt;,</span>
@@ -242,7 +242,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">acacia_canape</span><span class="op">$</span><span class="va">endem_type</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           mixed             neo not significant           paleo           super </span>
-<span class="co">#&gt;             101              12            2756              44             124</span></code></pre></div>
+<span class="co">#&gt;             112              13            2741              46             125</span></code></pre></div>
 </div>
 <div id="classify-signficance" class="section level2">
 <h2 class="hasAnchor">
@@ -261,7 +261,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">acacia_canape</span><span class="op">$</span><span class="va">pd_signif</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;          &lt; 0.01         &lt; 0.025         &gt; 0.975          &gt; 0.99 not significant </span>
-<span class="co">#&gt;             292             228              37              16            2464</span></code></pre></div>
+<span class="co">#&gt;             305             223              35              18            2456</span></code></pre></div>
 </div>
 <div id="visualize-results" class="section level2">
 <h2 class="hasAnchor">
