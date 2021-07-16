@@ -80,6 +80,9 @@ plan(multisession, workers = 4)
 # Uncomment this to show a progress bar when running cpr_rand_test()
 # progressr::handlers(global = TRUE)
 
+# Set a random number generator seed so we get the same results if this is run again
+set.seed(071421)
+
 tic() # Set a timer
 # Run randomization test
 acacia_rand_res <- cpr_rand_test(acacia$comm, acacia$phy, n_reps = 100, n_iterations = 100000)
@@ -94,7 +97,7 @@ Let's take a peek at the output. `cpr_rand_test()` produces **a lot** of columns
 as_tibble(acacia_rand_res, rownames = "site")
 ```
 
-For details about what each column means, see `?cpr_rand_test()`.
+For details about what each column means, see `cpr_rand_test()`.
 
 ## Classify endemism
 
