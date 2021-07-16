@@ -7,6 +7,7 @@
 <!-- badges: start -->
 
 [![DOI](https://zenodo.org/badge/359280907.svg)](https://zenodo.org/badge/latestdoi/359280907)
+[![R-CMD-check](https://github.com/joelnitta/canaper/workflows/R-CMD-check/badge.svg)](https://github.com/joelnitta/canaper/actions)
 <!-- badges: end -->
 
 The goal of canaper is to enable categorical analysis of neo- and
