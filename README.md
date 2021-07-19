@@ -158,6 +158,13 @@ types. In total, they include:
 For a more complete example, please [see the
 vignette](https://joelnitta.github.io/canaper/articles/canape.html)
 
+## Other information
+
+Poster at Botany 2021
+
+-   [PDF](https://github.com/joelnitta/botany_poster_2021/raw/main/canaper.pdf)
+-   [Video](https://www.youtube.com/watch?v=LXn_ziEli_Q)
+
 ## Citing this package
 
 If you use this package, please cite it! Here is an example:
