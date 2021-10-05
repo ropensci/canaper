@@ -13,8 +13,8 @@ has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 <!-- badges: end -->
 
-The goal of canaper is to enable categorical analysis of neo- and
-paleo-endemism (CANAPE) in R.
+The goal of canaper is to enable [categorical analysis of neo- and
+paleo-endemism (CANAPE)](https://doi.org/10.1038/ncomms5473) in R.
 
 ## Important note
 
@@ -36,6 +36,8 @@ remotes::install_github("joelnitta/canaper")
 ## Example usage
 
 These examples will use the dataset included with the `picante` package.
+The dataset includes a community (site x species) matrix and a
+pylogenetic tree.
 
 ``` r
 library(canaper)
