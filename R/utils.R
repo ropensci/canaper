@@ -13,17 +13,18 @@
 #' count_higher(4, c(1:10, NaN))
 #' }
 count_higher <- function(x, y, na.rm = TRUE) {
+  assertthat::assert_that(assertthat::is.number(x))
+  assertthat::assert_that(is.numeric(y))
 
-	assertthat::assert_that(assertthat::is.number(x))
-	assertthat::assert_that(is.numeric(y))
+  # remove any NAs before making comparison
+  if (isTRUE(na.rm)) y <- y[!is.na(y)]
 
-	# remove any NAs before making comparison
-	if (isTRUE(na.rm)) y <- y[!is.na(y)]
+  # if comparison is zero length, return NA
+  if (length(y) == 0) {
+    return(NaN)
+  }
 
-	# if comparison is zero length, return NA
-	if (length(y) == 0) return(NaN)
-
-	sum((x > y))
+  sum((x > y))
 }
 
 #' Count number of times one number is lower than others
@@ -41,15 +42,16 @@ count_higher <- function(x, y, na.rm = TRUE) {
 #' count_lower(NaN, 1:10)
 #' }
 count_lower <- function(x, y, na.rm = TRUE) {
+  assertthat::assert_that(assertthat::is.number(x))
+  assertthat::assert_that(is.numeric(y))
 
-	assertthat::assert_that(assertthat::is.number(x))
-	assertthat::assert_that(is.numeric(y))
+  # remove any NAs before making comparison
+  if (isTRUE(na.rm)) y <- y[!is.na(y)]
 
-	# remove any NAs before making comparison
-	if (isTRUE(na.rm)) y <- y[!is.na(y)]
+  # if comparison is zero length, return NA
+  if (length(y) == 0) {
+    return(NaN)
+  }
 
-	# if comparison is zero length, return NA
-	if (length(y) == 0) return(NaN)
-
-	sum((x < y))
+  sum((x < y))
 }

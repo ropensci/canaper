@@ -33,68 +33,67 @@
 #' calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = "pd")
 #' }
 #' @keywords internal
-calc_biodiv_random <- function(
-	comm, phy, phy_alt,
-	null_model = c("frequency", "richness", "independentswap", "trialswap"),
-	n_iterations = 1000, metrics) {
+calc_biodiv_random <- function(comm, phy, phy_alt,
+                               null_model = c("frequency", "richness", "independentswap", "trialswap"),
+                               n_iterations = 1000, metrics) {
+  assertthat::assert_that(is.character(null_model))
+  assertthat::assert_that(
+    null_model %in% c("frequency", "richness", "independentswap", "trialswap"),
+    msg = "Null model may only be selected from 'frequency', 'richness', 'independentswap', or 'trialswap'"
+  )
 
-	assertthat::assert_that(is.character(null_model))
-	assertthat::assert_that(
-		null_model %in% c("frequency", "richness", "independentswap", "trialswap"),
-		msg = "Null model may only be selected from 'frequency', 'richness', 'independentswap', or 'trialswap'"
-	)
+  # Make sure names match between community and tree
+  assertthat::assert_that(isTRUE(
+    all.equal(sort(phy$tip.label), sort(colnames(comm)))
+  ))
 
-	# Make sure names match between community and tree
-	assertthat::assert_that(isTRUE(
-		all.equal(sort(phy$tip.label), sort(colnames(comm)))
-	))
+  assertthat::assert_that(isTRUE(
+    all.equal(sort(phy_alt$tip.label), sort(colnames(comm)))
+  ))
 
-	assertthat::assert_that(isTRUE(
-		all.equal(sort(phy_alt$tip.label), sort(colnames(comm)))
-	))
+  # Make sure phylogeny has been rescaled to total branch length of 1 for RPE or RFD
+  if (any(metrics %in% c("rpe", "rpd"))) assertthat::assert_that(isTRUE(all.equal(sum(phy$edge.length), 1)))
+  if (any(metrics %in% c("rpe", "rpd"))) assertthat::assert_that(isTRUE(all.equal(sum(phy_alt$edge.length), 1)))
 
-	# Make sure phylogeny has been rescaled to total branch length of 1 for RPE or RFD
-	if (any(metrics %in% c("rpe", "rpd"))) assertthat::assert_that(isTRUE(all.equal(sum(phy$edge.length), 1)))
-	if (any(metrics %in% c("rpe", "rpd"))) assertthat::assert_that(isTRUE(all.equal(sum(phy_alt$edge.length), 1)))
+  # Convert comm to sparse matrix format for phyloregions
+  comm_sparse <- phyloregion::dense2sparse(comm)
 
-	# Convert comm to sparse matrix format for phyloregions
-	comm_sparse <- phyloregion::dense2sparse(comm)
+  # Generate random community
+  random_comm <- picante::randomizeMatrix(comm, null.model = null_model, iterations = n_iterations)
+  random_comm_sparse <- phyloregion::dense2sparse(random_comm)
 
-	# Generate random community
-	random_comm <- picante::randomizeMatrix(comm, null.model = null_model, iterations = n_iterations)
-	random_comm_sparse <- phyloregion::dense2sparse(random_comm)
+  # Calculate statistics for random community
+  # - set up null vectors first
+  pd <- NULL
+  pd_alt <- NULL
+  rpd <- NULL
+  pe <- NULL
+  pe_alt <- NULL
+  rpe <- NULL
 
-	# Calculate statistics for random community
-	# - set up null vectors first
-	pd <- NULL
-	pd_alt <- NULL
-	rpd <- NULL
-	pe <- NULL
-	pe_alt <- NULL
-	rpe <- NULL
+  # - calculate selected metrics
+  if ("pd" %in% metrics) pd <- phyloregion::PD(random_comm_sparse, phy)
+  if ("rpd" %in% metrics) {
+    pd_alt <- phyloregion::PD(random_comm_sparse, phy_alt)
+    rpd <- pd / pd_alt
+  }
+  if ("pe" %in% metrics) pe <- phyloregion::phylo_endemism(random_comm_sparse, phy, weighted = TRUE)
+  if ("rpe" %in% metrics) {
+    pe_alt <- phyloregion::phylo_endemism(random_comm_sparse, phy_alt, weighted = TRUE)
+    rpe <- pe / pe_alt
+  }
 
-	# - calculate selected metrics
-	if ("pd" %in% metrics) pd <- phyloregion::PD(random_comm_sparse, phy)
-	if ("rpd" %in% metrics) {
-		pd_alt <- phyloregion::PD(random_comm_sparse, phy_alt)
-		rpd <- pd / pd_alt}
-	if ("pe" %in% metrics) pe <- phyloregion::phylo_endemism(random_comm_sparse, phy, weighted = TRUE)
-	if ("rpe" %in% metrics) {
-		pe_alt <- phyloregion::phylo_endemism(random_comm_sparse, phy_alt, weighted = TRUE)
-		rpe <- pe / pe_alt}
-
-	# Output results, only keep non-NULL results
-	purrr::compact(
-		list(
-			pd = pd,
-			pd_alt = pd_alt,
-			rpd = rpd,
-			pe = pe,
-			pe_alt = pe_alt,
-			rpe = rpe
-		)
-	)
-
+  # Output results, only keep non-NULL results
+  purrr::compact(
+    list(
+      pd = pd,
+      pd_alt = pd_alt,
+      rpd = rpd,
+      pe = pe,
+      pe_alt = pe_alt,
+      rpe = rpe
+    )
+  )
 }
 
 #' Extract standard effect size (and other related statistics) for a single
@@ -119,57 +118,57 @@ calc_biodiv_random <- function(
 #' phy_alt$edge.length <- rep(x = 1, times = length(phy_alt$edge.length))
 #' phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length)
 #' phy$edge.length <- phy$edge.length / sum(phy$edge.length)
-#' 	random_vals <-
-#' 	purrr::map(
-#' 		1:100,
-#' 		~calc_biodiv_random(comm, phy, phy_alt, "independentswap", 1000, metrics = "pe")
-#' 	)
-#' 	comm_sparse <- phyloregion::dense2sparse(comm)
-#' 	pe_obs <- phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
-#' 	get_ses(random_vals, pe_obs, "pe")
-#' 	}
+#' random_vals <-
+#'   purrr::map(
+#'     1:100,
+#'     ~ calc_biodiv_random(comm, phy, phy_alt, "independentswap", 1000, metrics = "pe")
+#'   )
+#' comm_sparse <- phyloregion::dense2sparse(comm)
+#' pe_obs <- phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
+#' get_ses(random_vals, pe_obs, "pe")
+#' }
 #' @keywords internal
 get_ses <- function(random_vals, obs_vals, metric) {
+  assertthat::assert_that(assertthat::is.string(metric))
 
-	assertthat::assert_that(assertthat::is.string(metric))
+  assertthat::assert_that(
+    all(metric %in% c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")),
+    msg = "Biodiversity metrics may only be selected from 'pd', 'rpd', 'pe', or 'rpe'"
+  )
 
-	assertthat::assert_that(
-		all(metric %in% c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")),
-		msg = "Biodiversity metrics may only be selected from 'pd', 'rpd', 'pe', or 'rpe'"
-	)
+  random_vals_trans <- purrr::transpose(random_vals)
 
-	random_vals_trans <- purrr::transpose(random_vals)
+  results <-
+    tibble::tibble(
+      random_values = purrr::map(
+        purrr::transpose(random_vals_trans[[metric]]),
+        as_vector
+      ),
+      obs_val = obs_vals
+    )
 
-	results <-
-		tibble::tibble(
-			random_values = purrr::map(
-				purrr::transpose(random_vals_trans[[metric]]),
-				as_vector),
-			obs_val = obs_vals
-		)
+  results <- dplyr::transmute(
+    results,
+    obs = obs_val,
+    # Calculate SES
+    rand_mean = purrr::map_dbl(random_values, ~ mean(., na.rm = TRUE)),
+    rand_sd = purrr::map_dbl(random_values, ~ sd(., na.rm = TRUE)),
+    obs_z = (obs_val - rand_mean) / rand_sd,
+    # Count number of times observed value is higher than random values
+    obs_c_upper = purrr::map2_dbl(.x = obs_val, .y = random_values, ~ count_higher(.x, .y)),
+    # Count number of times observed value is lower than random values
+    obs_c_lower = purrr::map2_dbl(.x = obs_val, .y = random_values, ~ count_lower(.x, .y)),
+    # Count the number of non-NA random values used for comparison
+    obs_q = purrr::map_dbl(random_values, ~ length(magrittr::extract(., !is.na(.)))),
+    # Calculate p-value for upper tail
+    obs_p_upper = obs_c_upper / obs_q,
+    # Calculate p-value for lower tail
+    obs_p_lower = obs_c_lower / obs_q
+  )
 
-	results <- dplyr::transmute(
-			results,
-			obs = obs_val,
-			# Calculate SES
-			rand_mean = purrr::map_dbl(random_values, ~mean(., na.rm = TRUE)),
-			rand_sd = purrr::map_dbl(random_values, ~sd(., na.rm = TRUE)),
-			obs_z = (obs_val - rand_mean) / rand_sd,
-			# Count number of times observed value is higher than random values
-			obs_c_upper = purrr::map2_dbl(.x = obs_val, .y = random_values, ~count_higher(.x, .y)),
-			# Count number of times observed value is lower than random values
-			obs_c_lower = purrr::map2_dbl(.x = obs_val, .y = random_values, ~count_lower(.x, .y)),
-			# Count the number of non-NA random values used for comparison
-			obs_q = purrr::map_dbl(random_values, ~length(magrittr::extract(., !is.na(.)))),
-			# Calculate p-value for upper tail
-			obs_p_upper = obs_c_upper / obs_q,
-			# Calculate p-value for lower tail
-			obs_p_lower = obs_c_lower / obs_q
-		)
+  colnames(results) <- paste(metric, colnames(results), sep = "_")
 
-	colnames(results) <- paste(metric, colnames(results), sep = "_")
-
-	results
+  results
 }
 
 #' Run a randomization analysis for one or more biodiversity metrics
@@ -233,96 +232,100 @@ get_ses <- function(random_vals, obs_vals, metric) {
 #' @export
 cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 100, n_iterations = 10000, metrics = c("pd", "rpd", "pe", "rpe")) {
 
-	# Match tips of tree and column names of community data frame:
-	# Use only taxa that are in common between phylogeny and community
-	subsetted_data <- picante::match.phylo.comm(phy = phy, comm = comm)
-	phy <- subsetted_data[["phy"]]
-	comm <- subsetted_data[["comm"]]
+  # Match tips of tree and column names of community data frame:
+  # Use only taxa that are in common between phylogeny and community
+  subsetted_data <- picante::match.phylo.comm(phy = phy, comm = comm)
+  phy <- subsetted_data[["phy"]]
+  comm <- subsetted_data[["comm"]]
 
-	assertthat::assert_that(
-		isTRUE(
-			all.equal(
-				sort(colnames(comm)),
-				sort(phy$tip.label)
-			)
-		),
-		msg = "Tip names don't match between community and phylogeny"
-	)
+  assertthat::assert_that(
+    isTRUE(
+      all.equal(
+        sort(colnames(comm)),
+        sort(phy$tip.label)
+      )
+    ),
+    msg = "Tip names don't match between community and phylogeny"
+  )
 
-	# Make alternative tree with equal branch lengths
-	phy_alt <- phy
-	phy_alt$edge.length <- rep(x = 1, times = length(phy_alt$edge.length))
-	# rescale so total phy length is 1
-	phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length)
-	# rescale original phy so total length is 1
-	phy$edge.length <- phy$edge.length / sum(phy$edge.length)
+  # Make alternative tree with equal branch lengths
+  phy_alt <- phy
+  phy_alt$edge.length <- rep(x = 1, times = length(phy_alt$edge.length))
+  # rescale so total phy length is 1
+  phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length)
+  # rescale original phy so total length is 1
+  phy$edge.length <- phy$edge.length / sum(phy$edge.length)
 
-	# Make sparse community df
-	comm_sparse <- phyloregion::dense2sparse(comm)
+  # Make sparse community df
+  comm_sparse <- phyloregion::dense2sparse(comm)
 
-	# Calculate biodiversity metrics for random communities
-	# set up a progress bar
-	# pb <- progress::progress_bar$new(total = 100)
-	pb <- progressr::progressor(steps = n_reps)
+  # Calculate biodiversity metrics for random communities
+  # set up a progress bar
+  # pb <- progress::progress_bar$new(total = 100)
+  pb <- progressr::progressor(steps = n_reps)
 
-	random_vals <-
-		furrr::future_map(
-			1:n_reps,
-			~{
-				pb()
-				calc_biodiv_random(
-					comm, phy, phy_alt,
-					null_model = null_model,
-					n_iterations = n_iterations,
-					metrics = metrics)
-			},
-			.options = furrr::furrr_options(seed = TRUE)
-		)
+  random_vals <-
+    furrr::future_map(
+      1:n_reps,
+      ~ {
+        pb()
+        calc_biodiv_random(
+          comm, phy, phy_alt,
+          null_model = null_model,
+          n_iterations = n_iterations,
+          metrics = metrics
+        )
+      },
+      .options = furrr::furrr_options(seed = TRUE)
+    )
 
-	# Calculate biodiversity metrics for observed community
-	# - set up null vectors first
-	ses_pd <- NULL
-	ses_pd_alt <- NULL
-	ses_rpd <- NULL
-	ses_pe <- NULL
-	ses_pe_alt <- NULL
-	ses_rpe <- NULL
+  # Calculate biodiversity metrics for observed community
+  # - set up null vectors first
+  ses_pd <- NULL
+  ses_pd_alt <- NULL
+  ses_rpd <- NULL
+  ses_pe <- NULL
+  ses_pe_alt <- NULL
+  ses_rpe <- NULL
 
-	# - calculate selected metrics
-	if ("pd" %in% metrics) {
-		pd_obs <- phyloregion::PD(comm_sparse, phy)
-		ses_pd <- get_ses(random_vals, pd_obs, "pd")}
+  # - calculate selected metrics
+  if ("pd" %in% metrics) {
+    pd_obs <- phyloregion::PD(comm_sparse, phy)
+    ses_pd <- get_ses(random_vals, pd_obs, "pd")
+  }
 
-	if ("rpd" %in% metrics) {
-		pd_alt_obs <- phyloregion::PD(comm_sparse, phy_alt)
-		ses_pd_alt <- get_ses(random_vals, pd_alt_obs, "pd_alt")
-		rpd_obs <- pd_obs / pd_alt_obs
-		ses_rpd <- get_ses(random_vals, rpd_obs, "rpd")}
+  if ("rpd" %in% metrics) {
+    pd_alt_obs <- phyloregion::PD(comm_sparse, phy_alt)
+    ses_pd_alt <- get_ses(random_vals, pd_alt_obs, "pd_alt")
+    rpd_obs <- pd_obs / pd_alt_obs
+    ses_rpd <- get_ses(random_vals, rpd_obs, "rpd")
+  }
 
-	if ("pe" %in% metrics) {
-		pe_obs <- phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
-		ses_pe <- get_ses(random_vals, pe_obs, "pe")}
+  if ("pe" %in% metrics) {
+    pe_obs <- phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
+    ses_pe <- get_ses(random_vals, pe_obs, "pe")
+  }
 
-	if ("rpe" %in% metrics) {
-		pe_alt_obs <- phyloregion::phylo_endemism(comm_sparse, phy_alt, weighted = TRUE)
-		ses_pe_alt <- get_ses(random_vals, pe_alt_obs, "pe_alt")
-		rpe_obs <- pe_obs / pe_alt_obs
-		ses_rpe <- get_ses(random_vals, rpe_obs, "rpe")}
+  if ("rpe" %in% metrics) {
+    pe_alt_obs <- phyloregion::phylo_endemism(comm_sparse, phy_alt, weighted = TRUE)
+    ses_pe_alt <- get_ses(random_vals, pe_alt_obs, "pe_alt")
+    rpe_obs <- pe_obs / pe_alt_obs
+    ses_rpe <- get_ses(random_vals, rpe_obs, "rpe")
+  }
 
-	# Combine results
-	results <- dplyr::bind_cols(
-		ses_pd,
-		ses_pd_alt,
-		ses_rpd,
-		ses_pe,
-		ses_pe_alt,
-		ses_rpe
-	)
+  # Combine results
+  results <- dplyr::bind_cols(
+    ses_pd,
+    ses_pd_alt,
+    ses_rpd,
+    ses_pe,
+    ses_pe_alt,
+    ses_rpe
+  )
 
-	results <- dplyr::mutate(results, site = rownames(comm))
+  results <- dplyr::mutate(results, site = rownames(comm))
 
-	tibble::column_to_rownames(results, "site")
-
+  tibble::column_to_rownames(results, "site")
 }
 
 #' Classify phylogenetic endemism
@@ -353,29 +356,29 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 #' cpr_classify_endem(rand_test)
 #' @export
 cpr_classify_endem <- function(df) {
-	dplyr::mutate(
-		df,
-		# Categorize endemism by CANAPE scheme
-		# (here, PE_orig = pe_obs_p, PE_alt = pe_alt_obs_p, and RPE = rpe_obs_p)
-		#
-		# 1)    If either PE_orig or PE_alt are significantly high then we look for palaeo or neo endemism
-		#   a)    If RPE is significantly high then we have palaeo-endemism
-		#         (PE_orig is consistently higher than PE_alt across the random realisations)
-		#   b)    Else if RPE is significantly low then we have neo-endemism
-		#         (PE_orig is consistently lower than PE_alt across the random realisations)
-		#     c)    Else we have mixed age endemism in which case
-		#        i)    If both PE_orig and PE_alt are highly significant (p<0.01) then we
-		#              have super endemism (high in both palaeo and neo)
-		#        ii)   Else we have mixed (some mixture of palaeo, neo and non endemic)
-		# 2)    Else if neither PE_orig or PE_alt are significantly high then we have a non-endemic cell
-		endem_type = dplyr::case_when(
-			(pe_obs_p_upper >= 0.95 | pe_alt_obs_p_upper >= 0.95) & rpe_obs_p_upper >= 0.975 ~ "paleo",
-			(pe_obs_p_upper >= 0.95 | pe_alt_obs_p_upper >= 0.95) & rpe_obs_p_lower >= 0.975~ "neo",
-			pe_obs_p_upper >= 0.99 | pe_alt_obs_p_upper >= 0.99 ~ "super",
-			pe_obs_p_upper >= 0.95 | pe_alt_obs_p_upper >= 0.95 ~ "mixed",
-			TRUE ~ "not significant"
-		)
-	)
+  dplyr::mutate(
+    df,
+    # Categorize endemism by CANAPE scheme
+    # (here, PE_orig = pe_obs_p, PE_alt = pe_alt_obs_p, and RPE = rpe_obs_p)
+    #
+    # 1)    If either PE_orig or PE_alt are significantly high then we look for palaeo or neo endemism
+    #   a)    If RPE is significantly high then we have palaeo-endemism
+    #         (PE_orig is consistently higher than PE_alt across the random realisations)
+    #   b)    Else if RPE is significantly low then we have neo-endemism
+    #         (PE_orig is consistently lower than PE_alt across the random realisations)
+    #     c)    Else we have mixed age endemism in which case
+    #        i)    If both PE_orig and PE_alt are highly significant (p<0.01) then we
+    #              have super endemism (high in both palaeo and neo)
+    #        ii)   Else we have mixed (some mixture of palaeo, neo and non endemic)
+    # 2)    Else if neither PE_orig or PE_alt are significantly high then we have a non-endemic cell
+    endem_type = dplyr::case_when(
+      (pe_obs_p_upper >= 0.95 | pe_alt_obs_p_upper >= 0.95) & rpe_obs_p_upper >= 0.975 ~ "paleo",
+      (pe_obs_p_upper >= 0.95 | pe_alt_obs_p_upper >= 0.95) & rpe_obs_p_lower >= 0.975 ~ "neo",
+      pe_obs_p_upper >= 0.99 | pe_alt_obs_p_upper >= 0.99 ~ "super",
+      pe_obs_p_upper >= 0.95 | pe_alt_obs_p_upper >= 0.95 ~ "mixed",
+      TRUE ~ "not significant"
+    )
+  )
 }
 
 #' Classify statistical significance
@@ -418,40 +421,38 @@ cpr_classify_endem <- function(df) {
 #' cpr_classify_signif(rand_test, "pd")
 #' @export
 cpr_classify_signif <- function(df, metric, one_sided = FALSE, upper = FALSE) {
+  assertthat::assert_that(
+    all(metric %in% c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")),
+    msg = "Biodiversity metrics may only be selected from 'pd', 'rpd', 'pe', or 'rpe'"
+  )
 
-	assertthat::assert_that(
-		all(metric %in% c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")),
-		msg = "Biodiversity metrics may only be selected from 'pd', 'rpd', 'pe', or 'rpe'"
-	)
+  df[[paste0(metric, "_obs_p_lower")]]
 
-	df[[paste0(metric, "_obs_p_lower")]]
+  if (!isTRUE(one_sided)) {
+    signif <- dplyr::case_when(
+      df[[paste0(metric, "_obs_p_lower")]] > 0.99 ~ "< 0.01",
+      df[[paste0(metric, "_obs_p_lower")]] > 0.975 ~ "< 0.025",
+      df[[paste0(metric, "_obs_p_upper")]] > 0.99 ~ "> 0.99",
+      df[[paste0(metric, "_obs_p_upper")]] > 0.975 ~ "> 0.975",
+      TRUE ~ "not significant"
+    )
+  } else {
+    if (isTRUE(upper)) {
+      signif <- dplyr::case_when(
+        df[[paste0(metric, "_obs_p_upper")]] > 0.99 ~ "> 0.99",
+        df[[paste0(metric, "_obs_p_upper")]] > 0.95 ~ "> 0.95",
+        TRUE ~ "not significant"
+      )
+    } else {
+      signif <- dplyr::case_when(
+        df[[paste0(metric, "_obs_p_lower")]] > 0.99 ~ "< 0.01",
+        df[[paste0(metric, "_obs_p_lower")]] > 0.95 ~ "< 0.05",
+        TRUE ~ "not significant"
+      )
+    }
+  }
 
-	if (!isTRUE(one_sided)) {
-	signif <- dplyr::case_when(
-		df[[paste0(metric, "_obs_p_lower")]] > 0.99 ~ "< 0.01",
-		df[[paste0(metric, "_obs_p_lower")]] > 0.975 ~ "< 0.025",
-		df[[paste0(metric, "_obs_p_upper")]] > 0.99 ~ "> 0.99",
-		df[[paste0(metric, "_obs_p_upper")]] > 0.975 ~ "> 0.975",
-		TRUE ~ "not significant"
-	) } else {
-		if (isTRUE(upper)) {
-			signif <- dplyr::case_when(
-				df[[paste0(metric, "_obs_p_upper")]] > 0.99 ~ "> 0.99",
-				df[[paste0(metric, "_obs_p_upper")]] > 0.95 ~ "> 0.95",
-				TRUE ~ "not significant"
-			)
-		} else {
-			signif <- dplyr::case_when(
-				df[[paste0(metric, "_obs_p_lower")]] > 0.99 ~ "< 0.01",
-				df[[paste0(metric, "_obs_p_lower")]] > 0.95 ~ "< 0.05",
-				TRUE ~ "not significant"
-			)
-		}
-	}
+  df[[paste0(metric, "_signif")]] <- signif
 
-	df[[paste0(metric, "_signif")]] <- signif
-
-	df
-
+  df
 }
-

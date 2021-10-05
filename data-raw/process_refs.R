@@ -11,16 +11,16 @@ library(assertr)
 rmd_file <- here::here("vignettes/canape.Rmd")
 
 # Parse RMD file and extract citation keys
-citations <- 
-  readr::read_lines(rmd_file) %>% 
-  stringr::str_split(" |;") %>% 
-  unlist %>% 
-  magrittr::extract(., stringr::str_detect(., "@")) %>% 
-  stringr::str_remove_all("\\[|\\]|\\)|\\(|\\.$|,|\\{|\\}") %>% 
-  magrittr::extract(., stringr::str_detect(., "^@|^-@")) %>% 
-  stringr::str_remove_all("^@|^-@") %>% 
-  unique %>% 
-  sort %>%
+citations <-
+  readr::read_lines(rmd_file) %>%
+  stringr::str_split(" |;") %>%
+  unlist() %>%
+  magrittr::extract(., stringr::str_detect(., "@")) %>%
+  stringr::str_remove_all("\\[|\\]|\\)|\\(|\\.$|,|\\{|\\}") %>%
+  magrittr::extract(., stringr::str_detect(., "^@|^-@")) %>%
+  stringr::str_remove_all("^@|^-@") %>%
+  unique() %>%
+  sort() %>%
   tibble(key = .)
 
 # Read in YAML including all references exported from Zotero
