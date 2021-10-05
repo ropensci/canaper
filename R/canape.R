@@ -127,6 +127,7 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
 #' pe_obs <- phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
 #' get_ses(random_vals, pe_obs, "pe")
 #' }
+#' @autoglobal
 #' @keywords internal
 get_ses <- function(random_vals, obs_vals, metric) {
   assertthat::assert_that(assertthat::is.string(metric))
