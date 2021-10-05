@@ -1,5 +1,11 @@
 # CONTRIBUTING #
 
+This package is in an initially stable state of development, with a great deal 
+of active subsequent development envisioned.
+
+Contributions to `canaper` are welcome! Please read this documentation before
+proceeding.
+
 ### Fixing typos
 
 Small typos or grammatical errors in documentation may be edited directly using
@@ -18,9 +24,7 @@ bug, create an associated issue and illustrate the bug with a minimal
 ### Pull request process
 
 *  We recommend that you create a Git branch for each pull request (PR).  
-*  Look at the Travis and AppVeyor build status before and after making changes.
-The `README` should contain badges for any continuous integration services used
-by the package.  
+*  Look at the build status (`R-CMD-check` badge) before and after making changes.
 *  We recommend the tidyverse [style guide](http://style.tidyverse.org).
 You can use the [styler](https://CRAN.R-project.org/package=styler) package to
 apply these styles, but please don't restyle code that has nothing to do with 
@@ -31,22 +35,6 @@ with test cases included are easier to accept.
 *  For user-facing changes, add a bullet to the top of `NEWS.md` below the
 current development version header describing the changes made followed by your
 GitHub username, and links to relevant issue(s)/PR(s).
-
-### Code of Conduct
-
-Please note that the canaper project is released with a
-[Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this
-project you agree to abide by its terms.
-
-### See rOpenSci [contributing guide](https://devguide.ropensci.org/contributingguide.html)
-for further details.
-
-### Discussion forum
-
-Check out our [discussion forum](https://discuss.ropensci.org) if
-
-* you have a question, an use case, or otherwise not a bug or feature request for the software itself.
-* you think your issue requires a longer form discussion.
 
 ### Prefer to Email? 
 
