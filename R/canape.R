@@ -142,7 +142,7 @@ get_ses <- function(random_vals, obs_vals, metric) {
     tibble::tibble(
       random_values = purrr::map(
         purrr::transpose(random_vals_trans[[metric]]),
-        as_vector
+        purrr::as_vector
       ),
       obs_val = obs_vals
     )
