@@ -37,7 +37,7 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
 															 n_iterations = 1000, metrics) {
 	assertthat::assert_that(assertthat::is.string(null_model))
 	assertthat::assert_that(
-		null_model %in% c("frequency", "richness", "independentswap", "trialswap"),
+		isTRUE(all(null_model %in% c("frequency", "richness", "independentswap", "trialswap"))),
 		msg = "'null_model' must be one of 'frequency', 'richness', 'independentswap', or 'trialswap'"
 	)
 

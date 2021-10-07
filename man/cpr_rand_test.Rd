@@ -29,7 +29,7 @@ cpr_rand_test(
 )
 }
 \arguments{
-\item{comm}{Dataframe; input community matrix with communities as rows
+\item{comm}{Dataframe or matrix; input community matrix with communities as rows
 and species as columns, including row names and column names.}
 
 \item{phy}{List of class \code{phylo}; input phylogeny.}

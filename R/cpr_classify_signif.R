@@ -39,7 +39,7 @@
 #' @export
 cpr_classify_signif <- function(df, metric, one_sided = FALSE, upper = FALSE) {
   assertthat::assert_that(
-    all(metric %in% c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")),
+    isTRUE(all(metric %in% c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe"))),
     msg = "Biodiversity metrics may only be selected from 'pd', 'rpd', 'pe', or 'rpe'"
   )
 

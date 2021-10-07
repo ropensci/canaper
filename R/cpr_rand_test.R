@@ -14,7 +14,7 @@
 #' method of Gotelli (2000), which randomizes the community matrix while maintaining
 #' species occurrence frequency and sample species richness.
 #'
-#' @param comm Dataframe; input community matrix with communities as rows
+#' @param comm Dataframe or matrix; input community matrix with communities as rows
 #' and species as columns, including row names and column names.
 #' @param phy List of class `phylo`; input phylogeny.
 #' @param null_model Name of null model to use. Must choose from `frequency`, `richness`,
@@ -60,21 +60,21 @@
 cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 100, n_iterations = 10000, metrics = c("pd", "rpd", "pe", "rpe")) {
 
 	# Check input
-	assertthat::assert_that(inherits(comm, "data.frame"),
-													msg = "'comm' must be of class 'data.frame'")
+	assertthat::assert_that(inherits(comm, "data.frame") | inherits(comm, "matrix"),
+													msg = "'comm' must be of class 'data.frame' or 'matrix'")
 	assertthat::assert_that(
 		is.list(phy) && inherits(phy, "phylo"),
 		msg = "'phy' must be a list of class 'phylo'")
 	assertthat::assert_that(assertthat::is.string(null_model))
 	assertthat::assert_that(
-		null_model %in% c("frequency", "richness", "independentswap", "trialswap"),
+		isTRUE(null_model %in% c("frequency", "richness", "independentswap", "trialswap")),
 		msg = "'null_model' must be one of 'frequency', 'richness', 'independentswap', or 'trialswap'"
 	)
 	assertthat::assert_that(assertthat::is.number(n_reps))
 	assertthat::assert_that(assertthat::is.number(n_iterations))
 	assertthat::assert_that(is.character(metrics))
 	assertthat::assert_that(
-		metrics %in% c("pd", "rpd", "pe", "rpe"),
+		isTRUE(all(metrics %in% c("pd", "rpd", "pe", "rpe"))),
 		msg = "'metrics' may only include 'pd', 'rpd', 'pe', or 'rpe'"
 	)
 
