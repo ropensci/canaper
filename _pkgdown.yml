@@ -1,3 +1,8 @@
+home:
+  title: Categorical Analysis of Neo- and Paleo-endemism in R
+  description: >
+    Provides functions to conduct categorical analysis of neo- and paleo-endemism (CANAPE) in R.
+
 template:
   params:
     bootswatch: lumen
