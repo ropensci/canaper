@@ -78,6 +78,12 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 		msg = "'metrics' may only include 'pd', 'rpd', 'pe', or 'rpe'"
 	)
 
+	# Verify that at least 5 species and sites are present
+	# this could possibly be relaxed if https://github.com/skembel/picante/issues/26 gets fixed
+	assertthat::assert_that(nrow(comm) > 4, msg = "'comm' must include at least 5 species")
+	assertthat::assert_that(ncol(comm) > 4, msg = "'comm' must include at least 5 sites")
+	assertthat::assert_that(ape::Ntip(phy) > 4, msg = "'phy' must include at least 5 species")
+
 	# Match tips of tree and column names of community data frame:
 	# Use only taxa that are in common between phylogeny and community
 	subsetted_data <- picante::match.phylo.comm(phy = phy, comm = comm)
