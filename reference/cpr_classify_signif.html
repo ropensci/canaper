@@ -126,7 +126,7 @@ lie in the extreme of the random values." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Classify statistical significance</h1>
-    <small class="dont-index">Source: <a href='https://github.com/joelnitta/canaper/blob/master/R/canape.R'><code>R/canape.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/joelnitta/canaper/blob/master/R/cpr_classify_signif.R'><code>R/cpr_classify_signif.R</code></a></small>
     <div class="hidden name"><code>cpr_classify_signif.Rd</code></div>
     </div>
 
@@ -172,7 +172,7 @@ in the bottom 5% will be classified as significant.</p></td>
 selected metric. The new column name is the name of the metric with
 <code>_signif</code> appendend. The new column is a character that may contain the
 following values, depending on the null hypothesis:</p><ul>
-<li><p><code>&lt; 0.01</code>, <code>&lt; 0.025</code>, <code>&gt; 0.99</code>, <code>&gt; 0.99</code>, <code>not significant</code> (two-sided)</p></li>
+<li><p><code>&lt; 0.01</code>, <code>&lt; 0.025</code>, <code>&gt; 0.975</code>, <code>&gt; 0.99</code>, <code>not significant</code> (two-sided)</p></li>
 <li><p><code>&lt; 0.01</code>, <code>&lt; 0.05</code>, <code>&gt; 0.99</code>, <code>&gt; 0.95</code>, <code>not significant</code> (one-sided)</p></li>
 </ul>
 

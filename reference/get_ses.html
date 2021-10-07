@@ -128,7 +128,7 @@ diversity metric given random values and observed values of the metric" />
     <div class="page-header">
     <h1>Extract standard effect size (and other related statistics) for a single
 diversity metric given random values and observed values of the metric</h1>
-    <small class="dont-index">Source: <a href='https://github.com/joelnitta/canaper/blob/master/R/canape.R'><code>R/canape.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/joelnitta/canaper/blob/master/R/get_ses.R'><code>R/get_ses.R</code></a></small>
     <div class="hidden name"><code>get_ses.Rd</code></div>
     </div>
 
@@ -137,29 +137,35 @@ diversity metric given random values and observed values of the metric</h1>
 diversity metric given random values and observed values of the metric</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_ses</span><span class='op'>(</span><span class='va'>random_vals</span>, <span class='va'>obs_vals</span>, <span class='va'>metric</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_ses</span><span class='op'>(</span>
+  <span class='va'>random_vals</span>,
+  <span class='va'>obs_vals</span>,
+  metric <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pd"</span>, <span class='st'>"pd_alt"</span>, <span class='st'>"rpd"</span>, <span class='st'>"pe"</span>, <span class='st'>"pe_alt"</span>, <span class='st'>"rpe"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>random_vals</th>
-      <td><p>List of list of vectors. Each list of vectors is a biodiversity metric measured on a
-random community, in the same order as the rows in the input community.</p></td>
+      <td><p>List of list of vectors. Each list of vectors is a
+biodiversity metric measured on a random community, in the same order as
+the rows in the input community.</p></td>
     </tr>
     <tr>
       <th>obs_vals</th>
-      <td><p>Observed values of the biodiversity metric</p></td>
+      <td><p>Numeric vector; observed values of the biodiversity metric</p></td>
     </tr>
     <tr>
       <th>metric</th>
-      <td><p>Name of the metric ("mpd", "mntd", "mpd_morph", "mntd_morph", "pd", "pe", or "rpe")</p></td>
+      <td><p>Character vector of length 1; Name of the metric ("pd",
+"pd_alt", "rpd", "pe", "pe_alt", "rpe")</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Tibble</p>
+    <p>Dataframe</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>

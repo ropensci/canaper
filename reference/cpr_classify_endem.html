@@ -40,8 +40,8 @@
 
 
 <meta property="og:title" content="Classify phylogenetic endemism — cpr_classify_endem" />
-<meta property="og:description" content="Given the results of cpr_rand_test(), classifies phylogenetic endemism according to
-CANAPE scheme of Mishler 2014." />
+<meta property="og:description" content="Given the results of cpr_rand_test(), classifies phylogenetic endemism
+according to CANAPE scheme of Mishler et al. 2014." />
 
 
 
@@ -125,13 +125,13 @@ CANAPE scheme of Mishler 2014." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Classify phylogenetic endemism</h1>
-    <small class="dont-index">Source: <a href='https://github.com/joelnitta/canaper/blob/master/R/canape.R'><code>R/canape.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/joelnitta/canaper/blob/master/R/cpr_classify_endem.R'><code>R/cpr_classify_endem.R</code></a></small>
     <div class="hidden name"><code>cpr_classify_endem.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Given the results of <code><a href='cpr_rand_test.html'>cpr_rand_test()</a></code>, classifies phylogenetic endemism according to
-CANAPE scheme of Mishler 2014.</p>
+    <p>Given the results of <code><a href='cpr_rand_test.html'>cpr_rand_test()</a></code>, classifies phylogenetic endemism
+according to CANAPE scheme of Mishler et al. 2014.</p>
     </div>
 
     <pre class="usage"><span class='fu'>cpr_classify_endem</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span></pre>
@@ -151,14 +151,15 @@ CANAPE scheme of Mishler 2014.</p>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014) Phylogenetic measures
-of biodiversity and neo- and paleo-endemism in Australian Acacia.
-Nat Commun, 5: 4473. <a href='https://doi.org/10.1038/ncomms5473'>https://doi.org/10.1038/ncomms5473</a></p>
+    <p>Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
+Phylogenetic measures of biodiversity and neo- and paleo-endemism in
+Australian Acacia. Nat Commun, 5: 4473.
+<a href='https://doi.org/10.1038/ncomms5473'>https://doi.org/10.1038/ncomms5473</a></p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Dataframe with column <code>endem_type</code> (character) added. Values of <code>endem_type</code> type
-include <code>paleo</code> (paleoendemic), <code>neo</code> (neoendemic), <code>not significant</code> (what it says), <code>mixed</code> (mixed endemism),
-and <code>super</code> (super-endemic; both <code>pe_obs</code> and <code>pe_obs_alt</code> are highly significant).</p>
+    <p>Dataframe with column <code>endem_type</code> (character) added. Values of
+<code>endem_type</code> type include <code>paleo</code> (paleoendemic), <code>neo</code> (neoendemic), <code>not significant</code> (what it says), <code>mixed</code> (mixed endemism), and <code>super</code>
+(super-endemic; both <code>pe_obs</code> and <code>pe_obs_alt</code> are highly significant).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>For a summary of the classification scheme, see:
