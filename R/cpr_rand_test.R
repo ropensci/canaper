@@ -70,19 +70,24 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 		isTRUE(null_model %in% c("frequency", "richness", "independentswap", "trialswap")),
 		msg = "'null_model' must be one of 'frequency', 'richness', 'independentswap', or 'trialswap'"
 	)
+	assertthat::assert_that(assertthat::noNA(null_model))
 	assertthat::assert_that(assertthat::is.number(n_reps))
+	assertthat::assert_that(assertthat::noNA(n_reps))
 	assertthat::assert_that(assertthat::is.number(n_iterations))
+	assertthat::assert_that(assertthat::noNA(n_iterations))
 	assertthat::assert_that(is.character(metrics))
 	assertthat::assert_that(
 		isTRUE(all(metrics %in% c("pd", "rpd", "pe", "rpe"))),
 		msg = "'metrics' may only include 'pd', 'rpd', 'pe', or 'rpe'"
 	)
+	assertthat::assert_that(assertthat::noNA(metrics))
 
 	# Verify that at least 5 species and sites are present
 	# this could possibly be relaxed if https://github.com/skembel/picante/issues/26 gets fixed
 	assertthat::assert_that(nrow(comm) > 4, msg = "'comm' must include at least 5 species")
 	assertthat::assert_that(ncol(comm) > 4, msg = "'comm' must include at least 5 sites")
 	assertthat::assert_that(ape::Ntip(phy) > 4, msg = "'phy' must include at least 5 species")
+	assertthat::assert_that(assertthat::not_empty(comm))
 
 	# Match tips of tree and column names of community data frame:
 	# Use only taxa that are in common between phylogeny and community
