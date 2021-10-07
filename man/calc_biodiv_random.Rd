@@ -10,12 +10,12 @@ calc_biodiv_random(
   phy_alt,
   null_model = c("frequency", "richness", "independentswap", "trialswap"),
   n_iterations = 1000,
-  metrics
+  metrics = c("pd", "rpd", "pe", "rpe")
 )
 }
 \arguments{
-\item{comm}{Input community matrix in data.frame format (communities as rows,
-species as columns, with row names and column names)}
+\item{comm}{Dataframe or matrix; input community matrix with communities as rows
+and species as columns, including row names and column names.}
 
 \item{phy}{Input phylogeny with total branch length scaled to 1}
 
@@ -27,15 +27,11 @@ species as columns, with row names and column names)}
 }
 \value{
 List of vectors. Each vector is a biodiversity metric measured on the
-random community, in the same order as the rows in the input community.
+random community, in the same order as the rows in the input community. Names
+of the list correspond to \code{metrics}.
 }
 \description{
-The independent swap method of Gotelli (2000) is used, which randomizes
-the community matrix while maintaining species occurrence frequency and
-sample species richness.
-}
-\details{
-For description of metrics available, see run_ses_analysis()
+For description of metrics available, see \code{\link{cpr_rand_test}()}
 }
 \examples{
 \dontrun{
@@ -50,7 +46,7 @@ phy_alt <- phy
 phy_alt$edge.length <- rep(x = 1, times = length(phy_alt$edge.length))
 phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length)
 phy$edge.length <- phy$edge.length / sum(phy$edge.length)
-calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = "pd")
+calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = c("pd", "pe", "pd_alt"))
 }
 }
 \keyword{internal}
