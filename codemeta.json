@@ -1,9 +1,12 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "canaper",
-  "description": "Provides functions to conduct categorical analysis of neo- and paleo-endemism (CANAPE) in R..",
-  "name": "canaper: Categorical Analysis of Neo- and Paleo-endemism in R",
+  "description": "Provides functions to conduct categorical analysis of neo- and paleo-endemism (CANAPE).",
+  "name": "canaper: Categorical Analysis of Neo- And Paleo-endemism",
   "codeRepository": "https://github.com/joelnitta/canaper",
   "issueTracker": "https://github.com/joelnitta/canaper/issues",
   "license": "https://spdx.org/licenses/MIT",
@@ -13,7 +16,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.0 (2021-05-18)",
+  "runtimePlatform": "R version 4.1.1 (2021-08-10)",
   "author": [
     {
       "@type": "Person",
@@ -258,11 +261,13 @@
     }
   ],
   "releaseNotes": "https://github.com/joelnitta/canaper/blob/master/NEWS.md",
-  "readme": "https://github.com/joelnitta/canaper/blob/main/README.md",
-  "fileSize": "7233.018KB",
+  "fileSize": "115.481KB",
   "contIntegration": "https://github.com/joelnitta/canaper/actions",
   "developmentStatus": "https://www.repostatus.org/#wip",
-  "keywords": ["biodiversity", "canape"],
+  "keywords": [
+    "biodiversity",
+    "canape"
+  ],
   "citation": [
     {
       "@type": "SoftwareSourceCode",
