@@ -14,4 +14,10 @@ cpr_endem_cols
 Character vector with names corresponding to endemism types
 and values corresponding to color codes.
 }
+\examples{
+cpr_endem_cols
+\dontrun{
+scales::show_col(cpr_endem_cols)
+}
+}
 \keyword{datasets}

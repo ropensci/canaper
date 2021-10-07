@@ -29,4 +29,10 @@ acacia
 \description{
 Dataset of Australian \emph{Acacia} from Mishler et al. 2014 (Nat. Comm.)
 }
+\examples{
+# Example phylogeny
+acacia$phy
+# Example community
+acacia$comm[1:5,1:5]
+}
 \keyword{datasets}

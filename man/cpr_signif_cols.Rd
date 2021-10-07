@@ -14,4 +14,10 @@ cpr_signif_cols
 Character vector with names corresponding to significance levels
 and values corresponding to color codes.
 }
+\examples{
+cpr_signif_cols
+\dontrun{
+scales::show_col(cpr_signif_cols)
+}
+}
 \keyword{datasets}
