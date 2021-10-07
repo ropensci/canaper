@@ -4,9 +4,10 @@
 \alias{cpr_classify_endem}
 \title{Classify phylogenetic endemism}
 \source{
-Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014) Phylogenetic measures
-of biodiversity and neo- and paleo-endemism in Australian Acacia.
-Nat Commun, 5: 4473. \url{https://doi.org/10.1038/ncomms5473}
+Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
+Phylogenetic measures of biodiversity and neo- and paleo-endemism in
+Australian Acacia. Nat Commun, 5: 4473.
+\url{https://doi.org/10.1038/ncomms5473}
 }
 \usage{
 cpr_classify_endem(df)
@@ -20,13 +21,13 @@ cpr_classify_endem(df)
 }}
 }
 \value{
-Dataframe with column \code{endem_type} (character) added. Values of \code{endem_type} type
-include \code{paleo} (paleoendemic), \code{neo} (neoendemic), \verb{not significant} (what it says), \code{mixed} (mixed endemism),
-and \code{super} (super-endemic; both \code{pe_obs} and \code{pe_obs_alt} are highly significant).
+Dataframe with column \code{endem_type} (character) added. Values of
+\code{endem_type} type include \code{paleo} (paleoendemic), \code{neo} (neoendemic), \verb{not significant} (what it says), \code{mixed} (mixed endemism), and \code{super}
+(super-endemic; both \code{pe_obs} and \code{pe_obs_alt} are highly significant).
 }
 \description{
-Given the results of \code{\link[=cpr_rand_test]{cpr_rand_test()}}, classifies phylogenetic endemism according to
-CANAPE scheme of Mishler 2014.
+Given the results of \code{\link[=cpr_rand_test]{cpr_rand_test()}}, classifies phylogenetic endemism
+according to CANAPE scheme of Mishler et al. 2014.
 }
 \details{
 For a summary of the classification scheme, see:

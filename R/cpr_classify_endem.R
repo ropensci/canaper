@@ -1,7 +1,7 @@
 #' Classify phylogenetic endemism
 #'
-#' Given the results of [cpr_rand_test()], classifies phylogenetic endemism according to
-#' CANAPE scheme of Mishler 2014.
+#' Given the results of [cpr_rand_test()], classifies phylogenetic endemism
+#' according to CANAPE scheme of Mishler et al. 2014.
 #'
 #' For a summary of the classification scheme, see:
 #' <http://biodiverse-analysis-software.blogspot.com/2014/11/canape-categorical-analysis-of-palaeo.html>
@@ -11,13 +11,15 @@
 #' - `pe_alt_obs_p_upper`: Upper *p*-value comparing observed phylogenetic endemism on alternate tree to random values
 #' - `rpe_obs_p_upper`: Upper *p*-value comparing observed relative phylogenetic endemism to random values
 #'
-#' @return Dataframe with column `endem_type` (character) added. Values of `endem_type` type
-#' include `paleo` (paleoendemic), `neo` (neoendemic), `not significant` (what it says), `mixed` (mixed endemism),
-#' and `super` (super-endemic; both `pe_obs` and `pe_obs_alt` are highly significant).
+#' @return Dataframe with column `endem_type` (character) added. Values of
+#'   `endem_type` type include `paleo` (paleoendemic), `neo` (neoendemic), `not
+#'   significant` (what it says), `mixed` (mixed endemism), and `super`
+#'   (super-endemic; both `pe_obs` and `pe_obs_alt` are highly significant).
 #'
-#' @source Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014) Phylogenetic measures
-#' of biodiversity and neo- and paleo-endemism in Australian Acacia.
-#' Nat Commun, 5: 4473. <https://doi.org/10.1038/ncomms5473>
+#' @source Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
+#'   Phylogenetic measures of biodiversity and neo- and paleo-endemism in
+#'   Australian Acacia. Nat Commun, 5: 4473.
+#'   <https://doi.org/10.1038/ncomms5473>
 #'
 #' @examples
 #' library(picante)
@@ -26,6 +28,16 @@
 #' cpr_classify_endem(rand_test)
 #' @export
 cpr_classify_endem <- function(df) {
+
+	# Check input
+	assertthat::assert_that(
+		inherits(df, "data.frame"),
+		msg = "'df' must be of class 'data.frame'")
+	assertthat::assert_that(
+		isTRUE(all(c("pe_obs_p_upper", "pe_alt_obs_p_upper", "rpe_obs_p_upper") %in% colnames(df))),
+		msg = "'df' must include the following columns: 'pe_obs_p_upper', 'pe_alt_obs_p_upper', 'rpe_obs_p_upper'"
+	)
+
 	dplyr::mutate(
 		df,
 		# Categorize endemism by CANAPE scheme
