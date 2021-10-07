@@ -36,10 +36,10 @@
 calc_biodiv_random <- function(comm, phy, phy_alt,
                                null_model = c("frequency", "richness", "independentswap", "trialswap"),
                                n_iterations = 1000, metrics) {
-  assertthat::assert_that(is.character(null_model))
+  assertthat::assert_that(assertthat::is.string(null_model))
   assertthat::assert_that(
     null_model %in% c("frequency", "richness", "independentswap", "trialswap"),
-    msg = "Null model may only be selected from 'frequency', 'richness', 'independentswap', or 'trialswap'"
+    msg = "'null_model' must be one of 'frequency', 'richness', 'independentswap', or 'trialswap'"
   )
 
   # Make sure names match between community and tree
@@ -232,6 +232,25 @@ get_ses <- function(random_vals, obs_vals, metric) {
 #' cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd")
 #' @export
 cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 100, n_iterations = 10000, metrics = c("pd", "rpd", "pe", "rpe")) {
+
+  # Check input
+  assertthat::assert_that(inherits(comm, "data.frame"),
+    msg = "'comm' must be of class 'data.frame'")
+  assertthat::assert_that(
+    is.list(phy) && inherits(phy, "phylo"),
+    msg = "'phy' must be a list of class 'phylo'")
+  assertthat::assert_that(assertthat::is.string(null_model))
+  assertthat::assert_that(
+    null_model %in% c("frequency", "richness", "independentswap", "trialswap"),
+    msg = "'null_model' must be one of 'frequency', 'richness', 'independentswap', or 'trialswap'"
+  )
+  assertthat::assert_that(assertthat::is.number(n_reps))
+  assertthat::assert_that(assertthat::is.number(n_iterations))
+  assertthat::assert_that(is.character(metrics))
+  assertthat::assert_that(
+    metrics %in% c("pd", "rpd", "pe", "rpe"),
+    msg = "'metrics' may only include 'pd', 'rpd', 'pe', or 'rpe'"
+  )
 
   # Match tips of tree and column names of community data frame:
   # Use only taxa that are in common between phylogeny and community
