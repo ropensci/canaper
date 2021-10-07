@@ -1,0 +1,52 @@
+#' Classify phylogenetic endemism
+#'
+#' Given the results of [cpr_rand_test()], classifies phylogenetic endemism according to
+#' CANAPE scheme of Mishler 2014.
+#'
+#' For a summary of the classification scheme, see:
+#' <http://biodiverse-analysis-software.blogspot.com/2014/11/canape-categorical-analysis-of-palaeo.html>
+#'
+#' @param df Input data frame. Must have the following columns:
+#' - `pe_obs_p_upper`: Upper *p*-value comparing observed phylogenetic endemism to random values
+#' - `pe_alt_obs_p_upper`: Upper *p*-value comparing observed phylogenetic endemism on alternate tree to random values
+#' - `rpe_obs_p_upper`: Upper *p*-value comparing observed relative phylogenetic endemism to random values
+#'
+#' @return Dataframe with column `endem_type` (character) added. Values of `endem_type` type
+#' include `paleo` (paleoendemic), `neo` (neoendemic), `not significant` (what it says), `mixed` (mixed endemism),
+#' and `super` (super-endemic; both `pe_obs` and `pe_obs_alt` are highly significant).
+#'
+#' @source Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014) Phylogenetic measures
+#' of biodiversity and neo- and paleo-endemism in Australian Acacia.
+#' Nat Commun, 5: 4473. <https://doi.org/10.1038/ncomms5473>
+#'
+#' @examples
+#' library(picante)
+#' data(phylocom)
+#' rand_test <- cpr_rand_test(phylocom$sample, phylocom$phy, metrics = c("pe", "rpe"))
+#' cpr_classify_endem(rand_test)
+#' @export
+cpr_classify_endem <- function(df) {
+	dplyr::mutate(
+		df,
+		# Categorize endemism by CANAPE scheme
+		# (here, PE_orig = pe_obs_p, PE_alt = pe_alt_obs_p, and RPE = rpe_obs_p)
+		#
+		# 1)    If either PE_orig or PE_alt are significantly high then we look for palaeo or neo endemism
+		#   a)    If RPE is significantly high then we have palaeo-endemism
+		#         (PE_orig is consistently higher than PE_alt across the random realisations)
+		#   b)    Else if RPE is significantly low then we have neo-endemism
+		#         (PE_orig is consistently lower than PE_alt across the random realisations)
+		#     c)    Else we have mixed age endemism in which case
+		#        i)    If both PE_orig and PE_alt are highly significant (p<0.01) then we
+		#              have super endemism (high in both palaeo and neo)
+		#        ii)   Else we have mixed (some mixture of palaeo, neo and non endemic)
+		# 2)    Else if neither PE_orig or PE_alt are significantly high then we have a non-endemic cell
+		endem_type = dplyr::case_when(
+			(pe_obs_p_upper >= 0.95 | pe_alt_obs_p_upper >= 0.95) & rpe_obs_p_upper >= 0.975 ~ "paleo",
+			(pe_obs_p_upper >= 0.95 | pe_alt_obs_p_upper >= 0.95) & rpe_obs_p_lower >= 0.975 ~ "neo",
+			pe_obs_p_upper >= 0.99 | pe_alt_obs_p_upper >= 0.99 ~ "super",
+			pe_obs_p_upper >= 0.95 | pe_alt_obs_p_upper >= 0.95 ~ "mixed",
+			TRUE ~ "not significant"
+		)
+	)
+}
