@@ -14,7 +14,7 @@ calc_biodiv_random(
 )
 }
 \arguments{
-\item{comm}{Dataframe or matrix; input community matrix with communities as rows
+\item{comm}{Dataframe or matrix; input community matrix with communities (sites) as rows
 and species as columns, including row names and column names.}
 
 \item{phy}{Input phylogeny with total branch length scaled to 1}

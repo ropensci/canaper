@@ -7,7 +7,7 @@
 \format{
 A list with two elements:
 \describe{
-\item{phy}{Phylogeny of Australian \emph{Acacia} (list of class "DNAbin"). Tip
+\item{phy}{Phylogeny of Australian \emph{Acacia} (list of class "phylo"). Tip
 labels are specific epithet, except for the outgroup, which includes genus
 and specific epithet. Includes 508 ingroup taxa (genus \emph{Acacia}) and two
 outgroup taxa.}
@@ -31,6 +31,7 @@ Dataset of Australian \emph{Acacia} from Mishler et al. 2014 (Nat. Comm.)
 }
 \examples{
 # Example phylogeny
+library(ape)
 acacia$phy
 # Example community
 acacia$comm[1:5,1:5]

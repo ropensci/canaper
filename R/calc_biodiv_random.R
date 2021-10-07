@@ -2,7 +2,7 @@
 #'
 #' For description of metrics available, see \code{\link{cpr_rand_test}()}
 #'
-#' @param comm Dataframe or matrix; input community matrix with communities as rows
+#' @param comm Dataframe or matrix; input community matrix with communities (sites) as rows
 #' and species as columns, including row names and column names.
 #' @param phy Input phylogeny with total branch length scaled to 1
 #' @param phy_alt Alternative phylogeny where all branches are of equal length, scaled to 1
