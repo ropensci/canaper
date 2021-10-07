@@ -5,18 +5,24 @@
 \title{Extract standard effect size (and other related statistics) for a single
 diversity metric given random values and observed values of the metric}
 \usage{
-get_ses(random_vals, obs_vals, metric)
+get_ses(
+  random_vals,
+  obs_vals,
+  metric = c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")
+)
 }
 \arguments{
-\item{random_vals}{List of list of vectors. Each list of vectors is a biodiversity metric measured on a
-random community, in the same order as the rows in the input community.}
+\item{random_vals}{List of list of vectors. Each list of vectors is a
+biodiversity metric measured on a random community, in the same order as
+the rows in the input community.}
 
-\item{obs_vals}{Observed values of the biodiversity metric}
+\item{obs_vals}{Numeric vector; observed values of the biodiversity metric}
 
-\item{metric}{Name of the metric ("mpd", "mntd", "mpd_morph", "mntd_morph", "pd", "pe", or "rpe")}
+\item{metric}{Character vector of length 1; Name of the metric ("pd",
+"pd_alt", "rpd", "pe", "pe_alt", "rpe")}
 }
 \value{
-Tibble
+Dataframe
 }
 \description{
 Extract standard effect size (and other related statistics) for a single

@@ -1,12 +1,14 @@
 #' Extract standard effect size (and other related statistics) for a single
 #' diversity metric given random values and observed values of the metric
 #'
-#' @param random_vals List of list of vectors. Each list of vectors is a biodiversity metric measured on a
-#' random community, in the same order as the rows in the input community.
-#' @param obs_vals Observed values of the biodiversity metric
-#' @param metric Name of the metric ("mpd", "mntd", "mpd_morph", "mntd_morph", "pd", "pe", or "rpe")
+#' @param random_vals List of list of vectors. Each list of vectors is a
+#'   biodiversity metric measured on a random community, in the same order as
+#'   the rows in the input community.
+#' @param obs_vals Numeric vector; observed values of the biodiversity metric
+#' @param metric Character vector of length 1; Name of the metric ("pd",
+#'   "pd_alt", "rpd", "pe", "pe_alt", "rpe")
 #'
-#' @return Tibble
+#' @return Dataframe
 #' @examples
 #' \dontrun{
 #' library(picante)
@@ -31,16 +33,44 @@
 #' }
 #' @autoglobal
 #' @keywords internal
-get_ses <- function(random_vals, obs_vals, metric) {
+get_ses <- function(random_vals, obs_vals, metric = c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")) {
+	# Check input
+	assertthat::assert_that(is.list(random_vals))
+	assertthat::assert_that(is.numeric(obs_vals))
+	assertthat::assert_that(assertthat::not_empty(obs_vals))
 	assertthat::assert_that(assertthat::is.string(metric))
-
+	assertthat::assert_that(assertthat::not_empty(metric))
 	assertthat::assert_that(
 		all(metric %in% c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")),
-		msg = "Biodiversity metrics may only be selected from 'pd', 'rpd', 'pe', or 'rpe'"
+		msg = "Biodiversity metrics may only be selected from 'pd', 'pd_alt', 'rpd', 'pe', 'pe_alt', or 'rpe'"
+	)
+	assertthat::assert_that(
+		!isTRUE(is.null(names(obs_vals))),
+		msg = "'obs_vals' must be named"
+		)
+
+	# Make sure the names match between `obs_vals` and `random_values`
+	assertthat::assert_that(
+	all(
+		purrr::map_lgl(
+			random_vals,
+			~isTRUE(all.equal(names(.[[1]]), names(obs_vals)))
+		)
+	),
+	msg = "Names don't match between 'obs_vals' and 'random_vals'"
 	)
 
+	# Transpose the list so we can extract the selected metric
 	random_vals_trans <- purrr::transpose(random_vals)
 
+	# Make sure the observed metric is among the random values
+	assertthat::assert_that(
+		metric %in% names(random_vals_trans),
+		msg = "Observed metric missing from random values"
+	)
+
+	# Make a tibble with the random values as list-column,
+	# and observed values for the selected metric
 	results <-
 		tibble::tibble(
 			random_values = purrr::map(
