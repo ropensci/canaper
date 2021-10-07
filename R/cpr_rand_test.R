@@ -107,7 +107,6 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 
 	# Calculate biodiversity metrics for random communities
 	# set up a progress bar
-	# pb <- progress::progress_bar$new(total = 100)
 	pb <- progressr::progressor(steps = n_reps)
 
 	random_vals <-
