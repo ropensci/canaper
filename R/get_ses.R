@@ -33,9 +33,9 @@
 #' }
 #' @autoglobal
 #'
-#' @srrstats {G1.4} uses roxygen
+#' @srrstats {G1.4, G1.4a} uses roxygen
 #'
-#' @keywords internal
+#' @noRd
 get_ses <- function(random_vals, obs_vals, metric = c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")) {
 	# Check input
 	assertthat::assert_that(is.list(random_vals))

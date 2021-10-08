@@ -6,15 +6,15 @@
 #' vector be removed before making comparison?
 #'
 #' @return Number of times x is higher than y
-#' @keywords internal
 #'
-#' @srrstats {G1.4} uses roxygen
+#' @srrstats {G1.4, G1.4a} uses roxygen
 #'
 #' @examples
 #' \dontrun{
 #' count_higher(4, 1:10)
 #' count_higher(4, c(1:10, NaN))
 #' }
+#' @noRd
 count_higher <- function(x, y, na.rm = TRUE) {
   assertthat::assert_that(assertthat::is.number(x))
   assertthat::assert_that(is.numeric(y))
@@ -38,15 +38,15 @@ count_higher <- function(x, y, na.rm = TRUE) {
 #' vector be removed before making comparison?
 #'
 #' @return Number of times x is lower than y
-#' @keywords internal
 #'
-#' @srrstats {G1.4} uses roxygen
+#' @srrstats {G1.4, G1.4a} uses roxygen
 #'
 #' @examples
 #' \dontrun{
 #' count_lower(4, 1:10)
 #' count_lower(NaN, 1:10)
 #' }
+#' @noRd
 count_lower <- function(x, y, na.rm = TRUE) {
   assertthat::assert_that(assertthat::is.number(x))
   assertthat::assert_that(is.numeric(y))

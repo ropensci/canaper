@@ -29,9 +29,9 @@
 #' calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = c("pd", "pe", "pd_alt"))
 #' }
 #'
-#' @srrstats {G1.4} uses roxygen
+#' @srrstats {G1.4, G1.4a} uses roxygen
 #'
-#' @keywords internal
+#' @noRd
 calc_biodiv_random <- function(comm, phy, phy_alt,
 															 null_model = c("frequency", "richness", "independentswap", "trialswap"),
 															 n_iterations = 1000, metrics = c("pd", "rpd", "pe", "rpe")) {
