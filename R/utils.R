@@ -7,6 +7,9 @@
 #'
 #' @return Number of times x is higher than y
 #' @keywords internal
+#'
+#' @srrstats {G1.4} uses roxygen
+#'
 #' @examples
 #' \dontrun{
 #' count_higher(4, 1:10)
@@ -36,6 +39,9 @@ count_higher <- function(x, y, na.rm = TRUE) {
 #'
 #' @return Number of times x is lower than y
 #' @keywords internal
+#'
+#' @srrstats {G1.4} uses roxygen
+#'
 #' @examples
 #' \dontrun{
 #' count_lower(4, 1:10)

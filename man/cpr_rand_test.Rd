@@ -69,21 +69,9 @@ The observed value of the biodiversity metric(s) will be calculated, then
 compared against a set of random communities. Various statistics are calculated
 from the comparison (see \strong{Value} below).
 }
-\details{
-The biodiversity metrics available for analysis include:
-\itemize{
-\item \code{pd}: Phylogenetic diversity (Faith 1992)
-\item \code{rpd}: Relative phylogenetic diversity (Mishler et al 2014)
-\item \code{pe}: Phylogenetic endemism (Rosauer et al 2009)
-\item \code{rpe}: Relative phylogenetic endemism (Mishler et al 2014)
-}
-
-The default method for generating random communities is the independent swap
-method of Gotelli (2000), which randomizes the community matrix while maintaining
-species occurrence frequency and sample species richness.
-}
 \examples{
 library(picante)
 data(phylocom)
 cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd")
+
 }

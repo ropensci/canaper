@@ -37,4 +37,5 @@ library(picante)
 data(phylocom)
 rand_test <- cpr_rand_test(phylocom$sample, phylocom$phy, metrics = c("pe", "rpe"))
 cpr_classify_endem(rand_test)
+
 }

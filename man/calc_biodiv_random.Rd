@@ -48,5 +48,6 @@ phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length)
 phy$edge.length <- phy$edge.length / sum(phy$edge.length)
 calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = c("pd", "pe", "pd_alt"))
 }
+
 }
 \keyword{internal}

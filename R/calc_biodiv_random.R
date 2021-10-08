@@ -28,6 +28,9 @@
 #' phy$edge.length <- phy$edge.length / sum(phy$edge.length)
 #' calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = c("pd", "pe", "pd_alt"))
 #' }
+#'
+#' @srrstats {G1.4} uses roxygen
+#'
 #' @keywords internal
 calc_biodiv_random <- function(comm, phy, phy_alt,
 															 null_model = c("frequency", "richness", "independentswap", "trialswap"),

@@ -6,6 +6,7 @@
 #' For a summary of the classification scheme, see:
 #' <http://biodiverse-analysis-software.blogspot.com/2014/11/canape-categorical-analysis-of-palaeo.html>
 #'
+#' @srrstats {G1.3} defines terminology:
 #' @param df Input data frame. Must have the following columns:
 #' - `pe_obs_p_upper`: Upper *p*-value comparing observed phylogenetic endemism to random values
 #' - `pe_alt_obs_p_upper`: Upper *p*-value comparing observed phylogenetic endemism on alternate tree to random values
@@ -16,6 +17,7 @@
 #'   significant` (what it says), `mixed` (mixed endemism), and `super`
 #'   (super-endemic; both `pe_obs` and `pe_obs_alt` are highly significant).
 #'
+#' @srrstats {G1.0} Cites original ref:
 #' @source Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
 #'   Phylogenetic measures of biodiversity and neo- and paleo-endemism in
 #'   Australian Acacia. Nat Commun, 5: 4473. \doi{10.1038/ncomms5473}
@@ -25,6 +27,8 @@
 #' data(phylocom)
 #' rand_test <- cpr_rand_test(phylocom$sample, phylocom$phy, metrics = c("pe", "rpe"))
 #' cpr_classify_endem(rand_test)
+#'
+#' @srrstats {G1.4} uses roxygen
 #' @export
 cpr_classify_endem <- function(df) {
 

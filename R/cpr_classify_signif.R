@@ -4,6 +4,7 @@
 #' of a biodiversity metric. The null hypothesis is that observed value does not
 #' lie in the extreme of the random values.
 #'
+#' @srrstats {G1.3} defines terminology:
 #' @details  For metrics like `pe`, you probably want to consider a one-sided
 #' hypothesis testing values in the upper extreme (i.e., we are interested in
 #' areas that have higher than expected endemism). For this, you would set
@@ -36,6 +37,9 @@
 #' data(phylocom)
 #' rand_test <- cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd")
 #' cpr_classify_signif(rand_test, "pd")
+#'
+#' @srrstats {G1.4} uses roxygen
+#'
 #' @export
 cpr_classify_signif <- function(df, metric, one_sided = FALSE, upper = FALSE) {
 

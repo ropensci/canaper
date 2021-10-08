@@ -51,4 +51,5 @@ library(picante)
 data(phylocom)
 rand_test <- cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd")
 cpr_classify_signif(rand_test, "pd")
+
 }

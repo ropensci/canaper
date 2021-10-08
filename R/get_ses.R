@@ -32,6 +32,9 @@
 #' get_ses(random_vals, pe_obs, "pe")
 #' }
 #' @autoglobal
+#'
+#' @srrstats {G1.4} uses roxygen
+#'
 #' @keywords internal
 get_ses <- function(random_vals, obs_vals, metric = c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")) {
 	# Check input

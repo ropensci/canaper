@@ -23,7 +23,11 @@ knitr::opts_chunk$set(
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 <!-- badges: end -->
 
-The goal of canaper is to enable [categorical analysis of neo- and paleo-endemism (CANAPE)](https://doi.org/10.1038/ncomms5473) in R.
+```{r srr-tags-intro, eval = FALSE, echo = FALSE}
+#' @srrstats {G1.1} documents novelty
+```
+
+The goal of canaper is to enable [categorical analysis of neo- and paleo-endemism (CANAPE)](https://doi.org/10.1038/ncomms5473) in **R**. This is the first implementation in **R** of this analysis, which was previously only available in [Biodiverse](http://shawnlaffan.github.io/biodiverse/).
 
 ## Important note
 

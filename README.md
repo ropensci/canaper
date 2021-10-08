@@ -14,7 +14,10 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 <!-- badges: end -->
 
 The goal of canaper is to enable [categorical analysis of neo- and
-paleo-endemism (CANAPE)](https://doi.org/10.1038/ncomms5473) in R.
+paleo-endemism (CANAPE)](https://doi.org/10.1038/ncomms5473) in **R**.
+This is the first implementation in **R** of this analysis, which was
+previously only available in
+[Biodiverse](http://shawnlaffan.github.io/biodiverse/).
 
 ## Important note
 

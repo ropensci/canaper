@@ -4,6 +4,7 @@
 #' compared against a set of random communities. Various statistics are calculated
 #' from the comparison (see **Value** below).
 #'
+#' @srrstats {G1.3} defines terminology:
 #' The biodiversity metrics available for analysis include:
 #' - `pd`: Phylogenetic diversity (Faith 1992)
 #' - `rpd`: Relative phylogenetic diversity (Mishler et al 2014)
@@ -26,6 +27,7 @@
 #' @param metrics Character vector; names of biodiversity metrics to calculate.
 #' May include one or more of: `pd`, `rpd`, `pe`, `rpe`.
 #'
+#' @srrstats {G1.3} defines terminology:
 #' @return Dataframe. For each of the biodiversity metrics, the following 9 columns
 #' will be produced:
 #' - `*_obs`: Observed value
@@ -41,6 +43,7 @@
 #' So if you included `pd` in `metrics`, the output columns would include `pd_obs`,
 #' `pd_obs_c_lower`, etc...
 #'
+#' @srrstats {G1.0} Cites original refs:
 #' @source Faith DP (1992) Conservation evaluation and phylogenetic diversity.
 #'  Biological Conservation, 61:1–10. \doi{10.1016/0006-3207(92)91201-3}
 #' @source Gotelli, N.J. (2000) Null Model Analysis of Species Co-Occurrence
@@ -56,6 +59,9 @@
 #' library(picante)
 #' data(phylocom)
 #' cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd")
+#'
+#' @srrstats {G1.4} uses roxygen
+#'
 #' @export
 cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 100, n_iterations = 10000, metrics = c("pd", "rpd", "pe", "rpe")) {
 

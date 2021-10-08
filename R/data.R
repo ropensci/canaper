@@ -17,6 +17,9 @@
 #' @source Mishler, B., Knerr, N., González-Orozco, C. et al. Phylogenetic
 #' measures of biodiversity and neo- and paleo-endemism in Australian Acacia.
 #' Nat Commun 5, 4473 (2014). \doi{10.1038/ncomms5473}
+#'
+#' @srrstats {G1.4} uses roxygen
+#'
 #' @examples
 #' # Example phylogeny
 #' library(ape)
@@ -30,6 +33,8 @@
 #' Character vector with names corresponding to significance levels
 #' and values corresponding to color codes.
 #'
+#' @srrstats {G1.4} uses roxygen
+#'
 #' @examples
 #' cpr_signif_cols
 #' \dontrun{
@@ -41,6 +46,8 @@
 #'
 #' Character vector with names corresponding to endemism types
 #' and values corresponding to color codes.
+#'
+#' @srrstats {G1.4} uses roxygen
 #'
 #' @examples
 #' cpr_endem_cols
