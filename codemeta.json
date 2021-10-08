@@ -6,7 +6,7 @@
   "@type": "SoftwareSourceCode",
   "identifier": "canaper",
   "description": "Provides functions to conduct categorical analysis of neo- and paleo-endemism (CANAPE).",
-  "name": "canaper: Categorical Analysis of Neo- And Paleo-endemism",
+  "name": "canaper: Categorical Analysis of Neo- And Paleo-Endemism",
   "codeRepository": "https://github.com/joelnitta/canaper",
   "issueTracker": "https://github.com/joelnitta/canaper/issues",
   "license": "https://spdx.org/licenses/MIT",
@@ -261,7 +261,7 @@
     }
   ],
   "releaseNotes": "https://github.com/joelnitta/canaper/blob/master/NEWS.md",
-  "fileSize": "115.481KB",
+  "fileSize": "129.679KB",
   "contIntegration": "https://github.com/joelnitta/canaper/actions",
   "developmentStatus": "https://www.repostatus.org/#wip",
   "keywords": [
