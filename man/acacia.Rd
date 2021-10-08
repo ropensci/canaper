@@ -21,7 +21,7 @@ a species was observed in a grid cell.}
 \source{
 Mishler, B., Knerr, N., González-Orozco, C. et al. Phylogenetic
 measures of biodiversity and neo- and paleo-endemism in Australian Acacia.
-Nat Commun 5, 4473 (2014). \url{https://doi.org/10.1038/ncomms5473}
+Nat Commun 5, 4473 (2014). \doi{10.1038/ncomms5473}
 }
 \usage{
 acacia

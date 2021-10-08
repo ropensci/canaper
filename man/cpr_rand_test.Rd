@@ -5,18 +5,18 @@
 \title{Run a randomization analysis for one or more biodiversity metrics}
 \source{
 Faith DP (1992) Conservation evaluation and phylogenetic diversity.
-Biological Conservation, 61:1–10. \url{https://doi.org/10.1016/0006-3207(92)91201-3}
+Biological Conservation, 61:1–10. \doi{10.1016/0006-3207(92)91201-3}
 
 Gotelli, N.J. (2000) Null Model Analysis of Species Co-Occurrence
-Patterns. Ecology, 81: 2606-2621. \url{https://doi.org/10.1890/0012-9658(2000)081[2606:NMAOSC]2.0.CO;2}
+Patterns. Ecology, 81: 2606-2621. \doi{10.1890/0012-9658(2000)081[2606:NMAOSC]2.0.CO;2}
 
 Rosauer, D., Laffan, S.W., Crisp, M.D., Donnellan, S.C. and Cook, L.G. (2009)
 Phylogenetic endemism: a new approach for identifying geographical concentrations of
-evolutionary history. Molecular Ecology, 18: 4061-4072. https://doi.org/10.1111/j.1365-294X.2009.04311.x
+evolutionary history. Molecular Ecology, 18: 4061-4072. \doi{10.1111/j.1365-294X.2009.04311.x}
 
 Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014) Phylogenetic measures
 of biodiversity and neo- and paleo-endemism in Australian Acacia.
-Nat Commun, 5: 4473. \url{https://doi.org/10.1038/ncomms5473}
+Nat Commun, 5: 4473. \doi{10.1038/ncomms5473}
 }
 \usage{
 cpr_rand_test(

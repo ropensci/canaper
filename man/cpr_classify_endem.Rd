@@ -6,8 +6,7 @@
 \source{
 Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
 Phylogenetic measures of biodiversity and neo- and paleo-endemism in
-Australian Acacia. Nat Commun, 5: 4473.
-\url{https://doi.org/10.1038/ncomms5473}
+Australian Acacia. Nat Commun, 5: 4473. \doi{10.1038/ncomms5473}
 }
 \usage{
 cpr_classify_endem(df)
