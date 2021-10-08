@@ -11,9 +11,7 @@ Description: Provides functions to conduct categorical analysis of neo- and pale
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Roxygen: list(
-    markdown = TRUE,
-    roclets = c("collate", "namespace", "rd", "roxyglobals::global_roclet"))
+Roxygen: list(markdown = TRUE, roclets = c ("collate", "namespace", "rd", "roxyglobals::global_roclet", "srr::srr_stats_roclet"))
 RoxygenNote: 7.1.2
 URL: https://github.com/joelnitta/canaper
 BugReports: https://github.com/joelnitta/canaper/issues
