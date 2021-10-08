@@ -71,6 +71,7 @@
 cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 100, n_iterations = 10000, metrics = c("pd", "rpd", "pe", "rpe")) {
 
 	# Check input
+	#' @srrstats {G2.1} Check input types and lengths
 	assertthat::assert_that(inherits(comm, "data.frame") | inherits(comm, "matrix"),
 													msg = "'comm' must be of class 'data.frame' or 'matrix'")
 	assertthat::assert_that(

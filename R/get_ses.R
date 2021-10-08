@@ -38,7 +38,9 @@
 #'
 #' @noRd
 get_ses <- function(random_vals, obs_vals, metric = c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")) {
+
 	# Check input
+	#' @srrstats {G2.1} Check input types
 	assertthat::assert_that(is.list(random_vals))
 	assertthat::assert_that(is.numeric(obs_vals))
 	assertthat::assert_that(assertthat::not_empty(obs_vals))

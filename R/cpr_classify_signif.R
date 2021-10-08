@@ -47,6 +47,7 @@
 cpr_classify_signif <- function(df, metric, one_sided = FALSE, upper = FALSE) {
 
   # Check input
+  #' @srrstats {G2.1} Check input types and lengths
   #' @srrstats {G2.0, G2.2} assert input length is 1
   assertthat::assert_that(assertthat::is.string(metric))
   assertthat::assert_that(assertthat::noNA(metric))

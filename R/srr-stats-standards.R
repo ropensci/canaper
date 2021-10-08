@@ -19,7 +19,7 @@
 # @srrstatsNA {G1.6} *Software should include code necessary to compare performance claims with alternative implementations in other R packages.*
 # @srrstats {G2.0} *Implement assertions on lengths of inputs, particularly through asserting that inputs expected to be single- or multi-valued are indeed so.*
 # @srrstats {G2.0a} Provide explicit secondary documentation of any expectations on lengths of inputs
-#' @srrstatsTODO {G2.1} *Implement assertions on types of inputs (see the initial point on nomenclature above).*
+# @srrstats {G2.1} *Implement assertions on types of inputs (see the initial point on nomenclature above).*
 # @srrstats {G2.1a} *Provide explicit secondary documentation of expectations on data types of all vector inputs.*
 # @srrstats {G2.2} *Appropriately prohibit or restrict submission of multivariate input to parameters expected to be univariate.*
 #' @srrstatsTODO {G2.3} *For univariate character input:*

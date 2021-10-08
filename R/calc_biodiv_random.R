@@ -43,6 +43,7 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
 															 null_model = c("frequency", "richness", "independentswap", "trialswap"),
 															 n_iterations = 1000, metrics = c("pd", "rpd", "pe", "rpe")) {
 	# Check input
+	#' @srrstats {G2.1} Check input types
 	assertthat::assert_that(inherits(comm, "data.frame") | inherits(comm, "matrix"),
 													msg = "'comm' must be of class 'data.frame' or 'matrix'")
 	assertthat::assert_that(
