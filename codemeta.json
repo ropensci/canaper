@@ -257,11 +257,11 @@
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
-      "version": ">= 2.10"
+      "version": ">= 3.5.0"
     }
   ],
   "releaseNotes": "https://github.com/joelnitta/canaper/blob/master/NEWS.md",
-  "fileSize": "129.679KB",
+  "fileSize": "148.563KB",
   "contIntegration": "https://github.com/joelnitta/canaper/actions",
   "developmentStatus": "https://www.repostatus.org/#wip",
   "keywords": [
