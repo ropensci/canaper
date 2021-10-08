@@ -2,17 +2,23 @@
 #'
 #' For description of metrics available, see \code{\link{cpr_rand_test}()}
 #'
-#' @srrstats {G2.0a, G2.1a} Documents expectations on lengths, types of vector inputs
-#' @param comm Dataframe or matrix; input community matrix with communities (sites) as rows
-#' and species as columns, including row names and column names.
-#' @param phy List of class `phylo`; input phylogeny with total branch length scaled to 1
-#' @param phy_alt List of class `phylo`; alternative phylogeny where all branches are of equal length, scaled to 1
-#' @param n_iterations Numeric vector of length 1; Number of iterations to use when shuffling random community
-#' @param metrics Character vector; names of metrics to calculate
+#' @srrstats {G2.0a, G2.1a} Documents expectations on lengths, types of vector
+#'   inputs
+#' @param comm Dataframe or matrix; input community matrix with communities
+#'   (sites) as rows and species as columns, including row names and column
+#'   names.
+#' @param phy List of class `phylo`; input phylogeny with total branch length
+#'   scaled to 1
+#' @param phy_alt List of class `phylo`; alternative phylogeny where all
+#'   branches are of equal length, scaled to 1
+#' @param n_iterations Numeric vector of length 1; Number of iterations to use
+#'   when shuffling random community
+#' @param metrics Character vector; names of metrics to calculate. May include
+#'   one or more of: `pd`, `rpd`, `pe`, `rpe`.
 #'
 #' @return List of vectors. Each vector is a biodiversity metric measured on the
-#' random community, in the same order as the rows in the input community. Names
-#' of the list correspond to `metrics`.
+#'   random community, in the same order as the rows in the input community.
+#'   Names of the list correspond to `metrics`.
 #'
 #' @examples
 #' \dontrun{
@@ -57,7 +63,7 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
 	assertthat::assert_that(assertthat::noNA(n_iterations))
 	assertthat::assert_that(is.character(metrics))
 	assertthat::assert_that(
-		isTRUE(all(metrics %in% c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe"))),
+		isTRUE(all(metrics %in% c("pd", "rpd", "pe", "rpe"))),
 		msg = "'metrics' may only include 'pd', 'rpd', 'pe', or 'rpe'"
 	)
 	assertthat::assert_that(assertthat::noNA(metrics))

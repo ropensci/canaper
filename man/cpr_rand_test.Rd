@@ -29,8 +29,9 @@ cpr_rand_test(
 )
 }
 \arguments{
-\item{comm}{Dataframe or matrix; input community matrix with communities as
-rows and species as columns, including row names and column names.}
+\item{comm}{Dataframe or matrix; input community matrix with communities
+(sites) as rows and species as columns, including row names and column
+names.}
 
 \item{phy}{List of class \code{phylo}; input phylogeny.}
 
@@ -43,7 +44,7 @@ replicate.}
 
 \item{n_iterations}{Numeric vector of length 1; number of iterations to use
 when swapping occurrences to generate each random community; only used if
-\code{null_model} is 'independentswap' or 'trialswap'.}
+\code{null_model} is \code{independentswap} or \code{trialswap}.}
 
 \item{metrics}{Character vector; names of biodiversity metrics to calculate.
 May include one or more of: \code{pd}, \code{rpd}, \code{pe}, \code{rpe}.}

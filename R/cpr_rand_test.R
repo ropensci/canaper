@@ -12,12 +12,14 @@
 #' - `rpe`: Relative phylogenetic endemism (Mishler et al 2014)
 #'
 #' The default method for generating random communities is the independent swap
-#' method of Gotelli (2000), which randomizes the community matrix while maintaining
-#' species occurrence frequency and sample species richness.
+#' method of Gotelli (2000), which randomizes the community matrix while
+#' maintaining species occurrence frequency and sample species richness.
 #'
-#' @srrstats {G2.0a, G2.1a} Documents expectations on lengths, types of vector inputs
-#' @param comm Dataframe or matrix; input community matrix with communities as
-#'   rows and species as columns, including row names and column names.
+#' @srrstats {G2.0a, G2.1a} Documents expectations on lengths, types of vector
+#'   inputs
+#' @param comm Dataframe or matrix; input community matrix with communities
+#'   (sites) as rows and species as columns, including row names and column
+#'   names.
 #' @param phy List of class `phylo`; input phylogeny.
 #' @param null_model Character vector of length 1; name of null model to use.
 #'   Must choose from `frequency`, `richness`, `independentswap`, or
@@ -26,7 +28,7 @@
 #'   replicate.
 #' @param n_iterations Numeric vector of length 1; number of iterations to use
 #'   when swapping occurrences to generate each random community; only used if
-#'   `null_model` is 'independentswap' or 'trialswap'.
+#'   `null_model` is `independentswap` or `trialswap`.
 #' @param metrics Character vector; names of biodiversity metrics to calculate.
 #'   May include one or more of: `pd`, `rpd`, `pe`, `rpe`.
 #'

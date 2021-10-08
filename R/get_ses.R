@@ -6,8 +6,8 @@
 #'   biodiversity metric measured on a random community, in the same order as
 #'   the rows in the input community.
 #' @param obs_vals Numeric vector; observed values of the biodiversity metric
-#' @param metric Character vector of length 1; Name of the metric ("pd",
-#'   "pd_alt", "rpd", "pe", "pe_alt", "rpe")
+#' @param metric Character vector of length 1; Name of the metric (`pd`,
+#'   `pd_alt`, `rpd`, `pe`, `pe_alt`, `rpe`)
 #'
 #' @return Dataframe
 #' @examples
