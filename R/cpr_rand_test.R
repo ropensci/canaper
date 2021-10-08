@@ -15,17 +15,20 @@
 #' method of Gotelli (2000), which randomizes the community matrix while maintaining
 #' species occurrence frequency and sample species richness.
 #'
-#' @param comm Dataframe or matrix; input community matrix with communities as rows
-#' and species as columns, including row names and column names.
+#' @srrstats {G2.0a, G2.1a} Documents expectations on lengths, types of vector inputs
+#' @param comm Dataframe or matrix; input community matrix with communities as
+#'   rows and species as columns, including row names and column names.
 #' @param phy List of class `phylo`; input phylogeny.
-#' @param null_model Name of null model to use. Must choose from `frequency`, `richness`,
-#' `independentswap`, or `trialswap.` For details, see [picante::randomizeMatrix()].
-#' @param n_reps Number of random communities to replicate.
-#' @param n_iterations Number of iterations to use when swapping occurrences to
-#' generate each random community; only used if `null_model` is 'independentswap'
-#' or 'trialswap'.
+#' @param null_model Character vector of length 1; name of null model to use.
+#'   Must choose from `frequency`, `richness`, `independentswap`, or
+#'   `trialswap.` For details, see [picante::randomizeMatrix()].
+#' @param n_reps Numeric vector of length 1; number of random communities to
+#'   replicate.
+#' @param n_iterations Numeric vector of length 1; number of iterations to use
+#'   when swapping occurrences to generate each random community; only used if
+#'   `null_model` is 'independentswap' or 'trialswap'.
 #' @param metrics Character vector; names of biodiversity metrics to calculate.
-#' May include one or more of: `pd`, `rpd`, `pe`, `rpe`.
+#'   May include one or more of: `pd`, `rpd`, `pe`, `rpe`.
 #'
 #' @srrstats {G1.3} defines terminology:
 #' @return Dataframe. For each of the biodiversity metrics, the following 9 columns
@@ -71,6 +74,7 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 	assertthat::assert_that(
 		is.list(phy) && inherits(phy, "phylo"),
 		msg = "'phy' must be a list of class 'phylo'")
+	#' @srrstats {G2.0, G2.2} assert input length is 1
 	assertthat::assert_that(assertthat::is.string(null_model))
 	assertthat::assert_that(
 		isTRUE(null_model %in% c("frequency", "richness", "independentswap", "trialswap")),
@@ -79,6 +83,7 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 	assertthat::assert_that(assertthat::noNA(null_model))
 	assertthat::assert_that(assertthat::is.number(n_reps))
 	assertthat::assert_that(assertthat::noNA(n_reps))
+	#' @srrstats {G2.0, G2.2} assert input length is 1
 	assertthat::assert_that(assertthat::is.number(n_iterations))
 	assertthat::assert_that(assertthat::noNA(n_iterations))
 	assertthat::assert_that(is.character(metrics))

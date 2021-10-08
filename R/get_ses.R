@@ -1,6 +1,7 @@
 #' Extract standard effect size (and other related statistics) for a single
 #' diversity metric given random values and observed values of the metric
 #'
+#' @srrstats {G2.0a, G2.1a} Documents expectations on lengths, types of vector inputs
 #' @param random_vals List of list of vectors. Each list of vectors is a
 #'   biodiversity metric measured on a random community, in the same order as
 #'   the rows in the input community.

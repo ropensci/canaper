@@ -9,18 +9,20 @@ cpr_classify_signif(df, metric, one_sided = FALSE, upper = FALSE)
 \arguments{
 \item{df}{Input data frame.}
 
-\item{metric}{Selected metric to classify significance. May choose from
-\code{pd} (phylogenetic diversity), \code{rpd} (relative phylogenetic diversity),
-\code{pe} (phylogenentic endemism), \code{rpe} (relative phylogenetic endemism).}
+\item{metric}{Character vector of length 1; selected metric to classify
+significance. May choose from \code{pd} (phylogenetic diversity), \code{rpd}
+(relative phylogenetic diversity), \code{pe} (phylogenentic endemism), \code{rpe}
+(relative phylogenetic endemism).}
 
-\item{one_sided}{Logical; is the null hypothesis one-sided? If \code{TRUE}, values
-will be classified as significant if they are in \strong{either} the top 5\% \strong{or}
-bottom 5\%. If \code{FALSE}, values will be classified as significant if they
-are in the top 2.5\% or bottom 2.5\%, combined.}
+\item{one_sided}{Logical vector of length 1; is the null hypothesis
+one-sided? If \code{TRUE}, values will be classified as significant if they are
+in \strong{either} the top 5\% \strong{or} bottom 5\%. If \code{FALSE}, values will be
+classified as significant if they are in the top 2.5\% or bottom 2.5\%,
+combined.}
 
-\item{upper}{Logical; only applies if \code{one_sided} is \code{TRUE}. If \code{TRUE},
-values in the top 5\% will be classified as significant. If \code{FALSE}, values
-in the bottom 5\% will be classified as significant.}
+\item{upper}{Logical vector of length 1; only applies if \code{one_sided} is
+\code{TRUE}. If \code{TRUE}, values in the top 5\% will be classified as significant.
+If \code{FALSE}, values in the bottom 5\% will be classified as significant.}
 }
 \value{
 Dataframe with column added for stastistical significance of the
@@ -41,10 +43,10 @@ lie in the extreme of the random values.
 For metrics like \code{pe}, you probably want to consider a one-sided
 hypothesis testing values in the upper extreme (i.e., we are interested in
 areas that have higher than expected endemism). For this, you would set
-\verb{one_sided = TRUE, upper = TRUE}. For metrics like \code{pd}, you
-probably want to consider a two-sided hypothesis (i.e., we are interested in
-areas that are either more diverse or less than diverse than expected at
-random). For this, set \code{one_sided = FALSE}.
+\verb{one_sided = TRUE, upper = TRUE}. For metrics like \code{pd}, you probably want
+to consider a two-sided hypothesis (i.e., we are interested in areas that
+are either more diverse or less than diverse than expected at random). For
+this, set \code{one_sided = FALSE}.
 }
 \examples{
 library(picante)

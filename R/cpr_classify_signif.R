@@ -6,31 +6,34 @@
 #'
 #' @srrstats {G1.3} defines terminology:
 #' @details  For metrics like `pe`, you probably want to consider a one-sided
-#' hypothesis testing values in the upper extreme (i.e., we are interested in
-#' areas that have higher than expected endemism). For this, you would set
-#' `one_sided = TRUE, upper = TRUE`. For metrics like `pd`, you
-#' probably want to consider a two-sided hypothesis (i.e., we are interested in
-#' areas that are either more diverse or less than diverse than expected at
-#' random). For this, set `one_sided = FALSE`.
+#'   hypothesis testing values in the upper extreme (i.e., we are interested in
+#'   areas that have higher than expected endemism). For this, you would set
+#'   `one_sided = TRUE, upper = TRUE`. For metrics like `pd`, you probably want
+#'   to consider a two-sided hypothesis (i.e., we are interested in areas that
+#'   are either more diverse or less than diverse than expected at random). For
+#'   this, set `one_sided = FALSE`.
 #'
+#' @srrstats {G2.0a, G2.1a} Documents expectations on lengths, types of vector inputs
 #' @param df  Input data frame.
-#' @param metric Selected metric to classify significance. May choose from
-#' `pd` (phylogenetic diversity), `rpd` (relative phylogenetic diversity),
-#' `pe` (phylogenentic endemism), `rpe` (relative phylogenetic endemism).
-#' @param one_sided Logical; is the null hypothesis one-sided? If `TRUE`, values
-#' will be classified as significant if they are in **either** the top 5% **or**
-#' bottom 5%. If `FALSE`, values will be classified as significant if they
-#' are in the top 2.5% or bottom 2.5%, combined.
-#' @param upper Logical; only applies if `one_sided` is `TRUE`. If `TRUE`,
-#' values in the top 5% will be classified as significant. If `FALSE`, values
-#' in the bottom 5% will be classified as significant.
+#' @param metric Character vector of length 1; selected metric to classify
+#'   significance. May choose from `pd` (phylogenetic diversity), `rpd`
+#'   (relative phylogenetic diversity), `pe` (phylogenentic endemism), `rpe`
+#'   (relative phylogenetic endemism).
+#' @param one_sided Logical vector of length 1; is the null hypothesis
+#'   one-sided? If `TRUE`, values will be classified as significant if they are
+#'   in **either** the top 5% **or** bottom 5%. If `FALSE`, values will be
+#'   classified as significant if they are in the top 2.5% or bottom 2.5%,
+#'   combined.
+#' @param upper Logical vector of length 1; only applies if `one_sided` is
+#'   `TRUE`. If `TRUE`, values in the top 5% will be classified as significant.
+#'   If `FALSE`, values in the bottom 5% will be classified as significant.
 #'
 #' @return Dataframe with column added for stastistical significance of the
-#' selected metric. The new column name is the name of the metric with
-#' `_signif` appendend. The new column is a character that may contain the
-#' following values, depending on the null hypothesis:
-#' - `< 0.01`, `< 0.025`, `> 0.975`, `> 0.99`, `not significant` (two-sided)
-#' - `< 0.01`, `< 0.05`, `> 0.99`, `> 0.95`, `not significant` (one-sided)
+#'   selected metric. The new column name is the name of the metric with
+#'   `_signif` appendend. The new column is a character that may contain the
+#'   following values, depending on the null hypothesis:
+#'   - `< 0.01`, `< 0.025`, `> 0.975`, `> 0.99`, `not significant` (two-sided)
+#'   - `< 0.01`, `< 0.05`, `> 0.99`, `> 0.95`, `not significant` (one-sided)
 #'
 #' @examples
 #' library(picante)
@@ -44,6 +47,7 @@
 cpr_classify_signif <- function(df, metric, one_sided = FALSE, upper = FALSE) {
 
   # Check input
+  #' @srrstats {G2.0, G2.2} assert input length is 1
   assertthat::assert_that(assertthat::is.string(metric))
   assertthat::assert_that(assertthat::noNA(metric))
   assertthat::assert_that(
@@ -77,8 +81,8 @@ cpr_classify_signif <- function(df, metric, one_sided = FALSE, upper = FALSE) {
     isTRUE(all(df[[paste0(metric, "_obs_p_upper")]] >= 0)),
     msg = "Values for percentage of times observed value was higher than random values should be between 0 and 1, inclusive"
   )
-  assertthat::assert_that(is.logical(one_sided))
-  assertthat::assert_that(is.logical(upper))
+  assertthat::assert_that(assertthat::is.flag(one_sided))
+  assertthat::assert_that(assertthat::is.flag(upper))
 
   if (!isTRUE(one_sided)) {
     signif <- dplyr::case_when(

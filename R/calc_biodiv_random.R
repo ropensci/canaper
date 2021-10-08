@@ -2,11 +2,12 @@
 #'
 #' For description of metrics available, see \code{\link{cpr_rand_test}()}
 #'
+#' @srrstats {G2.0a, G2.1a} Documents expectations on lengths, types of vector inputs
 #' @param comm Dataframe or matrix; input community matrix with communities (sites) as rows
 #' and species as columns, including row names and column names.
-#' @param phy Input phylogeny with total branch length scaled to 1
-#' @param phy_alt Alternative phylogeny where all branches are of equal length, scaled to 1
-#' @param n_iterations Number of iterations to use when shuffling random community
+#' @param phy List of class `phylo`; input phylogeny with total branch length scaled to 1
+#' @param phy_alt List of class `phylo`; alternative phylogeny where all branches are of equal length, scaled to 1
+#' @param n_iterations Numeric vector of length 1; Number of iterations to use when shuffling random community
 #' @param metrics Character vector; names of metrics to calculate
 #'
 #' @return List of vectors. Each vector is a biodiversity metric measured on the
@@ -44,12 +45,14 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
 	assertthat::assert_that(
 		is.list(phy_alt) && inherits(phy_alt, "phylo"),
 		msg = "'phy_alt' must be a list of class 'phylo'")
+	#' @srrstats {G2.0, G2.2} assert input length is 1
 	assertthat::assert_that(assertthat::is.string(null_model))
 	assertthat::assert_that(assertthat::noNA(null_model))
 	assertthat::assert_that(
 		isTRUE(null_model %in% c("frequency", "richness", "independentswap", "trialswap")),
 		msg = "'null_model' must be one of 'frequency', 'richness', 'independentswap', or 'trialswap'"
 	)
+	#' @srrstats {G2.0, G2.2} assert input length is 1
 	assertthat::assert_that(assertthat::is.number(n_iterations))
 	assertthat::assert_that(assertthat::noNA(n_iterations))
 	assertthat::assert_that(is.character(metrics))

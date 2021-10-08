@@ -29,19 +29,21 @@ cpr_rand_test(
 )
 }
 \arguments{
-\item{comm}{Dataframe or matrix; input community matrix with communities as rows
-and species as columns, including row names and column names.}
+\item{comm}{Dataframe or matrix; input community matrix with communities as
+rows and species as columns, including row names and column names.}
 
 \item{phy}{List of class \code{phylo}; input phylogeny.}
 
-\item{null_model}{Name of null model to use. Must choose from \code{frequency}, \code{richness},
-\code{independentswap}, or \code{trialswap.} For details, see \code{\link[picante:randomizeSample]{picante::randomizeMatrix()}}.}
+\item{null_model}{Character vector of length 1; name of null model to use.
+Must choose from \code{frequency}, \code{richness}, \code{independentswap}, or
+\code{trialswap.} For details, see \code{\link[picante:randomizeSample]{picante::randomizeMatrix()}}.}
 
-\item{n_reps}{Number of random communities to replicate.}
+\item{n_reps}{Numeric vector of length 1; number of random communities to
+replicate.}
 
-\item{n_iterations}{Number of iterations to use when swapping occurrences to
-generate each random community; only used if \code{null_model} is 'independentswap'
-or 'trialswap'.}
+\item{n_iterations}{Numeric vector of length 1; number of iterations to use
+when swapping occurrences to generate each random community; only used if
+\code{null_model} is 'independentswap' or 'trialswap'.}
 
 \item{metrics}{Character vector; names of biodiversity metrics to calculate.
 May include one or more of: \code{pd}, \code{rpd}, \code{pe}, \code{rpe}.}
