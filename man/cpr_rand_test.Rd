@@ -31,7 +31,8 @@ cpr_rand_test(
 \arguments{
 \item{comm}{Dataframe or matrix; input community matrix with communities
 (sites) as rows and species as columns, including row names and column
-names.}
+names. If matrix, column names must follow rules for dataframe (cannot
+start with a number, must be unique).}
 
 \item{phy}{List of class \code{phylo}; input phylogeny.}
 

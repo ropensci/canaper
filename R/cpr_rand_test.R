@@ -15,11 +15,18 @@
 #' method of Gotelli (2000), which randomizes the community matrix while
 #' maintaining species occurrence frequency and sample species richness.
 #'
+#' A minimum of 5 species and sites are required as input; fewer than that may
+#' cause the default method for generating random communities (independent swap)
+#' to enter an infinite loop. Besides, inferences on very small numbers of
+#' species and/or sites is not recommended generally.
+#'
 #' @srrstats {G2.0a, G2.1a, G2.3b} Documents expectations on lengths, types of vector
 #'   inputs, case-sensitivity
+#' @srrstats {G2.7} accept dataframe or matrix
 #' @param comm Dataframe or matrix; input community matrix with communities
 #'   (sites) as rows and species as columns, including row names and column
-#'   names.
+#'   names. If matrix, column names must follow rules for dataframe (cannot
+#'   start with a number, must be unique).
 #' @param phy List of class `phylo`; input phylogeny.
 #' @param null_model Character vector of length 1; name of null model to use.
 #'   Must choose from `frequency`, `richness`, `independentswap`, or
@@ -97,18 +104,35 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 	)
 	assertthat::assert_that(assertthat::noNA(metrics))
 
-	# Verify that at least 5 species and sites are present
-	# this could possibly be relaxed if https://github.com/skembel/picante/issues/26 gets fixed
-	assertthat::assert_that(nrow(comm) > 4, msg = "'comm' must include at least 5 species")
-	assertthat::assert_that(ncol(comm) > 4, msg = "'comm' must include at least 5 sites")
-	assertthat::assert_that(ape::Ntip(phy) > 4, msg = "'phy' must include at least 5 species")
-	assertthat::assert_that(assertthat::not_empty(comm))
+	#' @srrstats {G2.8} type conversion for matrix
+	# Convert comm to dataframe, check if column names are unchanged
+	if (inherits(comm, "matrix")) {
+		comm_df <- data.frame(comm)
+		assertthat::assert_that(
+			isTRUE(
+				all.equal(
+					colnames(comm),
+					colnames(comm_df)
+				)
+			),
+			msg = "Column names of 'comm' changed after conversion from matrix to dataframe. Do any column names start with a number? This is not allowed."
+		)
+		comm <- comm_df
+	}
 
 	# Match tips of tree and column names of community data frame:
 	# Use only taxa that are in common between phylogeny and community
 	subsetted_data <- picante::match.phylo.comm(phy = phy, comm = comm)
 	phy <- subsetted_data[["phy"]]
 	comm <- subsetted_data[["comm"]]
+
+	# Make sure at least one taxon matches between comm and phy
+	assertthat::assert_that(
+		isTRUE(
+			!is.null(phy) && !is.null(comm)
+			),
+		msg = "Tip names don't match between community and phylogeny"
+	)
 
 	assertthat::assert_that(
 		isTRUE(
@@ -119,6 +143,12 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 		),
 		msg = "Tip names don't match between community and phylogeny"
 	)
+
+	# Verify that at least 5 species and sites are present
+	assertthat::assert_that(ape::Ntip(phy) > 4, msg = "'phy' and 'comm' must share at least 5 species in common")
+	assertthat::assert_that(nrow(comm) > 4, msg = "'comm' must include at least 5 sites")
+	assertthat::assert_that(ncol(comm) > 4, msg = "'phy' and 'comm' must share at least 5 species in common")
+	assertthat::assert_that(assertthat::not_empty(comm))
 
 	# Make alternative tree with equal branch lengths
 	phy_alt <- phy
