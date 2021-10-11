@@ -12,7 +12,7 @@ cpr_classify_signif(df, metric, one_sided = FALSE, upper = FALSE)
 \item{metric}{Character vector of length 1; selected metric to classify
 significance. May choose from \code{pd} (phylogenetic diversity), \code{rpd}
 (relative phylogenetic diversity), \code{pe} (phylogenentic endemism), \code{rpe}
-(relative phylogenetic endemism).}
+(relative phylogenetic endemism) (case-sensitive).}
 
 \item{one_sided}{Logical vector of length 1; is the null hypothesis
 one-sided? If \code{TRUE}, values will be classified as significant if they are

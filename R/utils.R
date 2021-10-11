@@ -16,6 +16,8 @@
 #' }
 #' @noRd
 count_higher <- function(x, y, na.rm = TRUE) {
+
+  #' @srrstats {G2.1, G2.6} Check input types and lengths
   assertthat::assert_that(assertthat::is.number(x))
   assertthat::assert_that(is.numeric(y))
 
@@ -48,6 +50,8 @@ count_higher <- function(x, y, na.rm = TRUE) {
 #' }
 #' @noRd
 count_lower <- function(x, y, na.rm = TRUE) {
+
+  #' @srrstats {G2.1, G2.6} Check input types and lengths
   assertthat::assert_that(assertthat::is.number(x))
   assertthat::assert_that(is.numeric(y))
 

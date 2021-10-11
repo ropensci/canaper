@@ -33,7 +33,7 @@
 cpr_classify_endem <- function(df) {
 
 	# Check input
-	#' @srrstats {G2.1} Check input types
+	#' @srrstats {G2.1, G2.6} Check input types
 	assertthat::assert_that(
 		inherits(df, "data.frame"),
 		msg = "'df' must be of class 'data.frame'")

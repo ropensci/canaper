@@ -37,7 +37,7 @@ names.}
 
 \item{null_model}{Character vector of length 1; name of null model to use.
 Must choose from \code{frequency}, \code{richness}, \code{independentswap}, or
-\code{trialswap.} For details, see \code{\link[picante:randomizeSample]{picante::randomizeMatrix()}}.}
+\code{trialswap} (case-sensitive). For details, see \code{\link[picante:randomizeSample]{picante::randomizeMatrix()}}.}
 
 \item{n_reps}{Numeric vector of length 1; number of random communities to
 replicate.}
@@ -47,7 +47,7 @@ when swapping occurrences to generate each random community; only used if
 \code{null_model} is \code{independentswap} or \code{trialswap}.}
 
 \item{metrics}{Character vector; names of biodiversity metrics to calculate.
-May include one or more of: \code{pd}, \code{rpd}, \code{pe}, \code{rpe}.}
+May include one or more of: \code{pd}, \code{rpd}, \code{pe}, \code{rpe} (case-sensitive).}
 }
 \value{
 Dataframe. For each of the biodiversity metrics, the following 9 columns

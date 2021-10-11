@@ -2,8 +2,8 @@
 #'
 #' For description of metrics available, see \code{\link{cpr_rand_test}()}
 #'
-#' @srrstats {G2.0a, G2.1a} Documents expectations on lengths, types of vector
-#'   inputs
+#' @srrstats {G2.0a, G2.1a, G2.3b} Documents expectations on lengths, types of vector
+#'   inputs, case-sensitivity
 #' @param comm Dataframe or matrix; input community matrix with communities
 #'   (sites) as rows and species as columns, including row names and column
 #'   names.
@@ -14,7 +14,7 @@
 #' @param n_iterations Numeric vector of length 1; Number of iterations to use
 #'   when shuffling random community
 #' @param metrics Character vector; names of metrics to calculate. May include
-#'   one or more of: `pd`, `rpd`, `pe`, `rpe`.
+#'   one or more of: `pd`, `rpd`, `pe`, `rpe` (case-sensitive).
 #'
 #' @return List of vectors. Each vector is a biodiversity metric measured on the
 #'   random community, in the same order as the rows in the input community.
@@ -43,7 +43,7 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
 															 null_model = c("frequency", "richness", "independentswap", "trialswap"),
 															 n_iterations = 1000, metrics = c("pd", "rpd", "pe", "rpe")) {
 	# Check input
-	#' @srrstats {G2.1} Check input types
+	#' @srrstats {G2.1, G2.6} Check input types and lengths
 	assertthat::assert_that(inherits(comm, "data.frame") | inherits(comm, "matrix"),
 													msg = "'comm' must be of class 'data.frame' or 'matrix'")
 	assertthat::assert_that(
@@ -55,6 +55,7 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
 	#' @srrstats {G2.0, G2.2} assert input length is 1
 	assertthat::assert_that(assertthat::is.string(null_model))
 	assertthat::assert_that(assertthat::noNA(null_model))
+	#' @srrstats {G2.3, G2.3a} # univariate char input
 	assertthat::assert_that(
 		isTRUE(null_model %in% c("frequency", "richness", "independentswap", "trialswap")),
 		msg = "'null_model' must be one of 'frequency', 'richness', 'independentswap', or 'trialswap'"
@@ -63,6 +64,7 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
 	assertthat::assert_that(assertthat::is.number(n_iterations))
 	assertthat::assert_that(assertthat::noNA(n_iterations))
 	assertthat::assert_that(is.character(metrics))
+	#' @srrstats {G2.3, G2.3a} # univariate char input
 	assertthat::assert_that(
 		isTRUE(all(metrics %in% c("pd", "rpd", "pe", "rpe"))),
 		msg = "'metrics' may only include 'pd', 'rpd', 'pe', or 'rpe'"

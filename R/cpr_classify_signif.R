@@ -13,12 +13,13 @@
 #'   are either more diverse or less than diverse than expected at random). For
 #'   this, set `one_sided = FALSE`.
 #'
-#' @srrstats {G2.0a, G2.1a} Documents expectations on lengths, types of vector inputs
+#' @srrstats {G2.0a, G2.1a, G2.3b} Documents expectations on lengths, types of vector
+#'   inputs, case-sensitivity
 #' @param df  Input data frame.
 #' @param metric Character vector of length 1; selected metric to classify
 #'   significance. May choose from `pd` (phylogenetic diversity), `rpd`
 #'   (relative phylogenetic diversity), `pe` (phylogenentic endemism), `rpe`
-#'   (relative phylogenetic endemism).
+#'   (relative phylogenetic endemism) (case-sensitive).
 #' @param one_sided Logical vector of length 1; is the null hypothesis
 #'   one-sided? If `TRUE`, values will be classified as significant if they are
 #'   in **either** the top 5% **or** bottom 5%. If `FALSE`, values will be
@@ -47,10 +48,11 @@
 cpr_classify_signif <- function(df, metric, one_sided = FALSE, upper = FALSE) {
 
   # Check input
-  #' @srrstats {G2.1} Check input types and lengths
+  #' @srrstats {G2.1, G2.6} Check input types and lengths
   #' @srrstats {G2.0, G2.2} assert input length is 1
   assertthat::assert_that(assertthat::is.string(metric))
   assertthat::assert_that(assertthat::noNA(metric))
+  #' @srrstats {G2.3, G2.3a} # univariate char input
   assertthat::assert_that(
     metric %in% c("pd", "rpd", "pe", "rpe"),
     msg = "Biodiversity metrics may only be selected from 'pd', 'rpd', 'pe', or 'rpe'"

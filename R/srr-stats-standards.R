@@ -22,17 +22,17 @@
 # @srrstats {G2.1} *Implement assertions on types of inputs (see the initial point on nomenclature above).*
 # @srrstats {G2.1a} *Provide explicit secondary documentation of expectations on data types of all vector inputs.*
 # @srrstats {G2.2} *Appropriately prohibit or restrict submission of multivariate input to parameters expected to be univariate.*
-#' @srrstatsTODO {G2.3} *For univariate character input:*
-#' @srrstatsTODO {G2.3a} *Use `match.arg()` or equivalent where applicable to only permit expected values.*
-#' @srrstatsTODO {G2.3b} *Either: use `tolower()` or equivalent to ensure input of character parameters is not case dependent; or explicitly document that parameters are strictly case-sensitive.*
-#' @srrstatsTODO {G2.4} *Provide appropriate mechanisms to convert between different data types, potentially including:*
-#' @srrstatsTODO {G2.4a} *explicit conversion to `integer` via `as.integer()`*
-#' @srrstatsTODO {G2.4b} *explicit conversion to continuous via `as.numeric()`*
-#' @srrstatsTODO {G2.4c} *explicit conversion to character via `as.character()` (and not `paste` or `paste0`)*
-#' @srrstatsTODO {G2.4d} *explicit conversion to factor via `as.factor()`*
-#' @srrstatsTODO {G2.4e} *explicit conversion from factor via `as...()` functions*
-#' @srrstatsTODO {G2.5} *Where inputs are expected to be of `factor` type, secondary documentation should explicitly state whether these should be `ordered` or not, and those inputs should provide appropriate error or other routines to ensure inputs follow these expectations.*
-#' @srrstatsTODO {G2.6} *Software which accepts one-dimensional input should ensure values are appropriately pre-processed regardless of class structures.*
+# @srrstats {G2.3} *For univariate character input:*
+# @srrstats {G2.3a} *Use `match.arg()` or equivalent where applicable to only permit expected values.*
+# @srrstats {G2.3b} *Either: use `tolower()` or equivalent to ensure input of character parameters is not case dependent; or explicitly document that parameters are strictly case-sensitive.*
+# @srrstatsNA {G2.4} *Provide appropriate mechanisms to convert between different data types, potentially including:*
+# @srrstatsNA {G2.4a} *explicit conversion to `integer` via `as.integer()`*
+# @srrstatsNA {G2.4b} *explicit conversion to continuous via `as.numeric()`*
+# @srrstatsNA {G2.4c} *explicit conversion to character via `as.character()` (and not `paste` or `paste0`)*
+# @srrstatsNA {G2.4d} *explicit conversion to factor via `as.factor()`*
+# @srrstatsNA {G2.4e} *explicit conversion from factor via `as...()` functions*
+# @srrstatsNA {G2.5} *Where inputs are expected to be of `factor` type, secondary documentation should explicitly state whether these should be `ordered` or not, and those inputs should provide appropriate error or other routines to ensure inputs follow these expectations.*
+# @srrstats {G2.6} *Software which accepts one-dimensional input should ensure values are appropriately pre-processed regardless of class structures.*
 #' @srrstatsTODO {G2.7} *Software should accept as input as many of the above standard tabular forms as possible, including extension to domain-specific forms.*
 #' @srrstatsTODO {G2.8} *Software should provide appropriate conversion or dispatch routines as part of initial pre-processing to ensure that all other sub-functions of a package receive inputs of a single defined class or type.*
 #' @srrstatsTODO {G2.9} *Software should issue diagnostic messages for type conversion in which information is lost (such as conversion of variables from factor to character; standardisation of variable names; or removal of meta-data such as those associated with [`sf`-format](https://r-spatial.github.io/sf/) data) or added (such as insertion of variable or column names where none were provided).*
@@ -120,8 +120,15 @@ NULL
 #' for why each of these standards have been deemed not applicable.
 #'
 #' @srrstatsNA {G1.5} No peformance claims made in any other publications
-#' @srrstatsNA {G1.6} NO performance claims made with alternative implementations in other R packages
-#'
+#' @srrstatsNA {G1.6} No performance claims made with alternative implementations in other R packages
+#' @srrstatsNA {G2.4} All input types in user-facing functions is defined and subject to assertions
+#'   (will fail if input type is not as expected), so no conversions are needed.
+#' @srrstatsNA {G2.4a} no conversion to `integer` via `as.integer()` needed
+#' @srrstatsNA {G2.4b} no conversion to continuous via `as.numeric()` needed
+#' @srrstatsNA {G2.4c} no conversion to character via `as.character()` needed
+#' @srrstatsNA {G2.4d} no conversion to factor via `as.factor()` needed
+#' @srrstatsNA {G2.4e} no conversion from factor via `as...()` functions needed
+#' @srrstatsNA {G2.5} No factor input conversion needed
 #' @noRd
 NULL
 

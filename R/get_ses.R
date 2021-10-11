@@ -1,13 +1,14 @@
 #' Extract standard effect size (and other related statistics) for a single
 #' diversity metric given random values and observed values of the metric
 #'
-#' @srrstats {G2.0a, G2.1a} Documents expectations on lengths, types of vector inputs
+#' @srrstats {G2.0a, G2.1a, G2.3b} Documents expectations on lengths, types of vector
+#'   inputs, case-sensitivity
 #' @param random_vals List of list of vectors. Each list of vectors is a
 #'   biodiversity metric measured on a random community, in the same order as
 #'   the rows in the input community.
 #' @param obs_vals Numeric vector; observed values of the biodiversity metric
 #' @param metric Character vector of length 1; Name of the metric (`pd`,
-#'   `pd_alt`, `rpd`, `pe`, `pe_alt`, `rpe`)
+#'   `pd_alt`, `rpd`, `pe`, `pe_alt`, `rpe`) (case-sensitive).
 #'
 #' @return Dataframe
 #' @examples
@@ -40,12 +41,13 @@
 get_ses <- function(random_vals, obs_vals, metric = c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")) {
 
 	# Check input
-	#' @srrstats {G2.1} Check input types
+	#' @srrstats {G2.1, G2.6} Check input types
 	assertthat::assert_that(is.list(random_vals))
 	assertthat::assert_that(is.numeric(obs_vals))
 	assertthat::assert_that(assertthat::not_empty(obs_vals))
 	assertthat::assert_that(assertthat::is.string(metric))
 	assertthat::assert_that(assertthat::not_empty(metric))
+	#' @srrstats {G2.3, G2.3a} # univariate char input
 	assertthat::assert_that(
 		all(metric %in% c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")),
 		msg = "Biodiversity metrics may only be selected from 'pd', 'pd_alt', 'rpd', 'pe', 'pe_alt', or 'rpe'"
