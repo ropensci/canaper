@@ -16,6 +16,7 @@ RoxygenNote: 7.1.2
 URL: https://github.com/joelnitta/canaper
 BugReports: https://github.com/joelnitta/canaper/issues
 Imports: 
+    assertr,
     assertthat,
     dplyr,
     furrr,

@@ -8,6 +8,34 @@ colnames(comm_num_names) <- 1:dim(comm_num_names)[2]
 phy_num_names <- phylocom$phy
 phy_num_names$tip.label <- colnames(comm_num_names)
 
+# make comm with duplicated species names
+comm_dup_names <- phylocom$sample
+colnames(comm_dup_names)[2] <- "sp1"
+
+# make phy with duplicated species names
+phy_dup_names <- phylocom$phy
+phy_dup_names$tip.label[2] <- "sp1"
+
+# make comm with missing data
+comm_dup_names <- phylocom$sample
+colnames(comm_dup_names)[2] <- "sp1"
+
+# make comm with non-numeric data
+comm_non_numeric <- phylocom$sample
+comm_non_numeric[1,1] <- "a"
+
+# make comm with NA data
+comm_with_na <- phylocom$sample
+comm_with_na[1,1] <- NA
+
+# make comm with non vector data
+comm_with_nonvec <- data.frame(phylocom$sample)
+attributes(comm_with_nonvec[,1]) <- list(bar = "foo")
+
+# make comm with infinite data
+comm_with_infinite <- data.frame(phylocom$sample)
+comm_with_infinite[1,1] <- Inf
+
 test_that("Input is valid", {
    expect_error(
       cpr_rand_test(10, phylocom$phy, metrics = "pd"),
@@ -36,6 +64,35 @@ test_that("Input is valid", {
    expect_error(
       cpr_rand_test(comm_num_names, phy_num_names, metrics = "pd"),
       "Column names of 'comm' changed after conversion from matrix to dataframe\\. Do any column names start with a number"
+   )
+   expect_error(
+      cpr_rand_test(comm_dup_names, phylocom$phy, metrics = "pd"),
+      "Column names of 'comm' changed after conversion from matrix to dataframe\\. Do any column names start with a number"
+   )
+   expect_error(
+      cpr_rand_test(comm_non_numeric, phylocom$phy, metrics = "pd"),
+      "All columns of 'comm' must be numeric"
+   )
+   expect_error(
+      cpr_rand_test(comm_with_na, phylocom$phy, metrics = "pd"),
+      "No missing values allowed in 'comm'"
+   )
+   expect_error(
+      cpr_rand_test(phylocom$sample, phy_dup_names, metrics = "pd"),
+      "All tip labels in 'phy' must be unique"
+   )
+   #' @srrstats {G2.11} test for non-vector inputs
+   expect_false(
+      is.vector(comm_with_nonvec[,1])
+   )
+   expect_error(
+      cpr_rand_test(comm_with_nonvec, phylocom$phy, metrics = "pd"),
+      "All columns of 'comm' must be numeric"
+   )
+   #' @srrstats {G2.16} don't allow infinite values
+   expect_error(
+      cpr_rand_test(comm_with_infinite, phylocom$phy, metrics = "pd"),
+      "No infinite values allowed in 'comm'"
    )
 })
 

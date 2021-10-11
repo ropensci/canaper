@@ -63,6 +63,7 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
 	#' @srrstats {G2.0, G2.2} assert input length is 1
 	assertthat::assert_that(assertthat::is.number(n_iterations))
 	assertthat::assert_that(assertthat::noNA(n_iterations))
+	assertthat::assert_that(!is.infinite(n_iterations))
 	assertthat::assert_that(is.character(metrics))
 	#' @srrstats {G2.3, G2.3a} # univariate char input
 	assertthat::assert_that(
