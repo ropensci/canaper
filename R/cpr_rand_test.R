@@ -4,7 +4,6 @@
 #' compared against a set of random communities. Various statistics are calculated
 #' from the comparison (see **Value** below).
 #'
-#' @srrstats {G1.3} defines terminology:
 #' The biodiversity metrics available for analysis include:
 #' - `pd`: Phylogenetic diversity (Faith 1992)
 #' - `rpd`: Relative phylogenetic diversity (Mishler et al 2014)
@@ -20,13 +19,19 @@
 #' to enter an infinite loop. Besides, inferences on very small numbers of
 #' species and/or sites is not recommended generally.
 #'
+#' `comm` should only include integers >= 0; non-integer input will be converted
+#' to integer. The results are identical regardless of whether the input is
+#' abundance or presence-absence data (i.e., abundance weighting is not used).
+#'
 #' @srrstats {G2.0a, G2.1a, G2.3b} Documents expectations on lengths, types of vector
 #'   inputs, case-sensitivity
 #' @srrstats {G2.7} accept dataframe or matrix
 #' @param comm Dataframe or matrix; input community matrix with communities
 #'   (sites) as rows and species as columns, including row names and column
 #'   names. If matrix, column names must follow rules for dataframe (cannot
-#'   start with a number, must be unique).
+#'   start with a number, must be unique). Values of each cell are the
+#'   presence/absence (0 or 1) or number of individuals (abundance) of each
+#'   species in each community (site).
 #' @param phy List of class `phylo`; input phylogeny.
 #' @param null_model Character vector of length 1; name of null model to use.
 #'   Must choose from `frequency`, `richness`, `independentswap`, or
@@ -39,7 +44,7 @@
 #' @param metrics Character vector; names of biodiversity metrics to calculate.
 #'   May include one or more of: `pd`, `rpd`, `pe`, `rpe` (case-sensitive).
 #'
-#' @srrstats {G1.3} defines terminology:
+#' @srrstats {G1.3} defines terminology (also in 'details'):
 #' @return Dataframe. For each of the biodiversity metrics, the following 9 columns
 #' will be produced:
 #' - `*_obs`: Observed value
@@ -155,6 +160,17 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 		isTRUE(all(assertr::is_uniq(phy$tip.label, allow.na = FALSE))),
 		msg = "All tip labels in 'phy' must be unique"
 		)
+
+	# Convert all values in comm to integer
+	comm <- dplyr::mutate(comm, dplyr::across(dplyr::everything(), as.integer))
+
+	# Check that all values in comm are >= 0
+	assertthat::assert_that(
+		assertr::assert(
+			comm, function(x) all(purrr::map_lgl(x, ~magrittr::is_weakly_greater_than(.x, 0))), dplyr::everything(),
+			success_fun = assertr::success_logical, error_fun = assertr::error_logical),
+		msg = "No negative values allowed in 'comm'"
+	)
 
 	# Match tips of tree and column names of community data frame:
 	# Use only taxa that are in common between phylogeny and community

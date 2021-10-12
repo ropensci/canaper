@@ -32,7 +32,9 @@ cpr_rand_test(
 \item{comm}{Dataframe or matrix; input community matrix with communities
 (sites) as rows and species as columns, including row names and column
 names. If matrix, column names must follow rules for dataframe (cannot
-start with a number, must be unique).}
+start with a number, must be unique). Values of each cell are the
+presence/absence (0 or 1) or number of individuals (abundance) of each
+species in each community (site).}
 
 \item{phy}{List of class \code{phylo}; input phylogeny.}
 
@@ -72,6 +74,28 @@ So if you included \code{pd} in \code{metrics}, the output columns would include
 The observed value of the biodiversity metric(s) will be calculated, then
 compared against a set of random communities. Various statistics are calculated
 from the comparison (see \strong{Value} below).
+}
+\details{
+The biodiversity metrics available for analysis include:
+\itemize{
+\item \code{pd}: Phylogenetic diversity (Faith 1992)
+\item \code{rpd}: Relative phylogenetic diversity (Mishler et al 2014)
+\item \code{pe}: Phylogenetic endemism (Rosauer et al 2009)
+\item \code{rpe}: Relative phylogenetic endemism (Mishler et al 2014)
+}
+
+The default method for generating random communities is the independent swap
+method of Gotelli (2000), which randomizes the community matrix while
+maintaining species occurrence frequency and sample species richness.
+
+A minimum of 5 species and sites are required as input; fewer than that may
+cause the default method for generating random communities (independent swap)
+to enter an infinite loop. Besides, inferences on very small numbers of
+species and/or sites is not recommended generally.
+
+\code{comm} should only include integers >= 0; non-integer input will be converted
+to integer. The results are identical regardless of whether the input is
+abundance or presence-absence data (i.e., abundance weighting is not used).
 }
 \examples{
 library(picante)

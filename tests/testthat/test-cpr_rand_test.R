@@ -36,6 +36,10 @@ attributes(comm_with_nonvec[,1]) <- list(bar = "foo")
 comm_with_infinite <- data.frame(phylocom$sample)
 comm_with_infinite[1,1] <- Inf
 
+# make comm with negative data
+comm_with_negative <- data.frame(phylocom$sample)
+comm_with_negative[1,1] <- -10
+
 #' @srrstats {G5.2, G5.2a, G5.2b} tests failure if input is not valid and checks warning messages
 test_that("Input is valid", {
    expect_error(
@@ -79,8 +83,12 @@ test_that("Input is valid", {
       "No missing values allowed in 'comm'"
    )
    expect_error(
-      cpr_rand_test(phylocom$sample, phy_dup_names, metrics = "pd"),
-      "All tip labels in 'phy' must be unique"
+      cpr_rand_test(comm_with_na, phylocom$phy, metrics = "pd"),
+      "No missing values allowed in 'comm'"
+   )
+   expect_error(
+      cpr_rand_test(comm_with_negative, phylocom$phy, metrics = "pd"),
+      "No negative values allowed in 'comm'"
    )
    #' @srrstats {G2.11} test for non-vector inputs
    expect_false(
