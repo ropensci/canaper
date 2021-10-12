@@ -147,6 +147,18 @@
   "softwareRequirements": [
     {
       "@type": "SoftwareApplication",
+      "identifier": "assertr",
+      "name": "assertr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=assertr"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "assertthat",
       "name": "assertthat",
       "provider": {
@@ -261,7 +273,7 @@
     }
   ],
   "releaseNotes": "https://github.com/joelnitta/canaper/blob/master/NEWS.md",
-  "fileSize": "148.563KB",
+  "fileSize": "170.316KB",
   "contIntegration": "https://github.com/joelnitta/canaper/actions",
   "developmentStatus": "https://www.repostatus.org/#wip",
   "keywords": [
