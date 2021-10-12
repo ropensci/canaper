@@ -40,6 +40,9 @@ comm_with_infinite[1,1] <- Inf
 comm_with_negative <- phylocom$sample
 comm_with_negative[1,1] <- -10
 
+# make presence-absence community
+comm_pa <- apply(phylocom$sample, 2, function(x) ifelse(x > 0, 1, 0))
+
 #' @srrstats {G5.2, G5.2a, G5.2b} tests failure if input is not valid and checks warning messages
 test_that("Input is valid", {
    expect_error(
@@ -103,6 +106,39 @@ test_that("Input is valid", {
       cpr_rand_test(comm_with_infinite, phylocom$phy, metrics = "pd"),
       "No infinite values allowed in 'comm'"
    )
+})
+
+test_that("Results are same regardless of presence/absence or abundance input", {
+   # pd
+   set.seed(123)
+   res_abun_pd <- cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd")
+   set.seed(123)
+   res_pa_pd <- cpr_rand_test(comm_pa, phylocom$phy, metrics = "pd")
+   expect_equal(res_abun_pd, res_pa_pd)
+   # pe
+   set.seed(123)
+   res_abun_pe <- cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pe")
+   set.seed(123)
+   res_pa_pe <- cpr_rand_test(comm_pa, phylocom$phy, metrics = "pe")
+   expect_equal(res_abun_pe, res_pa_pe)
+   # rpd
+   set.seed(123)
+   res_abun_rpd <- cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "rpd")
+   set.seed(123)
+   res_pa_rpd <- cpr_rand_test(comm_pa, phylocom$phy, metrics = "rpd")
+   expect_equal(res_abun_rpd, res_pa_rpd)
+   # rpe
+   set.seed(123)
+   res_abun_rpe <- cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "rpe")
+   set.seed(123)
+   res_pa_rpe <- cpr_rand_test(comm_pa, phylocom$phy, metrics = "rpe")
+   expect_equal(res_abun_rpe, res_pa_rpe)
+   # all
+   set.seed(123)
+   res_abun <- cpr_rand_test(phylocom$sample, phylocom$phy)
+   set.seed(123)
+   res_pa <- cpr_rand_test(comm_pa, phylocom$phy)
+   expect_equal(res_abun, res_pa)
 })
 
 test_that("Output is formatted as expected", {
