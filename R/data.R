@@ -30,7 +30,7 @@
 
 #' Test community matrix and phylogeny
 #'
-#' Test data from [Biodiverse](https://github.com/shawnlaffan/biodiverse)
+#' Fictional data for testing purposes from [Biodiverse](https://github.com/shawnlaffan/biodiverse/tree/master/data).
 #'
 #' @format A list with two elements:
 #' \describe{

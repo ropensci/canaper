@@ -20,7 +20,7 @@ a species was observed in a grid cell.}
 biod
 }
 \description{
-Test data from \href{https://github.com/shawnlaffan/biodiverse}{Biodiverse}
+Fictional data for testing purposes from \href{https://github.com/shawnlaffan/biodiverse/tree/master/data}{Biodiverse}.
 }
 \examples{
 # Example phylogeny
