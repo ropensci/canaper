@@ -248,6 +248,7 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 	}
 
 	if ("rpd" %in% metrics) {
+		if (!exists("pd_obs")) pd_obs <- phyloregion::PD(comm_sparse, phy)
 		pd_alt_obs <- phyloregion::PD(comm_sparse, phy_alt)
 		ses_pd_alt <- get_ses(random_vals, pd_alt_obs, "pd_alt")
 		rpd_obs <- pd_obs / pd_alt_obs
@@ -260,6 +261,7 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 	}
 
 	if ("rpe" %in% metrics) {
+		if (!exists("pe_obs")) pe_obs <- phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
 		pe_alt_obs <- phyloregion::phylo_endemism(comm_sparse, phy_alt, weighted = TRUE)
 		ses_pe_alt <- get_ses(random_vals, pe_alt_obs, "pe_alt")
 		rpe_obs <- pe_obs / pe_alt_obs

@@ -129,12 +129,14 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
 	if ("pd" %in% metrics) pd <- phyloregion::PD(random_comm_sparse, phy)
 	# pd_alt is inferred by rpd
 	if ("rpd" %in% metrics) {
+		if (is.null(pd)) pd <- phyloregion::PD(random_comm_sparse, phy)
 		pd_alt <- phyloregion::PD(random_comm_sparse, phy_alt)
 		rpd <- pd / pd_alt
 	}
 	# pe_alt is inferred by rpe
 	if ("pe" %in% metrics) pe <- phyloregion::phylo_endemism(random_comm_sparse, phy, weighted = TRUE)
 	if ("rpe" %in% metrics) {
+		if (is.null(pe)) pe <- phyloregion::phylo_endemism(random_comm_sparse, phy, weighted = TRUE)
 		pe_alt <- phyloregion::phylo_endemism(random_comm_sparse, phy_alt, weighted = TRUE)
 		rpe <- pe / pe_alt
 	}

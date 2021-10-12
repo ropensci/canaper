@@ -49,3 +49,19 @@ test_that("Input is valid", {
 		"alternative phylogeny not rescaled to total length 1"
 	)
 })
+
+test_that("Selected metric shows up in output", {
+	expect_named(calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = "pd"), "pd")
+	expect_named(calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = "pe"), "pe")
+	expect_named(calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = "rpd"), c("pd", "pd_alt", "rpd"), ignore.order = TRUE)
+	expect_named(calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = "rpe"), c("pe", "pe_alt", "rpe"), ignore.order = TRUE)
+	expect_named(
+		calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = c("rpd", "rpe")),
+		c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe"), ignore.order = TRUE
+	)
+	expect_named(
+		calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = c("pd", "pe")),
+		c("pd", "pe"),
+		ignore.order = TRUE
+	)
+})
