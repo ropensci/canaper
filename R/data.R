@@ -28,6 +28,29 @@
 #' acacia$comm[1:5,1:5]
 "acacia"
 
+#' Test community matrix and phylogeny
+#'
+#' Test data from [Biodiverse](https://github.com/shawnlaffan/biodiverse)
+#'
+#' @format A list with two elements:
+#' \describe{
+#'   \item{phy}{Phylogeny with 31 tips}
+#'   \item{comm}{Community matrix with 513 sites and 31 species.
+#'   Data are counts, i.e., the number of times
+#'   a species was observed in a grid cell.}
+#' }
+#' @source [Biodiverse](https://github.com/shawnlaffan/biodiverse)
+#'
+#' @srrstats {G1.4} uses roxygen
+#' @srrstats {G5.1} dataset is available (and documented)
+#' @examples
+#' # Example phylogeny
+#' library(ape)
+#' biod$phy
+#' # Example community
+#' biod$comm[1:5,1:5]
+"biod"
+
 #' Color palette for plotting results of randomization test
 #'
 #' Character vector with names corresponding to significance levels
