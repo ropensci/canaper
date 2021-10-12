@@ -66,66 +66,66 @@ count_lower <- function(x, y, na.rm = TRUE) {
   sum((x < y))
 }
 
-#' Version of `<=` that allows for modifying tolerance of equality test (`all.equal()`)
+#' Version of `<` that allows for modifying tolerance of equality test (`all.equal()`)
 #'
-#' Non-vectorized version. Is `x` lesser than or equal to `y`?
-#'
-#' @srrstats {G3.0} Uses appropriate tolerances for approximate equality
-#' @param x Numeric vector of lenth 1
-#' @param y Numeric vector of lenth 1
-#' @return Logical vector of length 1
-#' @noRd
-lesser_or_equal_single <- function(x, y) {
-  #' @srrstats {G2.1, G2.6} Check input types and lengths
-  assertthat::assert_that(assertthat::is.number(x))
-  assertthat::assert_that(assertthat::is.number(y))
-  isTRUE(all.equal(x, y)) | (x < y)
-}
-
-#' Version of `<=` that allows for modifying tolerance of equality test (`all.equal()`)
-#'
-#' Vectorized version. Is `x` lesser than or equal to `y`?
-#'
-#' @srrstats {G3.0} Uses appropriate tolerances for approximate equality
-#' @param x Numeric vector
-#' @param y Numeric vector
-#' @return Logical vector
-#' @noRd
-`%<=%` <- function(x,y) {
-  #' @srrstats {G2.1, G2.6} Check input types
-  assertthat::assert_that(is.numeric(x))
-  assertthat::assert_that(is.numeric(y))
-  purrr::map2_lgl(x, y, lesser_or_equal_single)
-}
-
-#' Version of `>=` that allows for modifying tolerance of equality test (`all.equal()`)
-#'
-#' Non-vectorized version. Is `x` greater than or equal to `y`?
+#' Non-vectorized version. Is `x` lesser than `y`?
 #'
 #' @srrstats {G3.0} Uses appropriate tolerances for approximate equality
 #' @param x Numeric vector of length 1
 #' @param y Numeric vector of length 1
 #' @return Logical vector of length 1
 #' @noRd
-greater_or_equal_single <- function(x, y) {
+lesser_than_single <- function(x, y) {
   #' @srrstats {G2.1, G2.6} Check input types and lengths
   assertthat::assert_that(assertthat::is.number(x))
   assertthat::assert_that(assertthat::is.number(y))
-  isTRUE(all.equal(x, y)) | (x > y)
+  !isTRUE(all.equal(x, y)) && (x < y)
 }
 
-#' Version of `>=` that allows for modifying tolerance of equality test (`all.equal()`)
+#' Version of `<` that allows for modifying tolerance of equality test (`all.equal()`)
 #'
-#' Vectorized version. Is `x` greater than or equal to `y`?
+#' Vectorized version. Is `x` lesser than `y`?
 #'
 #' @srrstats {G3.0} Uses appropriate tolerances for approximate equality
 #' @param x Numeric vector
 #' @param y Numeric vector
 #' @return Logical vector
 #' @noRd
-`%>=%` <- function(x,y) {
+`%lesser%` <- function(x,y) {
   #' @srrstats {G2.1, G2.6} Check input types
   assertthat::assert_that(is.numeric(x))
   assertthat::assert_that(is.numeric(y))
-  purrr::map2_lgl(x, y, greater_or_equal_single)
+  purrr::map2_lgl(x, y, lesser_than_single)
+}
+
+#' Version of `>` that allows for modifying tolerance of equality test (`all.equal()`)
+#'
+#' Non-vectorized version. Is `x` greater than `y`?
+#'
+#' @srrstats {G3.0} Uses appropriate tolerances for approximate equality
+#' @param x Numeric vector of length 1
+#' @param y Numeric vector of length 1
+#' @return Logical vector of length 1
+#' @noRd
+greater_than_single <- function(x, y) {
+  #' @srrstats {G2.1, G2.6} Check input types and lengths
+  assertthat::assert_that(assertthat::is.number(x))
+  assertthat::assert_that(assertthat::is.number(y))
+  !isTRUE(all.equal(x, y)) && (x > y)
+}
+
+#' Version of `>` that allows for modifying tolerance of equality test (`all.equal()`)
+#'
+#' Vectorized version. Is `x` greater than `y`?
+#'
+#' @srrstats {G3.0} Uses appropriate tolerances for approximate equality
+#' @param x Numeric vector
+#' @param y Numeric vector
+#' @return Logical vector
+#' @noRd
+`%greater%` <- function(x,y) {
+  #' @srrstats {G2.1, G2.6} Check input types
+  assertthat::assert_that(is.numeric(x))
+  assertthat::assert_that(is.numeric(y))
+  purrr::map2_lgl(x, y, greater_than_single)
 }

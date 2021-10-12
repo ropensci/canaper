@@ -59,10 +59,10 @@ cpr_classify_endem <- function(df) {
 		# 2)    Else if neither PE_orig or PE_alt are significantly high then we have a non-endemic cell
 		#' @srrstats {G3.0} use appropriate tolerances for approximate equality (see utils.R)
 		endem_type = dplyr::case_when(
-			(pe_obs_p_upper %>=% 0.95 | pe_alt_obs_p_upper %>=% 0.95) & rpe_obs_p_upper %>=% 0.975 ~ "paleo",
-			(pe_obs_p_upper %>=% 0.95 | pe_alt_obs_p_upper %>=% 0.95) & rpe_obs_p_lower %>=% 0.975 ~ "neo",
-			pe_obs_p_upper %>=% 0.99 | pe_alt_obs_p_upper %>=% 0.99 ~ "super",
-			pe_obs_p_upper %>=% 0.95 | pe_alt_obs_p_upper %>=% 0.95 ~ "mixed",
+			(pe_obs_p_upper %greater% 0.95 | pe_alt_obs_p_upper %greater% 0.95) & rpe_obs_p_upper %greater% 0.975 ~ "paleo",
+			(pe_obs_p_upper %greater% 0.95 | pe_alt_obs_p_upper %greater% 0.95) & rpe_obs_p_lower %greater% 0.975 ~ "neo",
+			pe_obs_p_upper %greater% 0.99 | pe_alt_obs_p_upper %greater% 0.99 ~ "super",
+			pe_obs_p_upper %greater% 0.95 | pe_alt_obs_p_upper %greater% 0.95 ~ "mixed",
 			TRUE ~ "not significant"
 		)
 	)
