@@ -18,7 +18,8 @@ reference:
 - title: "Data"
   desc: "Datasets included in this package"
 - contents:
-  - starts_with("acacia|biod")
+  - acacia
+  - biod
 - title: "Color palettes"
   desc: "Palettes for plotting classification results"
 - contents:
