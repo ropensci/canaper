@@ -33,11 +33,11 @@ comm_with_nonvec <- data.frame(phylocom$sample)
 attributes(comm_with_nonvec[,1]) <- list(bar = "foo")
 
 # make comm with infinite data
-comm_with_infinite <- data.frame(phylocom$sample)
+comm_with_infinite <- phylocom$sample
 comm_with_infinite[1,1] <- Inf
 
 # make comm with negative data
-comm_with_negative <- data.frame(phylocom$sample)
+comm_with_negative <- phylocom$sample
 comm_with_negative[1,1] <- -10
 
 #' @srrstats {G5.2, G5.2a, G5.2b} tests failure if input is not valid and checks warning messages
