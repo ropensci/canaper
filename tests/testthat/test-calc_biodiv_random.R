@@ -50,6 +50,17 @@ test_that("Input is valid", {
 	)
 })
 
+test_that("Output is formatted as expected", {
+	#' @srrstats {G5.3} check that output has no missing values
+	expect_true(
+		all(
+			assertr::not_na(
+				unlist(calc_biodiv_random(comm, phy, phy_alt, "independentswap"))
+			)
+		)
+	)
+})
+
 test_that("Selected metric shows up in output", {
 	expect_named(calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = "pd"), "pd")
 	expect_named(calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = "pe"), "pe")

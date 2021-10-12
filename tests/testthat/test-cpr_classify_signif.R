@@ -106,4 +106,14 @@ test_that("Output is formatted as expected", {
 			)
 		)
 	)
+	#' @srrstats {G5.3} check that output has no missing values
+	expect_true(
+		assertr::assert(
+			cpr_classify_signif(
+				data.frame(pd_obs_p_lower = c(0.0001), pd_obs_p_upper = c(0.99)),
+				metric = "pd"),
+			assertr::not_na, dplyr::everything(),
+			success_fun = assertr::success_logical, error_fun = assertr::error_logical
+		)
+	)
 })

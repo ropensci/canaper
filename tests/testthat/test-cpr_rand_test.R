@@ -145,4 +145,11 @@ test_that("Output is formatted as expected", {
    expect_s3_class(
       cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd"),
       "data.frame")
+   #' @srrstats {G5.3} check that output has no missing values
+   expect_true(
+      assertr::assert(
+         cpr_rand_test(phylocom$sample, phylocom$phy), assertr::not_na, dplyr::everything(),
+         success_fun = assertr::success_logical, error_fun = assertr::error_logical
+      )
+   )
 })
