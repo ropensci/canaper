@@ -22,7 +22,7 @@ test_that("Input is valid", {
 	)
 	expect_error(
 		calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = "pg"),
-		"'metrics' may only include 'pd', 'rpd', 'pe', or 'rpe'"
+		"'metrics' may only include 'pd', 'rpd', 'pe', 'rpe', 'pd_alt', 'pe_alt'"
 	)
 	expect_error(
 		calc_biodiv_random(comm, phy, phy_alt, "indepswap", metrics = "pd"),
@@ -62,6 +62,11 @@ test_that("Selected metric shows up in output", {
 	expect_named(
 		calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = c("pd", "pe")),
 		c("pd", "pe"),
+		ignore.order = TRUE
+	)
+	expect_named(
+		calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = c("pd", "pe", "pd_alt")),
+		c("pd", "pe", "pd_alt"),
 		ignore.order = TRUE
 	)
 })

@@ -42,7 +42,7 @@
 #' @noRd
 calc_biodiv_random <- function(comm, phy, phy_alt,
 															 null_model = c("frequency", "richness", "independentswap", "trialswap"),
-															 n_iterations = 1000, metrics = c("pd", "rpd", "pe", "rpe")) {
+															 n_iterations = 1000, metrics = c("pd", "rpd", "pe", "rpe", "pd_alt", "pe_alt")) {
 	# Check input
 	#' @srrstats {G2.1, G2.6} Check input types and lengths
 	assertthat::assert_that(inherits(comm, "data.frame") | inherits(comm, "matrix"),
@@ -68,8 +68,8 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
 	assertthat::assert_that(is.character(metrics))
 	#' @srrstats {G2.3, G2.3a} # univariate char input
 	assertthat::assert_that(
-		isTRUE(all(metrics %in% c("pd", "rpd", "pe", "rpe"))),
-		msg = "'metrics' may only include 'pd', 'rpd', 'pe', or 'rpe'"
+		isTRUE(all(metrics %in% c("pd", "rpd", "pe", "rpe", "pd_alt", "pe_alt"))),
+		msg = "'metrics' may only include 'pd', 'rpd', 'pe', 'rpe', 'pd_alt', 'pe_alt'"
 	)
 	assertthat::assert_that(assertthat::noNA(metrics))
 
@@ -127,17 +127,19 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
 
 	# - calculate selected metrics
 	if ("pd" %in% metrics) pd <- phyloregion::PD(random_comm_sparse, phy)
+	if ("pd_alt" %in% metrics) pd_alt <- phyloregion::PD(random_comm_sparse, phy_alt)
 	# pd_alt is inferred by rpd
 	if ("rpd" %in% metrics) {
 		if (is.null(pd)) pd <- phyloregion::PD(random_comm_sparse, phy)
-		pd_alt <- phyloregion::PD(random_comm_sparse, phy_alt)
+		if (is.null(pd_alt)) pd_alt <- phyloregion::PD(random_comm_sparse, phy_alt)
 		rpd <- pd / pd_alt
 	}
 	# pe_alt is inferred by rpe
 	if ("pe" %in% metrics) pe <- phyloregion::phylo_endemism(random_comm_sparse, phy, weighted = TRUE)
+	if ("pe_alt" %in% metrics) pe_alt <- phyloregion::phylo_endemism(random_comm_sparse, phy_alt, weighted = TRUE)
 	if ("rpe" %in% metrics) {
 		if (is.null(pe)) pe <- phyloregion::phylo_endemism(random_comm_sparse, phy, weighted = TRUE)
-		pe_alt <- phyloregion::phylo_endemism(random_comm_sparse, phy_alt, weighted = TRUE)
+		if (is.null(pe_alt)) pe_alt <- phyloregion::phylo_endemism(random_comm_sparse, phy_alt, weighted = TRUE)
 		rpe <- pe / pe_alt
 	}
 
