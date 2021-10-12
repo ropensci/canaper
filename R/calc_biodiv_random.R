@@ -20,6 +20,7 @@
 #'   random community, in the same order as the rows in the input community.
 #'   Names of the list correspond to `metrics`.
 #'
+#' @srrstats {G5.0} Uses a widely-used dataset
 #' @examples
 #' \dontrun{
 #' library(picante)

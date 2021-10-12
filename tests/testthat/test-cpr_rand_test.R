@@ -36,6 +36,7 @@ attributes(comm_with_nonvec[,1]) <- list(bar = "foo")
 comm_with_infinite <- data.frame(phylocom$sample)
 comm_with_infinite[1,1] <- Inf
 
+#' @srrstats {G5.2, G5.2a, G5.2b} tests failure if input is not valid and checks warning messages
 test_that("Input is valid", {
    expect_error(
       cpr_rand_test(10, phylocom$phy, metrics = "pd"),

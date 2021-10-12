@@ -10,6 +10,7 @@ phy_alt$edge.length <- rep(x = 1, times = length(phy_alt$edge.length))
 phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length)
 phy$edge.length <- phy$edge.length / sum(phy$edge.length)
 
+#' @srrstats {G5.2, G5.2a, G5.2b} tests failure if input is not valid and checks warning messages
 test_that("Input is valid", {
 	expect_error(
 		calc_biodiv_random(10, phy, phy_alt, "independentswap"),

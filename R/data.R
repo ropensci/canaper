@@ -19,7 +19,7 @@
 #' Nat Commun 5, 4473 (2014). \doi{10.1038/ncomms5473}
 #'
 #' @srrstats {G1.4} uses roxygen
-#'
+#' @srrstats {G5.1} dataset is available (and documented)
 #' @examples
 #' # Example phylogeny
 #' library(ape)
