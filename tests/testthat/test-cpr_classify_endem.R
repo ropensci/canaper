@@ -14,6 +14,22 @@ test_that("Input is valid", {
 	)
 })
 
+#' @srrstats {G5.4a} Correctness tests on trivial examples for new implementations
+test_that("Calculations work", {
+  dummy_res <- data.frame(
+  	pe_obs_p_upper =     c(0.99, 0.10, 0.999, 0.999, 0.10, 0.10),
+  	pe_alt_obs_p_upper = c(0.10, 0.99, 0.999, 0.10,  0.10, 0.10),
+  	rpe_obs_p_upper =    c(0.99, 0.10, 0.10,  0.10,  0.10, 0.99),
+  	rpe_obs_p_lower =    c(0.10, 0.99, 0.10,  0.10,  0.10, 0.10)
+  ) %>% cpr_classify_endem()
+  expect_equal(dummy_res$endem_type[[1]], "paleo")
+  expect_equal(dummy_res$endem_type[[2]], "neo")
+  expect_equal(dummy_res$endem_type[[3]], "super")
+  expect_equal(dummy_res$endem_type[[4]], "mixed")
+  expect_equal(dummy_res$endem_type[[5]], "not significant")
+  expect_equal(dummy_res$endem_type[[6]], "not significant")
+})
+
 test_that("Output is formatted as expected", {
 	expect_s3_class(
 		cpr_classify_endem(rand_test),

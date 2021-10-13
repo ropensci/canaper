@@ -52,7 +52,7 @@ cpr_classify_endem <- function(df) {
 		#         (PE_orig is consistently higher than PE_alt across the random realisations)
 		#   b)    Else if RPE is significantly low then we have neo-endemism
 		#         (PE_orig is consistently lower than PE_alt across the random realisations)
-		#     c)    Else we have mixed age endemism in which case
+		#   c)    Else we have mixed age endemism in which case
 		#        i)    If both PE_orig and PE_alt are highly significant (p<0.01) then we
 		#              have super endemism (high in both palaeo and neo)
 		#        ii)   Else we have mixed (some mixture of palaeo, neo and non endemic)
@@ -61,7 +61,7 @@ cpr_classify_endem <- function(df) {
 		endem_type = dplyr::case_when(
 			(pe_obs_p_upper %greater% 0.95 | pe_alt_obs_p_upper %greater% 0.95) & rpe_obs_p_upper %greater% 0.975 ~ "paleo",
 			(pe_obs_p_upper %greater% 0.95 | pe_alt_obs_p_upper %greater% 0.95) & rpe_obs_p_lower %greater% 0.975 ~ "neo",
-			pe_obs_p_upper %greater% 0.99 | pe_alt_obs_p_upper %greater% 0.99 ~ "super",
+			pe_obs_p_upper %greater% 0.99 & pe_alt_obs_p_upper %greater% 0.99 ~ "super",
 			pe_obs_p_upper %greater% 0.95 | pe_alt_obs_p_upper %greater% 0.95 ~ "mixed",
 			TRUE ~ "not significant"
 		)
