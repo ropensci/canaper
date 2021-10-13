@@ -46,6 +46,14 @@ comm_pa <- apply(phylocom$sample, 2, function(x) ifelse(x > 0, 1, 0))
 #' @srrstats {G5.2, G5.2a, G5.2b} tests failure if input is not valid and checks warning messages
 test_that("Input is valid", {
    expect_error(
+      cpr_rand_test(phylocom$sample, phylocom$phy, n_reps = -10),
+      "'n_reps' must be > 0"
+   )
+   expect_error(
+      cpr_rand_test(phylocom$sample, phylocom$phy, n_iterations = -10, null_model = "independentswap"),
+      "'n_iterations' must be > 0"
+   )
+   expect_error(
       cpr_rand_test(10, phylocom$phy, metrics = "pd"),
       "'comm' must be of class 'data\\.frame' or 'matrix'"
    )

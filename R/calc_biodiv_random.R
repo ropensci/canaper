@@ -34,7 +34,7 @@
 #' phy_alt$edge.length <- rep(x = 1, times = length(phy_alt$edge.length))
 #' phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length)
 #' phy$edge.length <- phy$edge.length / sum(phy$edge.length)
-#' calc_biodiv_random(comm, phy, phy_alt, "independentswap", metrics = c("pd", "pe", "pd_alt"))
+#' calc_biodiv_random(comm, phy, phy_alt, "independentswap", 1000L, metrics = c("pd", "pe", "pd_alt"))
 #' }
 #'
 #' @srrstats {G1.4, G1.4a} uses roxygen
@@ -42,7 +42,7 @@
 #' @noRd
 calc_biodiv_random <- function(comm, phy, phy_alt,
 															 null_model = c("frequency", "richness", "independentswap", "trialswap"),
-															 n_iterations = 1000, metrics = c("pd", "rpd", "pe", "rpe", "pd_alt", "pe_alt")) {
+															 n_iterations, metrics = c("pd", "rpd", "pe", "rpe", "pd_alt", "pe_alt")) {
 	# Check input
 	#' @srrstats {G2.1, G2.6} Check input types and lengths
 	assertthat::assert_that(inherits(comm, "data.frame") | inherits(comm, "matrix"),
@@ -62,9 +62,14 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
 		msg = "'null_model' must be one of 'frequency', 'richness', 'independentswap', or 'trialswap'"
 	)
 	#' @srrstats {G2.0, G2.2} assert input length is 1
-	assertthat::assert_that(assertthat::is.number(n_iterations))
-	assertthat::assert_that(assertthat::noNA(n_iterations))
-	assertthat::assert_that(!is.infinite(n_iterations))
+	# n_iterations (only needed for `independentswap`, `trialswap`)
+	if (null_model %in% c("independentswap", "trialswap")) {
+		assertthat::assert_that(assertthat::is.number(n_iterations))
+		assertthat::assert_that(is.integer(n_iterations))
+		assertthat::assert_that(assertthat::noNA(n_iterations))
+		assertthat::assert_that(!is.infinite(n_iterations))
+		assertthat::assert_that(n_iterations > 0, msg = "'n_iterations' must be > 0")
+	} else {n_iterations <- NULL}
 	assertthat::assert_that(is.character(metrics))
 	#' @srrstats {G2.3, G2.3a} # univariate char input
 	assertthat::assert_that(

@@ -85,28 +85,36 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 	# Check input: `null_model`, `n_reps`, `n_iterations`, `metrics` ----
 	#' @srrstats {G2.0, G2.2, G2.1, G2.3, G2.3a, G2.6, G2.13, G2.14, G2.14a, G2.15, G2.16}
 	#' check input types and lengths, missingness, undefined values, values of univariate char input
+	# null_model
 	assertthat::assert_that(assertthat::is.string(null_model))
 	assertthat::assert_that(assertthat::noNA(null_model))
 	assertthat::assert_that(
 		isTRUE(null_model %in% c("frequency", "richness", "independentswap", "trialswap")),
 		msg = "'null_model' must be one of 'frequency', 'richness', 'independentswap', or 'trialswap'"
 	)
+	# n_reps
 	assertthat::assert_that(assertthat::is.number(n_reps))
 	n_reps <- as.integer(n_reps)
 	assertthat::assert_that(is.integer(n_reps))
 	assertthat::assert_that(assertthat::noNA(n_reps))
 	assertthat::assert_that(!is.infinite(n_reps))
-	assertthat::assert_that(assertthat::is.number(n_iterations))
-	n_iterations <- as.integer(n_iterations)
-	assertthat::assert_that(is.integer(n_iterations))
-	assertthat::assert_that(assertthat::noNA(n_iterations))
-	assertthat::assert_that(!is.infinite(n_iterations))
+	assertthat::assert_that(n_reps > 0, msg = "'n_reps' must be > 0")
+	# metrics
 	assertthat::assert_that(is.character(metrics))
 	assertthat::assert_that(
 		isTRUE(all(metrics %in% c("pd", "rpd", "pe", "rpe"))),
 		msg = "'metrics' may only include 'pd', 'rpd', 'pe', or 'rpe'"
 	)
 	assertthat::assert_that(assertthat::noNA(metrics))
+	# n_iterations (only needed for `independentswap`, `trialswap`)
+	if (null_model %in% c("independentswap", "trialswap")) {
+		assertthat::assert_that(assertthat::is.number(n_iterations))
+		n_iterations <- as.integer(n_iterations)
+		assertthat::assert_that(is.integer(n_iterations))
+		assertthat::assert_that(assertthat::noNA(n_iterations))
+		assertthat::assert_that(!is.infinite(n_iterations))
+		assertthat::assert_that(n_iterations > 0, msg = "'n_iterations' must be > 0")
+	} else {n_iterations <- NULL}
 
 	# Check input: `comm` ----
 	assertthat::assert_that(inherits(comm, "data.frame") | inherits(comm, "matrix"),
