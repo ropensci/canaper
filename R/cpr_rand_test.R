@@ -215,7 +215,9 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 	# Prepare for calculations ----
 	# Make alternative tree with equal branch lengths
 	phy_alt <- phy
-	phy_alt$edge.length <- rep(x = 1, times = length(phy_alt$edge.length))
+	# convert **non-zero** branch lengths to same value (1)
+	non_zero_branches <- purrr::map_lgl(phy_alt$edge.length, ~!isTRUE(all.equal(., 0)))
+	phy_alt$edge.length[non_zero_branches] <- rep(x = 1, times = length(phy_alt$edge.length[non_zero_branches]))
 	# rescale so total phy length is 1
 	phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length)
 	# rescale original phy so total length is 1
