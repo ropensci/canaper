@@ -32,24 +32,54 @@
 #'
 #' Fictional data for testing purposes from [Biodiverse](https://github.com/shawnlaffan/biodiverse/tree/master/data).
 #'
+#' Corresponds to the the community matrix ("groups" object) and phylogeny from the Biodiverse [example_project.bps](https://github.com/shawnlaffan/biodiverse/raw/fbcad3c1df3667bac1235e822cb48ef6e5884e66/data/example_project.bps).
+#'
 #' @format A list with two elements:
 #' \describe{
 #'   \item{phy}{Phylogeny with 31 tips}
-#'   \item{comm}{Community matrix with 513 sites and 31 species.
+#'   \item{comm}{Community matrix with 127 sites and 31 species.
 #'   Data are counts, i.e., the number of times
 #'   a species was observed in a grid cell.}
 #' }
-#' @source [Biodiverse](https://github.com/shawnlaffan/biodiverse)
+#' @source Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a tool for the spatial analysis of biological and related diversity. Ecography. Vol 33, 643-647 (Version 3.1). \doi{10.1111/j.1600-0587.2010.06237.x}
 #'
 #' @srrstats {G1.4} uses roxygen
 #' @srrstats {G5.1} dataset is available (and documented)
 #' @examples
 #' # Example phylogeny
 #' library(ape)
-#' biod$phy
+#' biod_example$phy
 #' # Example community
-#' biod$comm[1:5,1:5]
-"biod"
+#' biod_example$comm[1:5,1:5]
+"biod_example"
+
+#' Output from Biodiverse
+#'
+#' Output of analyzing test data with [Biodiverse](https://github.com/shawnlaffan/biodiverse).
+#'
+#' The [example_project.bps](https://github.com/shawnlaffan/biodiverse/raw/fbcad3c1df3667bac1235e822cb48ef6e5884e66/data/example_project.bps)
+#' example data set was used as input, which corresponds to the \code{\link{biod_example}}
+#' dataset in this package.
+#'
+#' For a description of all Biodiverse metrics, [see the Biodiverse wiki](https://github.com/shawnlaffan/biodiverse/wiki/Indices).
+#'
+#' @format A tibble (dataframe) with 127 rows and 7 columns. Columns include:
+#' \describe{
+#'   \item{site}{Site name; corresponds to row names of \code{\link{biod_example}$comm}}
+#'   \item{pd_biodiv}{Phylogenetic diversity (PD; `PD_P` in Biodiverse)}
+#'   \item{pd_alt_biodiv}{Alternative PD (PD measured on tree with all branchlengths equal; `PHYLO_RPD_NULL2` in Biodiverse)}
+#'   \item{rpd_biodiv}{Relative PD (PD divided by alternative PD; `PHYLO_RPD_NULL2` in Biodiverse)}
+#'   \item{pe_biodiv}{Phylogenetic endemism (PE; `PE_WE_P` in Biodiverse)}
+#'   \item{pe_alt_biodiv}{Alternative PE (PE measured on tree with all branchlengths equal; `PHYLO_RPE_NULL2` in Biodiverse)}
+#'   \item{rpe_biodiv}{Relative PE (PE divided by alternative PD; `PHYLO_RPE2` in Biodiverse)}
+#' }
+#' @source Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a tool for the spatial analysis of biological and related diversity. Ecography. Vol 33, 643-647 (Version 3.1). \doi{10.1111/j.1600-0587.2010.06237.x}
+#'
+#' @srrstats {G1.4} uses roxygen
+#' @srrstats {G5.1} dataset is available (and documented)
+#' @examples
+#' biod_results
+"biod_results"
 
 #' Color palette for plotting results of randomization test
 #'

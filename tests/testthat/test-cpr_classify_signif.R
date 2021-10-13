@@ -26,6 +26,7 @@ test_that("Input is valid", {
 	)
 })
 
+#' @srrstats {G5.4a} Implement correctness tests
 test_that("Calculations work", {
 	expect_equal(cpr_classify_signif(
 		data.frame(

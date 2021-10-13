@@ -19,7 +19,8 @@ reference:
   desc: "Datasets included in this package"
 - contents:
   - acacia
-  - biod
+  - biod_example
+  - biod_results
 - title: "Color palettes"
   desc: "Palettes for plotting classification results"
 - contents:
