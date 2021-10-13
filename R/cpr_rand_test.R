@@ -82,28 +82,25 @@
 #' @export
 cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 100, n_iterations = 10000, metrics = c("pd", "rpd", "pe", "rpe")) {
 
-	# Check input
-	#' @srrstats {G2.1, G2.6, G2.13, G2.14, G2.14a, G2.15, G2.16} Check input types and lengths, missingness, undefined values
-	assertthat::assert_that(inherits(comm, "data.frame") | inherits(comm, "matrix"),
-													msg = "'comm' must be of class 'data.frame' or 'matrix'")
-	assertthat::assert_that(
-		is.list(phy) && inherits(phy, "phylo"),
-		msg = "'phy' must be a list of class 'phylo'")
-	#' @srrstats {G2.0, G2.2} assert input length is 1
+	# Check input: `null_model`, `n_reps`, `n_iterations`, `metrics` ----
+	#' @srrstats {G2.0, G2.2, G2.1, G2.3, G2.3a, G2.6, G2.13, G2.14, G2.14a, G2.15, G2.16}
+	#' check input types and lengths, missingness, undefined values, values of univariate char input
 	assertthat::assert_that(assertthat::is.string(null_model))
-	#' @srrstats {G2.3, G2.3a} # univariate char input
+	assertthat::assert_that(assertthat::noNA(null_model))
 	assertthat::assert_that(
 		isTRUE(null_model %in% c("frequency", "richness", "independentswap", "trialswap")),
 		msg = "'null_model' must be one of 'frequency', 'richness', 'independentswap', or 'trialswap'"
 	)
-	assertthat::assert_that(assertthat::noNA(null_model))
 	assertthat::assert_that(assertthat::is.number(n_reps))
+	n_reps <- as.integer(n_reps)
+	assertthat::assert_that(is.integer(n_reps))
 	assertthat::assert_that(assertthat::noNA(n_reps))
 	assertthat::assert_that(!is.infinite(n_reps))
-	assertthat::assert_that(!is.infinite(n_iterations))
-	#' @srrstats {G2.0, G2.2} assert input length is 1
 	assertthat::assert_that(assertthat::is.number(n_iterations))
+	n_iterations <- as.integer(n_iterations)
+	assertthat::assert_that(is.integer(n_iterations))
 	assertthat::assert_that(assertthat::noNA(n_iterations))
+	assertthat::assert_that(!is.infinite(n_iterations))
 	assertthat::assert_that(is.character(metrics))
 	assertthat::assert_that(
 		isTRUE(all(metrics %in% c("pd", "rpd", "pe", "rpe"))),
@@ -111,8 +108,11 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 	)
 	assertthat::assert_that(assertthat::noNA(metrics))
 
-	#' @srrstats {G2.8} type conversion for matrix
-	# Convert comm to dataframe, check if column names are unchanged
+	# Check input: `comm` ----
+	assertthat::assert_that(inherits(comm, "data.frame") | inherits(comm, "matrix"),
+	msg = "'comm' must be of class 'data.frame' or 'matrix'")
+	#' @srrstats {G2.8} Convert matrix to dataframe
+	# Check that column names are unchanged
 	if (inherits(comm, "matrix")) {
 		comm_df <- data.frame(comm)
 		assertthat::assert_that(
@@ -126,8 +126,6 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 		)
 		comm <- comm_df
 	}
-
-	# Check for comm (dataframe) data types, missing values, unique names
 	assertthat::assert_that(isTRUE(all(assertr::is_uniq(colnames(comm), allow.na = FALSE))))
 	assertthat::assert_that(isTRUE(all(assertr::is_uniq(rownames(comm), allow.na = FALSE))))
 	assertthat::assert_that(assertthat::noNA(colnames(comm)))
@@ -155,15 +153,8 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 		isTRUE(all(numeric_check)),
 		msg = "All columns of 'comm' must be numeric"
 	)
-	# Check for phylo unique tip labels
-	assertthat::assert_that(
-		isTRUE(all(assertr::is_uniq(phy$tip.label, allow.na = FALSE))),
-		msg = "All tip labels in 'phy' must be unique"
-		)
-
 	# Convert all values in comm to integer
 	comm <- dplyr::mutate(comm, dplyr::across(dplyr::everything(), as.integer))
-
 	# Check that all values in comm are >= 0
 	assertthat::assert_that(
 		assertr::assert(
@@ -172,6 +163,17 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 		msg = "No negative values allowed in 'comm'"
 	)
 
+	# Check input: `phylo` ----
+	assertthat::assert_that(
+		is.list(phy) && inherits(phy, "phylo"),
+		msg = "'phy' must be a list of class 'phylo'")
+	# Check for phylo unique tip labels
+	assertthat::assert_that(
+		isTRUE(all(assertr::is_uniq(phy$tip.label, allow.na = FALSE))),
+		msg = "All tip labels in 'phy' must be unique"
+		)
+
+	# Match input between `comm` and `phylo` ----
 	# Match tips of tree and column names of community data frame:
 	# Use only taxa that are in common between phylogeny and community
 	subsetted_data <- picante::match.phylo.comm(phy = phy, comm = comm)
@@ -202,6 +204,7 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 	assertthat::assert_that(ncol(comm) > 4, msg = "'phy' and 'comm' must share at least 5 species in common")
 	assertthat::assert_that(assertthat::not_empty(comm))
 
+	# Prepare for calculations ----
 	# Make alternative tree with equal branch lengths
 	phy_alt <- phy
 	phy_alt$edge.length <- rep(x = 1, times = length(phy_alt$edge.length))
@@ -213,8 +216,10 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 	# Make sparse community df
 	comm_sparse <- phyloregion::dense2sparse(comm)
 
-	# Calculate biodiversity metrics for random communities
-	# set up a progress bar
+	# Calculate biodiversity metrics ----
+
+	# Loop over random communities
+	# - set up a progress bar
 	pb <- progressr::progressor(steps = n_reps)
 
 	random_vals <-
