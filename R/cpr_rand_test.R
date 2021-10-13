@@ -25,7 +25,7 @@
 #'
 #' @srrstats {G2.0a, G2.1a, G2.3b} Documents expectations on lengths, types of vector
 #'   inputs, case-sensitivity
-#' @srrstats {G2.7} accept dataframe or matrix
+#' @srrstats {G2.7, UL1.0} accept dataframe or matrix
 #' @param comm Dataframe or matrix; input community matrix with communities
 #'   (sites) as rows and species as columns, including row names and column
 #'   names. If matrix, column names must follow rules for dataframe (cannot
@@ -94,6 +94,7 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 	)
 	# n_reps
 	assertthat::assert_that(assertthat::is.number(n_reps))
+	#' @srrstats {G2.4a} Convert to integer
 	n_reps <- as.integer(n_reps)
 	assertthat::assert_that(is.integer(n_reps))
 	assertthat::assert_that(assertthat::noNA(n_reps))
@@ -109,6 +110,7 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 	# n_iterations (only needed for `independentswap`, `trialswap`)
 	if (null_model %in% c("independentswap", "trialswap")) {
 		assertthat::assert_that(assertthat::is.number(n_iterations))
+		#' @srrstats {G2.4a} Convert to integer
 		n_iterations <- as.integer(n_iterations)
 		assertthat::assert_that(is.integer(n_iterations))
 		assertthat::assert_that(assertthat::noNA(n_iterations))
@@ -117,10 +119,11 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 	} else {n_iterations <- NULL}
 
 	# Check input: `comm` ----
+	#' @srrstats {UL1.1} assert that all input data is of the expected form
 	assertthat::assert_that(inherits(comm, "data.frame") | inherits(comm, "matrix"),
 	msg = "'comm' must be of class 'data.frame' or 'matrix'")
 	#' @srrstats {G2.8} Convert matrix to dataframe
-	# Check that column names are unchanged
+	#' @srrstats {UL1.2} Check that column names are unchanged after conversion
 	if (inherits(comm, "matrix")) {
 		comm_df <- data.frame(comm)
 		assertthat::assert_that(
@@ -134,25 +137,31 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 		)
 		comm <- comm_df
 	}
+	#' @srrstats {UL1.2} Check for default-looking rownames
+	# Default rownames not allowed because phyloregion::dense2sparse() will convert them to NULL
+	assertthat::assert_that(
+		!identical(rownames(comm), as.character(seq(nrow(comm)))),
+		msg = "'comm' cannot have default row names (consecutive integers from 1 to the number of rows)"
+	)
 	assertthat::assert_that(isTRUE(all(assertr::is_uniq(colnames(comm), allow.na = FALSE))))
 	assertthat::assert_that(isTRUE(all(assertr::is_uniq(rownames(comm), allow.na = FALSE))))
 	assertthat::assert_that(assertthat::noNA(colnames(comm)))
 	assertthat::assert_that(assertthat::noNA(rownames(comm)))
-	#' @srrstats {G2.15} don't assume non-missingness
+	#' @srrstats {G2.15, UL1.1} don't assume non-missingness
 	assertthat::assert_that(
 		assertr::assert(
 			comm, assertr::not_na, dplyr::everything(),
 			success_fun = assertr::success_logical, error_fun = assertr::error_logical),
 		msg = "No missing values allowed in 'comm'"
 	)
-	#' @srrstats {G2.16} don't allow infinite values
+	#' @srrstats {G2.16, UL1.1} don't allow infinite values
 	assertthat::assert_that(
 		assertr::assert(
 			comm, function(x) !any(purrr::map_lgl(x, is.infinite)), dplyr::everything(),
 			success_fun = assertr::success_logical, error_fun = assertr::error_logical),
 		msg = "No infinite values allowed in 'comm'"
 	)
-	#' @srrstats {G2.11} check for class attributes in dataframe
+	#' @srrstats {G2.11, UL1.1} check for class attributes in dataframe
 	numeric_check <- NULL
 	for (i in 1:ncol(comm)) {
 		numeric_check[i] <- is.vector(comm[,i], mode = "numeric")
@@ -161,7 +170,7 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 		isTRUE(all(numeric_check)),
 		msg = "All columns of 'comm' must be numeric"
 	)
-	# Convert all values in comm to integer
+	#' @srrstats {G2.4a} Convert all values in comm to integer
 	comm <- dplyr::mutate(comm, dplyr::across(dplyr::everything(), as.integer))
 	# Check that all values in comm are >= 0
 	assertthat::assert_that(

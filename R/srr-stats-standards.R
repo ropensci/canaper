@@ -1,11 +1,8 @@
 #' srr_stats
 #'
-#' All of the following standards initially have `@srrstatsTODO` tags.
-#' These may be moved at any time to any other locations in your code.
-#' Once addressed, please modify the tag from `@srrstatsTODO` to `@srrstats`,
-#' or `@srrstatsNA`, ensuring that references to every one of the following
-#' standards remain somewhere within your code.
-#' (These comments may be deleted at any time.)
+#' Complete list of standards. Comment-out as these are moved to different sections.
+#' Those ending with NA or TODO are in the respective sections below. Others are
+#' scattered throughout the code.
 #'
 #' @srrstatsVerbose TRUE
 #'
@@ -26,7 +23,7 @@
 # @srrstats {G2.3a} *Use `match.arg()` or equivalent where applicable to only permit expected values.*
 # @srrstats {G2.3b} *Either: use `tolower()` or equivalent to ensure input of character parameters is not case dependent; or explicitly document that parameters are strictly case-sensitive.*
 # @srrstatsNA {G2.4} *Provide appropriate mechanisms to convert between different data types, potentially including:*
-# @srrstatsNA {G2.4a} *explicit conversion to `integer` via `as.integer()`*
+# @srrstats {G2.4a} *explicit conversion to `integer` via `as.integer()`*
 # @srrstatsNA {G2.4b} *explicit conversion to continuous via `as.numeric()`*
 # @srrstatsNA {G2.4c} *explicit conversion to character via `as.character()` (and not `paste` or `paste0`)*
 # @srrstatsNA {G2.4d} *explicit conversion to factor via `as.factor()`*
@@ -61,25 +58,25 @@
 # @srrstats {G5.4b} *For new implementations of existing methods, correctness tests should include tests against previous implementations. Such testing may explicitly call those implementations in testing, preferably from fixed-versions of other software, or use stored outputs from those where that is not possible.*
 # @srrstatsNA {G5.4c} *Where applicable, stored values may be drawn from published paper outputs when applicable and where code from original implementations is not available*
 # @srrstats {G5.5} *Correctness tests should be run with a fixed random seed*
-#' @srrstatsTODO {G5.6} **Parameter recovery tests** *to test that the implementation produce expected results given data with known properties. For instance, a linear regression algorithm should return expected coefficient values for a simulated data set generated from a linear model.*
-#' @srrstatsTODO {G5.6a} *Parameter recovery tests should generally be expected to succeed within a defined tolerance rather than recovering exact values.*
-#' @srrstatsTODO {G5.6b} *Parameter recovery tests should be run with multiple random seeds when either data simulation or the algorithm contains a random component. (When long-running, such tests may be part of an extended, rather than regular, test suite; see G4.10-4.12, below).*
-#' @srrstatsTODO {G5.7} **Algorithm performance tests** *to test that implementation performs as expected as properties of data change. For instance, a test may show that parameters approach correct estimates within tolerance as data size increases, or that convergence times decrease for higher convergence thresholds.*
-#' @srrstatsTODO {G5.8} **Edge condition tests** *to test that these conditions produce expected behaviour such as clear warnings or errors when confronted with data with extreme properties including but not limited to:*
-#' @srrstatsTODO {G5.8a} *Zero-length data*
-#' @srrstatsTODO {G5.8b} *Data of unsupported types (e.g., character or complex numbers in for functions designed only for numeric data)*
-#' @srrstatsTODO {G5.8c} *Data with all-`NA` fields or columns or all identical fields or columns*
-#' @srrstatsTODO {G5.8d} *Data outside the scope of the algorithm (for example, data with more fields (columns) than observations (rows) for some regression algorithms)*
-#' @srrstatsTODO {G5.9} **Noise susceptibility tests** *Packages should test for expected stochastic behaviour, such as through the following conditions:*
-#' @srrstatsTODO {G5.9a} *Adding trivial noise (for example, at the scale of `.Machine$double.eps`) to data does not meaningfully change results*
-#' @srrstatsTODO {G5.9b} *Running under different random seeds or initial conditions does not meaningfully change results*
-#' @srrstatsTODO {G5.10} *Extended tests should included and run under a common framework with other tests but be switched on by flags such as as a `<MYPKG>_EXTENDED_TESTS=1` environment variable.*
-#' @srrstatsTODO {G5.11} *Where extended tests require large data sets or other assets, these should be provided for downloading and fetched as part of the testing workflow.*
-#' @srrstatsTODO {G5.11a} *When any downloads of additional data necessary for extended tests fail, the tests themselves should not fail, rather be skipped and implicitly succeed with an appropriate diagnostic message.*
-#' @srrstatsTODO {G5.12} *Any conditions necessary to run extended tests such as platform requirements, memory, expected runtime, and artefacts produced that may need manual inspection, should be described in developer documentation such as a `CONTRIBUTING.md` or `tests/README.md` file.*
-#' @srrstatsTODO {UL1.0} *Unsupervised Learning Software should explicitly document expected format (types or classes) for input data, including descriptions of types or classes which are not accepted; for example, specification that software accepts only numeric inputs in `vector` or `matrix` form, or that all inputs must be in `data.frame` form with both column and row names.*
-#' @srrstatsTODO {UL1.1} *Unsupervised Learning Software should provide distinct sub-routines to assert that all input data is of the expected form, and issue informative error messages when incompatible data are submitted.*
-#' @srrstatsTODO {UL1.2} *Unsupervised learning which uses row or column names to label output objects should assert that input data have non-default row or column names, and issue an informative message when these are not provided.*
+# @srrstatsTODO {G5.6} **Parameter recovery tests** *to test that the implementation produce expected results given data with known properties. For instance, a linear regression algorithm should return expected coefficient values for a simulated data set generated from a linear model.*
+# @srrstatsTODO {G5.6a} *Parameter recovery tests should generally be expected to succeed within a defined tolerance rather than recovering exact values.*
+# @srrstatsTODO {G5.6b} *Parameter recovery tests should be run with multiple random seeds when either data simulation or the algorithm contains a random component. (When long-running, such tests may be part of an extended, rather than regular, test suite; see G4.10-4.12, below).*
+# @srrstatsTODO {G5.7} **Algorithm performance tests** *to test that implementation performs as expected as properties of data change. For instance, a test may show that parameters approach correct estimates within tolerance as data size increases, or that convergence times decrease for higher convergence thresholds.*
+# @srrstatsTODO {G5.8} **Edge condition tests** *to test that these conditions produce expected behaviour such as clear warnings or errors when confronted with data with extreme properties including but not limited to:*
+# @srrstatsTODO {G5.8a} *Zero-length data*
+# @srrstatsTODO {G5.8b} *Data of unsupported types (e.g., character or complex numbers in for functions designed only for numeric data)*
+# @srrstatsTODO {G5.8c} *Data with all-`NA` fields or columns or all identical fields or columns*
+# @srrstatsTODO {G5.8d} *Data outside the scope of the algorithm (for example, data with more fields (columns) than observations (rows) for some regression algorithms)*
+# @srrstatsTODO {G5.9} **Noise susceptibility tests** *Packages should test for expected stochastic behaviour, such as through the following conditions:*
+# @srrstatsTODO {G5.9a} *Adding trivial noise (for example, at the scale of `.Machine$double.eps`) to data does not meaningfully change results*
+# @srrstatsTODO {G5.9b} *Running under different random seeds or initial conditions does not meaningfully change results*
+# @srrstatsNA {G5.10} *Extended tests should included and run under a common framework with other tests but be switched on by flags such as as a `<MYPKG>_EXTENDED_TESTS=1` environment variable.*
+# @srrstatsNA {G5.11} *Where extended tests require large data sets or other assets, these should be provided for downloading and fetched as part of the testing workflow.*
+# @srrstatsNA {G5.11a} *When any downloads of additional data necessary for extended tests fail, the tests themselves should not fail, rather be skipped and implicitly succeed with an appropriate diagnostic message.*
+# @srrstatsNA {G5.12} *Any conditions necessary to run extended tests such as platform requirements, memory, expected runtime, and artefacts produced that may need manual inspection, should be described in developer documentation such as a `CONTRIBUTING.md` or `tests/README.md` file.*
+# @srrstats {UL1.0} *Unsupervised Learning Software should explicitly document expected format (types or classes) for input data, including descriptions of types or classes which are not accepted; for example, specification that software accepts only numeric inputs in `vector` or `matrix` form, or that all inputs must be in `data.frame` form with both column and row names.*
+# @srrstats {UL1.1} *Unsupervised Learning Software should provide distinct sub-routines to assert that all input data is of the expected form, and issue informative error messages when incompatible data are submitted.*
+# @srrstats {UL1.2} *Unsupervised learning which uses row or column names to label output objects should assert that input data have non-default row or column names, and issue an informative message when these are not provided.*
 #' @srrstatsTODO {UL1.3} *Unsupervised Learning Software should transfer all relevant aspects of input data, notably including row and column names, and potentially information from other `attributes()`, to corresponding aspects of return objects.*
 #' @srrstatsTODO {UL1.3a} *Where otherwise relevant information is not transferred, this should be explicitly documented.*
 #' @srrstatsTODO {UL1.4} *Unsupervised Learning Software should document any assumptions made with regard to input data; for example assumptions about distributional forms or locations (such as that data are centred or on approximately equivalent distributional scales). Implications of violations of these assumptions should be both documented and tested, in particular:*
@@ -113,6 +110,31 @@
 #' @noRd
 NULL
 
+#' TODO_standards
+#'
+#' I'm not sure whether these apply, so leaving here for code review.
+#'
+#' # G5.6-G5.9 (Parameter recovery tests, Algorithm performance tests, Edge condition tests):
+#' The main algorithm, cpr_classify_endem() categorizes results based on
+#' comparison to a randomization. So no matter how many randomizations are
+#' performed (or how big the dataset), there is always the chance that an
+#' "unexpected" result will be obtained. I'm not sure how to design these tests
+#' given this condition.
+#' @srrstatsTODO {G5.6}
+#' @srrstatsTODO {G5.6a}
+#' @srrstatsTODO {G5.6b}
+#' @srrstatsTODO {G5.7}
+#' @srrstatsTODO {G5.8}
+#' @srrstatsTODO {G5.8a}
+#' @srrstatsTODO {G5.8b}
+#' @srrstatsTODO {G5.8c}
+#' @srrstatsTODO {G5.8d}
+#' @srrstatsTODO {G5.9}
+#' @srrstatsTODO {G5.9a}
+#' @srrstatsTODO {G5.9b}
+#' @noRd
+NULL
+
 #' NA_standards
 #'
 #' Any non-applicable standards can have their tags changed from `@srrstatsTODO`
@@ -121,26 +143,28 @@ NULL
 #'
 #' @srrstatsNA {G1.5} No peformance claims made in any other publications
 #' @srrstatsNA {G1.6} No performance claims made with alternative implementations in other R packages
-#' @srrstatsNA {G2.4} All input types in user-facing functions is defined and subject to assertions
+#' @srrstatsNA {G2.4} All input types in user-facing functions are defined and subject to assertions
 #'   (will fail if input type is not as expected), so no conversions are needed.
-#' @srrstatsNA {G2.4a} no conversion to `integer` via `as.integer()` needed
-#' @srrstatsNA {G2.4b} no conversion to continuous via `as.numeric()` needed
-#' @srrstatsNA {G2.4c} no conversion to character via `as.character()` needed
-#' @srrstatsNA {G2.4d} no conversion to factor via `as.factor()` needed
-#' @srrstatsNA {G2.4e} no conversion from factor via `as...()` functions needed
+#' @srrstatsNA {G2.4b} No conversion to continuous via `as.numeric()` needed
+#' @srrstatsNA {G2.4c} No conversion to character via `as.character()` needed
+#' @srrstatsNA {G2.4d} No conversion to factor via `as.factor()` needed
+#' @srrstatsNA {G2.4e} No conversion from factor via `as...()` functions needed
 #' @srrstatsNA {G2.5} No factor input conversion needed
 #' @srrstatsNA {G2.9} Prevent loss of data during type conversion by checking colnames
 #' @srrstatsNA {G2.10} Issue error if input dataframe (matrix) dimensions < 5 x 5,
 #'   so no need to check for behavior on single columns from tabular inputs.
 #' @srrstatsNA {G2.12} Tabular input is converted to dataframe via data.frame and checked
-#' for attributes (must be vector), so it is very unlikely a list-column will be encountered
+#'   for attributes (must be vector), so it is very unlikely a list-column will be encountered
 #' @srrstatsNA {G2.14b} Missing data results in an error
 #' @srrstatsNA {G2.14c} Missing data results in an error
 #' @srrstatsNA {G3.1} No covariance calculations
 #' @srrstatsNA {G3.1a} No covariance calculations
 #' @srrstatsNA {G4.0} No outputs written to local files
 #' @srrstatsNA {G5.4c} No stored values to be drawn from published paper outputs
-
+#' @srrstatsNA {G5.10} No long-running tests
+#' @srrstatsNA {G5.11} No long-running tests
+#' @srrstatsNA {G5.11a} No long-running tests
+#' @srrstatsNA {G5.12} No long-running tests
 #' @noRd
 NULL
 

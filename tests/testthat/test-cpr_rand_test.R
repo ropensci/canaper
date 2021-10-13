@@ -149,6 +149,28 @@ test_that("Results are same regardless of presence/absence or abundance input", 
    expect_equal(res_abun, res_pa)
 })
 
+#' @srrstats {UL1.2} Check for default-looking column and rownames
+test_that("Default column and rownames are detected", {
+   # Make a dummy community dataframe and phylogeny
+   set.seed(123)
+   abuns <- runif(10*8, 0, 10) %>% as.integer()
+   df_default_rows <- data.frame(
+      sp1 = abuns[1:10],
+      sp2 = abuns[11:20],
+      sp3 = abuns[21:30],
+      sp4 = abuns[31:40],
+      sp5 = abuns[41:50],
+      sp6 = abuns[51:60],
+      sp7 = abuns[61:70],
+      sp8 = abuns[71:80]
+   )
+   phy_default <- ape::keep.tip(phylocom$phylo, paste0("sp", 1:8))
+   expect_error(
+      cpr_rand_test(df_default_rows, phy_default),
+      "'comm' cannot have default row names \\(consecutive integers from 1 to the number of rows\\)"
+   )
+})
+
 #' @srrstats {G5.4, G5.4b, G5.5} Implement correctness tests
 # Make sure results from canaper match those of Biodiverse
 # (for non-random results only)
