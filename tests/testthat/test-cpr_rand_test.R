@@ -149,11 +149,12 @@ test_that("Results are same regardless of presence/absence or abundance input", 
    expect_equal(res_abun, res_pa)
 })
 
-#' @srrstats {G5.4, G5.4b} Implement correctness tests
+#' @srrstats {G5.4, G5.4b, G5.5} Implement correctness tests
 # Make sure results from canaper match those of Biodiverse
 # (for non-random results only)
 test_that("Output is same as when calculated with Biodiverse", {
    # Calculate observed PD, PE, etc using biodiverse test data
+   set.seed(123)
    res_compare <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 1, null_model = "richness") %>%
       tibble::rownames_to_column("site") %>%
       tibble::as_tibble() %>%
@@ -174,11 +175,4 @@ test_that("Output is formatted as expected", {
    expect_s3_class(
       cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd"),
       "data.frame")
-   #' @srrstats {G5.3} check that output has no missing values
-   expect_true(
-      assertr::assert(
-         cpr_rand_test(phylocom$sample, phylocom$phy), assertr::not_na, dplyr::everything(),
-         success_fun = assertr::success_logical, error_fun = assertr::error_logical
-      )
-   )
 })

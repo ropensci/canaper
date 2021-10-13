@@ -41,6 +41,22 @@ cpr_classify_endem <- function(df) {
 		isTRUE(all(c("pe_obs_p_upper", "pe_alt_obs_p_upper", "rpe_obs_p_upper") %in% colnames(df))),
 		msg = "'df' must include the following columns: 'pe_obs_p_upper', 'pe_alt_obs_p_upper', 'rpe_obs_p_upper'"
 	)
+	assertthat::assert_that(
+		is.numeric(df$pe_obs_p_upper),
+		msg = "Column 'pe_obs_p_upper' of 'df' must be numeric"
+	)
+	assertthat::assert_that(
+		is.numeric(df$pe_alt_obs_p_upper),
+		msg = "Column 'pe_alt_obs_p_upper' of 'df' must be numeric"
+	)
+	assertthat::assert_that(
+		is.numeric(df$rpe_obs_p_upper),
+		msg = "Column 'rpe_obs_p_upper' of 'df' must be numeric"
+	)
+	assertthat::assert_that(
+		is.numeric(df$rpe_obs_p_lower),
+		msg = "Column 'rpe_obs_p_lower' of 'df' must be numeric"
+	)
 
 	dplyr::mutate(
 		df,
@@ -59,6 +75,7 @@ cpr_classify_endem <- function(df) {
 		# 2)    Else if neither PE_orig or PE_alt are significantly high then we have a non-endemic cell
 		#' @srrstats {G3.0} use appropriate tolerances for approximate equality (see utils.R)
 		endem_type = dplyr::case_when(
+			is.na(pe_obs_p_upper) | is.na(pe_alt_obs_p_upper) | is.na(rpe_obs_p_upper) | is.na(rpe_obs_p_lower) ~ NA_character_,
 			(pe_obs_p_upper %greater% 0.95 | pe_alt_obs_p_upper %greater% 0.95) & rpe_obs_p_upper %greater% 0.975 ~ "paleo",
 			(pe_obs_p_upper %greater% 0.95 | pe_alt_obs_p_upper %greater% 0.95) & rpe_obs_p_lower %greater% 0.975 ~ "neo",
 			pe_obs_p_upper %greater% 0.99 & pe_alt_obs_p_upper %greater% 0.99 ~ "super",

@@ -90,6 +90,8 @@ cpr_classify_signif <- function(df, metric, one_sided = FALSE, upper = FALSE) {
   #' @srrstats {G3.0} use appropriate tolerances for approximate equality (see utils.R)
   if (!isTRUE(one_sided)) {
     signif <- dplyr::case_when(
+      is.na(df[[paste0(metric, "_obs_p_lower")]]) ~ NA_character_,
+      is.na(df[[paste0(metric, "_obs_p_upper")]]) ~ NA_character_,
       df[[paste0(metric, "_obs_p_lower")]] %greater% 0.99 ~ "< 0.01",
       df[[paste0(metric, "_obs_p_lower")]] %greater% 0.975 ~ "< 0.025",
       df[[paste0(metric, "_obs_p_upper")]] %greater% 0.99 ~ "> 0.99",
@@ -99,12 +101,14 @@ cpr_classify_signif <- function(df, metric, one_sided = FALSE, upper = FALSE) {
   } else {
     if (isTRUE(upper)) {
       signif <- dplyr::case_when(
+        is.na(df[[paste0(metric, "_obs_p_upper")]]) ~ NA_character_,
         df[[paste0(metric, "_obs_p_upper")]] %greater% 0.99 ~ "> 0.99",
         df[[paste0(metric, "_obs_p_upper")]] %greater% 0.95 ~ "> 0.95",
         TRUE ~ "not significant"
       )
     } else {
       signif <- dplyr::case_when(
+        is.na(df[[paste0(metric, "_obs_p_lower")]]) ~ NA_character_,
         df[[paste0(metric, "_obs_p_lower")]] %greater% 0.99 ~ "< 0.01",
         df[[paste0(metric, "_obs_p_lower")]] %greater% 0.95 ~ "< 0.05",
         TRUE ~ "not significant"

@@ -55,7 +55,7 @@ test_that("Output is formatted as expected", {
 	expect_true(
 		all(
 			assertr::not_na(
-				unlist(calc_biodiv_random(comm, phy, phy_alt, "independentswap", 10L))
+				unlist(calc_biodiv_random(comm, phy, phy_alt, "independentswap", 1L))
 			)
 		)
 	)

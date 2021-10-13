@@ -26,7 +26,7 @@ test_that("Input is valid", {
 	)
 })
 
-#' @srrstats {G5.4a} Implement correctness tests
+#' @srrstats {G5.4a, G5.5} Implement correctness tests
 test_that("Calculations work", {
 	expect_equal(cpr_classify_signif(
 		data.frame(
@@ -58,6 +58,7 @@ test_that("Calculations work", {
 })
 
 test_that("Output is formatted as expected", {
+	set.seed(123)
 	expect_s3_class(
 		cpr_classify_signif(
 			data.frame(
@@ -67,6 +68,7 @@ test_that("Output is formatted as expected", {
 			metric = "pd"
 		),
 		"data.frame")
+	set.seed(123)
 	expect_type(
 		cpr_classify_signif(
 			data.frame(
@@ -78,6 +80,7 @@ test_that("Output is formatted as expected", {
 		"character"
 	)
 	# Run cpr_classify_signif() a bunch of times to test the output values
+	set.seed(123)
 	random_results_two_sided <- cpr_classify_signif(
 		data.frame(
 			pd_obs_p_lower = runif(1000),
@@ -85,6 +88,7 @@ test_that("Output is formatted as expected", {
 		),
 		metric = "pd"
 	)
+	set.seed(123)
 	random_results_one_sided <- cpr_classify_signif(
 		data.frame(
 			pd_obs_p_lower = runif(1000),
@@ -105,16 +109,6 @@ test_that("Output is formatted as expected", {
 			all(random_results_one_sided[["pd_signif"]] %in%
 						c("< 0.01", "< 0.05", "> 0.99", "> 0.95", "not significant")
 			)
-		)
-	)
-	#' @srrstats {G5.3} check that output has no missing values
-	expect_true(
-		assertr::assert(
-			cpr_classify_signif(
-				data.frame(pd_obs_p_lower = c(0.0001), pd_obs_p_upper = c(0.99)),
-				metric = "pd"),
-			assertr::not_na, dplyr::everything(),
-			success_fun = assertr::success_logical, error_fun = assertr::error_logical
 		)
 	)
 })
