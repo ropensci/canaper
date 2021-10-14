@@ -1,10 +1,6 @@
-library(picante)
-data(phylocom)
-phy <- phylocom$phy
-comm <- phylocom$sample
-subsetted_data <- picante::match.phylo.comm(phy = phy, comm = comm)
-phy <- subsetted_data[["phy"]]
-comm <- subsetted_data[["comm"]]
+# Make datasets for testing ----
+phy <- biod_example$phy
+comm <- biod_example$comm
 phy_alt <- phy
 phy_alt$edge.length <- rep(x = 1, times = length(phy_alt$edge.length))
 phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length)
@@ -33,7 +29,7 @@ test_that("Input is valid", {
 		"'comm' must include at least 5 species"
 	)
 	expect_error(
-		calc_biodiv_random(comm, ape::keep.tip(phylocom$phy, c("sp1", "sp2")), phy_alt, "independentswap", 10L),
+		calc_biodiv_random(comm, ape::keep.tip(phy, c("sp1", "sp2")), phy_alt, "independentswap", 10L),
 		"'phy' must include at least 5 species"
 	)
 	expect_error(
@@ -41,11 +37,11 @@ test_that("Input is valid", {
 		"'phy' and 'phy_alt' should not be identical"
 	)
 	expect_error(
-		calc_biodiv_random(comm, subsetted_data[["phy"]], phy_alt, "independentswap", 10L),
+		calc_biodiv_random(comm, biod_example$phy, phy_alt, "independentswap", 10L),
 		"phylogeny not rescaled to total length 1"
 	)
 	expect_error(
-		calc_biodiv_random(comm, phy, subsetted_data[["phy"]], "independentswap", 10L),
+		calc_biodiv_random(comm, phy, biod_example$phy, "independentswap", 10L),
 		"alternative phylogeny not rescaled to total length 1"
 	)
 })

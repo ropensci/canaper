@@ -1,104 +1,100 @@
-library(picante)
-# load phylocom data
-data(phylocom)
+# Make datasets for testing ----
 
 # make data with numeric species names
-comm_num_names <- phylocom$sample
+comm_num_names <- biod_example$comm
 colnames(comm_num_names) <- 1:dim(comm_num_names)[2]
-phy_num_names <- phylocom$phy
+phy_num_names <- biod_example$phy
 phy_num_names$tip.label <- colnames(comm_num_names)
 
 # make comm with duplicated species names
-comm_dup_names <- phylocom$sample
+comm_dup_names <- biod_example$comm
 colnames(comm_dup_names)[2] <- "sp1"
 
 # make phy with duplicated species names
-phy_dup_names <- phylocom$phy
+phy_dup_names <- biod_example$phy
 phy_dup_names$tip.label[2] <- "sp1"
 
-# make comm with missing data
-comm_dup_names <- phylocom$sample
-colnames(comm_dup_names)[2] <- "sp1"
-
 # make comm with non-numeric data
-comm_non_numeric <- phylocom$sample
+comm_non_numeric <- biod_example$comm
 comm_non_numeric[1,1] <- "a"
 
 # make comm with NA data
-comm_with_na <- phylocom$sample
+comm_with_na <- biod_example$comm
 comm_with_na[1,1] <- NA
 
 # make comm with non vector data
-comm_with_nonvec <- data.frame(phylocom$sample)
+comm_with_nonvec <- data.frame(biod_example$comm)
 attributes(comm_with_nonvec[,1]) <- list(bar = "foo")
 
 # make comm with infinite data
-comm_with_infinite <- phylocom$sample
+comm_with_infinite <- biod_example$comm
 comm_with_infinite[1,1] <- Inf
 
 # make comm with negative data
-comm_with_negative <- phylocom$sample
+comm_with_negative <- biod_example$comm
 comm_with_negative[1,1] <- -10
 
 # make presence-absence community
-comm_pa <- apply(phylocom$sample, 2, function(x) ifelse(x > 0, 1, 0))
+comm_pa <- apply(biod_example$comm, 2, function(x) ifelse(x > 0, 1, 0))
+
+# Run tests ----
 
 #' @srrstats {G5.2, G5.2a, G5.2b} tests failure if input is not valid and checks warning messages
 test_that("Input is valid", {
    expect_error(
-      cpr_rand_test(phylocom$sample, phylocom$phy, n_reps = -10),
+      cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = -10),
       "'n_reps' must be > 0"
    )
    expect_error(
-      cpr_rand_test(phylocom$sample, phylocom$phy, n_iterations = -10, null_model = "independentswap"),
+      cpr_rand_test(biod_example$comm, biod_example$phy, n_iterations = -10, null_model = "independentswap"),
       "'n_iterations' must be > 0"
    )
    expect_error(
-      cpr_rand_test(10, phylocom$phy, metrics = "pd"),
+      cpr_rand_test(10, biod_example$phy, metrics = "pd"),
       "'comm' must be of class 'data\\.frame' or 'matrix'"
    )
    expect_error(
-      cpr_rand_test(phylocom$sample, NA, metrics = "pd"),
+      cpr_rand_test(biod_example$comm, NA, metrics = "pd"),
       "'phy' must be a list of class 'phylo'"
    )
    expect_error(
-      cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pg"),
+      cpr_rand_test(biod_example$comm, biod_example$phy, metrics = "pg"),
       "'metrics' may only include 'pd', 'rpd', 'pe', or 'rpe'"
    )
    expect_error(
-      cpr_rand_test(phylocom$sample[1:3,], phylocom$phy),
+      cpr_rand_test(biod_example$comm[1:3,], biod_example$phy),
       "'comm' must include at least 5 sites"
    )
    expect_error(
-      cpr_rand_test(phylocom$sample[,1:3], phylocom$phy),
+      cpr_rand_test(biod_example$comm[,1:3], biod_example$phy),
       "'phy' and 'comm' must share at least 5 species in common"
    )
    expect_error(
-      cpr_rand_test(phylocom$sample, ape::keep.tip(phylocom$phy, c("sp1", "sp2"))),
+      cpr_rand_test(biod_example$comm, ape::keep.tip(biod_example$phy, c("sp1", "sp2"))),
       "'phy' and 'comm' must share at least 5 species in common"
    )
    expect_error(
-      cpr_rand_test(comm_num_names, phy_num_names, metrics = "pd"),
+      cpr_rand_test(as.matrix(comm_num_names), phy_num_names, metrics = "pd"),
       "Column names of 'comm' changed after conversion from matrix to dataframe\\. Do any column names start with a number"
    )
    expect_error(
-      cpr_rand_test(comm_dup_names, phylocom$phy, metrics = "pd"),
-      "Column names of 'comm' changed after conversion from matrix to dataframe\\. Do any column names start with a number"
+      cpr_rand_test(comm_dup_names, biod_example$phy, metrics = "pd"),
+      "'comm' must have unique column names"
    )
    expect_error(
-      cpr_rand_test(comm_non_numeric, phylocom$phy, metrics = "pd"),
+      cpr_rand_test(comm_non_numeric, biod_example$phy, metrics = "pd"),
       "All columns of 'comm' must be numeric"
    )
    expect_error(
-      cpr_rand_test(comm_with_na, phylocom$phy, metrics = "pd"),
+      cpr_rand_test(comm_with_na, biod_example$phy, metrics = "pd"),
       "No missing values allowed in 'comm'"
    )
    expect_error(
-      cpr_rand_test(comm_with_na, phylocom$phy, metrics = "pd"),
+      cpr_rand_test(comm_with_na, biod_example$phy, metrics = "pd"),
       "No missing values allowed in 'comm'"
    )
    expect_error(
-      cpr_rand_test(comm_with_negative, phylocom$phy, metrics = "pd"),
+      cpr_rand_test(comm_with_negative, biod_example$phy, metrics = "pd"),
       "No negative values allowed in 'comm'"
    )
    #' @srrstats {G2.11} test for non-vector inputs
@@ -106,12 +102,12 @@ test_that("Input is valid", {
       is.vector(comm_with_nonvec[,1])
    )
    expect_error(
-      cpr_rand_test(comm_with_nonvec, phylocom$phy, metrics = "pd"),
+      cpr_rand_test(comm_with_nonvec, biod_example$phy, metrics = "pd"),
       "All columns of 'comm' must be numeric"
    )
    #' @srrstats {G2.16} don't allow infinite values
    expect_error(
-      cpr_rand_test(comm_with_infinite, phylocom$phy, metrics = "pd"),
+      cpr_rand_test(comm_with_infinite, biod_example$phy, metrics = "pd"),
       "No infinite values allowed in 'comm'"
    )
 })
@@ -119,33 +115,33 @@ test_that("Input is valid", {
 test_that("Results are same regardless of presence/absence or abundance input", {
    # pd
    set.seed(123)
-   res_abun_pd <- cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd")
+   res_abun_pd <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "richness", n_reps = 10, metrics = "pd")
    set.seed(123)
-   res_pa_pd <- cpr_rand_test(comm_pa, phylocom$phy, metrics = "pd")
+   res_pa_pd <- cpr_rand_test(comm_pa, biod_example$phy, null_model = "richness", n_reps = 10, metrics = "pd")
    expect_equal(res_abun_pd, res_pa_pd)
    # pe
    set.seed(123)
-   res_abun_pe <- cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pe")
+   res_abun_pe <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "richness", n_reps = 10, metrics = "pe")
    set.seed(123)
-   res_pa_pe <- cpr_rand_test(comm_pa, phylocom$phy, metrics = "pe")
+   res_pa_pe <- cpr_rand_test(comm_pa, biod_example$phy, null_model = "richness", n_reps = 10, metrics = "pe")
    expect_equal(res_abun_pe, res_pa_pe)
    # rpd
    set.seed(123)
-   res_abun_rpd <- cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "rpd")
+   res_abun_rpd <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "richness", n_reps = 10, metrics = "rpd")
    set.seed(123)
-   res_pa_rpd <- cpr_rand_test(comm_pa, phylocom$phy, metrics = "rpd")
+   res_pa_rpd <- cpr_rand_test(comm_pa, biod_example$phy, null_model = "richness", n_reps = 10, metrics = "rpd")
    expect_equal(res_abun_rpd, res_pa_rpd)
    # rpe
    set.seed(123)
-   res_abun_rpe <- cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "rpe")
+   res_abun_rpe <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "richness", n_reps = 10, metrics = "rpe")
    set.seed(123)
-   res_pa_rpe <- cpr_rand_test(comm_pa, phylocom$phy, metrics = "rpe")
+   res_pa_rpe <- cpr_rand_test(comm_pa, biod_example$phy, null_model = "richness", n_reps = 10, metrics = "rpe")
    expect_equal(res_abun_rpe, res_pa_rpe)
    # all
    set.seed(123)
-   res_abun <- cpr_rand_test(phylocom$sample, phylocom$phy)
+   res_abun <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "richness", n_reps = 10)
    set.seed(123)
-   res_pa <- cpr_rand_test(comm_pa, phylocom$phy)
+   res_pa <- cpr_rand_test(comm_pa, biod_example$phy, null_model = "richness", n_reps = 10)
    expect_equal(res_abun, res_pa)
 })
 
@@ -164,7 +160,7 @@ test_that("Default column and rownames are detected", {
       sp7 = abuns[61:70],
       sp8 = abuns[71:80]
    )
-   phy_default <- ape::keep.tip(phylocom$phylo, paste0("sp", 1:8))
+   phy_default <- ape::keep.tip(biod_example$phy, paste0("sp", 1:8))
    expect_error(
       cpr_rand_test(df_default_rows, phy_default),
       "'comm' cannot have default row names \\(consecutive integers from 1 to the number of rows\\)"
@@ -195,6 +191,6 @@ test_that("Output is same as when calculated with Biodiverse", {
 
 test_that("Output is formatted as expected", {
    expect_s3_class(
-      cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd"),
+      cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "richness", n_reps = 10, metrics = "pd"),
       "data.frame")
 })

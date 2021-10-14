@@ -1,11 +1,6 @@
-# Set up an appropriate test case for `get_ses()`
-library(picante)
-data(phylocom)
-phy <- phylocom$phy
-comm <- phylocom$sample
-subsetted_data <- picante::match.phylo.comm(phy = phy, comm = comm)
-phy <- subsetted_data[["phy"]]
-comm <- subsetted_data[["comm"]]
+# Make datasets for testing ----
+phy <- biod_example$phy
+comm <- biod_example$comm
 phy_alt <- phy
 phy_alt$edge.length <- rep(x = 1, times = length(phy_alt$edge.length))
 phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length)
@@ -24,7 +19,7 @@ test_that("Input is valid", {
 		"Biodiversity metrics may only be selected from 'pd', 'pd_alt', 'rpd', 'pe', 'pe_alt', or 'rpe'"
 	)
 	expect_error(
-		get_ses(random_vals, purrr::set_names(pe_obs, toupper), "pe"),
+		get_ses(random_vals, purrr::set_names(pe_obs, ~stringr::str_replace_all(., "0", "1")), "pe"),
 		"Names don't match between 'obs_vals' and 'random_vals'"
 	)
 	expect_error(
