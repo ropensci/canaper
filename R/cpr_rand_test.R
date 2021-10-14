@@ -121,7 +121,7 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 	# Check input: `comm` ----
 	#' @srrstats {UL1.1} assert that all input data is of the expected form
 	assertthat::assert_that(inherits(comm, "data.frame") | inherits(comm, "matrix"),
-	msg = "'comm' must be of class 'data.frame' or 'matrix'")
+													msg = "'comm' must be of class 'data.frame' or 'matrix'")
 	#' @srrstats {G2.8} Convert matrix to dataframe
 	#' @srrstats {UL1.2} Check that column names are unchanged after conversion
 	if (inherits(comm, "matrix")) {
@@ -143,8 +143,13 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 		!identical(rownames(comm), as.character(seq(nrow(comm)))),
 		msg = "'comm' cannot have default row names (consecutive integers from 1 to the number of rows)"
 	)
-	assertthat::assert_that(isTRUE(all(assertr::is_uniq(colnames(comm), allow.na = FALSE))))
-	assertthat::assert_that(isTRUE(all(assertr::is_uniq(rownames(comm), allow.na = FALSE))))
+	assertthat::assert_that(
+		isTRUE(all(assertr::is_uniq(colnames(comm), allow.na = FALSE))),
+		msg = "'comm' must have unique column names")
+	assertthat::assert_that(
+		isTRUE(all(assertr::is_uniq(rownames(comm), allow.na = FALSE))),
+		msg = "'comm' must have unique rownames"
+	)
 	assertthat::assert_that(assertthat::noNA(colnames(comm)))
 	assertthat::assert_that(assertthat::noNA(rownames(comm)))
 	#' @srrstats {G2.15, UL1.1} don't assume non-missingness
@@ -188,7 +193,7 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 	assertthat::assert_that(
 		isTRUE(all(assertr::is_uniq(phy$tip.label, allow.na = FALSE))),
 		msg = "All tip labels in 'phy' must be unique"
-		)
+	)
 
 	# Match input between `comm` and `phylo` ----
 	# Match tips of tree and column names of community data frame:
@@ -201,7 +206,7 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 	assertthat::assert_that(
 		isTRUE(
 			!is.null(phy) && !is.null(comm)
-			),
+		),
 		msg = "Tip names don't match between community and phylogeny"
 	)
 
