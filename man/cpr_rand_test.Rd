@@ -25,16 +25,15 @@ cpr_rand_test(
   null_model = "independentswap",
   n_reps = 100,
   n_iterations = 10000,
-  metrics = c("pd", "rpd", "pe", "rpe")
+  metrics = c("pd", "rpd", "pe", "rpe"),
+  site_col = "site"
 )
 }
 \arguments{
-\item{comm}{Dataframe or matrix; input community matrix with communities
-(sites) as rows and species as columns, including row names and column
-names. If matrix, column names must follow rules for dataframe (cannot
-start with a number, must be unique). Values of each cell are the
-presence/absence (0 or 1) or number of individuals (abundance) of each
-species in each community (site).}
+\item{comm}{Dataframe, tibble, or matrix; input community data with
+sites (communities) as rows and species as columns. Values of each cell are
+the presence/absence (0 or 1) or number of individuals (abundance) of each
+species in each site.}
 
 \item{phy}{List of class \code{phylo}; input phylogeny.}
 
@@ -51,6 +50,10 @@ when swapping occurrences to generate each random community; only used if
 
 \item{metrics}{Character vector; names of biodiversity metrics to calculate.
 May include one or more of: \code{pd}, \code{rpd}, \code{pe}, \code{rpe} (case-sensitive).}
+
+\item{site_col}{Character vector of length 1; name of column in \code{comm} that
+contains the site names; only used if \code{comm} is a tibble (object of class
+\code{tbl_df}).}
 }
 \value{
 Dataframe. For each of the biodiversity metrics, the following 9 columns
@@ -93,8 +96,16 @@ cause the default method for generating random communities (independent swap)
 to enter an infinite loop. Besides, inferences on very small numbers of
 species and/or sites is not recommended generally.
 
-\code{comm} should only include integers >= 0; non-integer input will be converted
-to integer. The results are identical regardless of whether the input is
+The following rules apply to \code{comm} input:
+\itemize{
+\item If dataframe or matrix, must include row names (site names) and column names (species names).
+\item If tibble, a single column (default, \code{site}) must be included with site names, and other columns must correspond to species names.
+\item Column names cannot start with a number and must be unique.
+\item Row names (site names) must be unique.
+\item Values (other than site names) should only include integers >= 0; non-integer input will be converted to integer.
+}
+
+The results are identical regardless of whether the input for \code{comm} is
 abundance or presence-absence data (i.e., abundance weighting is not used).
 }
 \examples{

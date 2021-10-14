@@ -19,19 +19,23 @@
 #' to enter an infinite loop. Besides, inferences on very small numbers of
 #' species and/or sites is not recommended generally.
 #'
-#' `comm` should only include integers >= 0; non-integer input will be converted
-#' to integer. The results are identical regardless of whether the input is
+#' The following rules apply to `comm` input:
+#' - If dataframe or matrix, must include row names (site names) and column names (species names).
+#' - If tibble, a single column (default, `site`) must be included with site names, and other columns must correspond to species names.
+#' - Column names cannot start with a number and must be unique.
+#' - Row names (site names) must be unique.
+#' - Values (other than site names) should only include integers >= 0; non-integer input will be converted to integer.
+#'
+#' The results are identical regardless of whether the input for `comm` is
 #' abundance or presence-absence data (i.e., abundance weighting is not used).
 #'
 #' @srrstats {G2.0a, G2.1a, G2.3b} Documents expectations on lengths, types of vector
 #'   inputs, case-sensitivity
 #' @srrstats {G2.7, UL1.0} accept dataframe or matrix
-#' @param comm Dataframe or matrix; input community matrix with communities
-#'   (sites) as rows and species as columns, including row names and column
-#'   names. If matrix, column names must follow rules for dataframe (cannot
-#'   start with a number, must be unique). Values of each cell are the
-#'   presence/absence (0 or 1) or number of individuals (abundance) of each
-#'   species in each community (site).
+#' @param comm Dataframe, tibble, or matrix; input community data with
+#'   sites (communities) as rows and species as columns. Values of each cell are
+#'   the presence/absence (0 or 1) or number of individuals (abundance) of each
+#'   species in each site.
 #' @param phy List of class `phylo`; input phylogeny.
 #' @param null_model Character vector of length 1; name of null model to use.
 #'   Must choose from `frequency`, `richness`, `independentswap`, or
@@ -43,6 +47,12 @@
 #'   `null_model` is `independentswap` or `trialswap`.
 #' @param metrics Character vector; names of biodiversity metrics to calculate.
 #'   May include one or more of: `pd`, `rpd`, `pe`, `rpe` (case-sensitive).
+#' @param site_col Character vector of length 1; name of column in `comm` that
+#' contains the site names; only used if `comm` is a tibble (object of class
+#' `tbl_df`).
+#' @param tbl_out Logical vector of length 1; should the output be returned as
+#' a tibble? If `FALSE`, will return a dataframe. Defaults to `TRUE` if `comm` is
+#' a tibble.
 #'
 #' @srrstats {G1.3} defines terminology (also in 'details'):
 #' @return Dataframe. For each of the biodiversity metrics, the following 9 columns
@@ -80,7 +90,11 @@
 #' @srrstats {G1.4} uses roxygen
 #'
 #' @export
-cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 100, n_iterations = 10000, metrics = c("pd", "rpd", "pe", "rpe")) {
+cpr_rand_test <- function(
+	comm, phy, null_model = "independentswap",
+	n_reps = 100, n_iterations = 10000,
+	metrics = c("pd", "rpd", "pe", "rpe"),
+	site_col = "site", tbl_out = tibble::is_tibble(comm)) {
 
 	# Check input: `null_model`, `n_reps`, `n_iterations`, `metrics` ----
 	#' @srrstats {G2.0, G2.2, G2.1, G2.3, G2.3a, G2.6, G2.13, G2.14, G2.14a, G2.15, G2.16}
@@ -117,11 +131,34 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 		assertthat::assert_that(!is.infinite(n_iterations))
 		assertthat::assert_that(n_iterations > 0, msg = "'n_iterations' must be > 0")
 	} else {n_iterations <- NULL}
+	# tbl_out
+	assertthat::assert_that(assertthat::is.flag(tbl_out))
 
 	# Check input: `comm` ----
 	#' @srrstats {UL1.1} assert that all input data is of the expected form
 	assertthat::assert_that(inherits(comm, "data.frame") | inherits(comm, "matrix"),
 													msg = "'comm' must be of class 'data.frame' or 'matrix'")
+	#' @srrstats {G2.8} Convert tibble to dataframe
+	if (tibble::is_tibble(comm)) {
+		assertthat::assert_that(assertthat::is.string(site_col))
+		assertthat::assert_that(assertthat::noNA(site_col))
+		assertthat::assert_that(
+			isTRUE(site_col %in% colnames(comm)),
+			msg = "'site_col' must be one of the column names of 'comm'")
+		assertthat::assert_that(
+			isTRUE(all(assertr::is_uniq(comm[[site_col]]))),
+			msg = "Site names must all be unique"
+			)
+		assertthat::assert_that(
+			assertthat::noNA(comm[[site_col]]),
+			msg = "Site names must not include any missing data"
+		)
+		assertthat::assert_that(
+			!isTRUE(grepl(site_col, "_obs$|_rand_|_obs_")),
+			msg = "Name of 'site_col' cannot resemble names of column names in 'cpr_rand_test()' output"
+		)
+		comm <- tibble::column_to_rownames(comm, site_col)
+	}
 	#' @srrstats {G2.8} Convert matrix to dataframe
 	#' @srrstats {UL1.2} Check that column names are unchanged after conversion
 	if (inherits(comm, "matrix")) {
@@ -298,16 +335,25 @@ cpr_rand_test <- function(comm, phy, null_model = "independentswap", n_reps = 10
 	}
 
 	# Combine results
-	results <- dplyr::bind_cols(
+	results_df <- dplyr::bind_cols(
 		ses_pd,
 		ses_pd_alt,
 		ses_rpd,
 		ses_pe,
 		ses_pe_alt,
 		ses_rpe
-	)
+	) %>%
+		dplyr::mutate(site = rownames(comm)) %>%
+		tibble::column_to_rownames("site")
 
-	results <- dplyr::mutate(results, site = rownames(comm))
+	# If tibble was input, return tibble starting with the "site" column
+	if (isTRUE(tbl_out)) {
+		results_tbl <- tibble::rownames_to_column(results_df, site_col) %>%
+			tibble::as_tibble() %>%
+			dplyr::select(dplyr::all_of(site_col), dplyr::everything())
+		return(results_tbl)
+	} else {
+		return(results_df)
+	}
 
-	tibble::column_to_rownames(results, "site")
 }
