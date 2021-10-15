@@ -1,41 +1,69 @@
 # Make datasets for testing ----
 
-# make data with numeric species names
+# -data with numeric species names
 comm_num_names <- biod_example$comm
 colnames(comm_num_names) <- 1:dim(comm_num_names)[2]
 phy_num_names <- biod_example$phy
 phy_num_names$tip.label <- colnames(comm_num_names)
 
-# make comm with duplicated species names
+# -comm with duplicated species names
 comm_dup_names <- biod_example$comm
 colnames(comm_dup_names)[2] <- "sp1"
 
-# make phy with duplicated species names
+# -phy with duplicated species names
 phy_dup_names <- biod_example$phy
 phy_dup_names$tip.label[2] <- "sp1"
 
-# make comm with non-numeric data
+# -comm with non-numeric data
 comm_non_numeric <- biod_example$comm
 comm_non_numeric[1,1] <- "a"
 
-# make comm with NA data
+# -comm with NA data
 comm_with_na <- biod_example$comm
 comm_with_na[1,1] <- NA
 
-# make comm with non vector data
+# -comm with non vector data
 comm_with_nonvec <- data.frame(biod_example$comm)
 attributes(comm_with_nonvec[,1]) <- list(bar = "foo")
 
-# make comm with infinite data
+# -comm with infinite data
 comm_with_infinite <- biod_example$comm
 comm_with_infinite[1,1] <- Inf
 
-# make comm with negative data
+# -comm with negative data
 comm_with_negative <- biod_example$comm
 comm_with_negative[1,1] <- -10
 
-# make presence-absence community
+# -presence-absence community
 comm_pa <- apply(biod_example$comm, 2, function(x) ifelse(x > 0, 1, 0))
+
+# -comm in tibble format
+comm_tbl <- biod_example$comm %>%
+   tibble::rownames_to_column("site") %>%
+   tibble::as_tibble()
+
+# -comm in tibble format, non-default site name
+comm_tbl_2 <- biod_example$comm %>%
+   tibble::rownames_to_column("sample") %>%
+   tibble::as_tibble()
+
+# -comm in matrix format
+comm_mat <- as.matrix(biod_example$comm)
+
+# Make output for testing ----
+# For testing that results are same regardless of input type
+# (need to have same random seed each time)
+set.seed(123)
+res_from_df <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "richness", n_reps = 10)
+set.seed(123)
+res_from_tbl <- cpr_rand_test(comm_tbl, biod_example$phy, null_model = "richness", n_reps = 10, tbl_out = FALSE)
+set.seed(123)
+res_from_mat <- cpr_rand_test(comm_mat, biod_example$phy, null_model = "richness", n_reps = 10)
+
+# For testing output format
+res_tbl_from_df <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "richness", n_reps = 1, metrics = "pd", tbl_out = TRUE)
+res_tbl_from_tbl <- cpr_rand_test(comm_tbl, biod_example$phy, null_model = "richness", n_reps = 1, metrics = "pd")
+res_df_from_tbl <- cpr_rand_test(comm_tbl, biod_example$phy, null_model = "richness", n_reps = 1, metrics = "pd", tbl_out = FALSE)
 
 # Run tests ----
 
@@ -110,6 +138,16 @@ test_that("Input is valid", {
       cpr_rand_test(comm_with_infinite, biod_example$phy, metrics = "pd"),
       "No infinite values allowed in 'comm'"
    )
+   expect_error(
+      cpr_rand_test(comm_tbl, biod_example$phy, metrics = "pd", site_col = "sample"),
+      "'site_col' must be one of the column names of 'comm'"
+   )
+})
+
+test_that("Results are same regardless of input type", {
+   expect_equal(res_from_mat, res_from_df)
+   expect_equal(res_from_mat, res_from_tbl)
+   expect_equal(res_from_df, res_from_tbl)
 })
 
 test_that("Results are same regardless of presence/absence or abundance input", {
@@ -190,7 +228,36 @@ test_that("Output is same as when calculated with Biodiverse", {
 })
 
 test_that("Output is formatted as expected", {
+   # Use expect equal() with class() when *only* expecting a data.frame
+   # (tibble inherits data.frame, tbl, and tbl_df)
+   expect_equal(
+      class(res_from_df),
+      "data.frame"
+   )
    expect_s3_class(
-      cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "richness", n_reps = 10, metrics = "pd"),
-      "data.frame")
+      res_tbl_from_df,
+      "tbl_df")
+   expect_s3_class(
+      res_tbl_from_df,
+      "tbl")
+   expect_s3_class(
+      res_tbl_from_tbl,
+      "tbl_df")
+   expect_s3_class(
+      res_tbl_from_tbl,
+      "tbl")
+   expect_equal(
+      class(res_df_from_tbl),
+      "data.frame"
+   )
+   # Make sure data from 'site_col' is carried through for tbl input
+   res_tbl_from_tbl_2 <- cpr_rand_test(comm_tbl_2, biod_example$phy, null_model = "richness", n_reps = 1, metrics = "pd", site_col = "sample")
+   expect_equal(
+      comm_tbl_2$sample,
+      res_tbl_from_tbl_2$sample
+   )
+   expect_equal(
+      rownames(res_from_df),
+      rownames(biod_example$comm)
+   )
 })
