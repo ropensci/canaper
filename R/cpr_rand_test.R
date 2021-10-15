@@ -214,12 +214,21 @@ cpr_rand_test <- function(
 	)
 	#' @srrstats {G2.4a} Convert all values in comm to integer
 	comm <- dplyr::mutate(comm, dplyr::across(dplyr::everything(), as.integer))
-	# Check that all values in comm are >= 0
+	#' @srrstats {UL1.4} Check that all values in comm are >= 0
 	assertthat::assert_that(
 		assertr::assert(
 			comm, function(x) all(purrr::map_lgl(x, ~magrittr::is_weakly_greater_than(.x, 0))), dplyr::everything(),
 			success_fun = assertr::success_logical, error_fun = assertr::error_logical),
 		msg = "No negative values allowed in 'comm'"
+	)
+	#' @srrstats {UL1.4} Check for all 0s for a given site or species
+	assertthat::assert_that(
+		isTRUE(all(colSums(comm) > 0)),
+		msg = "Every species in 'comm' must occur in at least one site"
+	)
+	assertthat::assert_that(
+		isTRUE(all(rowSums(comm) > 0)),
+		msg = "Every site in 'comm' must have at least once species"
 	)
 
 	# Check input: `phylo` ----
@@ -230,6 +239,11 @@ cpr_rand_test <- function(
 	assertthat::assert_that(
 		isTRUE(all(assertr::is_uniq(phy$tip.label, allow.na = FALSE))),
 		msg = "All tip labels in 'phy' must be unique"
+	)
+	#' @srrstats {UL1.4} Check for non-negative branch lengths
+	assertthat::assert_that(
+		isTRUE(all(phy$edge.length %>=% 0)),
+		msg = "'phy' may not have negative branchlengths"
 	)
 
 	# Match input between `comm` and `phylo` ----

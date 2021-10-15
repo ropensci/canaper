@@ -50,6 +50,18 @@ comm_tbl_2 <- biod_example$comm %>%
 # -comm in matrix format
 comm_mat <- as.matrix(biod_example$comm)
 
+# - negative branch lengths
+phy_neg <- biod_example$phy
+phy_neg$edge.length[1] <- -1
+
+# - column with all zeros
+comm_one_zero_col <- biod_example$comm
+comm_one_zero_col[,1] <- 0
+
+# - row with all zeros
+comm_one_zero_row <- biod_example$comm
+comm_one_zero_row[1,] <- 0
+
 # Make output for testing ----
 # For testing that results are same regardless of input type
 # (need to have same random seed each time)
@@ -89,13 +101,13 @@ test_that("Input is valid", {
       cpr_rand_test(biod_example$comm, biod_example$phy, metrics = "pg"),
       "'metrics' may only include 'pd', 'rpd', 'pe', or 'rpe'"
    )
+   comm_small <- biod_example$comm[1:3,]
+   comm_small[1,] <- 1
+   comm_small[2,] <- 1
+   comm_small[3,] <- 1
    expect_error(
-      cpr_rand_test(biod_example$comm[1:3,], biod_example$phy),
+      cpr_rand_test(comm_small, biod_example$phy),
       "'comm' must include at least 5 sites"
-   )
-   expect_error(
-      cpr_rand_test(biod_example$comm[,1:3], biod_example$phy),
-      "'phy' and 'comm' must share at least 5 species in common"
    )
    expect_error(
       cpr_rand_test(biod_example$comm, ape::keep.tip(biod_example$phy, c("sp1", "sp2"))),
@@ -141,6 +153,19 @@ test_that("Input is valid", {
    expect_error(
       cpr_rand_test(comm_tbl, biod_example$phy, metrics = "pd", site_col = "sample"),
       "'site_col' must be one of the column names of 'comm'"
+   )
+   #' @srrstats {UL1.4} Check assumptions made with regard to input data
+   expect_error(
+      cpr_rand_test(biod_example$comm, phy_neg),
+      "'phy' may not have negative branchlengths"
+   )
+   expect_error(
+      cpr_rand_test(comm_one_zero_col, biod_example$phy),
+      "Every species in 'comm' must occur in at least one site"
+   )
+   expect_error(
+      cpr_rand_test(comm_one_zero_row, biod_example$phy),
+      "Every site in 'comm' must have at least once species"
    )
 })
 
