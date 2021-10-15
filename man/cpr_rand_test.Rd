@@ -26,7 +26,8 @@ cpr_rand_test(
   n_reps = 100,
   n_iterations = 10000,
   metrics = c("pd", "rpd", "pe", "rpe"),
-  site_col = "site"
+  site_col = "site",
+  tbl_out = tibble::is_tibble(comm)
 )
 }
 \arguments{
@@ -54,6 +55,10 @@ May include one or more of: \code{pd}, \code{rpd}, \code{pe}, \code{rpe} (case-s
 \item{site_col}{Character vector of length 1; name of column in \code{comm} that
 contains the site names; only used if \code{comm} is a tibble (object of class
 \code{tbl_df}).}
+
+\item{tbl_out}{Logical vector of length 1; should the output be returned as
+a tibble? If \code{FALSE}, will return a dataframe. Defaults to \code{TRUE} if \code{comm} is
+a tibble.}
 }
 \value{
 Dataframe. For each of the biodiversity metrics, the following 9 columns

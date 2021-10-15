@@ -250,7 +250,7 @@ test_that("Output is formatted as expected", {
       class(res_df_from_tbl),
       "data.frame"
    )
-   # Make sure data from 'site_col' is carried through for tbl input
+   #' @srrstats {UL1.3} Make sure data from 'site_col' is carried through for tbl input
    res_tbl_from_tbl_2 <- cpr_rand_test(comm_tbl_2, biod_example$phy, null_model = "richness", n_reps = 1, metrics = "pd", site_col = "sample")
    expect_equal(
       comm_tbl_2$sample,
