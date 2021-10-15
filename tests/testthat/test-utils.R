@@ -37,5 +37,23 @@ test_that("modified equalities work", {
 	expect_true(
 		2.0 %lesser% 2.1
 	)
+	expect_true(
+		2.0 %>=% 2.0
+	)
+	expect_true(
+		2.1 %>=% 2.0
+	)
+	expect_false(
+		2.0 %>=% 2.1
+	)
+	expect_true(
+		2.0 %<=% 2.0
+	)
+	expect_false(
+		2.1 %<=% 2.0
+	)
+	expect_true(
+		2.0 %<=% 2.1
+	)
 }
 )

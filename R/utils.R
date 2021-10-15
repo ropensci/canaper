@@ -79,6 +79,7 @@ lesser_than_single <- function(x, y) {
   #' @srrstats {G2.1, G2.6} Check input types and lengths
   assertthat::assert_that(assertthat::is.number(x))
   assertthat::assert_that(assertthat::is.number(y))
+  # only true if x and y are NOT equal, and x is less than y
   !isTRUE(all.equal(x, y)) && (x < y)
 }
 
@@ -86,16 +87,51 @@ lesser_than_single <- function(x, y) {
 #'
 #' Vectorized version. Is `x` lesser than `y`?
 #'
+#' `%>%` is already taken by the pipe, so don't use `%>%` or `%<%` as name
+#'
 #' @srrstats {G3.0} Uses appropriate tolerances for approximate equality
 #' @param x Numeric vector
 #' @param y Numeric vector
 #' @return Logical vector
 #' @noRd
-`%lesser%` <- function(x,y) {
+`%lesser%` <- function(x, y) {
   #' @srrstats {G2.1, G2.6} Check input types
   assertthat::assert_that(is.numeric(x))
   assertthat::assert_that(is.numeric(y))
   purrr::map2_lgl(x, y, lesser_than_single)
+}
+
+#' Version of `=<` that allows for modifying tolerance of equality test (`all.equal()`)
+#'
+#' Non-vectorized version. Is `x` lesser than or equal to `y`?
+#'
+#' @srrstats {G3.0} Uses appropriate tolerances for approximate equality
+#' @param x Numeric vector of length 1
+#' @param y Numeric vector of length 1
+#' @return Logical vector of length 1
+#' @noRd
+lesser_than_or_equal_single <- function(x, y) {
+  #' @srrstats {G2.1, G2.6} Check input types and lengths
+  assertthat::assert_that(assertthat::is.number(x))
+  assertthat::assert_that(assertthat::is.number(y))
+  # true if x and y are equal OR x is less than y
+  isTRUE(all.equal(x, y)) || (x < y)
+}
+
+#' Version of `=<` that allows for modifying tolerance of equality test (`all.equal()`)
+#'
+#' Vectorized version. Is `x` lesser than or equal to `y`?
+#'
+#' @srrstats {G3.0} Uses appropriate tolerances for approximate equality
+#' @param x Numeric vector
+#' @param y Numeric vector
+#' @return Logical vector
+#' @noRd
+`%<=%` <- function(x, y) {
+  #' @srrstats {G2.1, G2.6} Check input types
+  assertthat::assert_that(is.numeric(x))
+  assertthat::assert_that(is.numeric(y))
+  purrr::map2_lgl(x, y, lesser_than_or_equal_single)
 }
 
 #' Version of `>` that allows for modifying tolerance of equality test (`all.equal()`)
@@ -111,10 +147,46 @@ greater_than_single <- function(x, y) {
   #' @srrstats {G2.1, G2.6} Check input types and lengths
   assertthat::assert_that(assertthat::is.number(x))
   assertthat::assert_that(assertthat::is.number(y))
+  # only true if x and y are NOT equal, and x is greater than y
   !isTRUE(all.equal(x, y)) && (x > y)
 }
 
 #' Version of `>` that allows for modifying tolerance of equality test (`all.equal()`)
+#'
+#' Vectorized version. Is `x` greater than `y`?
+#'
+#' `%>%` is already taken by the pipe, so don't use `%>%` or `%<%` as name
+#'
+#' @srrstats {G3.0} Uses appropriate tolerances for approximate equality
+#' @param x Numeric vector
+#' @param y Numeric vector
+#' @return Logical vector
+#' @noRd
+`%greater%` <- function(x, y) {
+  #' @srrstats {G2.1, G2.6} Check input types
+  assertthat::assert_that(is.numeric(x))
+  assertthat::assert_that(is.numeric(y))
+  purrr::map2_lgl(x, y, greater_than_single)
+}
+
+#' Version of `>=` that allows for modifying tolerance of equality test (`all.equal()`)
+#'
+#' Non-vectorized version. Is `x` greater than or equal to `y`?
+#'
+#' @srrstats {G3.0} Uses appropriate tolerances for approximate equality
+#' @param x Numeric vector of length 1
+#' @param y Numeric vector of length 1
+#' @return Logical vector of length 1
+#' @noRd
+greater_than_or_equal_single <- function(x, y) {
+  #' @srrstats {G2.1, G2.6} Check input types and lengths
+  assertthat::assert_that(assertthat::is.number(x))
+  assertthat::assert_that(assertthat::is.number(y))
+  # true if x and y are equal OR x is greater than y
+  isTRUE(all.equal(x, y)) || (x > y)
+}
+
+#' Version of `>=` that allows for modifying tolerance of equality test (`all.equal()`)
 #'
 #' Vectorized version. Is `x` greater than `y`?
 #'
@@ -123,9 +195,9 @@ greater_than_single <- function(x, y) {
 #' @param y Numeric vector
 #' @return Logical vector
 #' @noRd
-`%greater%` <- function(x,y) {
+`%>=%` <- function(x, y) {
   #' @srrstats {G2.1, G2.6} Check input types
   assertthat::assert_that(is.numeric(x))
   assertthat::assert_that(is.numeric(y))
-  purrr::map2_lgl(x, y, greater_than_single)
+  purrr::map2_lgl(x, y, greater_than_or_equal_single)
 }
