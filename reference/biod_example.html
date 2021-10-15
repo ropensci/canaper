@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • canaper</title>
+<title>Test community matrix and phylogeny — biod_example • canaper</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Test community matrix and phylogeny — biod_example" />
+<meta property="og:description" content="Fictional data for testing purposes from Biodiverse." />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -120,123 +121,58 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Test community matrix and phylogeny</h1>
+    <small class="dont-index">Source: <a href='https://github.com/joelnitta/canaper/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>biod_example.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Fictional data for testing purposes from <a href='https://github.com/shawnlaffan/biodiverse/tree/master/data'>Biodiverse</a>.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='va'>biod_example</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-randomization-tests" class="hasAnchor"><a href="#section-randomization-tests" class="anchor"></a>Randomization tests</h2>
-          <p class="section-desc"><p>The main focus of this package, conducting randomization tests of biodiversity metrics</p></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="cpr_rand_test.html">cpr_rand_test()</a></code> </p>
-        </td>
-        <td><p>Run a randomization analysis for one or more biodiversity metrics</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-classification" class="hasAnchor"><a href="#section-classification" class="anchor"></a>Classification</h2>
-          <p class="section-desc"><p>Functions to classify the results of the randomization test</p></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="cpr_classify_endem.html">cpr_classify_endem()</a></code> </p>
-        </td>
-        <td><p>Classify phylogenetic endemism</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="cpr_classify_signif.html">cpr_classify_signif()</a></code> </p>
-        </td>
-        <td><p>Classify statistical significance</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-data" class="hasAnchor"><a href="#section-data" class="anchor"></a>Data</h2>
-          <p class="section-desc"><p>Datasets included in this package</p></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="acacia.html">acacia</a></code> </p>
-        </td>
-        <td><p>Community matrix and phylogeny of Acacia in Australia</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="biod_example.html">biod_example</a></code> </p>
-        </td>
-        <td><p>Test community matrix and phylogeny</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="biod_results.html">biod_results</a></code> </p>
-        </td>
-        <td><p>Output from Biodiverse</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-color-palettes" class="hasAnchor"><a href="#section-color-palettes" class="anchor"></a>Color palettes</h2>
-          <p class="section-desc"><p>Palettes for plotting classification results</p></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="cpr_endem_cols.html">cpr_endem_cols</a></code> </p>
-        </td>
-        <td><p>Color palette for plotting results of CANAPE</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="cpr_signif_cols.html">cpr_signif_cols</a></code> </p>
-        </td>
-        <td><p>Color palette for plotting results of randomization test</p></td>
-      </tr>
-    </tbody>
-    </table>
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A list with two elements:</p><dl>
+<dt>phy</dt><dd><p>Phylogeny with 31 tips</p></dd>
+<dt>comm</dt><dd><p>Community matrix with 127 sites and 31 species.
+Data are counts, i.e., the number of times
+a species was observed in a grid cell.</p></dd>
+
+</dl>
+
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>Laffan, S.W., Lubarsky, E. &amp; Rosauer, D.F. (2010) Biodiverse, a tool for the spatial analysis of biological and related diversity. Ecography. Vol 33, 643-647 (Version 3.1). doi: <a href='https://doi.org/10.1111/j.1600-0587.2010.06237.x'>10.1111/j.1600-0587.2010.06237.x</a></p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Corresponds to the the community matrix ("groups" object) and phylogeny from the Biodiverse <a href='https://github.com/shawnlaffan/biodiverse/raw/fbcad3c1df3667bac1235e822cb48ef6e5884e66/data/example_project.bps'>example_project.bps</a>.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Example phylogeny</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://ape-package.ird.fr/'>ape</a></span><span class='op'>)</span>
+<span class='va'>biod_example</span><span class='op'>$</span><span class='va'>phy</span>
+</div><div class='output co'>#&gt; 
+#&gt; Phylogenetic tree with 31 tips and 30 internal nodes.
+#&gt; 
+#&gt; Tip labels:
+#&gt;   sp19, sp5, sp15, sp1, sp10, sp26, ...
+#&gt; Node labels:
+#&gt;   29___, 28___, 22___, 20___, 19___, 15___, ...
+#&gt; 
+#&gt; Rooted; includes branch lengths.</div><div class='input'><span class='co'># Example community</span>
+<span class='va'>biod_example</span><span class='op'>$</span><span class='va'>comm</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;                 sp1 sp2 sp3 sp4 sp5
+#&gt; 1950000:1350000   0   0   0   0   0
+#&gt; 1950000:1450000   0   0   0   0   0
+#&gt; 2050000:1250000   0   0   0   0   0
+#&gt; 2050000:1350000   0   0   0   0   0
+#&gt; 2150000:1050000   0   0   0   0   0</div></pre>
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>

@@ -142,7 +142,9 @@ from the comparison (see <strong>Value</strong> below).</p>
   null_model <span class='op'>=</span> <span class='st'>"independentswap"</span>,
   n_reps <span class='op'>=</span> <span class='fl'>100</span>,
   n_iterations <span class='op'>=</span> <span class='fl'>10000</span>,
-  metrics <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pd"</span>, <span class='st'>"rpd"</span>, <span class='st'>"pe"</span>, <span class='st'>"rpe"</span><span class='op'>)</span>
+  metrics <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pd"</span>, <span class='st'>"rpd"</span>, <span class='st'>"pe"</span>, <span class='st'>"rpe"</span><span class='op'>)</span>,
+  site_col <span class='op'>=</span> <span class='st'>"site"</span>,
+  tbl_out <span class='op'>=</span> <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/is_tibble.html'>is_tibble</a></span><span class='op'>(</span><span class='va'>comm</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -150,9 +152,10 @@ from the comparison (see <strong>Value</strong> below).</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>comm</th>
-      <td><p>Dataframe or matrix; input community matrix with communities
-(sites) as rows and species as columns, including row names and column
-names.</p></td>
+      <td><p>Dataframe, tibble, or matrix; input community data with
+sites (communities) as rows and species as columns. Values of each cell are
+the presence/absence (0 or 1) or number of individuals (abundance) of each
+species in each site.</p></td>
     </tr>
     <tr>
       <th>phy</th>
@@ -162,7 +165,7 @@ names.</p></td>
       <th>null_model</th>
       <td><p>Character vector of length 1; name of null model to use.
 Must choose from <code>frequency</code>, <code>richness</code>, <code>independentswap</code>, or
-<code>trialswap.</code> For details, see <code><a href='https://rdrr.io/pkg/picante/man/randomizeSample.html'>picante::randomizeMatrix()</a></code>.</p></td>
+<code>trialswap</code> (case-sensitive). For details, see <code><a href='https://rdrr.io/pkg/picante/man/randomizeSample.html'>picante::randomizeMatrix()</a></code>.</p></td>
     </tr>
     <tr>
       <th>n_reps</th>
@@ -178,7 +181,19 @@ when swapping occurrences to generate each random community; only used if
     <tr>
       <th>metrics</th>
       <td><p>Character vector; names of biodiversity metrics to calculate.
-May include one or more of: <code>pd</code>, <code>rpd</code>, <code>pe</code>, <code>rpe</code>.</p></td>
+May include one or more of: <code>pd</code>, <code>rpd</code>, <code>pe</code>, <code>rpe</code> (case-sensitive).</p></td>
+    </tr>
+    <tr>
+      <th>site_col</th>
+      <td><p>Character vector of length 1; name of column in <code>comm</code> that
+contains the site names; only used if <code>comm</code> is a tibble (object of class
+<code>tbl_df</code>).</p></td>
+    </tr>
+    <tr>
+      <th>tbl_out</th>
+      <td><p>Logical vector of length 1; should the output be returned as
+a tibble? If <code>FALSE</code>, will return a dataframe. Defaults to <code>TRUE</code> if <code>comm</code> is
+a tibble.</p></td>
     </tr>
     </table>
 
@@ -211,6 +226,32 @@ will be produced:</p><ul>
 
 <p>So if you included <code>pd</code> in <code>metrics</code>, the output columns would include <code>pd_obs</code>,
 <code>pd_obs_c_lower</code>, etc...</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The biodiversity metrics available for analysis include:</p><ul>
+<li><p><code>pd</code>: Phylogenetic diversity (Faith 1992)</p></li>
+<li><p><code>rpd</code>: Relative phylogenetic diversity (Mishler et al 2014)</p></li>
+<li><p><code>pe</code>: Phylogenetic endemism (Rosauer et al 2009)</p></li>
+<li><p><code>rpe</code>: Relative phylogenetic endemism (Mishler et al 2014)</p></li>
+</ul>
+
+<p>The default method for generating random communities is the independent swap
+method of Gotelli (2000), which randomizes the community matrix while
+maintaining species occurrence frequency and sample species richness.</p>
+<p>A minimum of 5 species and sites are required as input; fewer than that may
+cause the default method for generating random communities (independent swap)
+to enter an infinite loop. Besides, inferences on very small numbers of
+species and/or sites is not recommended generally.</p>
+<p>The following rules apply to <code>comm</code> input:</p><ul>
+<li><p>If dataframe or matrix, must include row names (site names) and column names (species names).</p></li>
+<li><p>If tibble, a single column (default, <code>site</code>) must be included with site names, and other columns must correspond to species names.</p></li>
+<li><p>Column names cannot start with a number and must be unique.</p></li>
+<li><p>Row names (site names) must be unique.</p></li>
+<li><p>Values (other than site names) should only include integers &gt;= 0; non-integer input will be converted to integer.</p></li>
+</ul>
+
+<p>The results are identical regardless of whether the input for <code>comm</code> is
+abundance or presence-absence data (i.e., abundance weighting is not used).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>picante</span><span class='op'>)</span>
