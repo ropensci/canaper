@@ -245,6 +245,14 @@ cpr_rand_test <- function(
 		isTRUE(all(phy$edge.length %>=% 0)),
 		msg = "'phy' may not have negative branchlengths"
 	)
+	assertthat::assert_that(is.numeric(phy$edge.length))
+	assertthat::assert_that(assertthat::noNA(phy$edge.length))
+	assertthat::assert_that(is.character(phy$tip.label))
+	assertthat::assert_that(assertthat::noNA(phy$tip.label))
+	assertthat::assert_that(
+		!any(purrr::map_lgl(phy$edge.length, is.infinite)),
+		msg = "'phy' may not have infinite branchlengths"
+	)
 
 	# Match input between `comm` and `phylo` ----
 	# Match tips of tree and column names of community data frame:
