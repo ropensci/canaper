@@ -1,4 +1,5 @@
-# Make datasets for testing ----
+# Make objects used across multiple tests ----
+
 phy <- biod_example$phy
 comm <- biod_example$comm
 phy_alt <- phy
@@ -12,6 +13,8 @@ random_vals <-
 	)
 comm_sparse <- phyloregion::dense2sparse(comm)
 pe_obs <- phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
+
+# Run tests ----
 
 test_that("Input is valid", {
 	expect_error(
@@ -54,3 +57,8 @@ test_that("Output is formatted as expected", {
 		)
 	}
 })
+
+
+# Cleanup ----
+
+rm(phy, comm, phy_alt, random_vals, comm_sparse, pe_obs)

@@ -1,10 +1,13 @@
-# Make datasets for testing ----
+# Make objects used across multiple tests ----
+
 phy <- biod_example$phy
 comm <- biod_example$comm
 phy_alt <- phy
 phy_alt$edge.length <- rep(x = 1, times = length(phy_alt$edge.length))
 phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length)
 phy$edge.length <- phy$edge.length / sum(phy$edge.length)
+
+# Run tests ----
 
 #' @srrstats {G5.2, G5.2a, G5.2b} tests failure if input is not valid and checks warning messages
 test_that("Input is valid", {
@@ -77,3 +80,7 @@ test_that("Selected metric shows up in output", {
 		ignore.order = TRUE
 	)
 })
+
+# Cleanup ----
+
+rm(phy, comm, phy_alt)

@@ -1,6 +1,4 @@
-# Make datasets for testing ----
-
-rand_test <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "richness", n_reps = 10, metrics = c("pe", "rpe"))
+# Make objects used across multiple tests ----
 
 dummy_data <- data.frame(
 	pe_obs_p_upper =     c(0.99, 0.10, 0.999, 0.999, 0.10, 0.10, NA),
@@ -10,19 +8,22 @@ dummy_data <- data.frame(
 )
 
 dummy_res <- cpr_classify_endem(dummy_data)
-data_non_num_1 <- dummy_data
-data_non_num_2 <- dummy_data
-data_non_num_3 <- dummy_data
-data_non_num_4 <- dummy_data
-data_non_num_1[1,1] <- "a"
-data_non_num_2[1,2] <- "a"
-data_non_num_3[1,3] <- "a"
-data_non_num_4[1,4] <- "a"
+
+rand_test <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "richness", n_reps = 10, metrics = c("pe", "rpe"))
 
 # Run tests ----
 
 #' @srrstats {G5.2, G5.2a, G5.2b} tests failure if input is not valid and checks warning messages
 test_that("Input is valid", {
+	data_non_num_1 <- dummy_data
+	data_non_num_2 <- dummy_data
+	data_non_num_3 <- dummy_data
+	data_non_num_4 <- dummy_data
+	data_non_num_1[1,1] <- "a"
+	data_non_num_2[1,2] <- "a"
+	data_non_num_3[1,3] <- "a"
+	data_non_num_4[1,4] <- "a"
+
 	expect_error(
 		cpr_classify_endem(1),
 		"'df' must be of class 'data.frame'"
@@ -79,3 +80,6 @@ test_that("Output is formatted as expected", {
 	)
 })
 
+# Cleanup ----
+
+rm(dummy_data, dummy_res, rand_test)

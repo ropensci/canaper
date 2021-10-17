@@ -1,81 +1,34 @@
-# Make datasets for testing ----
+# Make objects used across multiple tests ----
 
-# -data with numeric species names
-comm_num_names <- biod_example$comm
-colnames(comm_num_names) <- 1:dim(comm_num_names)[2]
-phy_num_names <- biod_example$phy
-phy_num_names$tip.label <- colnames(comm_num_names)
+# keep in a list for easy cleanup
+dat <- list()
 
-# -comm with duplicated species names
-comm_dup_names <- biod_example$comm
-colnames(comm_dup_names)[2] <- "sp1"
-
-# -phy with duplicated species names
-phy_dup_names <- biod_example$phy
-phy_dup_names$tip.label[2] <- "sp1"
-
-# -comm with non-numeric data
-comm_non_numeric <- biod_example$comm
-comm_non_numeric[1,1] <- "a"
-
-# -comm with NA data
-comm_with_na <- biod_example$comm
-comm_with_na[1,1] <- NA
-
-# -comm with non vector data
-comm_with_nonvec <- data.frame(biod_example$comm)
-attributes(comm_with_nonvec[,1]) <- list(bar = "foo")
-
-# -comm with infinite data
-comm_with_infinite <- biod_example$comm
-comm_with_infinite[1,1] <- Inf
-
-# -comm with negative data
-comm_with_negative <- biod_example$comm
-comm_with_negative[1,1] <- -10
-
-# -presence-absence community
-comm_pa <- apply(biod_example$comm, 2, function(x) ifelse(x > 0, 1, 0))
-
-# -comm in tibble format
-comm_tbl <- biod_example$comm %>%
+# comm in tibble format
+dat$comm_tbl <- biod_example$comm %>%
    tibble::rownames_to_column("site") %>%
    tibble::as_tibble()
 
-# -comm in tibble format, non-default site name
-comm_tbl_2 <- biod_example$comm %>%
+# comm in tibble format, non-default site name
+dat$comm_tbl_2 <- biod_example$comm %>%
    tibble::rownames_to_column("sample") %>%
    tibble::as_tibble()
 
-# -comm in matrix format
-comm_mat <- as.matrix(biod_example$comm)
+# comm in matrix format
+dat$comm_mat <- as.matrix(biod_example$comm)
 
-# - negative branch lengths
-phy_neg <- biod_example$phy
-phy_neg$edge.length[1] <- -1
-
-# - column with all zeros
-comm_one_zero_col <- biod_example$comm
-comm_one_zero_col[,1] <- 0
-
-# - row with all zeros
-comm_one_zero_row <- biod_example$comm
-comm_one_zero_row[1,] <- 0
-
-# Make output for testing ----
 # For testing that results are same regardless of input type
-# (need to have same random seed each time)
+# need to have same random seed each time
 set.seed(123)
-res_from_df <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "richness", n_reps = 10)
+dat$res_from_df <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "richness", n_reps = 10)
 set.seed(123)
-res_from_tbl <- cpr_rand_test(comm_tbl, biod_example$phy, null_model = "richness", n_reps = 10, tbl_out = FALSE)
+dat$res_from_tbl <- cpr_rand_test(dat$comm_tbl, biod_example$phy, null_model = "richness", n_reps = 10, tbl_out = FALSE)
 set.seed(123)
-res_from_mat <- cpr_rand_test(comm_mat, biod_example$phy, null_model = "richness", n_reps = 10)
+dat$res_from_mat <- cpr_rand_test(dat$comm_mat, biod_example$phy, null_model = "richness", n_reps = 10)
 
 # For testing output format
-res_tbl_from_df <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "richness", n_reps = 1, metrics = "pd", tbl_out = TRUE)
-res_tbl_from_tbl <- cpr_rand_test(comm_tbl, biod_example$phy, null_model = "richness", n_reps = 1, metrics = "pd")
-res_df_from_tbl <- cpr_rand_test(comm_tbl, biod_example$phy, null_model = "richness", n_reps = 1, metrics = "pd", tbl_out = FALSE)
+dat$res_tbl_from_df <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "richness", n_reps = 1, metrics = "pd", tbl_out = TRUE)
+dat$res_tbl_from_tbl <- cpr_rand_test(dat$comm_tbl, biod_example$phy, null_model = "richness", n_reps = 1, metrics = "pd")
+dat$res_df_from_tbl <- cpr_rand_test(dat$comm_tbl, biod_example$phy, null_model = "richness", n_reps = 1, metrics = "pd", tbl_out = FALSE)
 
 # Run tests ----
 
@@ -101,10 +54,16 @@ test_that("Input is valid", {
       cpr_rand_test(biod_example$comm, biod_example$phy, metrics = "pg"),
       "'metrics' may only include 'pd', 'rpd', 'pe', or 'rpe'"
    )
+   # input data too small
    comm_small <- biod_example$comm[1:3,]
-   comm_small[1,] <- 1
-   comm_small[2,] <- 1
-   comm_small[3,] <- 1
+   set.seed(123)
+   comm_small <- matrix(
+      data = sample(c(0,1), replace = TRUE, size = length(unlist(comm_small))),
+      nrow = nrow(comm_small),
+      ncol = ncol(comm_small))
+   rownames(comm_small) <- rownames(biod_example$comm[1:3,])
+   colnames(comm_small) <- colnames(biod_example$comm[1:3,])
+   comm_small <- comm_small[,colSums(comm_small) > 0]
    expect_error(
       cpr_rand_test(comm_small, biod_example$phy),
       "'comm' must include at least 5 sites"
@@ -113,31 +72,53 @@ test_that("Input is valid", {
       cpr_rand_test(biod_example$comm, ape::keep.tip(biod_example$phy, c("sp1", "sp2"))),
       "'phy' and 'comm' must share at least 5 species in common"
    )
+   # comm with numeric species names
+   comm_num_names <- biod_example$comm
+   colnames(comm_num_names) <- 1:dim(comm_num_names)[2]
+   phy_num_names <- biod_example$phy
+   phy_num_names$tip.label <- colnames(comm_num_names)
    expect_error(
       cpr_rand_test(as.matrix(comm_num_names), phy_num_names, metrics = "pd"),
       "Column names of 'comm' changed after conversion from matrix to dataframe\\. Do any column names start with a number"
    )
+   # comm with duplicated species names
+   comm_dup_names <- biod_example$comm
+   colnames(comm_dup_names)[2] <- "sp1"
    expect_error(
       cpr_rand_test(comm_dup_names, biod_example$phy, metrics = "pd"),
       "'comm' must have unique column names"
    )
+   # phy with duplicated species names
+   phy_dup_names <- biod_example$phy
+   phy_dup_names$tip.label[2] <- "sp1"
+   expect_error(
+      cpr_rand_test(biod_example$comm, phy_dup_names),
+      "All tip labels in 'phy' must be unique"
+   )
+   # comm with non-numeric data
+   comm_non_numeric <- biod_example$comm
+   comm_non_numeric[1,1] <- "a"
    expect_error(
       cpr_rand_test(comm_non_numeric, biod_example$phy, metrics = "pd"),
       "All columns of 'comm' must be numeric"
    )
+   # comm with NA data
+   comm_with_na <- biod_example$comm
+   comm_with_na[1,1] <- NA
    expect_error(
       cpr_rand_test(comm_with_na, biod_example$phy, metrics = "pd"),
       "No missing values allowed in 'comm'"
    )
-   expect_error(
-      cpr_rand_test(comm_with_na, biod_example$phy, metrics = "pd"),
-      "No missing values allowed in 'comm'"
-   )
+   # comm with negative data
+   comm_with_negative <- biod_example$comm
+   comm_with_negative[1,1] <- -10
    expect_error(
       cpr_rand_test(comm_with_negative, biod_example$phy, metrics = "pd"),
       "No negative values allowed in 'comm'"
    )
-   #' @srrstats {G2.11} test for non-vector inputs
+   #' @srrstats {G2.11} non-vector inputs
+   comm_with_nonvec <- data.frame(biod_example$comm)
+   attributes(comm_with_nonvec[,1]) <- list(bar = "foo")
    expect_false(
       is.vector(comm_with_nonvec[,1])
    )
@@ -145,37 +126,86 @@ test_that("Input is valid", {
       cpr_rand_test(comm_with_nonvec, biod_example$phy, metrics = "pd"),
       "All columns of 'comm' must be numeric"
    )
-   #' @srrstats {G2.16} don't allow infinite values
+   #' @srrstats {G2.16} infinite values
+   comm_with_infinite <- biod_example$comm
+   comm_with_infinite[1,1] <- Inf
    expect_error(
       cpr_rand_test(comm_with_infinite, biod_example$phy, metrics = "pd"),
       "No infinite values allowed in 'comm'"
    )
    expect_error(
-      cpr_rand_test(comm_tbl, biod_example$phy, metrics = "pd", site_col = "sample"),
+      cpr_rand_test(dat$comm_tbl, biod_example$phy, metrics = "pd", site_col = "sample"),
       "'site_col' must be one of the column names of 'comm'"
    )
-   #' @srrstats {UL1.4} Check assumptions made with regard to input data
+   #' @srrstats {UL1.4} Check assumptions made with regard to input data (negative branch lengths)
+   phy_neg <- biod_example$phy
+   phy_neg$edge.length[1] <- -1
    expect_error(
       cpr_rand_test(biod_example$comm, phy_neg),
       "'phy' may not have negative branchlengths"
    )
+   phy_inf <- biod_example$phy
+   phy_inf$edge.length[1] <- Inf
+   expect_error(
+      cpr_rand_test(biod_example$comm, phy_inf),
+      "'phy' may not have infinite branchlengths"
+   )
+   # check column with all zeros
+   comm_one_zero_col <- biod_example$comm
+   comm_one_zero_col[,1] <- 0
    expect_error(
       cpr_rand_test(comm_one_zero_col, biod_example$phy),
       "Every species in 'comm' must occur in at least one site"
    )
+   # check row with all zeros
+   comm_one_zero_row <- biod_example$comm
+   comm_one_zero_row[1,] <- 0
    expect_error(
       cpr_rand_test(comm_one_zero_row, biod_example$phy),
       "Every site in 'comm' must have at least once species"
    )
+   # input data with too many zeros or 1s
+   # - make comm with >99.5% zeros
+   set.seed(123)
+   comm_zero_heavy <- matrix(
+      data = sample.int(2, replace = TRUE, prob = c(0.005, 0.995), size = length(unlist(biod_example$comm))),
+      nrow = nrow(biod_example$comm),
+      ncol = ncol(biod_example$comm))
+   comm_zero_heavy[comm_zero_heavy == 2] <- 0
+   # - make sure it doesn't break other rules (at least one species / site)
+   comm_zero_heavy[1,] <- 1
+   comm_zero_heavy[,1] <- 1
+   rownames(comm_zero_heavy) <- rownames(biod_example$comm)
+   colnames(comm_zero_heavy) <- colnames(biod_example$comm)
+   expect_warning(
+      cpr_rand_test(comm_zero_heavy, biod_example$phy, null_model = "richness", metrics = "pd"),
+      "'comm' is > 95% absences (zeros). Be sure that 'n_reps' and 'n_iterations' are sufficiently large to ensure adequate mixing of random communities",
+      fixed = TRUE
+   )
+   # - convert comm_zero_heavy to comm_one_heavy,
+   # making sure it doesn't break other rules (at least one species / site)
+   comm_one_heavy <- comm_zero_heavy
+   comm_one_heavy[comm_one_heavy == 1] <- 2
+   comm_one_heavy[comm_one_heavy == 0] <- 1
+   comm_one_heavy[comm_one_heavy == 2] <- 0
+   comm_one_heavy[1,] <- 1
+   comm_one_heavy[,1] <- 1
+   expect_warning(
+      cpr_rand_test(comm_one_heavy, biod_example$phy, null_model = "richness", metrics = "pd"),
+      "'comm' is > 95% presences (values > 1). Be sure that 'n_reps' and 'n_iterations' are sufficiently large to ensure adequate mixing of random communities",
+      fixed = TRUE
+   )
 })
 
 test_that("Results are same regardless of input type", {
-   expect_equal(res_from_mat, res_from_df)
-   expect_equal(res_from_mat, res_from_tbl)
-   expect_equal(res_from_df, res_from_tbl)
+   expect_equal(dat$res_from_mat, dat$res_from_df)
+   expect_equal(dat$res_from_mat, dat$res_from_tbl)
+   expect_equal(dat$res_from_df, dat$res_from_tbl)
 })
 
 test_that("Results are same regardless of presence/absence or abundance input", {
+   # make presence-absence community
+   comm_pa <- apply(biod_example$comm, 2, function(x) ifelse(x > 0, 1, 0))
    # pd
    set.seed(123)
    res_abun_pd <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "richness", n_reps = 10, metrics = "pd")
@@ -230,7 +260,7 @@ test_that("Default column and rownames are detected", {
    )
 })
 
-#' @srrstats {G5.4, G5.4b, G5.5} Implement correctness tests
+#' @srrstats {G5.4, G5.4b, G5.5} Correctness tests
 # Make sure results from canaper match those of Biodiverse
 # (for non-random results only)
 test_that("Output is same as when calculated with Biodiverse", {
@@ -256,33 +286,36 @@ test_that("Output is formatted as expected", {
    # Use expect equal() with class() when *only* expecting a data.frame
    # (tibble inherits data.frame, tbl, and tbl_df)
    expect_equal(
-      class(res_from_df),
+      class(dat$res_from_df),
       "data.frame"
    )
    expect_s3_class(
-      res_tbl_from_df,
+      dat$res_tbl_from_df,
       "tbl_df")
    expect_s3_class(
-      res_tbl_from_df,
+      dat$res_tbl_from_df,
       "tbl")
    expect_s3_class(
-      res_tbl_from_tbl,
+      dat$res_tbl_from_tbl,
       "tbl_df")
    expect_s3_class(
-      res_tbl_from_tbl,
+      dat$res_tbl_from_tbl,
       "tbl")
    expect_equal(
-      class(res_df_from_tbl),
+      class(dat$res_df_from_tbl),
       "data.frame"
    )
    #' @srrstats {UL1.3} Make sure data from 'site_col' is carried through for tbl input
-   res_tbl_from_tbl_2 <- cpr_rand_test(comm_tbl_2, biod_example$phy, null_model = "richness", n_reps = 1, metrics = "pd", site_col = "sample")
+   res_tbl_from_tbl_2 <- cpr_rand_test(dat$comm_tbl_2, biod_example$phy, null_model = "richness", n_reps = 1, metrics = "pd", site_col = "sample")
    expect_equal(
-      comm_tbl_2$sample,
+      dat$comm_tbl_2$sample,
       res_tbl_from_tbl_2$sample
    )
    expect_equal(
-      rownames(res_from_df),
+      rownames(dat$res_from_df),
       rownames(biod_example$comm)
    )
 })
+
+# Cleanup ----
+remove(dat)
