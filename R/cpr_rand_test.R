@@ -96,6 +96,10 @@ cpr_rand_test <- function(
 	metrics = c("pd", "rpd", "pe", "rpe"),
 	site_col = "site", tbl_out = tibble::is_tibble(comm)) {
 
+	# capture state of n_reps and n_iterations for testing if different from default later
+	n_reps_input <- n_reps
+	n_iterations_input <- n_iterations
+
 	# Check input: `null_model`, `n_reps`, `n_iterations`, `metrics` ----
 	#' @srrstats {G2.0, G2.2, G2.1, G2.3, G2.3a, G2.6, G2.13, G2.14, G2.14a, G2.15, G2.16}
 	#' check input types and lengths, missingness, undefined values, values of univariate char input
@@ -148,7 +152,7 @@ cpr_rand_test <- function(
 		assertthat::assert_that(
 			isTRUE(all(assertr::is_uniq(comm[[site_col]]))),
 			msg = "Site names must all be unique"
-			)
+		)
 		assertthat::assert_that(
 			assertthat::noNA(comm[[site_col]]),
 			msg = "Site names must not include any missing data"
@@ -230,6 +234,14 @@ cpr_rand_test <- function(
 		isTRUE(all(rowSums(comm) > 0)),
 		msg = "Every site in 'comm' must have at least once species"
 	)
+	#' @srrstats {UL1.4, UL2.0} Warn if community matrix is >95% present or absent and defaults are unchanged
+	percent_present <- (sum(unlist(comm) > 0)) / (length(unlist(comm)))
+	if (percent_present > 0.95 && n_reps_input == 100 && n_iterations_input == 10000) {
+		warning("'comm' is > 95% presences (values > 1). Be sure that 'n_reps' and 'n_iterations' are sufficiently large to ensure adequate mixing of random communities")
+	}
+	if (percent_present < 0.05 && n_reps_input == 100 && n_iterations_input == 10000) {
+		warning("'comm' is > 95% absences (zeros). Be sure that 'n_reps' and 'n_iterations' are sufficiently large to ensure adequate mixing of random communities")
+	}
 
 	# Check input: `phylo` ----
 	assertthat::assert_that(
