@@ -3,5 +3,6 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   canape: canape.html
-last_built: 2021-10-17T00:59Z
+  how-many-rand: how-many-rand.html
+last_built: 2021-10-18T09:31Z
 
