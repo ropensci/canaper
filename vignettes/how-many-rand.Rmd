@@ -46,9 +46,9 @@ If either `n_reps` or `n_iterations` are set too high, it will take overly long 
 
 ## Effect of `n_iterations`
 
-First, let's explore the effect of `n_iterations`. There are various ways to do this, but here I will use a Mantel test, which compares two distance matrices. Specifically, I will calculate the correlation between a distance matrix based on the original community data and a distance matrix based on the randomized data. I will use `picant::randomizeMatrix()` to generate the random communities, which `cpr_rand_test()` also uses internally[^1].
+First, let's explore the effect of `n_iterations`. There are various ways to do this, but here I will use a Mantel test, which compares two distance matrices. Specifically, I will calculate the correlation between a distance matrix based on the original community data and a distance matrix based on the randomized data. I will use `picante::randomizeMatrix()` to generate the random communities, which `cpr_rand_test()` also uses internally[^1].
 
-[^1]: The `iterations` argument of `picant::randomizeMatrix()` is equivalent to the `n_iterations` of `cpr_rand_test()`).
+[^1]: The `iterations` argument of `picante::randomizeMatrix()` is equivalent to the `n_iterations` of `cpr_rand_test()`).
 
 First, let's load the packages used in this vignette.
 
@@ -60,10 +60,10 @@ library(tictoc) # For timing
 library(tidyverse) # For tidy code
 ```
 
-Next we will test the effects of `n_iterations`, using the test dataset that comes with `canaper` (and [Biodiverse](https://github.com/shawnlaffan/biodiverse/tree/master/data)):
+Next we will test the effects of `n_iterations`, using the [test dataset that comes with `canaper`](https://joelnitta.github.io/canaper/reference/biod_example.html) (and [Biodiverse](https://github.com/shawnlaffan/biodiverse/tree/master/data)):
 
 ```{r test-n-iter}
-# Calculate a distance matrix from the orignal community data matrix
+# Calculate a distance matrix from the original community data matrix
 comm_dist <- vegdist(biod_example$comm)
 
 # Set random number seed so the results are reproducible
@@ -92,7 +92,7 @@ ggplot(dist_test_res, aes(x = n_iter, y = mantel_r)) +
   labs(x = "n_iterations", y = "Mantel r")
 ```
 
-From this, we can see that the original community and the randomized community are correlated up to about 1000 iterations. After that, the correlation coefficient levels off, and doesn't decrease much further even with additional "mixing".
+From this, we can see that the original community and the randomized community are correlated up to about 1000 iterations. After that, the correlation coefficient levels off, and doesn't decrease much further with additional "mixing".
 
 @Miklos2004 suggest for their algorithm (`trialswap`) to use at least twice the number of non-zeros in the community matrix. For our data, that is:
 
@@ -104,7 +104,7 @@ sum(rowSums(comm_presabs)) * 2
 
 So that roughly agrees with our plot above.
 
-Note that the number of iterations required **will vary based on the dataset**. It will likely be higher in datasets that are extremely skewed towards a high percentage of presences or absences, since a given swap is unlikely to actually change anything. So I recommend exploring the data, or at least checking the "rule of thumb" of @Miklos2004, to determine the minimum number of iterations needed.
+Note that the number of iterations required **will vary based on the dataset**. It will likely be higher in datasets that are extremely skewed towards a high percentage of presences or absences, since a given swap is unlikely to actually change anything. So I recommend exploring the data as above, or at least checking the "rule of thumb" of @Miklos2004, to determine the minimum number of iterations needed.
 
 Another note: `picante::randomizeMatrix()` is quite fast, even with millions of swaps. So you can probably be comfortable running up to 10^6 or so, but again it will depend on the dataset.
 
