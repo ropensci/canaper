@@ -1,6 +1,8 @@
 ---
 title: "CANAPE example"
+author: "Joel H. Nitta"
 output: rmarkdown::html_vignette
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 vignette: >
   %\VignetteIndexEntry{CANAPE example}
   %\VignetteEncoding{UTF-8}
