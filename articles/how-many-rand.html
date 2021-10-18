@@ -119,7 +119,7 @@
 <h2 class="hasAnchor">
 <a href="#effect-of-n_iterations" class="anchor"></a>Effect of <code>n_iterations</code>
 </h2>
-<p>First, let’s explore the effect of <code>n_iterations</code>. There are various ways to do this, but here I will use a Mantel test, which compares two distance matrices. Specifically, I will calculate the correlation between a distance matrix based on the original community data and a distance matrix based on the randomized data. I will use <code>picant::randomizeMatrix()</code> to generate the random communities, which <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> also uses internally<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+<p>First, let’s explore the effect of <code>n_iterations</code>. There are various ways to do this, but here I will use a Mantel test, which compares two distance matrices. Specifically, I will calculate the correlation between a distance matrix based on the original community data and a distance matrix based on the randomized data. I will use <code><a href="https://rdrr.io/pkg/picante/man/randomizeSample.html">picante::randomizeMatrix()</a></code> to generate the random communities, which <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> also uses internally<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 <p>First, let’s load the packages used in this vignette.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/joelnitta/canaper">canaper</a></span><span class="op">)</span> <span class="co"># This package</span>
@@ -127,9 +127,9 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cran.r-project.org">vegan</a></span><span class="op">)</span> <span class="co"># For Mantel test</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/collectivemedia/tictoc">tictoc</a></span><span class="op">)</span> <span class="co"># For timing</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span> <span class="co"># For tidy code</span></code></pre></div>
-<p>Next we will test the effects of <code>n_iterations</code>, using the test dataset that comes with <code>canaper</code> (and <a href="https://github.com/shawnlaffan/biodiverse/tree/master/data">Biodiverse</a>):</p>
+<p>Next we will test the effects of <code>n_iterations</code>, using the <a href="https://joelnitta.github.io/canaper/reference/biod_example.html">test dataset that comes with <code>canaper</code></a> (and <a href="https://github.com/shawnlaffan/biodiverse/tree/master/data">Biodiverse</a>):</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Calculate a distance matrix from the orignal community data matrix</span>
+<code class="sourceCode R"><span class="co"># Calculate a distance matrix from the original community data matrix</span>
 <span class="va">comm_dist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/vegan/man/vegdist.html">vegdist</a></span><span class="op">(</span><span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span><span class="op">)</span>
 
 <span class="co"># Set random number seed so the results are reproducible</span>
@@ -157,7 +157,7 @@
   <span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"n_iterations"</span>, y <span class="op">=</span> <span class="st">"Mantel r"</span><span class="op">)</span></code></pre></div>
 <p><img src="how-many-rand_files/figure-html/test-n-iter-1.png" width="700"></p>
-<p>From this, we can see that the original community and the randomized community are correlated up to about 1000 iterations. After that, the correlation coefficient levels off, and doesn’t decrease much further even with additional “mixing”.</p>
+<p>From this, we can see that the original community and the randomized community are correlated up to about 1000 iterations. After that, the correlation coefficient levels off, and doesn’t decrease much further with additional “mixing”.</p>
 <p><span class="citation">Miklós and Podani (2004)</span> suggest for their algorithm (<code>trialswap</code>) to use at least twice the number of non-zeros in the community matrix. For our data, that is:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">comm_presabs</span> <span class="op">&lt;-</span> <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>
@@ -165,7 +165,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">comm_presabs</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fl">2</span>
 <span class="co">#&gt; [1] 730</span></code></pre></div>
 <p>So that roughly agrees with our plot above.</p>
-<p>Note that the number of iterations required <strong>will vary based on the dataset</strong>. It will likely be higher in datasets that are extremely skewed towards a high percentage of presences or absences, since a given swap is unlikely to actually change anything. So I recommend exploring the data, or at least checking the “rule of thumb” of <span class="citation">Miklós and Podani (2004)</span>, to determine the minimum number of iterations needed.</p>
+<p>Note that the number of iterations required <strong>will vary based on the dataset</strong>. It will likely be higher in datasets that are extremely skewed towards a high percentage of presences or absences, since a given swap is unlikely to actually change anything. So I recommend exploring the data as above, or at least checking the “rule of thumb” of <span class="citation">Miklós and Podani (2004)</span>, to determine the minimum number of iterations needed.</p>
 <p>Another note: <code><a href="https://rdrr.io/pkg/picante/man/randomizeSample.html">picante::randomizeMatrix()</a></code> is quite fast, even with millions of swaps. So you can probably be comfortable running up to 10^6 or so, but again it will depend on the dataset.</p>
 <p>Now that we’ve settled on the number of iterations per random replicate, let’s look into the number of replicates.</p>
 </div>
@@ -195,7 +195,7 @@
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>, 
   n_iterations <span class="op">=</span> <span class="fl">1000</span>, n_reps <span class="op">=</span> <span class="fl">10</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu">tictoc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 6.877 sec elapsed</span>
+<span class="co">#&gt; 7.771 sec elapsed</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
 <span class="va">res_10_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span>
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>, 
@@ -209,7 +209,7 @@
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>, 
   n_iterations <span class="op">=</span> <span class="fl">1000</span>, n_reps <span class="op">=</span> <span class="fl">100</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu">tictoc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 3.413 sec elapsed</span>
+<span class="co">#&gt; 4 sec elapsed</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
 <span class="va">res_100_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span>
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>, 
@@ -224,7 +224,7 @@
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>, 
   n_iterations <span class="op">=</span> <span class="fl">1000</span>, n_reps <span class="op">=</span> <span class="fl">1000</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu">tictoc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 18.492 sec elapsed</span>
+<span class="co">#&gt; 20.89 sec elapsed</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">)</span>
 <span class="va">res_1000_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span>
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>, 
@@ -257,7 +257,7 @@
 <div class="footnotes">
 <hr>
 <ol>
-<li id="fn1"><p>The <code>iterations</code> argument of <code>picant::randomizeMatrix()</code> is equivalent to the <code>n_iterations</code> of <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code>).<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>The <code>iterations</code> argument of <code><a href="https://rdrr.io/pkg/picante/man/randomizeSample.html">picante::randomizeMatrix()</a></code> is equivalent to the <code>n_iterations</code> of <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code>).<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 <li id="fn2"><p>Other values based on the randomizations could be checked too (any value ending in <code>_obs_z</code>, <code>_rand_mean</code>, or <code>_rand_sd</code>).<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
