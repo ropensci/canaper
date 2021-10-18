@@ -1,0 +1,67 @@
+references:
+- id: Connor1979
+  accessed:
+  - year: 2021
+    month: 10
+    day: 18
+  author:
+  - family: Connor
+    given: Edward F.
+  - family: Simberloff
+    given: Daniel
+  container-title: Ecology
+  container-title-short: Ecology
+  DOI: 10/b3kvf7
+  ISSN: 00129658
+  issue: '6'
+  issued:
+  - year: 1979
+    month: 12
+  page: '1132'
+  source: DOI.org (Crossref)
+  title: 'The Assembly of Species Communities: Chance or Competition?'
+  title-short: The Assembly of Species Communities
+  type: article-journal
+  URL: http://www.jstor.org/stable/1936961?origin=crossref
+  volume: '60'
+- id: Gotelli2000
+  author:
+  - family: Gotelli
+    given: Nicholas J
+  container-title: Ecology
+  DOI: 10.2307/177478
+  ISSN: 00129658
+  issue: '9'
+  issued:
+  - year: 2000
+    month: 9
+  page: 2606-2621
+  title: Null model analysis of species co-occurrence patterns
+  type: article-journal
+  URL: http://www.jstor.org/stable/177478?origin=crossref
+  volume: '81'
+- id: Miklos2004
+  accessed:
+  - year: 2020
+    month: 7
+    day: 21
+  author:
+  - family: Miklós
+    given: I.
+  - family: Podani
+    given: J.
+  container-title: Ecology
+  DOI: 10/br74wj
+  ISSN: 1939-9170
+  issue: '1'
+  issued:
+  - year: 2004
+  language: en
+  note: '_eprint: https://esajournals.onlinelibrary.wiley.com/doi/pdf/10.1890/03-0101'
+  page: 86-92
+  source: Wiley Online Library
+  title: 'Randomization of presence–absence Matrices: Comments and new algorithms'
+  title-short: Randomization of Presence–Absence Matrices
+  type: article-journal
+  URL: https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1890/03-0101
+  volume: '85'
