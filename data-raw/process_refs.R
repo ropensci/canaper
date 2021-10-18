@@ -7,8 +7,10 @@ library(tidyverse)
 library(yaml)
 library(assertr)
 
+filter_refs <- function(rmd, yaml_in, yaml_out) {
+
 # Set path to RMD file
-rmd_file <- here::here("vignettes/canape.Rmd")
+rmd_file <- here::here(rmd)
 
 # Parse RMD file and extract citation keys
 citations <-
@@ -24,7 +26,7 @@ citations <-
   tibble(key = .)
 
 # Read in YAML including all references exported from Zotero
-ref_yaml <- yaml::read_yaml(here::here("data-raw/main_library.yaml"))
+ref_yaml <- yaml::read_yaml(yaml_in)
 
 # Extract citation keys from YAML, filter to only those in the RMD
 cite_keys <- map_chr(ref_yaml$references, "id") %>%
@@ -39,4 +41,17 @@ cite_keys <- map_chr(ref_yaml$references, "id") %>%
 # Filter YAML to only those citation keys in the RMD
 list(references = ref_yaml$references[cite_keys$order]) %>%
   # Write out the YAML file
-  yaml::write_yaml(file = here::here("vignettes/references.yaml"))
+  yaml::write_yaml(file = yaml_out)
+}
+
+filter_refs(
+  "vignettes/canape.Rmd",
+  here::here("data-raw/main_library.yaml"),
+  file = here::here("vignettes/references.yaml")
+  )
+
+filter_refs(
+  "vignettes/nrand.Rmd",
+  here::here("data-raw/main_library.yaml"),
+  here::here("vignettes/nrand_references.yaml")
+)
