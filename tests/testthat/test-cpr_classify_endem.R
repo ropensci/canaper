@@ -13,7 +13,7 @@ rand_test <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "ri
 
 # Run tests ----
 
-#' @srrstats {G5.2, G5.2a, G5.2b} tests failure if input is not valid and checks warning messages
+#' @srrstats {G5.2, G5.2a, G5.2b, UL7.0} tests failure if input is not valid and checks warning messages
 test_that("Input is valid", {
 	data_non_num_1 <- dummy_data
 	data_non_num_2 <- dummy_data

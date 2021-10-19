@@ -32,7 +32,7 @@ dat$res_df_from_tbl <- cpr_rand_test(dat$comm_tbl, biod_example$phy, null_model 
 
 # Run tests ----
 
-#' @srrstats {G5.2, G5.2a, G5.2b} tests failure if input is not valid and checks warning messages
+#' @srrstats {G5.2, G5.2a, G5.2b, UL7.0} tests failure if input is not valid and checks warning messages
 test_that("Input is valid", {
    expect_error(
       cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = -10),
@@ -321,7 +321,7 @@ test_that("Output is formatted as expected", {
       class(dat$res_df_from_tbl),
       "data.frame"
    )
-   #' @srrstats {UL1.3} Make sure data from 'site_col' is carried through for tbl input
+   #' @srrstats {UL1.3, UL7.3} Make sure data from 'site_col' is carried through for tbl input
    res_tbl_from_tbl_2 <- cpr_rand_test(dat$comm_tbl_2, biod_example$phy, null_model = "richness", n_reps = 1, metrics = "pd", site_col = "sample")
    expect_equal(
       dat$comm_tbl_2$sample,

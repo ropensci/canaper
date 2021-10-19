@@ -9,7 +9,7 @@ phy$edge.length <- phy$edge.length / sum(phy$edge.length)
 
 # Run tests ----
 
-#' @srrstats {G5.2, G5.2a, G5.2b} tests failure if input is not valid and checks warning messages
+#' @srrstats {G5.2, G5.2a, G5.2b, UL7.0} tests failure if input is not valid and checks warning messages
 test_that("Input is valid", {
 	expect_error(
 		calc_biodiv_random(10, phy, phy_alt, "independentswap", 10L),

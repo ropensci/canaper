@@ -32,6 +32,7 @@
 #' @srrstats {G2.0a, G2.1a, G2.3b} Documents expectations on lengths, types of vector
 #'   inputs, case-sensitivity
 #' @srrstats {G2.7, UL1.0} accept dataframe or matrix
+#' @srrstats {UL4.3a} If `tbl_out` is `TRUE`, restricts number of rows/columns printed to screen
 #' @param comm Dataframe, tibble, or matrix; input community data with
 #'   sites (communities) as rows and species as columns. Values of each cell are
 #'   the presence/absence (0 or 1) or number of individuals (abundance) of each
@@ -54,7 +55,8 @@
 #' a tibble? If `FALSE`, will return a dataframe. Defaults to `TRUE` if `comm` is
 #' a tibble.
 #'
-#' @srrstats {G1.3} defines terminology (also in 'details'):
+#' @srrstats {G1.3} defines terminology (also in 'details')
+#' @srrstats {UL3.4} output includes variances in random values
 #' @return Dataframe. For each of the biodiversity metrics, the following 9 columns
 #' will be produced:
 #' - `*_obs`: Observed value

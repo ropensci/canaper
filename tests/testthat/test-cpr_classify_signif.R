@@ -1,4 +1,4 @@
-#' @srrstats {G5.2, G5.2a, G5.2b} tests failure if input is not valid and checks warning messages
+#' @srrstats {G5.2, G5.2a, G5.2b, UL7.0} tests failure if input is not valid and checks warning messages
 test_that("Input is valid", {
 	expect_error(
 		cpr_classify_signif(1, "pd"),
