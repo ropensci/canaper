@@ -97,7 +97,7 @@
 
     
     
-<p>A central part of CANAPE analysis is comparing observed values with randomizations. It is up to the user to set the number of randomizations… but how does one know if the number of randomizations is sufficient?</p>
+<p>A central part of CANAPE is comparing observed values with randomizations. It is up to the user to set the number of randomizations… but how does one know if the number of randomizations is sufficient?</p>
 <p>(This vignette assumes a basic understanding of CANAPE, community data matrices, and randomizations. If you aren’t familiar with any of these, you should probably see the <a href="https://joelnitta.github.io/canaper/articles/canape.html">the CANAPE example vignette</a> first).</p>
 <div id="a-word-about-randomization-algorithms" class="section level2">
 <h2 class="hasAnchor">
@@ -187,19 +187,19 @@
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>, 
   n_iterations <span class="op">=</span> <span class="fl">1000</span>, n_reps <span class="op">=</span> <span class="fl">10</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 5.858 sec elapsed</span>
+<span class="co">#&gt; 5.44 sec elapsed</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">tic</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">res_100_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span>
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>, 
   n_iterations <span class="op">=</span> <span class="fl">1000</span>, n_reps <span class="op">=</span> <span class="fl">100</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 2.042 sec elapsed</span>
+<span class="co">#&gt; 1.853 sec elapsed</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">tic</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">res_1000_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span>
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>, 
   n_iterations <span class="op">=</span> <span class="fl">1000</span>, n_reps <span class="op">=</span> <span class="fl">1000</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 18.249 sec elapsed</span>
+<span class="co">#&gt; 16.722 sec elapsed</span>
 
 <span class="co"># Second set</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">67890</span><span class="op">)</span>
@@ -289,7 +289,7 @@
 <hr>
 <ol>
 <li id="fn1"><p>An additional algorithm, <code>rand_structured</code> is currently <a href="http://biodiverse-analysis-software.blogspot.com/2020/11/randomisations-how-randstructured.html">only offered in Biodiverse</a>. <a href="http://biodiverse-analysis-software.blogspot.com/2020/12/biodiverse-now-includes-independent.html">Benchmark tests indicate</a> that <code>rand_structured</code> is faster than the <code>picante</code> swapping algorithms.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>The <code>iterations</code> argument of <code><a href="https://rdrr.io/pkg/picante/man/randomizeSample.html">picante::randomizeMatrix()</a></code> is equivalent to the <code>n_iterations</code> of <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code>).<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>The <code>iterations</code> argument of <code><a href="https://rdrr.io/pkg/picante/man/randomizeSample.html">picante::randomizeMatrix()</a></code> is equivalent to the <code>n_iterations</code> argument of <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code>).<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 <li id="fn3"><p>Other values based on the randomizations could be checked too (e.g., values ending in <code>_obs_z</code>, <code>_rand_mean</code>, or <code>_rand_sd</code>).<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
 <li id="fn4"><p>You can of course speed things up with parallelization. For details, see <a href="https://joelnitta.github.io/canaper/articles/canape.html#randomization-test">the CANAPE example vignette</a>.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
 </ol>
@@ -307,7 +307,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Joel Nitta.</p>
+  <p>Developed by Joel H. Nitta.</p>
 </div>
 
 <div class="pkgdown">
