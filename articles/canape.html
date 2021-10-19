@@ -88,7 +88,7 @@
       <h1 data-toc-skip>CANAPE example</h1>
                         <h4 class="author">Joel H. Nitta</h4>
             
-            <h4 class="date">18 October, 2021</h4>
+            <h4 class="date">19 October, 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/joelnitta/canaper/blob/master/vignettes/canape.Rmd"><code>vignettes/canape.Rmd</code></a></small>
       <div class="hidden name"><code>canape.Rmd</code></div>
@@ -172,7 +172,7 @@
 <p>The main purpose of <code>canaper</code> is to perform these randomization tests.</p>
 <p><code>canaper</code> performs community matrix randomizations available in the <a href="https://CRAN.R-project.org/package=picante"><code>picante</code></a> package, including <code>frequency</code>, <code>richness</code>, <code>independentswap</code> and <code>trialswap</code>. For details about these algorithms, see <a href="https://rdrr.io/cran/picante/man/randomizeSample.html"><code>picante::randomizeMatrix</code></a>.</p>
 <p>The default setting in <code>canaper</code> is to use <code>independentswap</code>, which maintains species richness and abundance patterns while randomizing species identity <span class="citation">(Gotelli 2000)</span>.</p>
-<p>Let’s perform a randomization test for the <code>acacia</code> dataset. This example also demonstrates one of the strengths of <code>canaper</code>: the ability to run randomizations in parallel. This is by far the most time-consuming part of CANAPE, since we have to repeat the calculations many (e.g., hundreds or more) times across the randomized communities to obtain reliable results. Here, we set the number of iterations (<code>n_iterations</code>; i.e., the number of swaps used to produce each randomized community) fairly high because this community matrix is large and includes many zeros; thorough mixing by swapping many times is required to completely randomize the matrix. We will use a low number of random communities (<code>n_reps</code>) so things finish relatively quickly; you should consider increasing <code>n_reps</code> for a “real” analysis.</p>
+<p>Let’s perform a randomization test for the <code>acacia</code> dataset. This example also demonstrates one of the strengths of <code>canaper</code>: the ability to run randomizations in parallel. This is by far the most time-consuming part of CANAPE, since we have to repeat the calculations many (e.g., hundreds or more) times across the randomized communities to obtain reliable results. Here, we set the number of iterations (<code>n_iterations</code>; i.e., the number of swaps used to produce each randomized community) fairly high because this community matrix is large and includes many zeros; thorough mixing by swapping many times is required to completely randomize the matrix. We will use a low number of random communities (<code>n_reps</code>) so things finish relatively quickly; you should consider increasing <code>n_reps</code> for a “real” analysis<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Set a parallel back-end, with 4 CPUs running simultaneously</span>
 <span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
@@ -190,7 +190,7 @@
 <span class="co">#&gt; [1] "Pararchidendron_pruinosum" "Paraserianthes_lophantha" </span>
 <span class="co">#&gt; [3] "saligna"                   "clunies-rossiae"</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># See how long it took</span>
-<span class="co">#&gt; 1612.351 sec elapsed</span></code></pre></div>
+<span class="co">#&gt; 871.501 sec elapsed</span></code></pre></div>
 <p>If we hadn’t run it in parallel, it would have taken 4 times longer!</p>
 <p>Let’s take a peek at the output. <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> produces <strong>a lot</strong> of columns, so we’ll view this as a tibble, which prints out more nicely than a plain <code>data.frame</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -332,6 +332,12 @@
 <p>Mishler, Brent D, Nunzio Knerr, Carlos E. González-Orozco, Andrew H. Thornhill, Shawn W. Laffan, and Joseph T. Miller. 2014. “Phylogenetic Measures of Biodiversity and Neo- and Paleo-Endemism in Australian Acacia.” <em>Nature Communications</em> 5: 4473. <a href="https://doi.org/10.1038/ncomms5473">https://doi.org/10.1038/ncomms5473</a>.</p>
 </div>
 </div>
+</div>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p>For more details on setting the appropriate number of iterations and replicates, <a href="https://joelnitta.github.io/canaper/articles/how-many-rand.html">see the “How many randomizations?” vigenette</a>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
   </div>
 
