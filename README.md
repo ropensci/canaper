@@ -17,7 +17,7 @@ coverage](https://codecov.io/gh/joelnitta/canaper/branch/main/graph/badge.svg)](
 
 The goal of canaper is to enable [categorical analysis of neo- and
 paleo-endemism (CANAPE)](https://doi.org/10.1038/ncomms5473) in **R**.
-This is the first implementation in **R** of this analysis, which was
+This is the first implementation in **R** of CANAPE, which was
 previously only available in
 [Biodiverse](http://shawnlaffan.github.io/biodiverse/).
 
@@ -170,7 +170,7 @@ vignette](https://joelnitta.github.io/canaper/articles/canape.html)
 
 ## Other information
 
-Poster at Botany 2021
+Poster at [Botany 2021](https://2021.botanyconference.org/)
 
 -   [PDF](https://github.com/joelnitta/botany_poster_2021/raw/main/canaper.pdf)
 -   [Video](https://www.youtube.com/watch?v=LXn_ziEli_Q)
@@ -193,7 +193,7 @@ the right.
 
 ## Papers citing `canaper`
 
--   Nitta **et al.** “Spatial phylogenetics of Japanese ferns: Patterns,
+-   Nitta *et al.* “Spatial phylogenetics of Japanese ferns: Patterns,
     processes, and implications for conservation”. bioRxiv
     <https://doi.org/10.1101/2021.08.26.457744>
 
