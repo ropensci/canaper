@@ -18,11 +18,6 @@ knitr::opts_chunk$set(
   comment = "#>",
   retina = 3
 )
-
-#' @srrstats {G5.7} This vignette demonstrates that the algorithm approaches
-#' expected, "correct" values as number of replicates increases
-#' @srrstats {UL7.1}  This vignette demonstrates that violating the assumption
-#' of sufficient number of randomizations produces unreliable output
 ```
 
 A central part of CANAPE is comparing observed values with randomizations. It is up to the user to set the number of randomizations... but how does one know if the number of randomizations is sufficient?

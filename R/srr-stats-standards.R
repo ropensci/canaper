@@ -179,5 +179,10 @@ NULL
 #' These standards apply to a file that is not R or Rmd, so they
 #' can't be moved there, and are instead place here (with a description of their location).
 #' @srrstats {G1.2} A life cycle statement is provided in `.github/CONTRIBUTING.md`
+#' @srrstats {G5.1} Data sets documented in `R/data.R`
+#' @srrstats {G5.7} `vignettes/how-many-rand.Rmd` demonstrates that the algorithm approaches
+#' expected, "correct" values as number of replicates increases
+#' @srrstats {UL7.1} `vignettes/how-many-rand.Rmd` demonstrates that violating the assumption
+#' of sufficient number of randomizations produces unreliable output
 #' @noRd
 NULL
