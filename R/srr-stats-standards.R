@@ -105,8 +105,8 @@
 # @srrstatsNA {UL7.2} *Demonstrate that labels placed on output data follow decreasing group sizes (**UL3.0**)*
 # @srrstats {UL7.3} *Demonstrate that labels on input data are propagated to, or may be recovered from, output data.*
 # @srrstatsNA {UL7.4} *Demonstrate that submission of new data to a previously fitted model can generate results more efficiently than initial model fitting.*
-#' @srrstatsTODO {UL7.5} *Batch processing routines should be explicitly tested, commonly via extended tests (see **G4.10**--**G4.12**).*
-#' @srrstatsTODO {UL7.5a} *Tests of batch processing routines should demonstrate that equivalent results are obtained from direct (non-batch) processing.*
+# @srrstats {UL7.5} *Batch processing routines should be explicitly tested, commonly via extended tests (see **G4.10**--**G4.12**).*
+# @srrstats {UL7.5a} *Tests of batch processing routines should demonstrate that equivalent results are obtained from direct (non-batch) processing.*
 #' @noRd
 NULL
 

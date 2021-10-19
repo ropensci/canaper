@@ -260,6 +260,43 @@ test_that("Default column and rownames are detected", {
    )
 })
 
+#' @srrstats {UL7.5, UL7.5a} Test batch processing, show that results don't
+#'   differ between sequential and parallel
+test_that("Parallelization decreases calculation time", {
+   # Change back to sequential when done (including on failure)
+   on.exit(future::plan(future::sequential), add = TRUE)
+
+   # Set future resolution to sequential (no parallelization)
+   future::plan(future::sequential)
+   set.seed(123)
+   tictoc::tic.clearlog()
+   tictoc::tic()
+   seq_res <- cpr_rand_test(acacia$comm, acacia$phy, null_model = "trialswap", n_iterations = 100, n_reps = 200)
+   tictoc::toc(log = TRUE, quiet = TRUE)
+
+   # Set future resolution to parallelized, with 4 workers
+   future::plan(future::multisession, workers = 4)
+   set.seed(123)
+   tictoc::tic()
+   parallel_res <- cpr_rand_test(acacia$comm, acacia$phy, null_model = "trialswap", n_iterations = 100, n_reps = 200)
+   tictoc::toc(log = TRUE, quiet = TRUE)
+   log_list <- tictoc::tic.log(format = FALSE)
+   tictoc::tic.clearlog()
+   # Check times
+   elapsed_time_seq <- log_list[[1]]$toc - log_list[[1]]$tic
+   elapsed_time_parallel <- log_list[[2]]$toc - log_list[[2]]$tic
+
+   # Change back to sequential
+   future::plan(future::sequential)
+
+   # Expect sequential to take longer
+   expect_gt(elapsed_time_seq, elapsed_time_parallel)
+   expect_lt(elapsed_time_parallel, elapsed_time_seq)
+
+   # But results should be same
+   expect_equal(seq_res, parallel_res)
+})
+
 #' @srrstats {G5.4, G5.4b, G5.5} Correctness tests
 # Make sure results from canaper match those of Biodiverse
 # (for non-random results only)
