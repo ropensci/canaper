@@ -2,11 +2,23 @@ Package: canaper
 Title: Categorical Analysis of Neo- And Paleo-Endemism
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Joel",
+    c(
+    person(given = "Joel H.",
            family = "Nitta",
            role = c("aut", "cre"),
            email = "joelnitta@gmail.com",
-           comment = c(ORCID = "0000-0003-4719-7472"))
+           comment = c(ORCID = "0000-0003-4719-7472")),
+    person(given = "Shawn W.",
+           family = "Laffan",
+           role = c("ctb", "dtc")),
+    person(given = "Brent D.",
+           family = "Mishler",
+           role = c("ctb", "dtc")),
+    person(given = "Wataru",
+           family = "Iwasaki",
+           role = c("ctb"),
+           comment = c(ORCID = "0000-0002-9169-9245"))
+           )
 Description: Provides functions to conduct categorical analysis of neo- and paleo-endemism (CANAPE).
 License: MIT + file LICENSE
 Encoding: UTF-8

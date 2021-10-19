@@ -17,7 +17,14 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Joel Nitta \email{joelnitta@gmail.com} (\href{https://orcid.org/0000-0003-4719-7472}{ORCID})
+\strong{Maintainer}: Joel H. Nitta \email{joelnitta@gmail.com} (\href{https://orcid.org/0000-0003-4719-7472}{ORCID})
+
+Other contributors:
+\itemize{
+  \item Shawn W. Laffan [contributor, data contributor]
+  \item Brent D. Mishler [contributor, data contributor]
+  \item Wataru Iwasaki (\href{https://orcid.org/0000-0002-9169-9245}{ORCID}) [contributor]
+}
 
 }
 \keyword{internal}
