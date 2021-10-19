@@ -367,6 +367,7 @@ cpr_rand_test <- function(
 	}
 
 	# Combine results
+	# (don't use pipe, to maintain backwards compatibility with R < 4.1)
 	results_df <- dplyr::bind_cols(
 		ses_pd,
 		ses_pd_alt,
@@ -374,15 +375,17 @@ cpr_rand_test <- function(
 		ses_pe,
 		ses_pe_alt,
 		ses_rpe
-	) %>%
-		dplyr::mutate(site = rownames(comm)) %>%
-		tibble::column_to_rownames("site")
+	)
+
+	results_df <- dplyr::mutate(results_df, site = rownames(comm))
+
+	results_df <- tibble::column_to_rownames(results_df, "site")
 
 	# If tibble was input, return tibble starting with the "site" column
 	if (isTRUE(tbl_out)) {
-		results_tbl <- tibble::rownames_to_column(results_df, site_col) %>%
-			tibble::as_tibble() %>%
-			dplyr::select(dplyr::all_of(site_col), dplyr::everything())
+		results_tbl <- tibble::rownames_to_column(results_df, site_col)
+		results_tbl <- tibble::as_tibble(results_tbl)
+		results_tbl <- dplyr::select(results_tbl, dplyr::all_of(site_col), dplyr::everything())
 		return(results_tbl)
 	} else {
 		return(results_df)

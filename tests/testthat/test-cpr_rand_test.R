@@ -4,13 +4,13 @@
 dat <- list()
 
 # comm in tibble format
-dat$comm_tbl <- biod_example$comm %>%
-   tibble::rownames_to_column("site") %>%
+dat$comm_tbl <- biod_example$comm |>
+   tibble::rownames_to_column("site") |>
    tibble::as_tibble()
 
 # comm in tibble format, non-default site name
-dat$comm_tbl_2 <- biod_example$comm %>%
-   tibble::rownames_to_column("sample") %>%
+dat$comm_tbl_2 <- biod_example$comm |>
+   tibble::rownames_to_column("sample") |>
    tibble::as_tibble()
 
 # comm in matrix format
@@ -242,7 +242,7 @@ test_that("Results are same regardless of presence/absence or abundance input", 
 test_that("Default column and rownames are detected", {
    # Make a dummy community dataframe and phylogeny
    set.seed(123)
-   abuns <- runif(10*8, 0, 10) %>% as.integer()
+   abuns <- runif(10*8, 0, 10) |> as.integer()
    df_default_rows <- data.frame(
       sp1 = abuns[1:10],
       sp2 = abuns[11:20],
@@ -303,12 +303,12 @@ test_that("Parallelization decreases calculation time", {
 test_that("Output is same as when calculated with Biodiverse", {
    # Calculate observed PD, PE, etc using biodiverse test data
    set.seed(123)
-   res_compare <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 1, null_model = "richness") %>%
-      tibble::rownames_to_column("site") %>%
-      tibble::as_tibble() %>%
-      dplyr::select(site, matches("_obs$")) %>%
+   res_compare <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 1, null_model = "richness") |>
+      tibble::rownames_to_column("site") |>
+      tibble::as_tibble() |>
+      dplyr::select(site, matches("_obs$")) |>
       # Join on independently calculated results from Biodiverse
-      dplyr::left_join(biod_results, by = "site") %>%
+      dplyr::left_join(biod_results, by = "site") |>
       # Make sure no values are NA
       assertr::assert(assertr::not_na, dplyr::everything())
    expect_equal(res_compare$pd_obs, res_compare$pd_biodiv)
