@@ -282,6 +282,22 @@ test_that("Output is same as when calculated with Biodiverse", {
    expect_equal(res_compare$rpe_obs, res_compare$rpe_biodiv)
 })
 
+test_that("Output is different with different random seeds", {
+   set.seed(123)
+   res_1 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "richness")
+   set.seed(456)
+   res_2 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "richness")
+   expect_false(isTRUE(all.equal(res_1, res_2)))
+})
+
+test_that("Output is same with same random seed", {
+   set.seed(123)
+   res_1 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "richness")
+   set.seed(123)
+   res_2 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "richness")
+   expect_equal(res_1, res_2)
+})
+
 test_that("Output is formatted as expected", {
    # Use expect equal() with class() when *only* expecting a data.frame
    # (tibble inherits data.frame, tbl, and tbl_df)
