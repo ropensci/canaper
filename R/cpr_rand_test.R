@@ -202,13 +202,6 @@ cpr_rand_test <- function(
 			success_fun = assertr::success_logical, error_fun = assertr::error_logical),
 		msg = "No missing values allowed in 'comm'"
 	)
-	#' @srrstats {G2.16, UL1.1} don't allow infinite values
-	assertthat::assert_that(
-		assertr::assert(
-			comm, function(x) !any(purrr::map_lgl(x, is.infinite)), dplyr::everything(),
-			success_fun = assertr::success_logical, error_fun = assertr::error_logical),
-		msg = "No infinite values allowed in 'comm'"
-	)
 	#' @srrstats {G2.11, UL1.1} check for class attributes in dataframe
 	numeric_check <- NULL
 	for (i in 1:ncol(comm)) {
@@ -218,13 +211,16 @@ cpr_rand_test <- function(
 		isTRUE(all(numeric_check)),
 		msg = "All columns of 'comm' must be numeric"
 	)
+	#' @srrstats {G2.16, UL1.1} don't allow infinite values
+	assertthat::assert_that(
+		isTRUE(all(is.finite(unlist(comm)))),
+		msg = "No infinite values allowed in 'comm'"
+	)
 	#' @srrstats {G2.4a} Convert all values in comm to integer
 	comm <- dplyr::mutate(comm, dplyr::across(dplyr::everything(), as.integer))
 	#' @srrstats {UL1.4} Check that all values in comm are >= 0
 	assertthat::assert_that(
-		assertr::assert(
-			comm, function(x) all(purrr::map_lgl(x, ~magrittr::is_weakly_greater_than(.x, 0))), dplyr::everything(),
-			success_fun = assertr::success_logical, error_fun = assertr::error_logical),
+		isTRUE(all(unlist(comm) >= 0)), # values have been converted to integer, so OK to use equalities
 		msg = "No negative values allowed in 'comm'"
 	)
 	#' @srrstats {UL1.4} Check for all 0s for a given site or species
