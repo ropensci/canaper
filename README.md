@@ -191,6 +191,12 @@ version of the package:
 You can find DOIs for older versions by viewing the “Releases” menu on
 the right.
 
+## Licenses
+
+-   Code: [MIT](LICENSE.md)
+-   Example datasets (`acacia`, `biod_example`): [GNU General Public
+    License v3.0](data-raw/LICENSE.txt)
+
 ## References
 
 Mishler, B., Knerr, N., González-Orozco, C. *et al*. Phylogenetic
