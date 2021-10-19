@@ -191,6 +191,12 @@ version of the package:
 You can find DOIs for older versions by viewing the “Releases” menu on
 the right.
 
+## Papers citing `canaper`
+
+-   Nitta **et al.** “Spatial phylogenetics of Japanese ferns: Patterns,
+    processes, and implications for conservation”. bioRxiv
+    <https://doi.org/10.1101/2021.08.26.457744>
+
 ## Licenses
 
 -   Code: [MIT](LICENSE.md)
