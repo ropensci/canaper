@@ -27,7 +27,7 @@
 #' random_vals <-
 #'   purrr::map(
 #'     1:100,
-#'     ~ calc_biodiv_random(comm, phy, phy_alt, "independentswap", 1000, metrics = "pe")
+#'     ~ calc_biodiv_random(comm, phy, phy_alt, "independentswap", 1000L, metrics = "pe")
 #'   )
 #' comm_sparse <- phyloregion::dense2sparse(comm)
 #' pe_obs <- phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
@@ -100,7 +100,7 @@ get_ses <- function(random_vals, obs_vals, metric = c("pd", "pd_alt", "rpd", "pe
 		# Count number of times observed value is lower than random values
 		obs_c_lower = purrr::map2_dbl(.x = obs_val, .y = random_values, ~ count_lower(.x, .y)),
 		# Count the number of non-NA random values used for comparison
-		obs_q = purrr::map_dbl(random_values, ~ length(magrittr::extract(., !is.na(.)))),
+		obs_q = purrr::map_dbl(random_values, ~sum(!is.na(.))),
 		# Calculate p-value for upper tail
 		obs_p_upper = obs_c_upper / obs_q,
 		# Calculate p-value for lower tail

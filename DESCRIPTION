@@ -32,7 +32,6 @@ Imports:
     assertthat,
     dplyr,
     furrr,
-    magrittr,
     phyloregion,
     picante,
     progressr,
@@ -50,6 +49,7 @@ Suggests:
     roxyglobals (>= 0.2.1),
     stringr,
     vegan,
+    magrittr,
     covr
 Config/testthat/edition: 3
 Depends: 
