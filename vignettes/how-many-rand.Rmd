@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 #' of sufficient number of randomizations produces unreliable output
 ```
 
-A central part of CANAPE analysis is comparing observed values with randomizations. It is up to the user to set the number of randomizations... but how does one know if the number of randomizations is sufficient?
+A central part of CANAPE is comparing observed values with randomizations. It is up to the user to set the number of randomizations... but how does one know if the number of randomizations is sufficient?
 
 (This vignette assumes a basic understanding of CANAPE, community data matrices, and randomizations. If you aren't familiar with any of these, you should probably see the [the CANAPE example vignette](https://joelnitta.github.io/canaper/articles/canape.html) first).
 
@@ -57,7 +57,7 @@ If either `n_reps` or `n_iterations` are set too high, it will take overly long 
 
 First, let's explore the effect of `n_iterations`. There are various ways to do this, but here I will use a [Mantel test](https://en.wikipedia.org/wiki/Mantel_test), which compares two matrices. Specifically, I will calculate the correlation between a distance matrix based on the original community data and a distance matrix based on the randomized data. I will use `picante::randomizeMatrix()` to generate the random communities, which `cpr_rand_test()` also uses internally[^2].
 
-[^2]: The `iterations` argument of `picante::randomizeMatrix()` is equivalent to the `n_iterations` of `cpr_rand_test()`).
+[^2]: The `iterations` argument of `picante::randomizeMatrix()` is equivalent to the `n_iterations` argument of `cpr_rand_test()`).
 
 First, let's load the packages used in this vignette.
 
