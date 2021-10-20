@@ -22,7 +22,7 @@ Nat Commun, 5: 4473. \doi{10.1038/ncomms5473}
 cpr_rand_test(
   comm,
   phy,
-  null_model = c("frequency", "richness", "independentswap", "trialswap"),
+  null_model = "independentswap",
   n_reps = 100,
   n_iterations = 10000,
   metrics = c("pd", "rpd", "pe", "rpe"),
@@ -93,8 +93,14 @@ The biodiversity metrics available for analysis include:
 }
 
 The default method for generating random communities is the independent swap
-method of Gotelli (2000), which randomizes the community matrix while
-maintaining species occurrence frequency and sample species richness.
+method of Gotelli (2000) (\code{independentswap}), which randomizes the community
+matrix while maintaining species occurrence frequency and sample species
+richness.
+
+Note that the \code{trialswap} method has been found to produce results that
+differ strongly from \code{independentswap} or the swapping algorithm of
+\href{https://github.com/shawnlaffan/biodiverse}{Biodiverse} (\code{rand_structured}),
+and \strong{is not recommended.}
 
 A minimum of 5 species and sites are required as input; fewer than that may
 cause the default method for generating random communities (independent swap)

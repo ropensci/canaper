@@ -36,7 +36,9 @@ The function used by `canaper` for randomizations, `picante::randomizeMatrix()`,
 
 `independentswap` and `trialswap` are more sophisticated, in that they preserve the row **and** column totals while randomizing the data. Both operate by swapping occurrences between pairs of species and sites; one such swap is a single iteration (the [Biodiverse blog has a nice explanation of the algorithm](http://biodiverse-analysis-software.blogspot.com/2020/12/biodiverse-now-includes-independent.html)). So they both require a large number of swaps to achieve sufficient randomization. The two algorithms are quite similar, but `trialswap` modifies `independentswap` so that it converges to the uniform distribution [@Miklos2004].
 
-In most cases, algorithms like `independentswap` and `trialswap` that randomize both columns and rows of the community matrix are preferable over simpler algorithms like `frequency` and `richness` [@Connor1979], so for this example we will use `trialswap`. 
+In most cases, algorithms like `independentswap` and `trialswap` that randomize both columns and rows of the community matrix are preferable over simpler algorithms like `frequency` and `richness` [@Connor1979], so for this example we will use `independentswap`. 
+
+**Important note**: `trialswap` has been found to produce CANAPE results that greatly differ from both `independentswap` and the [randomization algorithm of Biodiverse (`rand_structured`)](http://biodiverse-analysis-software.blogspot.com/2020/11/randomisations-how-randstructured.html). **It is strongly recommended to use `independentswap`, and not `trialswap`**.
 
 ## Replicates vs. iterations
 
@@ -131,19 +133,19 @@ set.seed(12345)
 tic()
 res_10_1 <- cpr_rand_test(
   biod_example$comm, biod_example$phy, 
-  null_model = "trialswap",
+  null_model = "independentswap",
   n_iterations = 1000, n_reps = 10, tbl_out = TRUE)
 toc()
 tic()
 res_100_1 <- cpr_rand_test(
   biod_example$comm, biod_example$phy, 
-  null_model = "trialswap",
+  null_model = "independentswap",
   n_iterations = 1000, n_reps = 100, tbl_out = TRUE)
 toc()
 tic()
 res_1000_1 <- cpr_rand_test(
   biod_example$comm, biod_example$phy, 
-  null_model = "trialswap",
+  null_model = "independentswap",
   n_iterations = 1000, n_reps = 1000, tbl_out = TRUE)
 toc()
 
@@ -151,15 +153,15 @@ toc()
 set.seed(67890)
 res_10_2 <- cpr_rand_test(
   biod_example$comm, biod_example$phy,
-  null_model = "trialswap",
+  null_model = "independentswap",
   n_iterations = 1000, n_reps = 10, tbl_out = TRUE)
 res_100_2 <- cpr_rand_test(
   biod_example$comm, biod_example$phy, 
-  null_model = "trialswap",
+  null_model = "independentswap",
   n_iterations = 1000, n_reps = 100, tbl_out = TRUE)
 res_1000_2 <- cpr_rand_test(
   biod_example$comm, biod_example$phy, 
-  null_model = "trialswap",
+  null_model = "independentswap",
   n_iterations = 1000, n_reps = 1000, tbl_out = TRUE)
 ```
 

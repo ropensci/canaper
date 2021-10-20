@@ -11,8 +11,14 @@
 #' - `rpe`: Relative phylogenetic endemism (Mishler et al 2014)
 #'
 #' The default method for generating random communities is the independent swap
-#' method of Gotelli (2000), which randomizes the community matrix while
-#' maintaining species occurrence frequency and sample species richness.
+#' method of Gotelli (2000) (`independentswap`), which randomizes the community
+#' matrix while maintaining species occurrence frequency and sample species
+#' richness.
+#'
+#' Note that the `trialswap` method has been found to produce results that
+#' differ strongly from `independentswap` or the swapping algorithm of
+#' [Biodiverse](https://github.com/shawnlaffan/biodiverse) (`rand_structured`),
+#' and **is not recommended.**
 #'
 #' A minimum of 5 species and sites are required as input; fewer than that may
 #' cause the default method for generating random communities (independent swap)
@@ -93,7 +99,7 @@
 #'
 #' @export
 cpr_rand_test <- function(
-	comm, phy, null_model = c("frequency", "richness", "independentswap", "trialswap"),
+	comm, phy, null_model = "independentswap",
 	n_reps = 100, n_iterations = 10000,
 	metrics = c("pd", "rpd", "pe", "rpe"),
 	site_col = "site", tbl_out = tibble::is_tibble(comm)) {

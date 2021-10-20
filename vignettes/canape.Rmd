@@ -80,8 +80,8 @@ Let's perform a randomization test for the `acacia` dataset. This example also d
 [^2]: For more information on setting the appropriate number of iterations and replicates, [see the "How many randomizations?" vigenette](https://joelnitta.github.io/canaper/articles/how-many-rand.html).
 
 ```{r acacia-rand}
-# Set a parallel back-end, with 4 CPUs running simultaneously
-plan(multisession, workers = 4)
+# Set a parallel back-end, with 3 CPUs running simultaneously
+plan(multisession, workers = 3)
 
 # Uncomment this to show a progress bar when running cpr_rand_test()
 # progressr::handlers(global = TRUE)
@@ -93,12 +93,15 @@ tic() # Set a timer
 # Run randomization test
 acacia_rand_res <- cpr_rand_test(
   acacia$comm, acacia$phy, 
-  null_model = "trialswap",
+  null_model = "independentswap",
   n_reps = 100, n_iterations = 100000)
 toc() # See how long it took
+
+# Switch back to sequential (non-parallel) mode
+plan(sequential)
 ```
 
-If we hadn't run it in parallel, it would have taken 4 times longer!
+If we hadn't run it in parallel, it would have taken significantly longer!
 
 Let's take a peek at the output. `cpr_rand_test()` produces **a lot** of columns, so we'll view this as a tibble, which prints out more nicely than a plain `data.frame`.
 

@@ -97,7 +97,7 @@ value to the alternative value (relative PD, relative PE).
 
 ``` r
 set.seed(071421)
-rand_test_results <- cpr_rand_test(phylocom$sample, phylocom$phy, null_model = "trialswap")
+rand_test_results <- cpr_rand_test(phylocom$sample, phylocom$phy)
 #> [1] "Dropping tips from the tree because they are not present in the community data:"
 #> [1] "sp16" "sp23" "sp27" "sp28" "sp30" "sp31" "sp32"
 ```
@@ -108,19 +108,19 @@ let’s just look at a subset of them:
 ``` r
 rand_test_results[,1:9]
 #>            pd_obs pd_rand_mean pd_rand_sd  pd_obs_z pd_obs_c_upper
-#> clump1  0.3018868    0.4641509 0.02913148 -5.570062              0
-#> clump2a 0.3207547    0.4716981 0.03577927 -4.218738              0
-#> clump2b 0.3396226    0.4713208 0.03092536 -4.258580              0
-#> clump4  0.4150943    0.4703774 0.03437010 -1.608462              6
-#> even    0.5660377    0.4652830 0.03048501  3.305057            100
-#> random  0.5094340    0.4662264 0.03509893  1.231022             83
+#> clump1  0.3018868    0.4679245 0.02850761 -5.824331              0
+#> clump2a 0.3207547    0.4703774 0.03130385 -4.779688              0
+#> clump2b 0.3396226    0.4624528 0.03133141 -3.920353              0
+#> clump4  0.4150943    0.4688679 0.03551447 -1.514132              4
+#> even    0.5660377    0.4692453 0.03836478  2.522951            100
+#> random  0.5094340    0.4698113 0.03086949  1.283553             85
 #>         pd_obs_c_lower pd_obs_q pd_obs_p_upper pd_obs_p_lower
 #> clump1             100      100           0.00           1.00
 #> clump2a            100      100           0.00           1.00
 #> clump2b            100      100           0.00           1.00
-#> clump4              91      100           0.06           0.91
+#> clump4              88      100           0.04           0.88
 #> even                 0      100           1.00           0.00
-#> random               4      100           0.83           0.04
+#> random               7      100           0.85           0.07
 ```
 
 This is a summary of the columns:
@@ -152,8 +152,8 @@ canape_results[, "endem_type", drop = FALSE]
 #> clump2a not significant
 #> clump2b not significant
 #> clump4  not significant
-#> even              super
-#> random            mixed
+#> even              mixed
+#> random            super
 ```
 
 This data set is very small, so it doesn’t include all possible endemism
