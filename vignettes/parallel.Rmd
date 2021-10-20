@@ -43,7 +43,7 @@ First, let's run an analysis in default sequential mode (without parallel comput
 tic()
 biod_res_seq <- cpr_rand_test(
   biod_example$comm, biod_example$phy, 
-  null_model = "independentswap", n_reps = 100)
+  null_model = "independentswap", n_reps = 50)
 toc()
 ```
 
@@ -68,22 +68,22 @@ plan(multisession, workers = 3)
 tic()
 biod_res_par <- cpr_rand_test(
   biod_example$comm, biod_example$phy, 
-  null_model = "independentswap", n_reps = 100)
+  null_model = "independentswap", n_reps = 50)
 toc()
 
 # Change back to default sequential mode
 plan(sequential)
 ```
 
-This time, the calculations were carried out in 4 batches in parallel.
+This time, the calculations were carried out in 3 batches in parallel.
 
-But the runtime isn't any faster!! What gives?
+But there is no significant improvement in runtime^[Results vary each time this vignette is generated, but it probably won't be three times as fast; sometimes, the parallel version is even **slower**.]. What is going on here?
 
 ## When to parallelize?
 
 Although it may seem to always be a good idea to speed things up by using parallel computing, **this is not the case**. There is some overhead involved in splitting the job across multiple processes, coordinating those processes, and putting everything back together again.
 
-If your dataset is small, this overhead may outweigh simply running the analysis sequentially ^[It may even **take longer** with parallelization!]. That is the case with the `biod_example` data. Let's check the size of this dataset:
+If your dataset is small, this overhead may outweigh simply running the analysis sequentially. That is the case with the `biod_example` data. Let's check the size of this dataset:
 
 ```{r check-size-biod-example}
 # dim() returns number of rows, then columns
@@ -101,23 +101,24 @@ dim(acacia$comm)
 
 Quite a bit larger! 
 
-Let's see how parallel computing works on the `acacia` dataset. We will also increase the number of replicates, to a value that is closer to what you would use for a "real analysis" ^[For more information on how to choose the number of replicates, see the ["How many randomizations" vignette](https://joelnitta.github.io/canaper/articles/how-many-rand.html).]:
+Let's see how parallel computing works on the `acacia` dataset:
 
 ```{r acacia-single}
+plan(sequential)
 tic()
 acacia_res_seq <- cpr_rand_test(
   acacia$comm, acacia$phy, 
-  null_model = "independentswap", n_reps = 500)
+  null_model = "independentswap", n_reps = 50)
 toc()
 ```
 
 ```{r acacia-parallel}
-# Run cpr_rand_test() in parallel with four CPUs
-plan(multisession, workers = 4)
+# Run cpr_rand_test() in parallel with 3 CPUs
+plan(multisession, workers = 3)
 tic()
 acacia_par_seq <- cpr_rand_test(
   acacia$comm, acacia$phy, 
-  null_model = "independentswap", n_reps = 500)
+  null_model = "independentswap", n_reps = 50)
 toc()
 # Change back to default sequential mode
 plan(sequential)
@@ -131,7 +132,7 @@ If you'd like to track the progress of `cpr_rand_test()` in real time, you can e
 
 One way is to add `progressr::handlers(global = TRUE)` before `cpr_rand_test()`:
 
-```{r progress-example-1}
+```{r progress-example-1, eval = FALSE}
 progressr::handlers(global = TRUE)
 
 biod_res_long <- cpr_rand_test(
@@ -141,7 +142,7 @@ biod_res_long <- cpr_rand_test(
 
 The other way is to place `cpr_rand_test()` inside the `progressr::with_progress()` function:
 
-```{r progress-example-2}
+```{r progress-example-2, eval = FALSE}
 with_progress(
   biod_res_long <- cpr_rand_test(
     biod_example$comm, biod_example$phy, 
