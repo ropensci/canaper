@@ -131,7 +131,7 @@ If you'd like to track the progress of `cpr_rand_test()` in real time, you can e
 
 One way is to add `progressr::handlers(global = TRUE)` before `cpr_rand_test()`:
 
-```{r progress-example}
+```{r progress-example-1}
 progressr::handlers(global = TRUE)
 
 biod_res_long <- cpr_rand_test(
@@ -141,7 +141,7 @@ biod_res_long <- cpr_rand_test(
 
 The other way is to place `cpr_rand_test()` inside the `progressr::with_progress()` function:
 
-```{r progress-example}
+```{r progress-example-2}
 with_progress(
   biod_res_long <- cpr_rand_test(
     biod_example$comm, biod_example$phy, 
