@@ -55,6 +55,27 @@ test_that("Calculations work", {
 	)[["pd_signif"]],
 	"> 0.975"
 	)
+	expect_equal(cpr_classify_signif(
+		data.frame(
+			pd_obs_p_lower = c(0.0001),
+			pd_obs_p_upper = c(0.96)
+		),
+		metric = "pd",
+		upper = TRUE,
+		one_sided = TRUE
+	)[["pd_signif"]],
+	"> 0.95"
+	)
+	expect_equal(cpr_classify_signif(
+		data.frame(
+			pd_obs_p_lower = c(0.0001),
+			pd_obs_p_upper = c(0.96)
+		),
+		metric = "pd",
+		upper = FALSE
+	)[["pd_signif"]],
+	"not significant"
+	)
 })
 
 test_that("Output is formatted as expected", {
