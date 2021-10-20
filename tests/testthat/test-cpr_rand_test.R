@@ -271,14 +271,14 @@ test_that("Parallelization decreases calculation time", {
    tictoc::tic.clearlog()
    tictoc::tic()
    set.seed(123)
-   seq_res <- cpr_rand_test(acacia$comm, acacia$phy, null_model = "independentswap", n_iterations = 100, n_reps = 100)
+   seq_res <- cpr_rand_test(acacia$comm, acacia$phy, null_model = "trialswap", n_iterations = 100, n_reps = 100)
    tictoc::toc(log = TRUE, quiet = TRUE)
 
    # Set future resolution to parallelized, with 3 workers
    future::plan(future::multisession, workers = 3)
    tictoc::tic()
    set.seed(123)
-   parallel_res <- cpr_rand_test(acacia$comm, acacia$phy, null_model = "independentswap", n_iterations = 100, n_reps = 100)
+   parallel_res <- cpr_rand_test(acacia$comm, acacia$phy, null_model = "trialswap", n_iterations = 100, n_reps = 100)
    tictoc::toc(log = TRUE, quiet = TRUE)
    log_list <- tictoc::tic.log(format = FALSE)
    tictoc::tic.clearlog()
@@ -321,17 +321,17 @@ test_that("Output is same as when calculated with Biodiverse", {
 
 test_that("Output is different with different random seeds", {
    set.seed(123)
-   res_1 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "richness")
+   res_1 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "independentswap")
    set.seed(456)
-   res_2 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "richness")
+   res_2 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "independentswap")
    expect_false(isTRUE(all.equal(res_1, res_2)))
 })
 
 test_that("Output is same with same random seed", {
    set.seed(123)
-   res_1 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "richness")
+   res_1 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "independentswap")
    set.seed(123)
-   res_2 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "richness")
+   res_2 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "independentswap")
    expect_equal(res_1, res_2)
 })
 
