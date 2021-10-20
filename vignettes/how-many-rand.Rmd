@@ -36,7 +36,7 @@ The function used by `canaper` for randomizations, `picante::randomizeMatrix()`,
 
 `independentswap` and `trialswap` are more sophisticated, in that they preserve the row **and** column totals while randomizing the data. Both operate by swapping occurrences between pairs of species and sites; one such swap is a single iteration (the [Biodiverse blog has a nice explanation of the algorithm](http://biodiverse-analysis-software.blogspot.com/2020/12/biodiverse-now-includes-independent.html)). So they both require a large number of swaps to achieve sufficient randomization. The two algorithms are quite similar, but `trialswap` modifies `independentswap` so that it converges to the uniform distribution [@Miklos2004].
 
-In most cases, algorithms like `independentswap` and `trialswap` that randomize both columns and rows of the community matrix are preferable over simpler algorithms like `frequency` and `richness` [@Connor1979], so the default method is `canaper` is `independentswap`. 
+In most cases, algorithms like `independentswap` and `trialswap` that randomize both columns and rows of the community matrix are preferable over simpler algorithms like `frequency` and `richness` [@Connor1979], so for this example we will use `trialswap`. 
 
 ## Replicates vs. iterations
 
