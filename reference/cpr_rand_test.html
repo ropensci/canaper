@@ -145,7 +145,7 @@ from the comparison (see <strong>Value</strong> below).</p>
     <pre class="usage"><span class='fu'>cpr_rand_test</span><span class='op'>(</span>
   <span class='va'>comm</span>,
   <span class='va'>phy</span>,
-  null_model <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"frequency"</span>, <span class='st'>"richness"</span>, <span class='st'>"independentswap"</span>, <span class='st'>"trialswap"</span><span class='op'>)</span>,
+  null_model <span class='op'>=</span> <span class='st'>"independentswap"</span>,
   n_reps <span class='op'>=</span> <span class='fl'>100</span>,
   n_iterations <span class='op'>=</span> <span class='fl'>10000</span>,
   metrics <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pd"</span>, <span class='st'>"rpd"</span>, <span class='st'>"pe"</span>, <span class='st'>"rpe"</span><span class='op'>)</span>,
@@ -242,8 +242,13 @@ will be produced:</p><ul>
 </ul>
 
 <p>The default method for generating random communities is the independent swap
-method of Gotelli (2000), which randomizes the community matrix while
-maintaining species occurrence frequency and sample species richness.</p>
+method of Gotelli (2000) (<code>independentswap</code>), which randomizes the community
+matrix while maintaining species occurrence frequency and sample species
+richness.</p>
+<p>Note that the <code>trialswap</code> method has been found to produce results that
+differ strongly from <code>independentswap</code> or the swapping algorithm of
+<a href='https://github.com/shawnlaffan/biodiverse'>Biodiverse</a> (<code>rand_structured</code>),
+and <strong>is not recommended.</strong></p>
 <p>A minimum of 5 species and sites are required as input; fewer than that may
 cause the default method for generating random communities (independent swap)
 to enter an infinite loop. Besides, inferences on very small numbers of

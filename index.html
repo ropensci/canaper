@@ -155,26 +155,26 @@
 <p>The main “workhorse” function of <code>canaper</code> is <code><a href="reference/cpr_rand_test.html">cpr_rand_test()</a></code>, which conducts a randomization test to determine if observed values of phylogenetic diversity (PD) and phylogenetic endemism (PE) are significantly different from random. It also calculates the same values on an alternative phylogeny where all branch lengths have been set equal (alternative PD, alternative PE) as well as the ratio of the original value to the alternative value (relative PD, relative PE).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">071421</span><span class="op">)</span>
-<span class="va">rand_test_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span><span class="va">phylocom</span><span class="op">$</span><span class="va">sample</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span>, null_model <span class="op">=</span> <span class="st">"trialswap"</span><span class="op">)</span>
+<span class="va">rand_test_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span><span class="va">phylocom</span><span class="op">$</span><span class="va">sample</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Dropping tips from the tree because they are not present in the community data:"</span>
 <span class="co">#&gt; [1] "sp16" "sp23" "sp27" "sp28" "sp30" "sp31" "sp32"</span></code></pre></div>
 <p><code>cpr_rand_test</code> produces <strong>a lot</strong> of columns (nine per metric), so let’s just look at a subset of them:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rand_test_results</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span>
 <span class="co">#&gt;            pd_obs pd_rand_mean pd_rand_sd  pd_obs_z pd_obs_c_upper</span>
-<span class="co">#&gt; clump1  0.3018868    0.4641509 0.02913148 -5.570062              0</span>
-<span class="co">#&gt; clump2a 0.3207547    0.4716981 0.03577927 -4.218738              0</span>
-<span class="co">#&gt; clump2b 0.3396226    0.4713208 0.03092536 -4.258580              0</span>
-<span class="co">#&gt; clump4  0.4150943    0.4703774 0.03437010 -1.608462              6</span>
-<span class="co">#&gt; even    0.5660377    0.4652830 0.03048501  3.305057            100</span>
-<span class="co">#&gt; random  0.5094340    0.4662264 0.03509893  1.231022             83</span>
+<span class="co">#&gt; clump1  0.3018868    0.4679245 0.02850761 -5.824331              0</span>
+<span class="co">#&gt; clump2a 0.3207547    0.4703774 0.03130385 -4.779688              0</span>
+<span class="co">#&gt; clump2b 0.3396226    0.4624528 0.03133141 -3.920353              0</span>
+<span class="co">#&gt; clump4  0.4150943    0.4688679 0.03551447 -1.514132              4</span>
+<span class="co">#&gt; even    0.5660377    0.4692453 0.03836478  2.522951            100</span>
+<span class="co">#&gt; random  0.5094340    0.4698113 0.03086949  1.283553             85</span>
 <span class="co">#&gt;         pd_obs_c_lower pd_obs_q pd_obs_p_upper pd_obs_p_lower</span>
 <span class="co">#&gt; clump1             100      100           0.00           1.00</span>
 <span class="co">#&gt; clump2a            100      100           0.00           1.00</span>
 <span class="co">#&gt; clump2b            100      100           0.00           1.00</span>
-<span class="co">#&gt; clump4              91      100           0.06           0.91</span>
+<span class="co">#&gt; clump4              88      100           0.04           0.88</span>
 <span class="co">#&gt; even                 0      100           1.00           0.00</span>
-<span class="co">#&gt; random               4      100           0.83           0.04</span></code></pre></div>
+<span class="co">#&gt; random               7      100           0.85           0.07</span></code></pre></div>
 <p>This is a summary of the columns:</p>
 <ul>
 <li>
@@ -206,8 +206,8 @@
 <span class="co">#&gt; clump2a not significant</span>
 <span class="co">#&gt; clump2b not significant</span>
 <span class="co">#&gt; clump4  not significant</span>
-<span class="co">#&gt; even              super</span>
-<span class="co">#&gt; random            mixed</span></code></pre></div>
+<span class="co">#&gt; even              mixed</span>
+<span class="co">#&gt; random            super</span></code></pre></div>
 <p>This data set is very small, so it doesn’t include all possible endemism types. In total, they include:</p>
 <ul>
 <li>
