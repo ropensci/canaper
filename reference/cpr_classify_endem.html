@@ -101,6 +101,9 @@ according to CANAPE scheme of Mishler et al. 2014." />
     <li>
       <a href="../articles/how-many-rand.html">How many randomizations?</a>
     </li>
+    <li>
+      <a href="../articles/parallel.html">Parallel computing</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -170,57 +173,59 @@ Australian Acacia. Nat Commun, 5: 4473. doi: <a href='https://doi.org/10.1038/nc
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>picante</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Loading required package: vegan</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: permute</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: lattice</span></div><div class='output co'>#&gt; <span class='message'>This is vegan 2.5-7</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: nlme</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>)</span>
-<span class='va'>rand_test</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cpr_rand_test.html'>cpr_rand_test</a></span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>$</span><span class='va'>sample</span>, <span class='va'>phylocom</span><span class='op'>$</span><span class='va'>phy</span>, metrics <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pe"</span>, <span class='st'>"rpe"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>rand_test</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cpr_rand_test.html'>cpr_rand_test</a></span><span class='op'>(</span>
+  <span class='va'>phylocom</span><span class='op'>$</span><span class='va'>sample</span>, <span class='va'>phylocom</span><span class='op'>$</span><span class='va'>phy</span>,
+  null_model <span class='op'>=</span> <span class='st'>"trialswap"</span>, metrics <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pe"</span>, <span class='st'>"rpe"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "Dropping tips from the tree because they are not present in the community data:"
 #&gt; [1] "sp16" "sp23" "sp27" "sp28" "sp30" "sp31" "sp32"</div><div class='input'><span class='fu'>cpr_classify_endem</span><span class='op'>(</span><span class='va'>rand_test</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;            pe_obs pe_rand_mean pe_rand_sd   pe_obs_z pe_obs_c_upper
-#&gt; clump1  0.1333333    0.1643145 0.02859872 -1.0833049              8
-#&gt; clump2a 0.1081761    0.1655786 0.02790195 -2.0572938              1
-#&gt; clump2b 0.1286164    0.1664560 0.02986440 -1.2670478             10
-#&gt; clump4  0.1411950    0.1666478 0.02628396 -0.9683788             17
-#&gt; even    0.2506289    0.1651698 0.02847858  3.0008206            100
-#&gt; random  0.2380503    0.1718333 0.02783237  2.3791352            100
+</div><div class='output co'>#&gt;            pe_obs pe_rand_mean pe_rand_sd  pe_obs_z pe_obs_c_upper
+#&gt; clump1  0.1333333    0.1676195 0.02894737 -1.184431             13
+#&gt; clump2a 0.1081761    0.1682390 0.02830990 -2.121622              2
+#&gt; clump2b 0.1286164    0.1651226 0.02774182 -1.315930              6
+#&gt; clump4  0.1411950    0.1715881 0.02710248 -1.121413             13
+#&gt; even    0.2506289    0.1611572 0.02890731  3.095123            100
+#&gt; random  0.2380503    0.1662736 0.02812715  2.551866             99
 #&gt;         pe_obs_c_lower pe_obs_q pe_obs_p_upper pe_obs_p_lower pe_alt_obs
-#&gt; clump1              92      100           0.08           0.92  0.1472222
-#&gt; clump2a             99      100           0.01           0.99  0.1194444
-#&gt; clump2b             90      100           0.10           0.90  0.1420139
-#&gt; clump4              83      100           0.17           0.83  0.1454861
+#&gt; clump1              87      100           0.13           0.87  0.1472222
+#&gt; clump2a             98      100           0.02           0.98  0.1194444
+#&gt; clump2b             94      100           0.06           0.94  0.1420139
+#&gt; clump4              87      100           0.13           0.87  0.1454861
 #&gt; even                 0      100           1.00           0.00  0.2246528
-#&gt; random               0      100           1.00           0.00  0.2211806
+#&gt; random               1      100           0.99           0.01  0.2211806
 #&gt;         pe_alt_rand_mean pe_alt_rand_sd pe_alt_obs_z pe_alt_obs_c_upper
-#&gt; clump1         0.1664306     0.02340602   -0.8206579                 17
-#&gt; clump2a        0.1676528     0.01981308   -2.4331568                  1
-#&gt; clump2b        0.1657396     0.02438609   -0.9729191                 18
-#&gt; clump4         0.1653264     0.01936701   -1.0244370                 18
-#&gt; even           0.1643542     0.02425978    2.4855384                 99
-#&gt; random         0.1704965     0.02278607    2.2243426                 99
+#&gt; clump1         0.1667118     0.02220159   -0.8778464                 19
+#&gt; clump2a        0.1681250     0.02202588   -2.2101528                  2
+#&gt; clump2b        0.1656215     0.02210565   -1.0679457                 12
+#&gt; clump4         0.1687326     0.02323544   -1.0004772                 16
+#&gt; even           0.1625278     0.02267298    2.7400458                100
+#&gt; random         0.1682812     0.02244792    2.3565348                 99
 #&gt;         pe_alt_obs_c_lower pe_alt_obs_q pe_alt_obs_p_upper pe_alt_obs_p_lower
-#&gt; clump1                  83          100               0.17               0.83
-#&gt; clump2a                 99          100               0.01               0.99
-#&gt; clump2b                 82          100               0.18               0.82
-#&gt; clump4                  82          100               0.18               0.82
-#&gt; even                     1          100               0.99               0.01
+#&gt; clump1                  81          100               0.19               0.81
+#&gt; clump2a                 98          100               0.02               0.98
+#&gt; clump2b                 88          100               0.12               0.88
+#&gt; clump4                  84          100               0.16               0.84
+#&gt; even                     0          100               1.00               0.00
 #&gt; random                   1          100               0.99               0.01
 #&gt;           rpe_obs rpe_rand_mean rpe_rand_sd  rpe_obs_z rpe_obs_c_upper
-#&gt; clump1  0.9056604     0.9868537  0.09668403 -0.8397806               7
-#&gt; clump2a 0.9056604     0.9854372  0.09658621 -0.8259651               6
-#&gt; clump2b 0.9056604     1.0034321  0.09869689 -0.9906266              10
-#&gt; clump4  0.9705048     1.0072990  0.09802223 -0.3753655              49
-#&gt; even    1.1156280     1.0057375  0.10475577  1.0490160              82
-#&gt; random  1.0762714     1.0080821  0.09998678  0.6819836              76
+#&gt; clump1  0.9056604     1.0050980  0.10896220 -0.9125882              10
+#&gt; clump2a 0.9056604     1.0003335  0.10832251 -0.8739933               3
+#&gt; clump2b 0.9056604     0.9961295  0.09905292 -0.9133414              13
+#&gt; clump4  0.9705048     1.0191118  0.10666889 -0.4556815              46
+#&gt; even    1.1156280     0.9900208  0.09692127  1.2959716              86
+#&gt; random  1.0762714     0.9863649  0.08319048  1.0807316              88
 #&gt;         rpe_obs_c_lower rpe_obs_q rpe_obs_p_upper rpe_obs_p_lower
-#&gt; clump1               85       100            0.07            0.85
-#&gt; clump2a              85       100            0.06            0.85
-#&gt; clump2b              81       100            0.10            0.81
-#&gt; clump4               51       100            0.49            0.51
-#&gt; even                 18       100            0.82            0.18
-#&gt; random               24       100            0.76            0.24
+#&gt; clump1               83       100            0.10            0.83
+#&gt; clump2a              91       100            0.03            0.91
+#&gt; clump2b              74       100            0.13            0.74
+#&gt; clump4               54       100            0.46            0.54
+#&gt; even                 14       100            0.86            0.14
+#&gt; random               12       100            0.88            0.12
 #&gt;              endem_type
 #&gt; clump1  not significant
 #&gt; clump2a not significant
 #&gt; clump2b not significant
 #&gt; clump4  not significant
-#&gt; even              mixed
+#&gt; even              super
 #&gt; random            mixed</div><div class='input'>
 </div></pre>
   </div>

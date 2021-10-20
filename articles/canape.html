@@ -59,6 +59,9 @@
     <li>
       <a href="../articles/how-many-rand.html">How many randomizations?</a>
     </li>
+    <li>
+      <a href="../articles/parallel.html">Parallel computing</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -88,7 +91,7 @@
       <h1 data-toc-skip>CANAPE example</h1>
                         <h4 class="author">Joel H. Nitta</h4>
             
-            <h4 class="date">19 October, 2021</h4>
+            <h4 class="date">20 October, 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/joelnitta/canaper/blob/master/vignettes/canape.Rmd"><code>vignettes/canape.Rmd</code></a></small>
       <div class="hidden name"><code>canape.Rmd</code></div>
@@ -172,7 +175,7 @@
 <p>The main purpose of <code>canaper</code> is to perform these randomization tests.</p>
 <p><code>canaper</code> performs community matrix randomizations available in the <a href="https://CRAN.R-project.org/package=picante"><code>picante</code></a> package, including <code>frequency</code>, <code>richness</code>, <code>independentswap</code> and <code>trialswap</code>. For details about these algorithms, see <a href="https://rdrr.io/cran/picante/man/randomizeSample.html"><code>picante::randomizeMatrix</code></a>.</p>
 <p>The default setting in <code>canaper</code> is to use <code>independentswap</code>, which maintains species richness and abundance patterns while randomizing species identity <span class="citation">(Gotelli 2000)</span>.</p>
-<p>Let’s perform a randomization test for the <code>acacia</code> dataset. This example also demonstrates one of the strengths of <code>canaper</code>: the ability to run randomizations in parallel. This is by far the most time-consuming part of CANAPE, since we have to repeat the calculations many (e.g., hundreds or more) times across the randomized communities to obtain reliable results. Here, we set the number of iterations (<code>n_iterations</code>; i.e., the number of swaps used to produce each randomized community) fairly high because this community matrix is large and includes many zeros; thorough mixing by swapping many times is required to completely randomize the matrix. We will use a low number of random communities (<code>n_reps</code>) so things finish relatively quickly; you should consider increasing <code>n_reps</code> for a “real” analysis<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+<p>Let’s perform a randomization test for the <code>acacia</code> dataset. This example also demonstrates one of the strengths of <code>canaper</code>: the ability to run randomizations in parallel<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. This is by far the most time-consuming part of CANAPE, since we have to repeat the calculations many (e.g., hundreds or more) times across the randomized communities to obtain reliable results. Here, we set the number of iterations (<code>n_iterations</code>; i.e., the number of swaps used to produce each randomized community) fairly high because this community matrix is large and includes many zeros; thorough mixing by swapping many times is required to completely randomize the matrix. We will use a low number of random communities (<code>n_reps</code>) so things finish relatively quickly; you should consider increasing <code>n_reps</code> for a “real” analysis<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Set a parallel back-end, with 4 CPUs running simultaneously</span>
 <span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
@@ -185,12 +188,15 @@
 
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">tic</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Set a timer</span>
 <span class="co"># Run randomization test</span>
-<span class="va">acacia_rand_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span><span class="va">acacia</span><span class="op">$</span><span class="va">comm</span>, <span class="va">acacia</span><span class="op">$</span><span class="va">phy</span>, n_reps <span class="op">=</span> <span class="fl">100</span>, n_iterations <span class="op">=</span> <span class="fl">100000</span><span class="op">)</span>
+<span class="va">acacia_rand_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span>
+  <span class="va">acacia</span><span class="op">$</span><span class="va">comm</span>, <span class="va">acacia</span><span class="op">$</span><span class="va">phy</span>, 
+  null_model <span class="op">=</span> <span class="st">"trialswap"</span>,
+  n_reps <span class="op">=</span> <span class="fl">100</span>, n_iterations <span class="op">=</span> <span class="fl">100000</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Dropping tips from the tree because they are not present in the community data:"</span>
 <span class="co">#&gt; [1] "Pararchidendron_pruinosum" "Paraserianthes_lophantha" </span>
 <span class="co">#&gt; [3] "saligna"                   "clunies-rossiae"</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># See how long it took</span>
-<span class="co">#&gt; 840.406 sec elapsed</span></code></pre></div>
+<span class="co">#&gt; 38.614 sec elapsed</span></code></pre></div>
 <p>If we hadn’t run it in parallel, it would have taken 4 times longer!</p>
 <p>Let’s take a peek at the output. <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> produces <strong>a lot</strong> of columns, so we’ll view this as a tibble, which prints out more nicely than a plain <code>data.frame</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -198,16 +204,16 @@
 <span class="co">#&gt; # A tibble: 3,037 × 55</span>
 <span class="co">#&gt;    site    pd_obs pd_rand_mean pd_rand_sd pd_obs_z pd_obs_c_upper pd_obs_c_lower</span>
 <span class="co">#&gt;    &lt;chr&gt;    &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 '-1025… 0.0145      0.0223     0.00441   -1.78               0            100</span>
-<span class="co">#&gt;  2 '-1025… 0.0383      0.0500     0.00766   -1.53               2             98</span>
-<span class="co">#&gt;  3 '-1025… 0.0379      0.0366     0.00654    0.203             64             36</span>
-<span class="co">#&gt;  4 '-1025… 0.0571      0.0623     0.00888   -0.582             30             70</span>
-<span class="co">#&gt;  5 '-1025… 0.0410      0.0432     0.00786   -0.281             45             55</span>
-<span class="co">#&gt;  6 '-1025… 0.0100      0.00981    0.00154    0.128             53             45</span>
-<span class="co">#&gt;  7 '-1025… 0.0188      0.0229     0.00375   -1.10              14             86</span>
-<span class="co">#&gt;  8 '-1025… 0.0435      0.0544     0.00724   -1.51               6             94</span>
-<span class="co">#&gt;  9 '-1025… 0.0111      0.0102     0.00177    0.520             81             18</span>
-<span class="co">#&gt; 10 '-1025… 0.0905      0.0876     0.0108     0.266             62             38</span>
+<span class="co">#&gt;  1 '-1025… 0.0145       0.0145  0.0000779  -0.100               0              1</span>
+<span class="co">#&gt;  2 '-1025… 0.0383       0.0383  0.000305   -0.0736              1              2</span>
+<span class="co">#&gt;  3 '-1025… 0.0379       0.0378  0.000576    0.149               3              0</span>
+<span class="co">#&gt;  4 '-1025… 0.0571       0.0572  0.000546   -0.163               0              3</span>
+<span class="co">#&gt;  5 '-1025… 0.0410       0.0411  0.00106    -0.132               1              2</span>
+<span class="co">#&gt;  6 '-1025… 0.0100       0.0100  0.0000729  -0.100               0              1</span>
+<span class="co">#&gt;  7 '-1025… 0.0188       0.0188  0         NaN                   0              0</span>
+<span class="co">#&gt;  8 '-1025… 0.0435       0.0434  0.000686    0.186               5              0</span>
+<span class="co">#&gt;  9 '-1025… 0.0111       0.0111  0         NaN                   0              0</span>
+<span class="co">#&gt; 10 '-1025… 0.0905       0.0906  0.00136    -0.0905              5              4</span>
 <span class="co">#&gt; # … with 3,027 more rows, and 48 more variables: pd_obs_q &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   pd_obs_p_upper &lt;dbl&gt;, pd_obs_p_lower &lt;dbl&gt;, pd_alt_obs &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   pd_alt_rand_mean &lt;dbl&gt;, pd_alt_rand_sd &lt;dbl&gt;, pd_alt_obs_z &lt;dbl&gt;,</span>
@@ -243,7 +249,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">acacia_canape</span><span class="op">$</span><span class="va">endem_type</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           mixed             neo not significant           paleo           super </span>
-<span class="co">#&gt;             183               9            2781              36              28</span></code></pre></div>
+<span class="co">#&gt;            1431             527            1047               2              30</span></code></pre></div>
 </div>
 <div id="classify-signficance" class="section level2">
 <h2 class="hasAnchor">
@@ -261,8 +267,8 @@
 <span class="co"># Take a look at one of the significance classifications:</span>
 <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">acacia_canape</span><span class="op">$</span><span class="va">pd_signif</span><span class="op">)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;          &lt; 0.01         &lt; 0.025         &gt; 0.975          &gt; 0.99 not significant </span>
-<span class="co">#&gt;             296             236              31              22            2452</span></code></pre></div>
+<span class="co">#&gt; not significant </span>
+<span class="co">#&gt;            3037</span></code></pre></div>
 </div>
 <div id="visualize-results" class="section level2">
 <h2 class="hasAnchor">
@@ -336,7 +342,8 @@
 <div class="footnotes">
 <hr>
 <ol>
-<li id="fn1"><p>For more details on setting the appropriate number of iterations and replicates, <a href="https://joelnitta.github.io/canaper/articles/how-many-rand.html">see the “How many randomizations?” vigenette</a>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>For more information on how and when to use parallel computing in <code>canaper</code>, <a href="https://joelnitta.github.io/canaper/articles/parallel.html">see the “Parallel computing” vignette</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>For more information on setting the appropriate number of iterations and replicates, <a href="https://joelnitta.github.io/canaper/articles/how-many-rand.html">see the “How many randomizations?” vigenette</a>.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
