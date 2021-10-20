@@ -1,0 +1,142 @@
+---
+title: "Parallel computing"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Parallel computing}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+One feature of `canaper` is the ability to use parallel computing (running calculations on multiple CPUs simultaneously) to speed up analysis. The parallel computing is used during the randomizations carried out by `cpr_rand_test()`, since this function involves calculating the same values on many random replicates. This vignette shows how and when to use parallel computing to speed up `cpr_rand_test()`.
+
+(**This vignette assumes a basic understanding of CANAPE, community data matrices, and randomizations**. If you aren't familiar with any of these, you should probably see the [the CANAPE example vignette](https://joelnitta.github.io/canaper/articles/canape.html) first).
+
+Let's get started by loading the packages used in this vignette.
+
+```{r setup, message = FALSE}
+library(canaper) # This package
+library(tictoc) # For timing
+library(future) # For parallel computing
+library(progressr) # Enable progress bar
+# Set seed for random number generator for reproducible results
+set.seed(123)
+```
+
+## How to parallelize
+
+`canaper` uses the `furrr` package to handle parallel computing, which in turn uses the `future` package. In these packages, specification of sequential (i.e., no parallel computing) vs. parallel computing, and the number of CPUs (i.e., "cores") to use in parallel is specified **outside** of other functions. This is easiest to see with an example.
+
+### Sequential mode
+
+First, let's run an analysis in default sequential mode (without parallel computing). I'll use the `tictoc` package to time how long it takes to run.
+
+```{r sequential-1}
+tic()
+biod_res_seq <- cpr_rand_test(
+  biod_example$comm, biod_example$phy, 
+  null_model = "trialswap", n_reps = 100)
+toc()
+```
+
+Since we have specified 100 random replicates and are not using parallel computing, `cpr_rand_test()` calculated the various phylogenetic diversity metrics for each of the 100 replicates one at a time.
+
+### Parallel mode
+
+Before trying the parallel version, let's check how many CPUs are available to use:
+
+```{r check-cores}
+availableCores()
+```
+
+OK, we have verified that there are multiple cores available for parallel computing.
+
+To enable parallel computing, just add one line before `cpr_rand_test()`: `plan(multisession, workers = 4)` ^[Of course, the number of workers should be no greater than the number of available CPUs.]. Here, the `multisession, workers = 4` part is telling `future` that we want to use 4 CPUs in parallel on our local machine. See `future::plan()` for other options. Otherwise, **everything is the same**.
+
+```{r parallel-1}
+# Set up parallel computing with 4 CPUs
+plan(multisession, workers = 4)
+
+tic()
+biod_res_par <- cpr_rand_test(
+  biod_example$comm, biod_example$phy, 
+  null_model = "trialswap", n_reps = 100)
+toc()
+
+# Change back to default sequential mode
+plan(sequential)
+```
+
+This time, the calculations were carried out in 4 batches in parallel.
+
+But the runtime isn't any faster!! What gives?
+
+## When to parallelize?
+
+Although it may seem to always be a good idea to speed things up by using parallel computing, **this is not the case**. There is some overhead involved in splitting the job across multiple processes, coordinating those processes, and putting everything back together again.
+
+If your dataset is small, this overhead may outweigh simply running the analysis sequentially ^[It may even **take longer** with parallelization!]. That is the case with the `biod_example` data. Let's check the size of this dataset:
+
+```{r check-size-biod-example}
+# dim() returns number of rows, then columns
+dim(biod_example$comm)
+```
+
+The `biod_example` dataset is small because it is entirely made-up and used only for testing code (and we want tests to run quickly).
+
+Let's see how that compares with another dataset included in `canaper`, the `acacia` dataset. The `acacia` dataset is "real-life" data of the genus *Acacia* in Australia:
+
+```{r check-size-acaia-example}
+# dim() returns number of rows, then columns
+dim(acacia$comm)
+```
+
+Quite a bit larger! 
+
+Let's see how parallel computing works on the `acacia` dataset. We will also increase the number of replicates, to a value that is closer to what you would use for a "real analysis" ^[For more information on how to choose the number of replicates, see the ["How many randomizations" vignette](https://joelnitta.github.io/canaper/articles/how-many-rand.html).]:
+
+```{r acacia-single}
+tic()
+acacia_res_seq <- cpr_rand_test(
+  acacia$comm, acacia$phy, 
+  null_model = "trialswap", n_reps = 500)
+toc()
+```
+
+```{r acacia-parallel}
+# Run cpr_rand_test() in parallel with four CPUs
+plan(multisession, workers = 4)
+tic()
+acacia_par_seq <- cpr_rand_test(
+  acacia$comm, acacia$phy, 
+  null_model = "trialswap", n_reps = 500)
+toc()
+# Change back to default sequential mode
+plan(sequential)
+```
+
+And now we start to see the performance improvements that be can be gained from parallel computing!
+
+## Progress bars
+
+If you'd like to track the progress of `cpr_rand_test()` in real time, you can enable a progress bar. Just put the call to `cpr_rand_test()` inside the `progressr::with_progress()` function (nothing shows up in this webpage, but do try it at home!):
+
+```{r progress-example}
+with_progress(
+  biod_res_long <- cpr_rand_test(
+    biod_example$comm, biod_example$phy, 
+    null_model = "trialswap", n_reps = 500)
+)
+```
+
+## Conclusion
+
+This vignette shows how easy it is to enable parallel computing in `canaper`, and when it makes sense to do so. I hope it helps your analyses run faster!
