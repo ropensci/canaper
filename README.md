@@ -179,7 +179,7 @@ Poster at [Botany 2021](https://2021.botanyconference.org/)
 
 If you use this package, please cite it! Here is an example:
 
-    Nitta JH, Iwasaki W. (2021) canaper: Categorical analysis of neo- and paleo-endemism in R. doi: 10.5281/zenodo.5094032
+    Nitta JH, Laffan SW, Mishler BD, Iwasaki W. (2021) canaper: Categorical analysis of neo- and paleo-endemism in R. doi: 10.5281/zenodo.5094032
 
 The example DOI above is for the overall package.
 
