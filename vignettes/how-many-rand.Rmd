@@ -131,29 +131,35 @@ set.seed(12345)
 tic()
 res_10_1 <- cpr_rand_test(
   biod_example$comm, biod_example$phy, 
+  null_model = "trialswap",
   n_iterations = 1000, n_reps = 10, tbl_out = TRUE)
 toc()
 tic()
 res_100_1 <- cpr_rand_test(
   biod_example$comm, biod_example$phy, 
+  null_model = "trialswap",
   n_iterations = 1000, n_reps = 100, tbl_out = TRUE)
 toc()
 tic()
 res_1000_1 <- cpr_rand_test(
   biod_example$comm, biod_example$phy, 
+  null_model = "trialswap",
   n_iterations = 1000, n_reps = 1000, tbl_out = TRUE)
 toc()
 
 # Second set
 set.seed(67890)
 res_10_2 <- cpr_rand_test(
-  biod_example$comm, biod_example$phy, 
+  biod_example$comm, biod_example$phy,
+  null_model = "trialswap",
   n_iterations = 1000, n_reps = 10, tbl_out = TRUE)
 res_100_2 <- cpr_rand_test(
   biod_example$comm, biod_example$phy, 
+  null_model = "trialswap",
   n_iterations = 1000, n_reps = 100, tbl_out = TRUE)
 res_1000_2 <- cpr_rand_test(
   biod_example$comm, biod_example$phy, 
+  null_model = "trialswap",
   n_iterations = 1000, n_reps = 1000, tbl_out = TRUE)
 ```
 

@@ -91,7 +91,10 @@ set.seed(071421)
 
 tic() # Set a timer
 # Run randomization test
-acacia_rand_res <- cpr_rand_test(acacia$comm, acacia$phy, n_reps = 100, n_iterations = 100000)
+acacia_rand_res <- cpr_rand_test(
+  acacia$comm, acacia$phy, 
+  null_model = "trialswap",
+  n_reps = 100, n_iterations = 100000)
 toc() # See how long it took
 ```
 
