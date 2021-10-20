@@ -271,14 +271,14 @@ test_that("Parallelization decreases calculation time", {
    tictoc::tic.clearlog()
    tictoc::tic()
    set.seed(123)
-   seq_res <- cpr_rand_test(acacia$comm, acacia$phy, null_model = "trialswap", n_iterations = 100, n_reps = 100)
+   seq_res <- cpr_rand_test(acacia$comm, acacia$phy, null_model = "trialswap", n_iterations = 100, n_reps = 200)
    tictoc::toc(log = TRUE, quiet = TRUE)
 
    # Set future resolution to parallelized, with 3 workers
    future::plan(future::multisession, workers = 3)
    tictoc::tic()
    set.seed(123)
-   parallel_res <- cpr_rand_test(acacia$comm, acacia$phy, null_model = "trialswap", n_iterations = 100, n_reps = 100)
+   parallel_res <- cpr_rand_test(acacia$comm, acacia$phy, null_model = "trialswap", n_iterations = 100, n_reps = 200)
    tictoc::toc(log = TRUE, quiet = TRUE)
    log_list <- tictoc::tic.log(format = FALSE)
    tictoc::tic.clearlog()
