@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 A central part of CANAPE is comparing observed values with randomizations. It is up to the user to set the number of randomizations... but how does one know if the number of randomizations is sufficient?
 
-(This vignette assumes a basic understanding of CANAPE, community data matrices, and randomizations. If you aren't familiar with any of these, you should probably see the [the CANAPE example vignette](https://joelnitta.github.io/canaper/articles/canape.html) first).
+(**This vignette assumes a basic understanding of CANAPE, community data matrices, and randomizations**. If you aren't familiar with any of these, you should probably see the [the CANAPE example vignette](https://joelnitta.github.io/canaper/articles/canape.html) first).
 
 ## A word about randomization algorithms
 

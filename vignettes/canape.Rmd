@@ -73,9 +73,11 @@ The main purpose of `canaper` is to perform these randomization tests.
 
 The default setting in `canaper` is to use `independentswap`, which maintains species richness and abundance patterns while randomizing species identity [@Gotelli2000].
 
-Let's perform a randomization test for the `acacia` dataset. This example also demonstrates one of the strengths of `canaper`: the ability to run randomizations in parallel. This is by far the most time-consuming part of CANAPE, since we have to repeat the calculations many (e.g., hundreds or more) times across the randomized communities to obtain reliable results. Here, we set the number of iterations (`n_iterations`; i.e., the number of swaps used to produce each randomized community) fairly high because this community matrix is large and includes many zeros; thorough mixing by swapping many times is required to completely randomize the matrix. We will use a low number of random communities (`n_reps`) so things finish relatively quickly; you should consider increasing `n_reps` for a "real" analysis[^1].
+Let's perform a randomization test for the `acacia` dataset. This example also demonstrates one of the strengths of `canaper`: the ability to run randomizations in parallel[^1]. This is by far the most time-consuming part of CANAPE, since we have to repeat the calculations many (e.g., hundreds or more) times across the randomized communities to obtain reliable results. Here, we set the number of iterations (`n_iterations`; i.e., the number of swaps used to produce each randomized community) fairly high because this community matrix is large and includes many zeros; thorough mixing by swapping many times is required to completely randomize the matrix. We will use a low number of random communities (`n_reps`) so things finish relatively quickly; you should consider increasing `n_reps` for a "real" analysis[^2].
 
-[^1]: For more details on setting the appropriate number of iterations and replicates, [see the "How many randomizations?" vigenette](https://joelnitta.github.io/canaper/articles/how-many-rand.html).
+[^1]: For more information on how and when to use parallel computing in `canaper`, [see the "Parallel computing" vignette](https://joelnitta.github.io/canaper/articles/parallel.html)
+
+[^2]: For more information on setting the appropriate number of iterations and replicates, [see the "How many randomizations?" vigenette](https://joelnitta.github.io/canaper/articles/how-many-rand.html).
 
 ```{r acacia-rand}
 # Set a parallel back-end, with 4 CPUs running simultaneously
