@@ -22,7 +22,7 @@ Nat Commun, 5: 4473. \doi{10.1038/ncomms5473}
 cpr_rand_test(
   comm,
   phy,
-  null_model = "independentswap",
+  null_model = c("frequency", "richness", "independentswap", "trialswap"),
   n_reps = 100,
   n_iterations = 10000,
   metrics = c("pd", "rpd", "pe", "rpe"),
@@ -116,6 +116,6 @@ abundance or presence-absence data (i.e., abundance weighting is not used).
 \examples{
 library(picante)
 data(phylocom)
-cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd")
+cpr_rand_test(phylocom$sample, phylocom$phy, null_model = "trialswap", metrics = "pd")
 
 }

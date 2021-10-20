@@ -39,7 +39,9 @@
 #' @examples
 #' library(picante)
 #' data(phylocom)
-#' rand_test <- cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd")
+#' rand_test <- cpr_rand_test(
+#'   phylocom$sample, phylocom$phy,
+#'   null_model = "trialswap", metrics = "pd")
 #' cpr_classify_signif(rand_test, "pd")
 #'
 #' @srrstats {G1.4} uses roxygen

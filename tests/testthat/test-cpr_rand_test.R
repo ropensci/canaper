@@ -35,7 +35,7 @@ dat$res_df_from_tbl <- cpr_rand_test(dat$comm_tbl, biod_example$phy, null_model 
 #' @srrstats {G5.2, G5.2a, G5.2b, UL7.0} tests failure if input is not valid and checks warning messages
 test_that("Input is valid", {
    expect_error(
-      cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = -10),
+      cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = -10, null_model = "independentswap"),
       "'n_reps' must be > 0"
    )
    expect_error(
@@ -43,15 +43,15 @@ test_that("Input is valid", {
       "'n_iterations' must be > 0"
    )
    expect_error(
-      cpr_rand_test(10, biod_example$phy, metrics = "pd"),
+      cpr_rand_test(10, biod_example$phy, metrics = "pd", null_model = "independentswap"),
       "'comm' must be of class 'data\\.frame' or 'matrix'"
    )
    expect_error(
-      cpr_rand_test(biod_example$comm, NA, metrics = "pd"),
+      cpr_rand_test(biod_example$comm, NA, metrics = "pd", null_model = "independentswap"),
       "'phy' must be a list of class 'phylo'"
    )
    expect_error(
-      cpr_rand_test(biod_example$comm, biod_example$phy, metrics = "pg"),
+      cpr_rand_test(biod_example$comm, biod_example$phy, metrics = "pg", null_model = "independentswap"),
       "'metrics' may only include 'pd', 'rpd', 'pe', or 'rpe'"
    )
    # input data too small
@@ -65,11 +65,11 @@ test_that("Input is valid", {
    colnames(comm_small) <- colnames(biod_example$comm[1:3,])
    comm_small <- comm_small[,colSums(comm_small) > 0]
    expect_error(
-      cpr_rand_test(comm_small, biod_example$phy),
+      cpr_rand_test(comm_small, biod_example$phy, null_model = "independentswap"),
       "'comm' must include at least 5 sites"
    )
    expect_error(
-      cpr_rand_test(biod_example$comm, ape::keep.tip(biod_example$phy, c("sp1", "sp2"))),
+      cpr_rand_test(biod_example$comm, ape::keep.tip(biod_example$phy, c("sp1", "sp2")), null_model = "independentswap"),
       "'phy' and 'comm' must share at least 5 species in common"
    )
    # comm with numeric species names
@@ -78,42 +78,42 @@ test_that("Input is valid", {
    phy_num_names <- biod_example$phy
    phy_num_names$tip.label <- colnames(comm_num_names)
    expect_error(
-      cpr_rand_test(as.matrix(comm_num_names), phy_num_names, metrics = "pd"),
+      cpr_rand_test(as.matrix(comm_num_names), phy_num_names, metrics = "pd", null_model = "independentswap"),
       "Column names of 'comm' changed after conversion from matrix to dataframe\\. Do any column names start with a number"
    )
    # comm with duplicated species names
    comm_dup_names <- biod_example$comm
    colnames(comm_dup_names)[2] <- "sp1"
    expect_error(
-      cpr_rand_test(comm_dup_names, biod_example$phy, metrics = "pd"),
+      cpr_rand_test(comm_dup_names, biod_example$phy, metrics = "pd", null_model = "independentswap"),
       "'comm' must have unique column names"
    )
    # phy with duplicated species names
    phy_dup_names <- biod_example$phy
    phy_dup_names$tip.label[2] <- "sp1"
    expect_error(
-      cpr_rand_test(biod_example$comm, phy_dup_names),
+      cpr_rand_test(biod_example$comm, phy_dup_names, null_model = "independentswap"),
       "All tip labels in 'phy' must be unique"
    )
    # comm with non-numeric data
    comm_non_numeric <- biod_example$comm
    comm_non_numeric[1,1] <- "a"
    expect_error(
-      cpr_rand_test(comm_non_numeric, biod_example$phy, metrics = "pd"),
+      cpr_rand_test(comm_non_numeric, biod_example$phy, metrics = "pd", null_model = "independentswap"),
       "All columns of 'comm' must be numeric"
    )
    # comm with NA data
    comm_with_na <- biod_example$comm
    comm_with_na[1,1] <- NA
    expect_error(
-      cpr_rand_test(comm_with_na, biod_example$phy, metrics = "pd"),
+      cpr_rand_test(comm_with_na, biod_example$phy, metrics = "pd", null_model = "independentswap"),
       "No missing values allowed in 'comm'"
    )
    # comm with negative data
    comm_with_negative <- biod_example$comm
    comm_with_negative[1,1] <- -10
    expect_error(
-      cpr_rand_test(comm_with_negative, biod_example$phy, metrics = "pd"),
+      cpr_rand_test(comm_with_negative, biod_example$phy, metrics = "pd", null_model = "independentswap"),
       "No negative values allowed in 'comm'"
    )
    #' @srrstats {G2.11} non-vector inputs
@@ -123,45 +123,45 @@ test_that("Input is valid", {
       is.vector(comm_with_nonvec[,1])
    )
    expect_error(
-      cpr_rand_test(comm_with_nonvec, biod_example$phy, metrics = "pd"),
+      cpr_rand_test(comm_with_nonvec, biod_example$phy, metrics = "pd", null_model = "independentswap"),
       "All columns of 'comm' must be numeric"
    )
    #' @srrstats {G2.16} infinite values
    comm_with_infinite <- biod_example$comm
    comm_with_infinite[1,1] <- Inf
    expect_error(
-      cpr_rand_test(comm_with_infinite, biod_example$phy, metrics = "pd"),
+      cpr_rand_test(comm_with_infinite, biod_example$phy, metrics = "pd", null_model = "independentswap"),
       "No infinite values allowed in 'comm'"
    )
    expect_error(
-      cpr_rand_test(dat$comm_tbl, biod_example$phy, metrics = "pd", site_col = "sample"),
+      cpr_rand_test(dat$comm_tbl, biod_example$phy, metrics = "pd", site_col = "sample", null_model = "independentswap"),
       "'site_col' must be one of the column names of 'comm'"
    )
    #' @srrstats {UL1.4} Check assumptions made with regard to input data (negative branch lengths)
    phy_neg <- biod_example$phy
    phy_neg$edge.length[1] <- -1
    expect_error(
-      cpr_rand_test(biod_example$comm, phy_neg),
+      cpr_rand_test(biod_example$comm, phy_neg, null_model = "independentswap"),
       "'phy' may not have negative branchlengths"
    )
    phy_inf <- biod_example$phy
    phy_inf$edge.length[1] <- Inf
    expect_error(
-      cpr_rand_test(biod_example$comm, phy_inf),
+      cpr_rand_test(biod_example$comm, phy_inf, null_model = "independentswap"),
       "'phy' may not have infinite branchlengths"
    )
    # check column with all zeros
    comm_one_zero_col <- biod_example$comm
    comm_one_zero_col[,1] <- 0
    expect_error(
-      cpr_rand_test(comm_one_zero_col, biod_example$phy),
+      cpr_rand_test(comm_one_zero_col, biod_example$phy, null_model = "independentswap"),
       "Every species in 'comm' must occur in at least one site"
    )
    # check row with all zeros
    comm_one_zero_row <- biod_example$comm
    comm_one_zero_row[1,] <- 0
    expect_error(
-      cpr_rand_test(comm_one_zero_row, biod_example$phy),
+      cpr_rand_test(comm_one_zero_row, biod_example$phy, null_model = "independentswap"),
       "Every site in 'comm' must have at least once species"
    )
    # input data with too many zeros or 1s
@@ -255,7 +255,7 @@ test_that("Default column and rownames are detected", {
    )
    phy_default <- ape::keep.tip(biod_example$phy, paste0("sp", 1:8))
    expect_error(
-      cpr_rand_test(df_default_rows, phy_default),
+      cpr_rand_test(df_default_rows, phy_default, null_model = "independentswap"),
       "'comm' cannot have default row names \\(consecutive integers from 1 to the number of rows\\)"
    )
 })

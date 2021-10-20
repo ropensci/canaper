@@ -87,13 +87,13 @@
 #' @examples
 #' library(picante)
 #' data(phylocom)
-#' cpr_rand_test(phylocom$sample, phylocom$phy, metrics = "pd")
+#' cpr_rand_test(phylocom$sample, phylocom$phy, null_model = "trialswap", metrics = "pd")
 #'
 #' @srrstats {G1.4} uses roxygen
 #'
 #' @export
 cpr_rand_test <- function(
-	comm, phy, null_model = "independentswap",
+	comm, phy, null_model = c("frequency", "richness", "independentswap", "trialswap"),
 	n_reps = 100, n_iterations = 10000,
 	metrics = c("pd", "rpd", "pe", "rpe"),
 	site_col = "site", tbl_out = tibble::is_tibble(comm)) {
