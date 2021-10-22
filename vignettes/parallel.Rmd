@@ -1,6 +1,8 @@
 ---
 title: "Parallel computing"
+author: "Joel H. Nitta"
 output: rmarkdown::html_vignette
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 vignette: >
   %\VignetteIndexEntry{Parallel computing}
   %\VignetteEncoding{UTF-8}
