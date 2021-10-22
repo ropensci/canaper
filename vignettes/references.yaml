@@ -1,20 +1,4 @@
 references:
-- id: Gotelli2000
-  author:
-  - family: Gotelli
-    given: Nicholas J
-  container-title: Ecology
-  DOI: 10.2307/177478
-  ISSN: 00129658
-  issue: '9'
-  issued:
-  - year: 2000
-    month: 9
-  page: 2606-2621
-  title: Null model analysis of species co-occurrence patterns
-  type: article-journal
-  URL: http://www.jstor.org/stable/177478?origin=crossref
-  volume: '81'
 - id: Mishler2014
   author:
   - family: Mishler
@@ -40,3 +24,63 @@ references:
   type: article-journal
   URL: http://www.nature.com/doifinder/10.1038/ncomms5473
   volume: '5'
+- id: Strona2014
+  accessed:
+  - year: 2021
+    month: 10
+    day: 21
+  author:
+  - family: Strona
+    given: Giovanni
+  - family: Nappo
+    given: Domenico
+  - family: Boccacci
+    given: Francesco
+  - family: Fattorini
+    given: Simone
+  - family: San-Miguel-Ayanz
+    given: Jesus
+  container-title: Nature Communications
+  container-title-short: Nat Commun
+  DOI: 10.1038/ncomms5114
+  ISSN: 2041-1723
+  issue: '1'
+  issued:
+  - year: 2014
+    month: 9
+    day: 22
+  language: en
+  page: '4114'
+  source: DOI.org (Crossref)
+  title: A fast and unbiased procedure to randomize ecological binary matrices with
+    fixed row and column totals
+  type: article-journal
+  URL: http://www.nature.com/articles/ncomms5114
+  volume: '5'
+- id: Strona2018
+  accessed:
+  - year: 2021
+    month: 10
+    day: 21
+  author:
+  - family: Strona
+    given: Giovanni
+  - family: Ulrich
+    given: Werner
+  - family: Gotelli
+    given: Nicholas J.
+  container-title: Ecology
+  container-title-short: Ecology
+  DOI: 10.1002/ecy.2043
+  ISSN: 0012-9658, 1939-9170
+  issue: '1'
+  issued:
+  - year: 2018
+    month: 1
+  language: en
+  page: 103-115
+  source: DOI.org (Crossref)
+  title: Bi‐dimensional null model analysis of presence‐absence binary matrices
+  type: article-journal
+  URL: https://onlinelibrary.wiley.com/doi/10.1002/ecy.2043
+  volume: '99'

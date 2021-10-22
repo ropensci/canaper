@@ -18,16 +18,15 @@
 #'   (super-endemic; both `pe_obs` and `pe_obs_alt` are highly significant).
 #'
 #' @srrstats {G1.0} Cites original ref:
-#' @source Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
+#' @references Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
 #'   Phylogenetic measures of biodiversity and neo- and paleo-endemism in
 #'   Australian Acacia. Nat Commun, 5: 4473. \doi{10.1038/ncomms5473}
 #'
 #' @examples
-#' library(picante)
 #' data(phylocom)
 #' rand_test <- cpr_rand_test(
 #'   phylocom$sample, phylocom$phy,
-#'   null_model = "trialswap", metrics = c("pe", "rpe"))
+#'   null_model = "curveball", metrics = c("pe", "rpe"))
 #' cpr_classify_endem(rand_test)
 #'
 #' @srrstats {G1.4} uses roxygen

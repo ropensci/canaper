@@ -13,6 +13,8 @@
 #'   branches are of equal length, scaled to 1
 #' @param n_iterations Numeric vector of length 1; Number of iterations to use
 #'   when shuffling random community
+#' @param thin Numeric vector of length 1; thinning parameter used by some
+#'   null models in `vegan` (e.g., `quasiswap`).
 #' @param metrics Character vector; names of metrics to calculate. May include
 #'   one or more of: `pd`, `rpd`, `pe`, `rpe` (case-sensitive).
 #'
@@ -20,72 +22,65 @@
 #'   random community, in the same order as the rows in the input community.
 #'   Names of the list correspond to `metrics`.
 #'
-#' @srrstats {G5.0} Uses a widely-used dataset
 #' @examples
-#' \dontrun{
-#' library(picante)
-#' data(phylocom)
-#' phy <- phylocom$phy
-#' comm <- phylocom$sample
-#' subsetted_data <- picante::match.phylo.comm(phy = phy, comm = comm)
-#' phy <- subsetted_data[["phy"]]
-#' comm <- subsetted_data[["comm"]]
+#' phy <- biod_example$phy
+#' comm <- biod_example$comm
 #' phy_alt <- phy
 #' phy_alt$edge.length <- rep(x = 1, times = length(phy_alt$edge.length))
 #' phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length)
 #' phy$edge.length <- phy$edge.length / sum(phy$edge.length)
-#' calc_biodiv_random(comm, phy, phy_alt, "independentswap", 1000L, metrics = c("pd", "pe", "pd_alt"))
-#' }
+#' calc_biodiv_random(comm, phy, phy_alt, "tswap", 1000, metrics = c("pd", "pe", "pd_alt"))
 #'
 #' @srrstats {G1.4, G1.4a} uses roxygen
 #'
 #' @noRd
 calc_biodiv_random <- function(comm, phy, phy_alt,
-															 null_model = c("frequency", "richness", "independentswap", "trialswap"),
-															 n_iterations, metrics = c("pd", "rpd", "pe", "rpe", "pd_alt", "pe_alt")) {
-	# Check input
+															 null_model,
+															 n_iterations = 1, thin = 1,
+															 metrics = c("pd", "rpd", "pe", "rpe", "pd_alt", "pe_alt")) {
+	# Check input ----
 	#' @srrstats {G2.1, G2.6} Check input types and lengths
+	#' @srrstats {G2.0, G2.2} Assert input length is 1 as needed
+	#' @srrstats {G2.3, G2.3a} Check univariate char input
+	# - comm
 	assertthat::assert_that(inherits(comm, "data.frame") | inherits(comm, "matrix"),
 													msg = "'comm' must be of class 'data.frame' or 'matrix'")
+	# - phy
 	assertthat::assert_that(
 		is.list(phy) && inherits(phy, "phylo"),
 		msg = "'phy' must be a list of class 'phylo'")
+	# - phy_alt
 	assertthat::assert_that(
 		is.list(phy_alt) && inherits(phy_alt, "phylo"),
 		msg = "'phy_alt' must be a list of class 'phylo'")
-	#' @srrstats {G2.0, G2.2} assert input length is 1
-	assertthat::assert_that(assertthat::is.string(null_model))
-	assertthat::assert_that(assertthat::noNA(null_model))
-	#' @srrstats {G2.3, G2.3a} # univariate char input
+	# - null_model
 	assertthat::assert_that(
-		isTRUE(null_model %in% c("frequency", "richness", "independentswap", "trialswap")),
-		msg = "'null_model' must be one of 'frequency', 'richness', 'independentswap', or 'trialswap'"
+		assertthat::is.string(null_model) | inherits(null_model, "commsim"),
+		msg = "'null_model' must be a string (character vector of length 1) or an object of class 'commsim'"
 	)
-	#' @srrstats {G2.0, G2.2} assert input length is 1
-	# n_iterations (only needed for `independentswap`, `trialswap`)
-	if (null_model %in% c("independentswap", "trialswap")) {
-		assertthat::assert_that(assertthat::is.number(n_iterations))
-		assertthat::assert_that(is.integer(n_iterations))
-		assertthat::assert_that(assertthat::noNA(n_iterations))
-		assertthat::assert_that(!is.infinite(n_iterations))
-		assertthat::assert_that(n_iterations > 0, msg = "'n_iterations' must be > 0")
-	} else {n_iterations <- NULL}
+	if (isTRUE(assertthat::is.string(null_model))) {
+		assertthat::assert_that(assertthat::not_empty(comm))
+		assertthat::assert_that(assertthat::noNA(null_model))
+	}
+	# - n_iterations
+	assertthat::assert_that(assertthat::is.number(n_iterations))
+	assertthat::assert_that(assertthat::noNA(n_iterations))
+	assertthat::assert_that(is.finite(n_iterations))
+	n_iterations <- as.integer(n_iterations)
+	assertthat::assert_that(n_iterations > 0, msg = "'n_iterations' must be > 0")
+	# - thin
+	assertthat::assert_that(assertthat::is.number(thin))
+	assertthat::assert_that(assertthat::noNA(thin))
+	assertthat::assert_that(is.finite(thin))
+	# - metrics
 	assertthat::assert_that(is.character(metrics))
-	#' @srrstats {G2.3, G2.3a} # univariate char input
+	assertthat::assert_that(assertthat::noNA(metrics))
 	assertthat::assert_that(
 		isTRUE(all(metrics %in% c("pd", "rpd", "pe", "rpe", "pd_alt", "pe_alt"))),
 		msg = "'metrics' may only include 'pd', 'rpd', 'pe', 'rpe', 'pd_alt', 'pe_alt'"
 	)
-	assertthat::assert_that(assertthat::noNA(metrics))
 
-	# Verify that at least 5 species and sites are present
-	# this could possibly be relaxed if https://github.com/skembel/picante/issues/26 gets fixed
-	assertthat::assert_that(nrow(comm) > 4, msg = "'comm' must include at least 5 species")
-	assertthat::assert_that(ncol(comm) > 4, msg = "'comm' must include at least 5 sites")
-	assertthat::assert_that(ape::Ntip(phy) > 4, msg = "'phy' must include at least 5 species")
-	assertthat::assert_that(assertthat::not_empty(comm))
-
-	# Make sure names match between community and tree
+	# - Make sure names match between community and tree
 	assertthat::assert_that(isTRUE(
 		all.equal(sort(phy$tip.label), sort(colnames(comm)))
 	))
@@ -94,31 +89,33 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
 		all.equal(sort(phy_alt$tip.label), sort(colnames(comm)))
 	))
 
-	# Make sure phylogeny has been re-scaled to total branch length of 1 for RPE or RFD
+	# - Make sure phylogeny has been re-scaled to total branch length of 1 for RPE or RFD
 	if (any(metrics %in% c("rpe", "rpd"))) {
 		assertthat::assert_that(
 			isTRUE(all.equal(sum(phy$edge.length), 1)),
 			msg = "phylogeny not rescaled to total length 1"
-			)
+		)
 	}
 	if (any(metrics %in% c("rpe", "rpd"))) {
 		assertthat::assert_that(
 			isTRUE(all.equal(sum(phy_alt$edge.length), 1)),
 			msg = "alternative phylogeny not rescaled to total length 1"
-			)
+		)
 	}
 
-	# Check that phy_alt is different from phy
+	# - Check that phy_alt is different from phy
 	assertthat::assert_that(
-		isTRUE(!(all.equal(phy, phy_alt))),
+		!isTRUE((all.equal(phy, phy_alt))),
 		msg = "'phy' and 'phy_alt' should not be identical"
 	)
+
+	# Calculations ----
 
 	# Convert comm to sparse matrix format for phyloregions
 	comm_sparse <- phyloregion::dense2sparse(comm)
 
 	# Generate random community
-	random_comm <- picante::randomizeMatrix(comm, null.model = null_model, iterations = n_iterations)
+	random_comm <- cpr_rand_comm(comm, null_model = null_model, n_iterations = n_iterations, thin = thin)
 	random_comm_sparse <- phyloregion::dense2sparse(random_comm)
 
 	# Calculate statistics for random community

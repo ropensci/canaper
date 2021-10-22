@@ -1,29 +1,47 @@
 #' Run a randomization analysis for one or more biodiversity metrics
 #'
-#' The observed value of the biodiversity metric(s) will be calculated, then
-#' compared against a set of random communities. Various statistics are calculated
-#' from the comparison (see **Value** below).
+#' The observed value of the biodiversity metric(s) will be calculated for the
+#' input community data, then compared against a set of random communities.
+#' Various statistics are calculated from the comparison (see **Value** below).
 #'
-#' The biodiversity metrics available for analysis include:
+#' The biodiversity metrics (`metrics`) available for analysis include:
+#'
 #' - `pd`: Phylogenetic diversity (Faith 1992)
 #' - `rpd`: Relative phylogenetic diversity (Mishler et al 2014)
 #' - `pe`: Phylogenetic endemism (Rosauer et al 2009)
 #' - `rpe`: Relative phylogenetic endemism (Mishler et al 2014)
 #'
-#' The default method for generating random communities is the independent swap
-#' method of Gotelli (2000) (`independentswap`), which randomizes the community
-#' matrix while maintaining species occurrence frequency and sample species
-#' richness.
+#' (`pe` and `rpe` are needed for CANAPE with \code{\link{cpr_classify_endem}()})
 #'
-#' Note that the `trialswap` method has been found to produce results that
-#' differ strongly from `independentswap` or the swapping algorithm of
-#' [Biodiverse](https://github.com/shawnlaffan/biodiverse) (`rand_structured`),
-#' and **is not recommended.**
+#' The choice of a randomization algorithm (`null_model`) is not trivial, and may
+#' strongly affect results. `cpr_rand_test()` uses null models provided by
+#' `vegan`; for a complete list, see the help file of [vegan::commsim()] or run
+#' [vegan::make.commsim()]. One frequently used null model is `swap` (Gotelli &
+#' Entsminger 2003), which randomizes the community matrix while preserving
+#' column and row sums (marginal sums). For a review of various null models, see
+#' Strona et al. (2018); `swap` is an "FF" model in the sense of Strona et al.
+#' (2018).
 #'
-#' A minimum of 5 species and sites are required as input; fewer than that may
-#' cause the default method for generating random communities (independent swap)
-#' to enter an infinite loop. Besides, inferences on very small numbers of
-#' species and/or sites is not recommended generally.
+#' Instead of using one of the predefined null models in [vegan::commsim()], it
+#' is also possible to define a custom null model; see **Examples** in
+#' \code{\link{cpr_rand_comm}()}
+#'
+#' Note that the pre-defined models in `vegan` include binary models (designed
+#' for presence-absence data) and quantitative models (designed for abundance
+#' data). Although the binary models will accept abundance data, they treat it
+#' as binary and always return a binary (presence-absence) matrix. The PD and PE
+#' calculations in `canaper` are not abundance-weighted, so they return the same
+#' result regardless of whether the input is presence-absence or abundance. In
+#' that sense, binary null models are appropriate for `cpr_rand_test()`. The
+#' quantitative models could also be used for abundance data, but the output
+#' will be treated as binary anyways when calculating PD and PE. The effects of
+#' using binary vs. quantitative null models for `cpr_rand_test()` have not been
+#' investigated.
+#'
+#' A minimum of 5 species and sites are required as input; fewer than that is
+#' likely cause the some randomization algorithms (e.g., `swap`) to enter an
+#' infinite loop. Besides, inferences on very small numbers of species and/or
+#' sites is not recommended generally.
 #'
 #' The following rules apply to `comm` input:
 #' - If dataframe or matrix, must include row names (site names) and column names (species names).
@@ -37,21 +55,26 @@
 #'
 #' @srrstats {G2.0a, G2.1a, G2.3b} Documents expectations on lengths, types of vector
 #'   inputs, case-sensitivity
-#' @srrstats {G2.7, UL1.0} accept dataframe or matrix
+#' @srrstats {G2.7, UL1.0} accept dataframe, tibble, or matrix
 #' @srrstats {UL4.3a} If `tbl_out` is `TRUE`, restricts number of rows/columns printed to screen
 #' @param comm Dataframe, tibble, or matrix; input community data with
-#'   sites (communities) as rows and species as columns. Values of each cell are
-#'   the presence/absence (0 or 1) or number of individuals (abundance) of each
-#'   species in each site.
+#'   sites (communities) as rows and species as columns. Either presence-absence
+#'   data (values only 0s or 1s) or abundance data (values >= 0) accepted, but
+#'   calculations do not use abundance-weighting, so results from abundance data
+#'   will be the same as if converted to presence-absence before analysis.
 #' @param phy List of class `phylo`; input phylogeny.
-#' @param null_model Character vector of length 1; name of null model to use.
-#'   Must choose from `frequency`, `richness`, `independentswap`, or
-#'   `trialswap` (case-sensitive). For details, see [picante::randomizeMatrix()].
+#' @param null_model Character vector of length 1 or object of class `commsim`;
+#'   either the name of the model to use for generating random communities (null
+#'   model), or a custom null model. For full list of available predefined null
+#'   models, see the help file of [vegan::commsim()], or run
+#'   [vegan::make.commsim()]. An object of class `commsim` can be generated with
+#'   [vegan::commsim()] (see **Examples** in \code{\link{cpr_rand_comm}()}).
 #' @param n_reps Numeric vector of length 1; number of random communities to
 #'   replicate.
 #' @param n_iterations Numeric vector of length 1; number of iterations to use
-#'   when swapping occurrences to generate each random community; only used if
-#'   `null_model` is `independentswap` or `trialswap`.
+#'   for sequential null models; ignored for non-sequential models.
+#' @param thin Numeric vector of length 1; thinning parameter used by some
+#'   null models in `vegan` (e.g., `quasiswap`); ignored for other models.
 #' @param metrics Character vector; names of biodiversity metrics to calculate.
 #'   May include one or more of: `pd`, `rpd`, `pe`, `rpe` (case-sensitive).
 #' @param site_col Character vector of length 1; name of column in `comm` that
@@ -79,28 +102,31 @@
 #' `pd_obs_c_lower`, etc...
 #'
 #' @srrstats {G1.0} Cites original refs:
-#' @source Faith DP (1992) Conservation evaluation and phylogenetic diversity.
-#'  Biological Conservation, 61:1–10. \doi{10.1016/0006-3207(92)91201-3}
-#' @source Gotelli, N.J. (2000) Null Model Analysis of Species Co-Occurrence
-#' Patterns. Ecology, 81: 2606-2621. \doi{10.1890/0012-9658(2000)081[2606:NMAOSC]2.0.CO;2}
-#' @source Rosauer, D., Laffan, S.W., Crisp, M.D., Donnellan, S.C. and Cook, L.G. (2009)
-#' Phylogenetic endemism: a new approach for identifying geographical concentrations of
-#' evolutionary history. Molecular Ecology, 18: 4061-4072. \doi{10.1111/j.1365-294X.2009.04311.x}
-#' @source Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014) Phylogenetic measures
-#' of biodiversity and neo- and paleo-endemism in Australian Acacia.
-#' Nat Commun, 5: 4473. \doi{10.1038/ncomms5473}
+#' @references Faith DP (1992) Conservation evaluation and phylogenetic diversity.
+#'   Biological Conservation, 61:1–10. \doi{10.1016/0006-3207(92)91201-3}
+#' @references Gotelli, N.J. and Entsminger, N.J. (2003). Swap algorithms in null
+#'   model analysis. Ecology 84, 532–535.
+#' @references Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
+#'   Phylogenetic measures of biodiversity and neo- and paleo-endemism in
+#'   Australian Acacia. Nat Commun, 5: 4473. \doi{10.1038/ncomms5473}
+#' @references Rosauer, D., Laffan, S.W., Crisp, M.D., Donnellan, S.C. and Cook,
+#'   L.G. (2009) Phylogenetic endemism: a new approach for identifying
+#'   geographical concentrations of evolutionary history. Molecular Ecology, 18:
+#'   4061-4072. \doi{10.1111/j.1365-294X.2009.04311.x}
+#' @references Strona, G., Ulrich, W. and Gotelli, N.J. (2018), Bi-dimensional null
+#'   model analysis of presence-absence binary matrices. Ecology, 99: 103-115.
+#'   \doi{10.1002/ecy.2043}
 #'
 #' @examples
-#' library(picante)
 #' data(phylocom)
-#' cpr_rand_test(phylocom$sample, phylocom$phy, null_model = "trialswap", metrics = "pd")
+#' cpr_rand_test(phylocom$sample, phylocom$phy, null_model = "curveball", metrics = "pd")
 #'
 #' @srrstats {G1.4} uses roxygen
 #'
 #' @export
 cpr_rand_test <- function(
-	comm, phy, null_model = "independentswap",
-	n_reps = 100, n_iterations = 10000,
+	comm, phy, null_model,
+	n_reps = 100, n_iterations = 10000, thin = 1,
 	metrics = c("pd", "rpd", "pe", "rpe"),
 	site_col = "site", tbl_out = tibble::is_tibble(comm)) {
 
@@ -108,42 +134,42 @@ cpr_rand_test <- function(
 	n_reps_input <- n_reps
 	n_iterations_input <- n_iterations
 
-	# Check input: `null_model`, `n_reps`, `n_iterations`, `metrics` ----
-	#' @srrstats {G2.0, G2.2, G2.1, G2.3, G2.3a, G2.6, G2.13, G2.14, G2.14a, G2.15, G2.16}
-	#' check input types and lengths, missingness, undefined values, values of univariate char input
-	# null_model
+	# Check input: `null_model`, `n_reps`, `n_iterations`, `thin`, `metrics`, `tbl_out` ----
+	#' @srrstats {G2.0, G2.2, G2.1, G2.3, G2.3a, G2.4a, G2.6, G2.13, G2.14, G2.14a, G2.15, G2.16}
+	#' check input types and lengths, missingness, undefined values, values of univariate char input,
+	#' convert to integer before numeric comparisons
+	# - null_model
 	assertthat::assert_that(assertthat::is.string(null_model))
 	assertthat::assert_that(assertthat::noNA(null_model))
-	assertthat::assert_that(
-		isTRUE(null_model %in% c("frequency", "richness", "independentswap", "trialswap")),
-		msg = "'null_model' must be one of 'frequency', 'richness', 'independentswap', or 'trialswap'"
-	)
-	# n_reps
+	# - n_reps
 	assertthat::assert_that(assertthat::is.number(n_reps))
-	#' @srrstats {G2.4a} Convert to integer
+	assertthat::assert_that(assertthat::noNA(n_reps))
+	assertthat::assert_that(is.finite(n_reps))
 	n_reps <- as.integer(n_reps)
 	assertthat::assert_that(is.integer(n_reps))
-	assertthat::assert_that(assertthat::noNA(n_reps))
-	assertthat::assert_that(!is.infinite(n_reps))
 	assertthat::assert_that(n_reps > 0, msg = "'n_reps' must be > 0")
-	# metrics
+	# - n_iterations
+	assertthat::assert_that(assertthat::noNA(n_iterations))
+	assertthat::assert_that(is.finite(n_iterations))
+	assertthat::assert_that(assertthat::is.number(n_iterations))
+	n_iterations <- as.integer(n_iterations)
+	assertthat::assert_that(is.integer(n_iterations))
+	assertthat::assert_that(n_iterations > 0, msg = "'n_iterations' must be > 0")
+	# - thin
+	assertthat::assert_that(assertthat::is.number(thin))
+	assertthat::assert_that(assertthat::noNA(thin))
+	assertthat::assert_that(is.finite(thin))
+	thin <- as.integer(thin)
+	assertthat::assert_that(is.integer(thin))
+	assertthat::assert_that(thin > 0, msg = "'thin' must be > 0")
+	# - metrics
 	assertthat::assert_that(is.character(metrics))
+	assertthat::assert_that(assertthat::noNA(metrics))
 	assertthat::assert_that(
 		isTRUE(all(metrics %in% c("pd", "rpd", "pe", "rpe"))),
 		msg = "'metrics' may only include 'pd', 'rpd', 'pe', or 'rpe'"
 	)
-	assertthat::assert_that(assertthat::noNA(metrics))
-	# n_iterations (only needed for `independentswap`, `trialswap`)
-	if (null_model %in% c("independentswap", "trialswap")) {
-		assertthat::assert_that(assertthat::is.number(n_iterations))
-		#' @srrstats {G2.4a} Convert to integer
-		n_iterations <- as.integer(n_iterations)
-		assertthat::assert_that(is.integer(n_iterations))
-		assertthat::assert_that(assertthat::noNA(n_iterations))
-		assertthat::assert_that(!is.infinite(n_iterations))
-		assertthat::assert_that(n_iterations > 0, msg = "'n_iterations' must be > 0")
-	} else {n_iterations <- NULL}
-	# tbl_out
+	# - tbl_out
 	assertthat::assert_that(assertthat::is.flag(tbl_out))
 
 	# Check input: `comm` ----
@@ -330,6 +356,7 @@ cpr_rand_test <- function(
 					comm, phy, phy_alt,
 					null_model = null_model,
 					n_iterations = n_iterations,
+					thin = thin,
 					metrics = metrics
 				)
 			},

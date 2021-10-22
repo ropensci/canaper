@@ -28,7 +28,7 @@ library(tictoc) # For timing
 library(future) # For parallel computing
 library(progressr) # Enable progress bar
 # Set seed for random number generator for reproducible results
-set.seed(123)
+set.seed(12345)
 ```
 
 ## How to parallelize
@@ -43,7 +43,7 @@ First, let's run an analysis in default sequential mode (without parallel comput
 tic()
 biod_res_seq <- cpr_rand_test(
   biod_example$comm, biod_example$phy, 
-  null_model = "independentswap", n_reps = 50)
+  null_model = "swap", n_reps = 50)
 toc()
 ```
 
@@ -59,7 +59,7 @@ availableCores()
 
 OK, we have verified that there are multiple cores available for parallel computing.
 
-To enable parallel computing, just add one line before `cpr_rand_test()`: `plan(multisession, workers = 4)` ^[Of course, the number of workers should be no greater than the number of available CPUs.]. Here, the `multisession, workers = 3` part is telling `future` that we want to use 3 CPUs in parallel on our local machine. See `future::plan()` for other options. Otherwise, **everything is the same**.
+To enable parallel computing, just add one line before `cpr_rand_test()`: `plan(multisession, workers = 3)` ^[Of course, the number of workers should be no greater than the number of available CPUs.]. Here, the `multisession, workers = 3` part is telling `future` that we want to use 3 CPUs in parallel on our local machine. See `future::plan()` for other options. Otherwise, **everything is the same**.
 
 ```{r parallel-1}
 # Set up parallel computing with 3 CPUs
@@ -68,7 +68,7 @@ plan(multisession, workers = 3)
 tic()
 biod_res_par <- cpr_rand_test(
   biod_example$comm, biod_example$phy, 
-  null_model = "independentswap", n_reps = 50)
+  null_model = "swap", n_reps = 50)
 toc()
 
 # Change back to default sequential mode
@@ -77,11 +77,11 @@ plan(sequential)
 
 This time, the calculations were carried out in 3 batches in parallel.
 
-But there is no significant improvement in runtime^[Results vary each time this vignette is generated, but it probably won't be three times as fast; sometimes, the parallel version is even **slower**.]. What is going on here?
+But there is no significant improvement in processing time^[Results vary each time this vignette is generated, but it is usually about the same; sometimes, the parallel version is even **slower**.]. What is going on here?
 
 ## When to parallelize?
 
-Although it may seem to always be a good idea to speed things up by using parallel computing, **this is not the case**. There is some overhead involved in splitting the job across multiple processes, coordinating those processes, and putting everything back together again.
+Although it may seem to always be a good idea to speed things up by using parallel computing, **this is not the case**. There is some computational overhead involved in splitting the job across multiple processes, coordinating those processes, and putting everything back together again.
 
 If your dataset is small, this overhead may outweigh simply running the analysis sequentially. That is the case with the `biod_example` data. Let's check the size of this dataset:
 
@@ -108,7 +108,7 @@ plan(sequential)
 tic()
 acacia_res_seq <- cpr_rand_test(
   acacia$comm, acacia$phy, 
-  null_model = "independentswap", n_reps = 50)
+  null_model = "swap", n_reps = 50)
 toc()
 ```
 
@@ -118,17 +118,15 @@ plan(multisession, workers = 3)
 tic()
 acacia_par_seq <- cpr_rand_test(
   acacia$comm, acacia$phy, 
-  null_model = "independentswap", n_reps = 50)
+  null_model = "swap", n_reps = 50)
 toc()
-# Change back to default sequential mode
-plan(sequential)
 ```
 
 And now we start to see the performance improvements that be can be gained from parallel computing!
 
 ## Progress bars
 
-If you'd like to track the progress of `cpr_rand_test()` in real time, you can enable a progress bar. There are two ways to do so (neither of these will show up on the webpage, but do try it at home!).
+If you'd like to track the progress of `cpr_rand_test()` in real time, you can enable a progress bar. There are two ways to do so (neither of these will show up on the webpage, but do try it at home!). Similar to parallelization, this is done outside of the actual function.
 
 One way is to add `progressr::handlers(global = TRUE)` before `cpr_rand_test()`:
 
@@ -137,7 +135,7 @@ progressr::handlers(global = TRUE)
 
 biod_res_long <- cpr_rand_test(
   biod_example$comm, biod_example$phy, 
-  null_model = "independentswap", n_reps = 500)
+  null_model = "swap", n_reps = 500)
 ```
 
 The other way is to place `cpr_rand_test()` inside the `progressr::with_progress()` function:
@@ -146,7 +144,7 @@ The other way is to place `cpr_rand_test()` inside the `progressr::with_progress
 with_progress(
   biod_res_long <- cpr_rand_test(
     biod_example$comm, biod_example$phy, 
-    null_model = "independentswap", n_reps = 500)
+    null_model = "swap", n_reps = 500)
 )
 ```
 

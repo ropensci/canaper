@@ -36,7 +36,9 @@ Imports:
     picante,
     progressr,
     purrr,
-    tibble
+    stats,
+    tibble,
+    vegan
 Suggests: 
     rmarkdown,
     knitr,
@@ -48,7 +50,6 @@ Suggests:
     testthat (>= 3.0.0),
     roxyglobals (>= 0.2.1),
     stringr,
-    vegan,
     magrittr,
     covr
 Config/testthat/edition: 3

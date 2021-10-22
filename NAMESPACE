@@ -2,4 +2,5 @@
 
 export(cpr_classify_endem)
 export(cpr_classify_signif)
+export(cpr_rand_comm)
 export(cpr_rand_test)

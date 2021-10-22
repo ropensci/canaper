@@ -3,28 +3,14 @@
 \name{cpr_rand_test}
 \alias{cpr_rand_test}
 \title{Run a randomization analysis for one or more biodiversity metrics}
-\source{
-Faith DP (1992) Conservation evaluation and phylogenetic diversity.
-Biological Conservation, 61:1–10. \doi{10.1016/0006-3207(92)91201-3}
-
-Gotelli, N.J. (2000) Null Model Analysis of Species Co-Occurrence
-Patterns. Ecology, 81: 2606-2621. \doi{10.1890/0012-9658(2000)081[2606:NMAOSC]2.0.CO;2}
-
-Rosauer, D., Laffan, S.W., Crisp, M.D., Donnellan, S.C. and Cook, L.G. (2009)
-Phylogenetic endemism: a new approach for identifying geographical concentrations of
-evolutionary history. Molecular Ecology, 18: 4061-4072. \doi{10.1111/j.1365-294X.2009.04311.x}
-
-Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014) Phylogenetic measures
-of biodiversity and neo- and paleo-endemism in Australian Acacia.
-Nat Commun, 5: 4473. \doi{10.1038/ncomms5473}
-}
 \usage{
 cpr_rand_test(
   comm,
   phy,
-  null_model = "independentswap",
+  null_model,
   n_reps = 100,
   n_iterations = 10000,
+  thin = 1,
   metrics = c("pd", "rpd", "pe", "rpe"),
   site_col = "site",
   tbl_out = tibble::is_tibble(comm)
@@ -32,22 +18,28 @@ cpr_rand_test(
 }
 \arguments{
 \item{comm}{Dataframe, tibble, or matrix; input community data with
-sites (communities) as rows and species as columns. Values of each cell are
-the presence/absence (0 or 1) or number of individuals (abundance) of each
-species in each site.}
+sites (communities) as rows and species as columns. Either presence-absence
+data (values only 0s or 1s) or abundance data (values >= 0) accepted, but
+calculations do not use abundance-weighting, so results from abundance data
+will be the same as if converted to presence-absence before analysis.}
 
 \item{phy}{List of class \code{phylo}; input phylogeny.}
 
-\item{null_model}{Character vector of length 1; name of null model to use.
-Must choose from \code{frequency}, \code{richness}, \code{independentswap}, or
-\code{trialswap} (case-sensitive). For details, see \code{\link[picante:randomizeSample]{picante::randomizeMatrix()}}.}
+\item{null_model}{Character vector of length 1 or object of class \code{commsim};
+either the name of the model to use for generating random communities (null
+model), or a custom null model. For full list of available predefined null
+models, see the help file of \code{\link[vegan:commsim]{vegan::commsim()}}, or run
+\code{\link[vegan:commsim]{vegan::make.commsim()}}. An object of class \code{commsim} can be generated with
+\code{\link[vegan:commsim]{vegan::commsim()}} (see \strong{Examples} in \code{\link{cpr_rand_comm}()}).}
 
 \item{n_reps}{Numeric vector of length 1; number of random communities to
 replicate.}
 
 \item{n_iterations}{Numeric vector of length 1; number of iterations to use
-when swapping occurrences to generate each random community; only used if
-\code{null_model} is \code{independentswap} or \code{trialswap}.}
+for sequential null models; ignored for non-sequential models.}
+
+\item{thin}{Numeric vector of length 1; thinning parameter used by some
+null models in \code{vegan} (e.g., \code{quasiswap}); ignored for other models.}
 
 \item{metrics}{Character vector; names of biodiversity metrics to calculate.
 May include one or more of: \code{pd}, \code{rpd}, \code{pe}, \code{rpe} (case-sensitive).}
@@ -79,12 +71,12 @@ So if you included \code{pd} in \code{metrics}, the output columns would include
 \code{pd_obs_c_lower}, etc...
 }
 \description{
-The observed value of the biodiversity metric(s) will be calculated, then
-compared against a set of random communities. Various statistics are calculated
-from the comparison (see \strong{Value} below).
+The observed value of the biodiversity metric(s) will be calculated for the
+input community data, then compared against a set of random communities.
+Various statistics are calculated from the comparison (see \strong{Value} below).
 }
 \details{
-The biodiversity metrics available for analysis include:
+The biodiversity metrics (\code{metrics}) available for analysis include:
 \itemize{
 \item \code{pd}: Phylogenetic diversity (Faith 1992)
 \item \code{rpd}: Relative phylogenetic diversity (Mishler et al 2014)
@@ -92,20 +84,37 @@ The biodiversity metrics available for analysis include:
 \item \code{rpe}: Relative phylogenetic endemism (Mishler et al 2014)
 }
 
-The default method for generating random communities is the independent swap
-method of Gotelli (2000) (\code{independentswap}), which randomizes the community
-matrix while maintaining species occurrence frequency and sample species
-richness.
+(\code{pe} and \code{rpe} are needed for CANAPE with \code{\link{cpr_classify_endem}()})
 
-Note that the \code{trialswap} method has been found to produce results that
-differ strongly from \code{independentswap} or the swapping algorithm of
-\href{https://github.com/shawnlaffan/biodiverse}{Biodiverse} (\code{rand_structured}),
-and \strong{is not recommended.}
+The choice of a randomization algorithm (\code{null_model}) is not trivial, and may
+strongly affect results. \code{cpr_rand_test()} uses null models provided by
+\code{vegan}; for a complete list, see the help file of \code{\link[vegan:commsim]{vegan::commsim()}} or run
+\code{\link[vegan:commsim]{vegan::make.commsim()}}. One frequently used null model is \code{swap} (Gotelli &
+Entsminger 2003), which randomizes the community matrix while preserving
+column and row sums (marginal sums). For a review of various null models, see
+Strona et al. (2018); \code{swap} is an "FF" model in the sense of Strona et al.
+(2018).
 
-A minimum of 5 species and sites are required as input; fewer than that may
-cause the default method for generating random communities (independent swap)
-to enter an infinite loop. Besides, inferences on very small numbers of
-species and/or sites is not recommended generally.
+Instead of using one of the predefined null models in \code{\link[vegan:commsim]{vegan::commsim()}}, it
+is also possible to define a custom null model; see \strong{Examples} in
+\code{\link{cpr_rand_comm}()}
+
+Note that the pre-defined models in \code{vegan} include binary models (designed
+for presence-absence data) and quantitative models (designed for abundance
+data). Although the binary models will accept abundance data, they treat it
+as binary and always return a binary (presence-absence) matrix. The PD and PE
+calculations in \code{canaper} are not abundance-weighted, so they return the same
+result regardless of whether the input is presence-absence or abundance. In
+that sense, binary null models are appropriate for \code{cpr_rand_test()}. The
+quantitative models could also be used for abundance data, but the output
+will be treated as binary anyways when calculating PD and PE. The effects of
+using binary vs. quantitative null models for \code{cpr_rand_test()} have not been
+investigated.
+
+A minimum of 5 species and sites are required as input; fewer than that is
+likely cause the some randomization algorithms (e.g., \code{swap}) to enter an
+infinite loop. Besides, inferences on very small numbers of species and/or
+sites is not recommended generally.
 
 The following rules apply to \code{comm} input:
 \itemize{
@@ -120,8 +129,27 @@ The results are identical regardless of whether the input for \code{comm} is
 abundance or presence-absence data (i.e., abundance weighting is not used).
 }
 \examples{
-library(picante)
 data(phylocom)
-cpr_rand_test(phylocom$sample, phylocom$phy, null_model = "trialswap", metrics = "pd")
+cpr_rand_test(phylocom$sample, phylocom$phy, null_model = "curveball", metrics = "pd")
 
+}
+\references{
+Faith DP (1992) Conservation evaluation and phylogenetic diversity.
+Biological Conservation, 61:1–10. \doi{10.1016/0006-3207(92)91201-3}
+
+Gotelli, N.J. and Entsminger, N.J. (2003). Swap algorithms in null
+model analysis. Ecology 84, 532–535.
+
+Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
+Phylogenetic measures of biodiversity and neo- and paleo-endemism in
+Australian Acacia. Nat Commun, 5: 4473. \doi{10.1038/ncomms5473}
+
+Rosauer, D., Laffan, S.W., Crisp, M.D., Donnellan, S.C. and Cook,
+L.G. (2009) Phylogenetic endemism: a new approach for identifying
+geographical concentrations of evolutionary history. Molecular Ecology, 18:
+4061-4072. \doi{10.1111/j.1365-294X.2009.04311.x}
+
+Strona, G., Ulrich, W. and Gotelli, N.J. (2018), Bi-dimensional null
+model analysis of presence-absence binary matrices. Ecology, 99: 103-115.
+\doi{10.1002/ecy.2043}
 }

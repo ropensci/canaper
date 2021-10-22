@@ -27,7 +27,7 @@ This vignette replicates the [analysis of Mishler et al. 2014](https://doi.org/1
 
 Start by loading `canaper` and some other packages we will use for this vignette:
 
-```{r setup}
+```{r setup, message = FALSE}
 library(canaper) # This package :)
 library(ape) # For handling phylogenetic trees
 library(future) # For parallel computing
@@ -50,7 +50,7 @@ The `acacia` dataset is a list including two items. The first, `phy`, is a phylo
 acacia$phy
 ```
 
-The second, `comm`, is a community dataframe with species as columns and rows as sites. The row names (sites) correspond to the centroids of 50 x 50 km grid cells covering Australia. The community matrix is too large to print out in its entirety, so we will just take a look at the first 8 rows and columns:
+The second, `comm`, is a community dataframe with species as columns and rows as sites. The row names (sites) correspond to the centroids of 50 x 50 km grid cells covering Australia. The community matrix is too large to print out in its entirety, so we will just take a look at the first 8 rows and columns^[You might think the dataset is all zeros, but that is not the case. It is just very sparse.]:
 
 ```{r inspect-data-comm}
 dim(acacia$comm)
@@ -69,15 +69,13 @@ Observed values that are in the extremes (e.g, the top or lower 5% for a one-sid
 
 The main purpose of `canaper` is to perform these randomization tests. 
 
-`canaper` performs community matrix randomizations available in the [`picante`](https://CRAN.R-project.org/package=picante) package, including `frequency`, `richness`, `independentswap` and `trialswap`. For details about these algorithms, see [`picante::randomizeMatrix`](https://rdrr.io/cran/picante/man/randomizeSample.html).
+`canaper` generates random communities using the [`vegan` package](https://CRAN.R-project.org/package=vegan). There are a large number of pre-defined randomization algorithms available in `vegan`^[`r length(unique(vegan::make.commsim()))` as of `vegan` v`r as.character(packageVersion("vegan"))`, though not all may be applicable.], as well as an option to provide a user-defined algorithm. Selecting the appropriate algorithm is not trivial, and can greatly influence results^[For a good review of randomization algorithms and their implications for analysis results, see @Strona2018]. For details about the pre-defined algorithms, see `vegan::commsim()`.
 
-The default setting in `canaper` is to use `independentswap`, which maintains species richness and abundance patterns while randomizing species identity [@Gotelli2000].
+This example also demonstrates one of the strengths of `canaper`: the ability to run randomizations in parallel^[For more information on how and when to use parallel computing in `canaper`, [see the "Parallel computing" vignette](https://joelnitta.github.io/canaper/articles/parallel.html)]. 
+This is by far the most time-consuming part of CANAPE, since we have to repeat the calculations many (e.g., hundreds or more) times across the randomized communities to obtain reliable results. Here, we set the number of iterations (`n_iterations`; i.e., the number of swaps used to produce each randomized community) fairly high because this community matrix is large and includes many zeros; thorough mixing by swapping many times is required to completely randomize the matrix. 
 
-Let's perform a randomization test for the `acacia` dataset. This example also demonstrates one of the strengths of `canaper`: the ability to run randomizations in parallel[^1]. This is by far the most time-consuming part of CANAPE, since we have to repeat the calculations many (e.g., hundreds or more) times across the randomized communities to obtain reliable results. Here, we set the number of iterations (`n_iterations`; i.e., the number of swaps used to produce each randomized community) fairly high because this community matrix is large and includes many zeros; thorough mixing by swapping many times is required to completely randomize the matrix. We will use a low number of random communities (`n_reps`) so things finish relatively quickly; you should consider increasing `n_reps` for a "real" analysis[^2].
-
-[^1]: For more information on how and when to use parallel computing in `canaper`, [see the "Parallel computing" vignette](https://joelnitta.github.io/canaper/articles/parallel.html)
-
-[^2]: For more information on setting the appropriate number of iterations and replicates, [see the "How many randomizations?" vigenette](https://joelnitta.github.io/canaper/articles/how-many-rand.html).
+We will use a low number of random communities (`n_reps`) so things finish relatively quickly; you should consider increasing `n_reps` for a "real" analysis^[For more information on setting the appropriate number of iterations and replicates, [see the "How many randomizations?" vigenette](https://joelnitta.github.io/canaper/articles/how-many-rand.html).].
+We will use the `curveball` randomization algorithm, which maintains species richness and abundance patterns while randomizing species identity [@Strona2014]^[`curveball` is similar to `swap` but runs much faster so I chose it for this large dataset.].
 
 ```{r acacia-rand}
 # Set a parallel back-end, with 3 CPUs running simultaneously
@@ -93,21 +91,22 @@ tic() # Set a timer
 # Run randomization test
 acacia_rand_res <- cpr_rand_test(
   acacia$comm, acacia$phy, 
-  null_model = "independentswap",
-  n_reps = 100, n_iterations = 100000)
+  null_model = "curveball",
+  n_reps = 100, n_iterations = 100000,
+  tbl_out = TRUE)
 toc() # See how long it took
 
 # Switch back to sequential (non-parallel) mode
 plan(sequential)
 ```
 
-If we hadn't run it in parallel, it would have taken significantly longer!
-
-Let's take a peek at the output. `cpr_rand_test()` produces **a lot** of columns, so we'll view this as a tibble, which prints out more nicely than a plain `data.frame`.
+Let's take a peek at the output.
 
 ```{r acacia-rand-res}
-as_tibble(acacia_rand_res, rownames = "site")
+acacia_rand_res
 ```
+
+`cpr_rand_test()` produces **a lot** of columns. Here, `pd_obs` is the observed value of phylogenetic diversity (PD). Other columns starting with `pd` refer to aspects of the randomization: `pd_rand_mean` is the mean PD across the random communities, `pd_rand_sd` is the standard deviation of PD across the random communities, `pd_obs_z` is the standard effect size of PD, etc. 
 
 For details about what each column means, see `cpr_rand_test()`.
 
@@ -159,7 +158,7 @@ Here is Figure 2, showing the results of the randomization test for PE, RPE, PE,
 
 ```{r mishler2014-fig2, fig.height = 7, fig.width = 7}
 # Fist do some data wrangling to make the results easier to plot (add lat/long columns)
-acacia_canape <- as_tibble(acacia_canape, rownames = "site") |> 
+acacia_canape <- acacia_canape |>
   separate(site, c("long", "lat"), sep = ":") |> 
   mutate(across(c(long, lat), parse_number))
 

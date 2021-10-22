@@ -9,7 +9,7 @@ phy$edge.length <- phy$edge.length / sum(phy$edge.length)
 random_vals <-
 	purrr::map(
 		1:100,
-		~ calc_biodiv_random(comm, phy, phy_alt, "independentswap", 1000L, metrics = "pe")
+		~ calc_biodiv_random(comm, phy, phy_alt, "curveball", 1000L, metrics = "pe")
 	)
 comm_sparse <- phyloregion::dense2sparse(comm)
 pe_obs <- phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
@@ -57,7 +57,6 @@ test_that("Output is formatted as expected", {
 		)
 	}
 })
-
 
 # Cleanup ----
 

@@ -3,11 +3,6 @@
 \name{cpr_classify_endem}
 \alias{cpr_classify_endem}
 \title{Classify phylogenetic endemism}
-\source{
-Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
-Phylogenetic measures of biodiversity and neo- and paleo-endemism in
-Australian Acacia. Nat Commun, 5: 4473. \doi{10.1038/ncomms5473}
-}
 \usage{
 cpr_classify_endem(df)
 }
@@ -33,11 +28,15 @@ For a summary of the classification scheme, see:
 \url{http://biodiverse-analysis-software.blogspot.com/2014/11/canape-categorical-analysis-of-palaeo.html}
 }
 \examples{
-library(picante)
 data(phylocom)
 rand_test <- cpr_rand_test(
   phylocom$sample, phylocom$phy,
-  null_model = "trialswap", metrics = c("pe", "rpe"))
+  null_model = "curveball", metrics = c("pe", "rpe"))
 cpr_classify_endem(rand_test)
 
+}
+\references{
+Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
+Phylogenetic measures of biodiversity and neo- and paleo-endemism in
+Australian Acacia. Nat Commun, 5: 4473. \doi{10.1038/ncomms5473}
 }

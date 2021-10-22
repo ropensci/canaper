@@ -40,19 +40,12 @@ remotes::install_github("joelnitta/canaper")
 
 ## Example usage
 
-These examples will use the dataset included with the `picante` package.
-The dataset includes a community (site x species) matrix and a
-pylogenetic tree.
+These examples will use the dataset from
+[Phylocom](http://phylodiversity.net/phylocom/). The dataset includes a
+community (site x species) matrix and a pylogenetic tree.
 
 ``` r
 library(canaper)
-library(picante)
-#> Loading required package: ape
-#> Loading required package: vegan
-#> Loading required package: permute
-#> Loading required package: lattice
-#> This is vegan 2.5-7
-#> Loading required package: nlme
 
 data(phylocom)
 
@@ -76,15 +69,91 @@ phylocom$sample
 
 # Example phylogeny
 phylocom$phy
+#> $edge
+#>       [,1] [,2]
+#>  [1,]   33   34
+#>  [2,]   34   35
+#>  [3,]   35   36
+#>  [4,]   36   37
+#>  [5,]   37    1
+#>  [6,]   37    2
+#>  [7,]   36   38
+#>  [8,]   38    3
+#>  [9,]   38    4
+#> [10,]   35   39
+#> [11,]   39   40
+#> [12,]   40    5
+#> [13,]   40    6
+#> [14,]   39   41
+#> [15,]   41    7
+#> [16,]   41    8
+#> [17,]   34   42
+#> [18,]   42   43
+#> [19,]   43   44
+#> [20,]   44    9
+#> [21,]   44   10
+#> [22,]   43   45
+#> [23,]   45   11
+#> [24,]   45   12
+#> [25,]   42   46
+#> [26,]   46   47
+#> [27,]   47   13
+#> [28,]   47   14
+#> [29,]   46   48
+#> [30,]   48   15
+#> [31,]   48   16
+#> [32,]   33   49
+#> [33,]   49   50
+#> [34,]   50   51
+#> [35,]   51   52
+#> [36,]   52   17
+#> [37,]   52   18
+#> [38,]   51   53
+#> [39,]   53   19
+#> [40,]   53   20
+#> [41,]   50   54
+#> [42,]   54   55
+#> [43,]   55   21
+#> [44,]   55   22
+#> [45,]   54   56
+#> [46,]   56   23
+#> [47,]   56   24
+#> [48,]   49   57
+#> [49,]   57   58
+#> [50,]   58   59
+#> [51,]   59   25
+#> [52,]   59   26
+#> [53,]   58   60
+#> [54,]   60   27
+#> [55,]   60   28
+#> [56,]   57   61
+#> [57,]   61   62
+#> [58,]   62   29
+#> [59,]   62   30
+#> [60,]   61   63
+#> [61,]   63   31
+#> [62,]   63   32
 #> 
-#> Phylogenetic tree with 32 tips and 31 internal nodes.
+#> $tip.label
+#>  [1] "sp1"  "sp2"  "sp3"  "sp4"  "sp5"  "sp6"  "sp7"  "sp8"  "sp9"  "sp10"
+#> [11] "sp11" "sp12" "sp13" "sp14" "sp15" "sp16" "sp17" "sp18" "sp19" "sp20"
+#> [21] "sp21" "sp22" "sp23" "sp24" "sp25" "sp26" "sp27" "sp28" "sp29" "sp30"
+#> [31] "sp31" "sp32"
 #> 
-#> Tip labels:
-#>   sp1, sp2, sp3, sp4, sp5, sp6, ...
-#> Node labels:
-#>   A, B, C, D, E, F, ...
+#> $Nnode
+#> [1] 31
 #> 
-#> Rooted; includes branch lengths.
+#> $node.label
+#>  [1] "A"  "B"  "C"  "D"  "E"  "F"  "G"  "H"  "I"  "J"  "K"  "L"  "M"  "N"  "O" 
+#> [16] "P"  "Q"  "R"  "S"  "T"  "U"  "V"  "W"  "X"  "Y"  "Z"  "AA" "BB" "CC" "DD"
+#> [31] "EE"
+#> 
+#> $edge.length
+#>  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+#> [39] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+#> 
+#> attr(,"class")
+#> [1] "phylo"
 ```
 
 The main “workhorse” function of `canaper` is `cpr_rand_test()`, which
@@ -97,7 +166,7 @@ value to the alternative value (relative PD, relative PE).
 
 ``` r
 set.seed(071421)
-rand_test_results <- cpr_rand_test(phylocom$sample, phylocom$phy)
+rand_test_results <- cpr_rand_test(phylocom$sample, phylocom$phy, null_model = "swap")
 #> [1] "Dropping tips from the tree because they are not present in the community data:"
 #> [1] "sp16" "sp23" "sp27" "sp28" "sp30" "sp31" "sp32"
 ```
@@ -108,19 +177,19 @@ let’s just look at a subset of them:
 ``` r
 rand_test_results[,1:9]
 #>            pd_obs pd_rand_mean pd_rand_sd  pd_obs_z pd_obs_c_upper
-#> clump1  0.3018868    0.4679245 0.02850761 -5.824331              0
-#> clump2a 0.3207547    0.4703774 0.03130385 -4.779688              0
-#> clump2b 0.3396226    0.4624528 0.03133141 -3.920353              0
-#> clump4  0.4150943    0.4688679 0.03551447 -1.514132              4
-#> even    0.5660377    0.4692453 0.03836478  2.522951            100
-#> random  0.5094340    0.4698113 0.03086949  1.283553             85
+#> clump1  0.3018868    0.4692453 0.03214267 -5.206739              0
+#> clump2a 0.3207547    0.4762264 0.03263836 -4.763465              0
+#> clump2b 0.3396226    0.4681132 0.03462444 -3.710978              0
+#> clump4  0.4150943    0.4667925 0.03180131 -1.625660              3
+#> even    0.5660377    0.4660377 0.03501739  2.855724            100
+#> random  0.5094340    0.4733962 0.03070539  1.173662             79
 #>         pd_obs_c_lower pd_obs_q pd_obs_p_upper pd_obs_p_lower
 #> clump1             100      100           0.00           1.00
 #> clump2a            100      100           0.00           1.00
 #> clump2b            100      100           0.00           1.00
-#> clump4              88      100           0.04           0.88
+#> clump4              91      100           0.03           0.91
 #> even                 0      100           1.00           0.00
-#> random               7      100           0.85           0.07
+#> random               6      100           0.79           0.06
 ```
 
 This is a summary of the columns:
@@ -153,7 +222,7 @@ canape_results[, "endem_type", drop = FALSE]
 #> clump2b not significant
 #> clump4  not significant
 #> even              mixed
-#> random            super
+#> random            mixed
 ```
 
 This data set is very small, so it doesn’t include all possible endemism

@@ -9,7 +9,7 @@ dummy_data <- data.frame(
 
 dummy_res <- cpr_classify_endem(dummy_data)
 
-rand_test <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "richness", n_reps = 10, metrics = c("pe", "rpe"))
+rand_test <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "swap", n_reps = 10, metrics = c("pe", "rpe"))
 
 # Run tests ----
 

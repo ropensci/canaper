@@ -49,11 +49,10 @@ are either more diverse or less than diverse than expected at random). For
 this, set \code{one_sided = FALSE}.
 }
 \examples{
-library(picante)
 data(phylocom)
 rand_test <- cpr_rand_test(
   phylocom$sample, phylocom$phy,
-  null_model = "trialswap", metrics = "pd")
+  null_model = "curveball", metrics = "pd")
 cpr_classify_signif(rand_test, "pd")
 
 }

@@ -47,11 +47,11 @@ list(references = ref_yaml$references[cite_keys$order]) %>%
 filter_refs(
   "vignettes/canape.Rmd",
   here::here("data-raw/main_library.yaml"),
-  file = here::here("vignettes/references.yaml")
+  here::here("vignettes/references.yaml")
   )
 
 filter_refs(
-  "vignettes/nrand.Rmd",
+  "vignettes/how-many-rand.Rmd",
   here::here("data-raw/main_library.yaml"),
   here::here("vignettes/nrand_references.yaml")
 )

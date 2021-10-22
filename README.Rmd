@@ -45,12 +45,11 @@ remotes::install_github("joelnitta/canaper")
 
 ## Example usage
 
-These examples will use the dataset included with the `picante` package. 
+These examples will use the dataset from [Phylocom](http://phylodiversity.net/phylocom/). 
 The dataset includes a community (site x species) matrix and a pylogenetic tree.
 
 ```{r example-data}
 library(canaper)
-library(picante)
 
 data(phylocom)
 
@@ -66,7 +65,7 @@ The main "workhorse" function of `canaper` is `cpr_rand_test()`, which conducts 
 
 ```{r rand-test-example}
 set.seed(071421)
-rand_test_results <- cpr_rand_test(phylocom$sample, phylocom$phy)
+rand_test_results <- cpr_rand_test(phylocom$sample, phylocom$phy, null_model = "swap")
 ```
 
 `cpr_rand_test` produces **a lot** of columns (nine per metric), so let's just look at a subset of them:
