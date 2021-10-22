@@ -1,4 +1,4 @@
-#' Randomize a community matrix
+#' Randomize a single community matrix
 #'
 #' Note that binary null models return a binary matrix, even if an abundance
 #' matrix was used as input.

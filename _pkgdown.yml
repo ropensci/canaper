@@ -11,6 +11,9 @@ template:
   params:
     bootswatch: lumen
 reference:
+- title: "Community matrix randomization"
+- contents:
+  - cpr_rand_comm
 - title: "Randomization tests"
   desc: "The main focus of this package, conducting randomization tests of biodiversity metrics"
 - contents:
@@ -25,6 +28,7 @@ reference:
   - acacia
   - biod_example
   - biod_results
+  - phylocom
 - title: "Color palettes"
   desc: "Palettes for plotting classification results"
 - contents:

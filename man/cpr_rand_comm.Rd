@@ -2,7 +2,7 @@
 % Please edit documentation in R/cpr_rand_comm.R
 \name{cpr_rand_comm}
 \alias{cpr_rand_comm}
-\title{Randomize a community matrix}
+\title{Randomize a single community matrix}
 \usage{
 cpr_rand_comm(comm, null_model, n_iterations = 1, thin = 1, seed = NULL)
 }
