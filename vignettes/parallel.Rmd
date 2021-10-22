@@ -141,7 +141,7 @@ biod_res_long <- cpr_rand_test(
 The other way is to place `cpr_rand_test()` inside the `progressr::with_progress()` function:
 
 ```{r progress-example-2, eval = FALSE}
-with_progress(
+progressr::with_progress(
   biod_res_long <- cpr_rand_test(
     biod_example$comm, biod_example$phy, 
     null_model = "swap", n_reps = 500)
