@@ -110,16 +110,9 @@
 <div id="example-usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-usage" class="anchor"></a>Example usage</h2>
-<p>These examples will use the dataset included with the <code>picante</code> package. The dataset includes a community (site x species) matrix and a pylogenetic tree.</p>
+<p>These examples will use the dataset from <a href="http://phylodiversity.net/phylocom/">Phylocom</a>. The dataset includes a community (site x species) matrix and a pylogenetic tree.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/joelnitta/canaper">canaper</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">picante</span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: ape</span>
-<span class="co">#&gt; Loading required package: vegan</span>
-<span class="co">#&gt; Loading required package: permute</span>
-<span class="co">#&gt; Loading required package: lattice</span>
-<span class="co">#&gt; This is vegan 2.5-7</span>
-<span class="co">#&gt; Loading required package: nlme</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">phylocom</span><span class="op">)</span>
 
@@ -143,38 +136,114 @@
 
 <span class="co"># Example phylogeny</span>
 <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span>
+<span class="co">#&gt; $edge</span>
+<span class="co">#&gt;       [,1] [,2]</span>
+<span class="co">#&gt;  [1,]   33   34</span>
+<span class="co">#&gt;  [2,]   34   35</span>
+<span class="co">#&gt;  [3,]   35   36</span>
+<span class="co">#&gt;  [4,]   36   37</span>
+<span class="co">#&gt;  [5,]   37    1</span>
+<span class="co">#&gt;  [6,]   37    2</span>
+<span class="co">#&gt;  [7,]   36   38</span>
+<span class="co">#&gt;  [8,]   38    3</span>
+<span class="co">#&gt;  [9,]   38    4</span>
+<span class="co">#&gt; [10,]   35   39</span>
+<span class="co">#&gt; [11,]   39   40</span>
+<span class="co">#&gt; [12,]   40    5</span>
+<span class="co">#&gt; [13,]   40    6</span>
+<span class="co">#&gt; [14,]   39   41</span>
+<span class="co">#&gt; [15,]   41    7</span>
+<span class="co">#&gt; [16,]   41    8</span>
+<span class="co">#&gt; [17,]   34   42</span>
+<span class="co">#&gt; [18,]   42   43</span>
+<span class="co">#&gt; [19,]   43   44</span>
+<span class="co">#&gt; [20,]   44    9</span>
+<span class="co">#&gt; [21,]   44   10</span>
+<span class="co">#&gt; [22,]   43   45</span>
+<span class="co">#&gt; [23,]   45   11</span>
+<span class="co">#&gt; [24,]   45   12</span>
+<span class="co">#&gt; [25,]   42   46</span>
+<span class="co">#&gt; [26,]   46   47</span>
+<span class="co">#&gt; [27,]   47   13</span>
+<span class="co">#&gt; [28,]   47   14</span>
+<span class="co">#&gt; [29,]   46   48</span>
+<span class="co">#&gt; [30,]   48   15</span>
+<span class="co">#&gt; [31,]   48   16</span>
+<span class="co">#&gt; [32,]   33   49</span>
+<span class="co">#&gt; [33,]   49   50</span>
+<span class="co">#&gt; [34,]   50   51</span>
+<span class="co">#&gt; [35,]   51   52</span>
+<span class="co">#&gt; [36,]   52   17</span>
+<span class="co">#&gt; [37,]   52   18</span>
+<span class="co">#&gt; [38,]   51   53</span>
+<span class="co">#&gt; [39,]   53   19</span>
+<span class="co">#&gt; [40,]   53   20</span>
+<span class="co">#&gt; [41,]   50   54</span>
+<span class="co">#&gt; [42,]   54   55</span>
+<span class="co">#&gt; [43,]   55   21</span>
+<span class="co">#&gt; [44,]   55   22</span>
+<span class="co">#&gt; [45,]   54   56</span>
+<span class="co">#&gt; [46,]   56   23</span>
+<span class="co">#&gt; [47,]   56   24</span>
+<span class="co">#&gt; [48,]   49   57</span>
+<span class="co">#&gt; [49,]   57   58</span>
+<span class="co">#&gt; [50,]   58   59</span>
+<span class="co">#&gt; [51,]   59   25</span>
+<span class="co">#&gt; [52,]   59   26</span>
+<span class="co">#&gt; [53,]   58   60</span>
+<span class="co">#&gt; [54,]   60   27</span>
+<span class="co">#&gt; [55,]   60   28</span>
+<span class="co">#&gt; [56,]   57   61</span>
+<span class="co">#&gt; [57,]   61   62</span>
+<span class="co">#&gt; [58,]   62   29</span>
+<span class="co">#&gt; [59,]   62   30</span>
+<span class="co">#&gt; [60,]   61   63</span>
+<span class="co">#&gt; [61,]   63   31</span>
+<span class="co">#&gt; [62,]   63   32</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Phylogenetic tree with 32 tips and 31 internal nodes.</span>
+<span class="co">#&gt; $tip.label</span>
+<span class="co">#&gt;  [1] "sp1"  "sp2"  "sp3"  "sp4"  "sp5"  "sp6"  "sp7"  "sp8"  "sp9"  "sp10"</span>
+<span class="co">#&gt; [11] "sp11" "sp12" "sp13" "sp14" "sp15" "sp16" "sp17" "sp18" "sp19" "sp20"</span>
+<span class="co">#&gt; [21] "sp21" "sp22" "sp23" "sp24" "sp25" "sp26" "sp27" "sp28" "sp29" "sp30"</span>
+<span class="co">#&gt; [31] "sp31" "sp32"</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Tip labels:</span>
-<span class="co">#&gt;   sp1, sp2, sp3, sp4, sp5, sp6, ...</span>
-<span class="co">#&gt; Node labels:</span>
-<span class="co">#&gt;   A, B, C, D, E, F, ...</span>
+<span class="co">#&gt; $Nnode</span>
+<span class="co">#&gt; [1] 31</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Rooted; includes branch lengths.</span></code></pre></div>
+<span class="co">#&gt; $node.label</span>
+<span class="co">#&gt;  [1] "A"  "B"  "C"  "D"  "E"  "F"  "G"  "H"  "I"  "J"  "K"  "L"  "M"  "N"  "O" </span>
+<span class="co">#&gt; [16] "P"  "Q"  "R"  "S"  "T"  "U"  "V"  "W"  "X"  "Y"  "Z"  "AA" "BB" "CC" "DD"</span>
+<span class="co">#&gt; [31] "EE"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $edge.length</span>
+<span class="co">#&gt;  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span>
+<span class="co">#&gt; [39] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; attr(,"class")</span>
+<span class="co">#&gt; [1] "phylo"</span></code></pre></div>
 <p>The main “workhorse” function of <code>canaper</code> is <code><a href="reference/cpr_rand_test.html">cpr_rand_test()</a></code>, which conducts a randomization test to determine if observed values of phylogenetic diversity (PD) and phylogenetic endemism (PE) are significantly different from random. It also calculates the same values on an alternative phylogeny where all branch lengths have been set equal (alternative PD, alternative PE) as well as the ratio of the original value to the alternative value (relative PD, relative PE).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">071421</span><span class="op">)</span>
-<span class="va">rand_test_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span><span class="va">phylocom</span><span class="op">$</span><span class="va">sample</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span><span class="op">)</span>
+<span class="va">rand_test_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span><span class="va">phylocom</span><span class="op">$</span><span class="va">sample</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span>, null_model <span class="op">=</span> <span class="st">"swap"</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Dropping tips from the tree because they are not present in the community data:"</span>
 <span class="co">#&gt; [1] "sp16" "sp23" "sp27" "sp28" "sp30" "sp31" "sp32"</span></code></pre></div>
 <p><code>cpr_rand_test</code> produces <strong>a lot</strong> of columns (nine per metric), so let’s just look at a subset of them:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rand_test_results</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span>
 <span class="co">#&gt;            pd_obs pd_rand_mean pd_rand_sd  pd_obs_z pd_obs_c_upper</span>
-<span class="co">#&gt; clump1  0.3018868    0.4679245 0.02850761 -5.824331              0</span>
-<span class="co">#&gt; clump2a 0.3207547    0.4703774 0.03130385 -4.779688              0</span>
-<span class="co">#&gt; clump2b 0.3396226    0.4624528 0.03133141 -3.920353              0</span>
-<span class="co">#&gt; clump4  0.4150943    0.4688679 0.03551447 -1.514132              4</span>
-<span class="co">#&gt; even    0.5660377    0.4692453 0.03836478  2.522951            100</span>
-<span class="co">#&gt; random  0.5094340    0.4698113 0.03086949  1.283553             85</span>
+<span class="co">#&gt; clump1  0.3018868    0.4692453 0.03214267 -5.206739              0</span>
+<span class="co">#&gt; clump2a 0.3207547    0.4762264 0.03263836 -4.763465              0</span>
+<span class="co">#&gt; clump2b 0.3396226    0.4681132 0.03462444 -3.710978              0</span>
+<span class="co">#&gt; clump4  0.4150943    0.4667925 0.03180131 -1.625660              3</span>
+<span class="co">#&gt; even    0.5660377    0.4660377 0.03501739  2.855724            100</span>
+<span class="co">#&gt; random  0.5094340    0.4733962 0.03070539  1.173662             79</span>
 <span class="co">#&gt;         pd_obs_c_lower pd_obs_q pd_obs_p_upper pd_obs_p_lower</span>
 <span class="co">#&gt; clump1             100      100           0.00           1.00</span>
 <span class="co">#&gt; clump2a            100      100           0.00           1.00</span>
 <span class="co">#&gt; clump2b            100      100           0.00           1.00</span>
-<span class="co">#&gt; clump4              88      100           0.04           0.88</span>
+<span class="co">#&gt; clump4              91      100           0.03           0.91</span>
 <span class="co">#&gt; even                 0      100           1.00           0.00</span>
-<span class="co">#&gt; random               7      100           0.85           0.07</span></code></pre></div>
+<span class="co">#&gt; random               6      100           0.79           0.06</span></code></pre></div>
 <p>This is a summary of the columns:</p>
 <ul>
 <li>
@@ -207,7 +276,7 @@
 <span class="co">#&gt; clump2b not significant</span>
 <span class="co">#&gt; clump4  not significant</span>
 <span class="co">#&gt; even              mixed</span>
-<span class="co">#&gt; random            super</span></code></pre></div>
+<span class="co">#&gt; random            mixed</span></code></pre></div>
 <p>This data set is very small, so it doesn’t include all possible endemism types. In total, they include:</p>
 <ul>
 <li>

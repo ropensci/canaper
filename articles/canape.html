@@ -91,7 +91,7 @@
       <h1 data-toc-skip>CANAPE example</h1>
                         <h4 class="author">Joel H. Nitta</h4>
             
-            <h4 class="date">20 October, 2021</h4>
+            <h4 class="date">22 October, 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/joelnitta/canaper/blob/master/vignettes/canape.Rmd"><code>vignettes/canape.Rmd</code></a></small>
       <div class="hidden name"><code>canape.Rmd</code></div>
@@ -112,15 +112,7 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span> <span class="co"># For parallel computing</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/collectivemedia/tictoc">tictoc</a></span><span class="op">)</span> <span class="co"># For timing things</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span> <span class="co"># For composing mult-part plots</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span> <span class="co"># For data-wrangling and plotting</span>
-<span class="co">#&gt; ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</span>
-<span class="co">#&gt; ✔ ggplot2 3.3.5     ✔ purrr   0.3.4</span>
-<span class="co">#&gt; ✔ tibble  3.1.5     ✔ dplyr   1.0.7</span>
-<span class="co">#&gt; ✔ tidyr   1.1.4     ✔ stringr 1.4.0</span>
-<span class="co">#&gt; ✔ readr   2.0.2     ✔ forcats 0.5.1</span>
-<span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span>
-<span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span>
-<span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span> <span class="co"># For data-wrangling and plotting</span></code></pre></div>
 </div>
 <div id="dataset" class="section level2">
 <h2 class="hasAnchor">
@@ -138,7 +130,7 @@
 <span class="co">#&gt;   Pararchidendron_pruinosum, Paraserianthes_lophantha, adinophylla, semicircinalis, aphanoclada, inaequilatera, ...</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Rooted; includes branch lengths.</span></code></pre></div>
-<p>The second, <code>comm</code>, is a community dataframe with species as columns and rows as sites. The row names (sites) correspond to the centroids of 50 x 50 km grid cells covering Australia. The community matrix is too large to print out in its entirety, so we will just take a look at the first 8 rows and columns:</p>
+<p>The second, <code>comm</code>, is a community dataframe with species as columns and rows as sites. The row names (sites) correspond to the centroids of 50 x 50 km grid cells covering Australia. The community matrix is too large to print out in its entirety, so we will just take a look at the first 8 rows and columns<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">acacia</span><span class="op">$</span><span class="va">comm</span><span class="op">)</span>
 <span class="co">#&gt; [1] 3037  506</span>
@@ -173,9 +165,9 @@
 </ol>
 <p>Observed values that are in the extremes (e.g, the top or lower 5% for a one-sided test, or either the top or bottom 2.5% for a two-sided test) would be considered significantly more or less diverse than random.</p>
 <p>The main purpose of <code>canaper</code> is to perform these randomization tests.</p>
-<p><code>canaper</code> performs community matrix randomizations available in the <a href="https://CRAN.R-project.org/package=picante"><code>picante</code></a> package, including <code>frequency</code>, <code>richness</code>, <code>independentswap</code> and <code>trialswap</code>. For details about these algorithms, see <a href="https://rdrr.io/cran/picante/man/randomizeSample.html"><code>picante::randomizeMatrix</code></a>.</p>
-<p>The default setting in <code>canaper</code> is to use <code>independentswap</code>, which maintains species richness and abundance patterns while randomizing species identity <span class="citation">(Gotelli 2000)</span>.</p>
-<p>Let’s perform a randomization test for the <code>acacia</code> dataset. This example also demonstrates one of the strengths of <code>canaper</code>: the ability to run randomizations in parallel<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. This is by far the most time-consuming part of CANAPE, since we have to repeat the calculations many (e.g., hundreds or more) times across the randomized communities to obtain reliable results. Here, we set the number of iterations (<code>n_iterations</code>; i.e., the number of swaps used to produce each randomized community) fairly high because this community matrix is large and includes many zeros; thorough mixing by swapping many times is required to completely randomize the matrix. We will use a low number of random communities (<code>n_reps</code>) so things finish relatively quickly; you should consider increasing <code>n_reps</code> for a “real” analysis<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
+<p><code>canaper</code> generates random communities using the <a href="https://CRAN.R-project.org/package=vegan"><code>vegan</code> package</a>. There are a large number of pre-defined randomization algorithms available in <code>vegan</code><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, as well as an option to provide a user-defined algorithm. Selecting the appropriate algorithm is not trivial, and can greatly influence results<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. For details about the pre-defined algorithms, see <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html">vegan::commsim()</a></code>.</p>
+<p>This example also demonstrates one of the strengths of <code>canaper</code>: the ability to run randomizations in parallel<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>. This is by far the most time-consuming part of CANAPE, since we have to repeat the calculations many (e.g., hundreds or more) times across the randomized communities to obtain reliable results. Here, we set the number of iterations (<code>n_iterations</code>; i.e., the number of swaps used to produce each randomized community) fairly high because this community matrix is large and includes many zeros; thorough mixing by swapping many times is required to completely randomize the matrix.</p>
+<p>We will use a low number of random communities (<code>n_reps</code>) so things finish relatively quickly; you should consider increasing <code>n_reps</code> for a “real” analysis<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>. We will use the <code>curveball</code> randomization algorithm, which maintains species richness and abundance patterns while randomizing species identity <span class="citation">(Strona et al. 2014)</span><a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Set a parallel back-end, with 3 CPUs running simultaneously</span>
 <span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
@@ -190,33 +182,33 @@
 <span class="co"># Run randomization test</span>
 <span class="va">acacia_rand_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span>
   <span class="va">acacia</span><span class="op">$</span><span class="va">comm</span>, <span class="va">acacia</span><span class="op">$</span><span class="va">phy</span>, 
-  null_model <span class="op">=</span> <span class="st">"independentswap"</span>,
-  n_reps <span class="op">=</span> <span class="fl">100</span>, n_iterations <span class="op">=</span> <span class="fl">100000</span><span class="op">)</span>
+  null_model <span class="op">=</span> <span class="st">"curveball"</span>,
+  n_reps <span class="op">=</span> <span class="fl">100</span>, n_iterations <span class="op">=</span> <span class="fl">100000</span>,
+  tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Dropping tips from the tree because they are not present in the community data:"</span>
 <span class="co">#&gt; [1] "Pararchidendron_pruinosum" "Paraserianthes_lophantha" </span>
 <span class="co">#&gt; [3] "saligna"                   "clunies-rossiae"</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># See how long it took</span>
-<span class="co">#&gt; 953.968 sec elapsed</span>
+<span class="co">#&gt; 96.292 sec elapsed</span>
 
 <span class="co"># Switch back to sequential (non-parallel) mode</span>
 <span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></code></pre></div>
-<p>If we hadn’t run it in parallel, it would have taken significantly longer!</p>
-<p>Let’s take a peek at the output. <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> produces <strong>a lot</strong> of columns, so we’ll view this as a tibble, which prints out more nicely than a plain <code>data.frame</code>.</p>
+<p>Let’s take a peek at the output.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">as_tibble</span><span class="op">(</span><span class="va">acacia_rand_res</span>, rownames <span class="op">=</span> <span class="st">"site"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">acacia_rand_res</span>
 <span class="co">#&gt; # A tibble: 3,037 × 55</span>
 <span class="co">#&gt;    site    pd_obs pd_rand_mean pd_rand_sd pd_obs_z pd_obs_c_upper pd_obs_c_lower</span>
 <span class="co">#&gt;    &lt;chr&gt;    &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 '-1025… 0.0145      0.0224     0.00441   -1.79               0            100</span>
-<span class="co">#&gt;  2 '-1025… 0.0383      0.0503     0.00765   -1.57               2             98</span>
-<span class="co">#&gt;  3 '-1025… 0.0379      0.0364     0.00632    0.241             66             34</span>
-<span class="co">#&gt;  4 '-1025… 0.0571      0.0625     0.00870   -0.616             29             71</span>
-<span class="co">#&gt;  5 '-1025… 0.0410      0.0431     0.00779   -0.276             45             55</span>
-<span class="co">#&gt;  6 '-1025… 0.0100      0.00980    0.00153    0.133             54             44</span>
-<span class="co">#&gt;  7 '-1025… 0.0188      0.0228     0.00383   -1.06              14             86</span>
-<span class="co">#&gt;  8 '-1025… 0.0435      0.0544     0.00718   -1.53               6             94</span>
-<span class="co">#&gt;  9 '-1025… 0.0111      0.0102     0.00178    0.510             80             19</span>
-<span class="co">#&gt; 10 '-1025… 0.0905      0.0877     0.0110     0.258             62             38</span>
+<span class="co">#&gt;  1 '-1025… 0.0145       0.0224    0.00451 -1.76                 2             98</span>
+<span class="co">#&gt;  2 '-1025… 0.0383       0.0492    0.00792 -1.37                 8             92</span>
+<span class="co">#&gt;  3 '-1025… 0.0379       0.0380    0.00697 -0.00999             54             46</span>
+<span class="co">#&gt;  4 '-1025… 0.0571       0.0616    0.00777 -0.569               33             67</span>
+<span class="co">#&gt;  5 '-1025… 0.0410       0.0415    0.00704 -0.0760              52             48</span>
+<span class="co">#&gt;  6 '-1025… 0.0100       0.0103    0.00230 -0.124               55             45</span>
+<span class="co">#&gt;  7 '-1025… 0.0188       0.0228    0.00408 -0.977               17             83</span>
+<span class="co">#&gt;  8 '-1025… 0.0435       0.0539    0.00725 -1.44                 8             92</span>
+<span class="co">#&gt;  9 '-1025… 0.0111       0.0103    0.00232  0.377               80             20</span>
+<span class="co">#&gt; 10 '-1025… 0.0905       0.0860    0.0103   0.442               68             32</span>
 <span class="co">#&gt; # … with 3,027 more rows, and 48 more variables: pd_obs_q &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   pd_obs_p_upper &lt;dbl&gt;, pd_obs_p_lower &lt;dbl&gt;, pd_alt_obs &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   pd_alt_rand_mean &lt;dbl&gt;, pd_alt_rand_sd &lt;dbl&gt;, pd_alt_obs_z &lt;dbl&gt;,</span>
@@ -224,6 +216,7 @@
 <span class="co">#&gt; #   pd_alt_obs_p_upper &lt;dbl&gt;, pd_alt_obs_p_lower &lt;dbl&gt;, rpd_obs &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   rpd_rand_mean &lt;dbl&gt;, rpd_rand_sd &lt;dbl&gt;, rpd_obs_z &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   rpd_obs_c_upper &lt;dbl&gt;, rpd_obs_c_lower &lt;dbl&gt;, rpd_obs_q &lt;dbl&gt;, …</span></code></pre></div>
+<p><code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> produces <strong>a lot</strong> of columns. Here, <code>pd_obs</code> is the observed value of phylogenetic diversity (PD). Other columns starting with <code>pd</code> refer to aspects of the randomization: <code>pd_rand_mean</code> is the mean PD across the random communities, <code>pd_rand_sd</code> is the standard deviation of PD across the random communities, <code>pd_obs_z</code> is the standard effect size of PD, etc.</p>
 <p>For details about what each column means, see <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code>.</p>
 </div>
 <div id="classify-endemism" class="section level2">
@@ -252,7 +245,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">acacia_canape</span><span class="op">$</span><span class="va">endem_type</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           mixed             neo not significant           paleo           super </span>
-<span class="co">#&gt;             181              10            2781              36              29</span></code></pre></div>
+<span class="co">#&gt;             175               9            2786              34              33</span></code></pre></div>
 </div>
 <div id="classify-signficance" class="section level2">
 <h2 class="hasAnchor">
@@ -271,7 +264,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">acacia_canape</span><span class="op">$</span><span class="va">pd_signif</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;          &lt; 0.01         &lt; 0.025         &gt; 0.975          &gt; 0.99 not significant </span>
-<span class="co">#&gt;             298             234              25              24            2456</span></code></pre></div>
+<span class="co">#&gt;             301             219              32              22            2463</span></code></pre></div>
 </div>
 <div id="visualize-results" class="section level2">
 <h2 class="hasAnchor">
@@ -281,7 +274,7 @@
 <p>Here is Figure 2, showing the results of the randomization test for PE, RPE, PE, and RPE:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Fist do some data wrangling to make the results easier to plot (add lat/long columns)</span>
-<span class="va">acacia_canape</span> <span class="op">&lt;-</span> <span class="fu">as_tibble</span><span class="op">(</span><span class="va">acacia_canape</span>, rownames <span class="op">=</span> <span class="st">"site"</span><span class="op">)</span> |&gt; 
+<span class="va">acacia_canape</span> <span class="op">&lt;-</span> <span class="va">acacia_canape</span> |&gt;
   <span class="fu">separate</span><span class="op">(</span><span class="va">site</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"long"</span>, <span class="st">"lat"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">":"</span><span class="op">)</span> |&gt; 
   <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span><span class="op">)</span>, <span class="va">parse_number</span><span class="op">)</span><span class="op">)</span>
 
@@ -334,19 +327,26 @@
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
 <div id="refs" class="references">
-<div id="ref-Gotelli2000">
-<p>Gotelli, Nicholas J. 2000. “Null Model Analysis of Species Co-Occurrence Patterns.” <em>Ecology</em> 81 (9): 2606–21. <a href="https://doi.org/10.2307/177478">https://doi.org/10.2307/177478</a>.</p>
-</div>
 <div id="ref-Mishler2014">
 <p>Mishler, Brent D, Nunzio Knerr, Carlos E. González-Orozco, Andrew H. Thornhill, Shawn W. Laffan, and Joseph T. Miller. 2014. “Phylogenetic Measures of Biodiversity and Neo- and Paleo-Endemism in Australian Acacia.” <em>Nature Communications</em> 5: 4473. <a href="https://doi.org/10.1038/ncomms5473">https://doi.org/10.1038/ncomms5473</a>.</p>
+</div>
+<div id="ref-Strona2014">
+<p>Strona, Giovanni, Domenico Nappo, Francesco Boccacci, Simone Fattorini, and Jesus San-Miguel-Ayanz. 2014. “A Fast and Unbiased Procedure to Randomize Ecological Binary Matrices with Fixed Row and Column Totals.” <em>Nature Communications</em> 5 (1): 4114. <a href="https://doi.org/10.1038/ncomms5114">https://doi.org/10.1038/ncomms5114</a>.</p>
+</div>
+<div id="ref-Strona2018">
+<p>Strona, Giovanni, Werner Ulrich, and Nicholas J. Gotelli. 2018. “Bi‐dimensional Null Model Analysis of Presence‐absence Binary Matrices.” <em>Ecology</em> 99 (1): 103–15. <a href="https://doi.org/10.1002/ecy.2043">https://doi.org/10.1002/ecy.2043</a>.</p>
 </div>
 </div>
 </div>
 <div class="footnotes">
 <hr>
 <ol>
-<li id="fn1"><p>For more information on how and when to use parallel computing in <code>canaper</code>, <a href="https://joelnitta.github.io/canaper/articles/parallel.html">see the “Parallel computing” vignette</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>For more information on setting the appropriate number of iterations and replicates, <a href="https://joelnitta.github.io/canaper/articles/how-many-rand.html">see the “How many randomizations?” vigenette</a>.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>You might think the dataset is all zeros, but that is not the case. It is just very sparse.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>32 as of <code>vegan</code> v2.5.7, though not all may be applicable.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>For a good review of randomization algorithms and their implications for analysis results, see <span class="citation">Strona, Ulrich, and Gotelli (2018)</span><a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>For more information on how and when to use parallel computing in <code>canaper</code>, <a href="https://joelnitta.github.io/canaper/articles/parallel.html">see the “Parallel computing” vignette</a><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>For more information on setting the appropriate number of iterations and replicates, <a href="https://joelnitta.github.io/canaper/articles/how-many-rand.html">see the “How many randomizations?” vigenette</a>.<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p><code>curveball</code> is similar to <code>swap</code> but runs much faster so I chose it for this large dataset.<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
