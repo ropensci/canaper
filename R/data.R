@@ -53,6 +53,34 @@
 #' biod_example$comm[1:5,1:5]
 "biod_example"
 
+#' Phylocom example data
+#'
+#' Fictional data for testing purposes from [Phylocom](http://www.phylodiversity.net/phylocom/) (Webb et al. 2008)
+#'
+#' Obtained via the `picante` package (Kembel et al. 2010)
+#'
+#' @format A list with three elements:
+#' \describe{
+#'   \item{phylo}{Phylogeny with 32 tips}
+#'   \item{sample}{Community matrix with 6 sites (rows) and 25 species (columns).}
+#'   \item{traits}{Trait data; a data.frame with 32 species (rows) and 4 traits (columns)}
+#' }
+#' @source Webb, C.O., Ackerly, D.D., and Kembel, S.W. 2008. Phylocom: software
+#'   for the analysis of phylogenetic community structure and trait evolution.
+#'   Version 4.0.1. http://www.phylodiversity.net/phylocom/.
+#' @source Kembel, et al. Picante: R tools for integrating phylogenies and
+#'   ecology, Bioinformatics 26: 1463–1464 \doi{10.1093/bioinformatics/btq166}
+#'
+#' @srrstats {G1.4} uses roxygen
+#' @srrstats {G5.1} dataset is available (and documented)
+#' @examples
+#' # Example phylogeny
+#' library(ape)
+#' phylocom$phylo
+#' # Example community
+#' phylocom$sample
+"phylocom"
+
 #' Output from Biodiverse
 #'
 #' Output of analyzing test data with [Biodiverse](https://github.com/shawnlaffan/biodiverse).
