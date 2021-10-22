@@ -271,14 +271,14 @@ test_that("Parallelization decreases calculation time", {
    tictoc::tic.clearlog()
    tictoc::tic()
    set.seed(123)
-   seq_res <- cpr_rand_test(acacia$comm, acacia$phy, null_model = "curveball", n_iterations = 100, n_reps = 200)
+   seq_res <- cpr_rand_test(acacia$comm, acacia$phy, null_model = "curveball", n_iterations = 100, n_reps = 100)
    tictoc::toc(log = TRUE, quiet = TRUE)
 
    # Set future resolution to parallelized, with 3 workers
    future::plan(future::multisession, workers = 3)
    tictoc::tic()
    set.seed(123)
-   parallel_res <- cpr_rand_test(acacia$comm, acacia$phy, null_model = "curveball", n_iterations = 100, n_reps = 200)
+   parallel_res <- cpr_rand_test(acacia$comm, acacia$phy, null_model = "curveball", n_iterations = 100, n_reps = 100)
    tictoc::toc(log = TRUE, quiet = TRUE)
    log_list <- tictoc::tic.log(format = FALSE)
    tictoc::tic.clearlog()
@@ -292,10 +292,43 @@ test_that("Parallelization decreases calculation time", {
    # Expect sequential to take longer
    expect_gt(elapsed_time_seq, elapsed_time_parallel)
    expect_lt(elapsed_time_parallel, elapsed_time_seq)
+})
 
-   # But results should be same
-   # FIXME: not passing
-   # expect_equal(seq_res, parallel_res)
+
+#' @srrstats {UL7.5, UL7.5a} Test batch processing, show that results don't
+#'   differ between sequential and parallel
+test_that("Seeds work across sequential and parallel", {
+   # Change back to sequential when done (including on failure)
+   on.exit(future::plan(future::sequential), add = TRUE)
+
+   # Set future resolution to sequential (no parallelization)
+   future::plan(future::sequential)
+   set.seed(12345)
+   seq_res_1 <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "curveball", n_iterations = 10, n_reps = 10)
+   set.seed(67890)
+   seq_res_2 <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "curveball", n_iterations = 10, n_reps = 10)
+   set.seed(12345)
+   seq_res_3 <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "curveball", n_iterations = 10, n_reps = 10)
+
+   expect_true(isTRUE(all.equal(seq_res_1, seq_res_3)))
+   expect_false(isTRUE(all.equal(seq_res_1, seq_res_2)))
+
+   skip('WIP: need to figure out how to use furrr reproducibly in a package')
+   # Set future resolution to parallelized, with 3 workers
+   future::plan(future::multisession, workers = 3)
+   set.seed(12345)
+   par_res_1 <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "curveball", n_iterations = 10, n_reps = 10)
+   set.seed(67890)
+   par_res_2 <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "curveball", n_iterations = 10, n_reps = 10)
+   set.seed(12345)
+   par_res_3 <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "curveball", n_iterations = 10, n_reps = 10)
+
+   expect_true(isTRUE(all.equal(par_res_1, par_res_3)))
+   expect_true(isTRUE(all.equal(par_res_1, par_res_2)))
+   expect_true(isTRUE(all.equal(seq_res_1, par_res_1)))
+
+   # Change back to sequential
+   future::plan(future::sequential)
 })
 
 #' @srrstats {G5.4, G5.4b, G5.5} Correctness tests
@@ -320,20 +353,15 @@ test_that("Output is same as when calculated with Biodiverse", {
    expect_equal(res_compare$rpe_obs, res_compare$rpe_biodiv)
 })
 
-test_that("Output is different with different random seeds", {
-   set.seed(123)
-   res_1 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "swap")
-   set.seed(456)
-   res_2 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "swap")
+test_that("Output is different with different random seeds, and same with same random seed", {
+   set.seed(12345)
+   res_1 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "curveball")
+   set.seed(67890)
+   res_2 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "curveball")
+   set.seed(12345)
+   res_3 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "curveball")
    expect_false(isTRUE(all.equal(res_1, res_2)))
-})
-
-test_that("Output is same with same random seed", {
-   set.seed(123)
-   res_1 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "swap")
-   set.seed(123)
-   res_2 <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 100, null_model = "swap")
-   expect_equal(res_1, res_2)
+   expect_true(isTRUE(all.equal(res_1, res_3)))
 })
 
 test_that("Output is formatted as expected", {

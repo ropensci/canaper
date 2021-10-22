@@ -4,7 +4,7 @@
 \alias{cpr_rand_comm}
 \title{Randomize a community matrix}
 \usage{
-cpr_rand_comm(comm, null_model, n_iterations = 1, thin = 1)
+cpr_rand_comm(comm, null_model, n_iterations = 1, thin = 1, seed = NULL)
 }
 \arguments{
 \item{comm}{Dataframe or matrix; input community data with
@@ -24,6 +24,10 @@ sequential null models. Ignored by non-sequential null models.}
 
 \item{thin}{Numeric vector of length 1; thinning parameter used by some
 null models in \code{vegan} (e.g., \code{quasiswap}); ignored for other models.}
+
+\item{seed}{Integer vector of length 1 or NULL; random seed that will be used
+in a call to \code{set.seed()} before randomizing the matrix. Default (\code{NULL})
+will not change the random generator state.}
 }
 \value{
 Matrix

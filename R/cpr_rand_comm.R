@@ -17,6 +17,9 @@
 #'   sequential null models. Ignored by non-sequential null models.
 #' @param thin Numeric vector of length 1; thinning parameter used by some
 #'   null models in `vegan` (e.g., `quasiswap`); ignored for other models.
+#' @param seed Integer vector of length 1 or NULL; random seed that will be used
+#'   in a call to `set.seed()` before randomizing the matrix. Default (`NULL`)
+#'   will not change the random generator state.
 #' @return Matrix
 #' @export
 #' @examples
@@ -44,7 +47,7 @@
 #' # 3. Generate the null community
 #' cpr_rand_comm(phylocom$sample, cs_object, 100)
 #'
-cpr_rand_comm <- function(comm, null_model, n_iterations = 1, thin = 1) {
+cpr_rand_comm <- function(comm, null_model, n_iterations = 1, thin = 1, seed = NULL) {
 
 	#' @srrstats {G2.1, G2.6} Check input types and lengths
 	# - comm
@@ -67,20 +70,22 @@ cpr_rand_comm <- function(comm, null_model, n_iterations = 1, thin = 1) {
 			msg = paste0("'null_model' must be one of: '", paste0(vegan::make.commsim(), collapse = "', '"), "'")
 		)
 	}
-	# n_iterations
+	# - n_iterations
 	assertthat::assert_that(assertthat::is.number(n_iterations))
 	assertthat::assert_that(assertthat::noNA(n_iterations))
 	assertthat::assert_that(is.finite(n_iterations))
 	n_iterations <- as.integer(n_iterations)
 	assertthat::assert_that(is.integer(n_iterations))
 	assertthat::assert_that(n_iterations > 0, msg = "'n_iterations' must be > 0")
-	# thin
+	# - thin
 	assertthat::assert_that(assertthat::is.number(thin))
 	assertthat::assert_that(assertthat::noNA(thin))
 	assertthat::assert_that(is.finite(thin))
 	thin <- as.integer(thin)
 	assertthat::assert_that(is.integer(thin))
 	assertthat::assert_that(thin > 0, msg = "'thin' must be > 0")
+	# - seed
+	assertthat::assert_that(is.numeric(seed) | is.null(seed))
 
 	# Convert to matrix
 	comm <- as.matrix(comm)
@@ -90,6 +95,6 @@ cpr_rand_comm <- function(comm, null_model, n_iterations = 1, thin = 1) {
 
 	# Randomize matrix
 	# just take the first simulated community after n_iterations - 1
-	stats::simulate(null_model, nsim = 1, thin = thin, burnin = n_iterations - 1)[,,1]
+	stats::simulate(null_model, nsim = 1, thin = thin, burnin = n_iterations - 1, seed = seed)[,,1]
 
 }

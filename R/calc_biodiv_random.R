@@ -37,7 +37,8 @@
 calc_biodiv_random <- function(comm, phy, phy_alt,
 															 null_model,
 															 n_iterations = 1, thin = 1,
-															 metrics = c("pd", "rpd", "pe", "rpe", "pd_alt", "pe_alt")) {
+															 metrics = c("pd", "rpd", "pe", "rpe", "pd_alt", "pe_alt"),
+															 seed = NULL) {
 	# Check input ----
 	#' @srrstats {G2.1, G2.6} Check input types and lengths
 	#' @srrstats {G2.0, G2.2} Assert input length is 1 as needed
@@ -115,7 +116,7 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
 	comm_sparse <- phyloregion::dense2sparse(comm)
 
 	# Generate random community
-	random_comm <- cpr_rand_comm(comm, null_model = null_model, n_iterations = n_iterations, thin = thin)
+	random_comm <- cpr_rand_comm(comm, null_model = null_model, n_iterations = n_iterations, thin = thin, seed = seed)
 	random_comm_sparse <- phyloregion::dense2sparse(random_comm)
 
 	# Calculate statistics for random community

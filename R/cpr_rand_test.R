@@ -343,9 +343,8 @@ cpr_rand_test <- function(
 
 	# Calculate biodiversity metrics ----
 
-	# Loop over random communities
-	# - set up a progress bar
-	pb <- progressr::progressor(steps = n_reps)
+	## Loop over random communities
+	pb <- progressr::progressor(steps = n_reps) # Set up a progress bar
 
 	random_vals <-
 		furrr::future_map(
@@ -399,7 +398,7 @@ cpr_rand_test <- function(
 		ses_rpe <- get_ses(random_vals, rpe_obs, "rpe")
 	}
 
-	# Combine results
+	## Combine results
 	# (don't use pipe, to maintain backwards compatibility with R < 4.1)
 	results_df <- dplyr::bind_cols(
 		ses_pd,

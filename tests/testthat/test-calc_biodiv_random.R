@@ -41,6 +41,59 @@ test_that("Input is valid", {
 	)
 })
 
+test_that("Random seeds work", {
+	set.seed(12345)
+	res1 <- calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L)
+	set.seed(67890)
+	res2 <- calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L)
+	# Should be able to pass seed as an argument
+	set.seed(42)
+	res3 <- calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L, seed = 12345)
+	res4 <- calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L, seed = 67890)
+	# Different seeds should give different results
+	expect_false(isTRUE(all.equal(res1, res2)))
+	expect_false(isTRUE(all.equal(res3, res4)))
+	# Same seeds should give same results
+	expect_true(isTRUE(all.equal(res1, res3)))
+	expect_true(isTRUE(all.equal(res2, res4)))
+})
+
+test_that("Random seeds work in parallel", {
+
+	skip('WIP: need to figure out how to use furrr reproducibly in a package')
+
+	# Change back to sequential when done (including on failure)
+	on.exit(future::plan(future::sequential), add = TRUE)
+
+	# Set future resolution to parallelized, with 3 workers
+	future::plan(future::multisession, workers = 3)
+
+	set.seed(12345)
+	res1 <- furrr::future_map(
+		1:2,
+		~calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L),
+		.options = furrr::furrr_options(seed = TRUE))
+	set.seed(67890)
+	res2 <- furrr::future_map(
+		1:2,
+		~calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L),
+		.options = furrr::furrr_options(seed = TRUE))
+	# Should be able to pass seed as an argument
+	set.seed(12345)
+	res3 <- furrr::future_map(
+		1:2,
+		~calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L),
+		.options = furrr::furrr_options(seed = TRUE))
+	# Different seeds should give different results
+	expect_false(isTRUE(all.equal(res1, res2)))
+	# Same seeds should give same results
+	expect_true(isTRUE(all.equal(res1, res3)))
+
+	# Change back to sequential
+	future::plan(future::sequential)
+})
+
+
 test_that("Output is formatted as expected", {
 	#' @srrstats {G5.3} check that output has no missing values
 	expect_true(
