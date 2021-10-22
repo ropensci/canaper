@@ -28,6 +28,7 @@ RoxygenNote: 7.1.2
 URL: https://github.com/joelnitta/canaper
 BugReports: https://github.com/joelnitta/canaper/issues
 Imports: 
+    ape,
     assertr,
     assertthat,
     dplyr,
@@ -42,7 +43,6 @@ Imports:
 Suggests: 
     rmarkdown,
     knitr,
-    ape,
     future,
     tictoc,
     patchwork,

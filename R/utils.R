@@ -201,3 +201,7 @@ greater_than_or_equal_single <- function(x, y) {
   assertthat::assert_that(is.numeric(y))
   purrr::map2_lgl(x, y, greater_than_or_equal_single)
 }
+
+# Print phylogenies nicely
+#' @importFrom ape print.phylo
+NULL

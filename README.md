@@ -46,7 +46,6 @@ community (site x species) matrix and a pylogenetic tree.
 
 ``` r
 library(canaper)
-library(ape)
 
 data(phylocom)
 

@@ -50,7 +50,6 @@ The dataset includes a community (site x species) matrix and a pylogenetic tree.
 
 ```{r example-data}
 library(canaper)
-library(ape)
 
 data(phylocom)
 

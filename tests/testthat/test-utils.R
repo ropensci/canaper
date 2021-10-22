@@ -73,3 +73,10 @@ test_that("modified equalities work", {
 	)
 }
 )
+
+test_that("Printing phylogenies works", {
+	expect_output(
+		print(biod_example$phy),
+		"Phylogenetic tree with 31 tips and 30 internal nodes"
+	)
+})
