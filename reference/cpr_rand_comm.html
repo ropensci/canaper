@@ -198,7 +198,7 @@ will not change the random generator state.</p></td>
 #&gt; [29] "r0_ind"          "r00_both"        "c0_both"         "r0_both"        </div><div class='input'>
 <span class='co'># Binary null model produces binary output</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>)</span>
-<span class='fu'>cpr_rand_comm</span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>$</span><span class='va'>sample</span>, <span class='st'>"swap"</span>, <span class='fl'>100</span><span class='op'>)</span>
+<span class='fu'>cpr_rand_comm</span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>$</span><span class='va'>comm</span>, <span class='st'>"swap"</span>, <span class='fl'>100</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;         sp1 sp10 sp11 sp12 sp13 sp14 sp15 sp17 sp18 sp19 sp2 sp20 sp21 sp22
 #&gt; clump1    1    0    0    0    0    0    0    1    1    0   1    0    0    0
 #&gt; clump2a   0    1    0    0    0    0    0    1    0    0   1    0    0    1
@@ -214,7 +214,7 @@ will not change the random generator state.</p></td>
 #&gt; even       1    0    1    0   0   0   0   0   1   0   1
 #&gt; random     0    1    0    0   0   1   1   0   0   0   0</div><div class='input'>
 <span class='co'># Quantitative null model produces quantitative output</span>
-<span class='fu'>cpr_rand_comm</span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>$</span><span class='va'>sample</span>, <span class='st'>"swap_count"</span>, <span class='fl'>100</span><span class='op'>)</span>
+<span class='fu'>cpr_rand_comm</span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>$</span><span class='va'>comm</span>, <span class='st'>"swap_count"</span>, <span class='fl'>100</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;         sp1 sp10 sp11 sp12 sp13 sp14 sp15 sp17 sp18 sp19 sp2 sp20 sp21 sp22
 #&gt; clump1    1    0    0    2    1    0    0    0    1    0   0    0    0    0
 #&gt; clump2a   1    2    2    0    0    1    0    0    2    0   2    0    0    0
@@ -241,7 +241,7 @@ will not change the random generator state.</p></td>
   isSeq <span class='op'>=</span> <span class='cn'>FALSE</span>, mode <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span>
 
 <span class='co'># 3. Generate the null community</span>
-<span class='fu'>cpr_rand_comm</span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>$</span><span class='va'>sample</span>, <span class='va'>cs_object</span>, <span class='fl'>100</span><span class='op'>)</span>
+<span class='fu'>cpr_rand_comm</span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>$</span><span class='va'>comm</span>, <span class='va'>cs_object</span>, <span class='fl'>100</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;         sp1 sp10 sp11 sp12 sp13 sp14 sp15 sp17 sp18 sp19 sp2 sp20 sp21 sp22
 #&gt; clump1    0    1    0    0    1    0    1    0    0    0   0    1    0    1
 #&gt; clump2a   0    0    0    0    1    0    0    1    1    0   0    0    0    1
