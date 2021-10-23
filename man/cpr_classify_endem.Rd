@@ -31,7 +31,7 @@ For a summary of the classification scheme, see:
 set.seed(12345)
 data(phylocom)
 rand_test <- cpr_rand_test(
-  phylocom$sample, phylocom$phy,
+  phylocom$comm, phylocom$phy,
   null_model = "curveball", metrics = c("pe", "rpe"))
 cpr_classify_endem(rand_test)
 

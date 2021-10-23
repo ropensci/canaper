@@ -120,7 +120,7 @@
 #' @examples
 #' set.seed(12345)
 #' data(phylocom)
-#' cpr_rand_test(phylocom$sample, phylocom$phy, null_model = "curveball", metrics = "pd")
+#' cpr_rand_test(phylocom$comm, phylocom$phy, null_model = "curveball", metrics = "pd")
 #'
 #' @srrstats {G1.4} uses roxygen
 #'

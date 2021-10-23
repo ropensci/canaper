@@ -131,7 +131,7 @@ abundance or presence-absence data (i.e., abundance weighting is not used).
 \examples{
 set.seed(12345)
 data(phylocom)
-cpr_rand_test(phylocom$sample, phylocom$phy, null_model = "curveball", metrics = "pd")
+cpr_rand_test(phylocom$comm, phylocom$phy, null_model = "curveball", metrics = "pd")
 
 }
 \references{

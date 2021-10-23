@@ -76,9 +76,9 @@
 #' @examples
 #' # Example phylogeny
 #' library(ape)
-#' phylocom$phylo
+#' phylocom$phy
 #' # Example community
-#' phylocom$sample
+#' phylocom$comm
 "phylocom"
 
 #' Output from Biodiverse

@@ -52,7 +52,7 @@ this, set \code{one_sided = FALSE}.
 set.seed(12345)
 data(phylocom)
 rand_test <- cpr_rand_test(
-  phylocom$sample, phylocom$phy,
+  phylocom$comm, phylocom$phy,
   null_model = "curveball", metrics = "pd")
 cpr_classify_signif(rand_test, "pd")
 

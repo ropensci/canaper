@@ -51,7 +51,7 @@ data(phylocom)
 
 # Example community matrix including 4 "clumped" communities, 
 # one "even" community, and one "random" community
-phylocom$sample
+phylocom$comm
 #>         sp1 sp10 sp11 sp12 sp13 sp14 sp15 sp17 sp18 sp19 sp2 sp20 sp21 sp22
 #> clump1    1    0    0    0    0    0    0    0    0    0   1    0    0    0
 #> clump2a   1    2    2    2    0    0    0    0    0    0   1    0    0    0
@@ -90,7 +90,7 @@ value to the alternative value (relative PD, relative PE).
 
 ``` r
 set.seed(071421)
-rand_test_results <- cpr_rand_test(phylocom$sample, phylocom$phy, null_model = "swap")
+rand_test_results <- cpr_rand_test(phylocom$comm, phylocom$phy, null_model = "swap")
 #> [1] "Dropping tips from the tree because they are not present in the community data:"
 #> [1] "sp16" "sp23" "sp27" "sp28" "sp30" "sp31" "sp32"
 ```

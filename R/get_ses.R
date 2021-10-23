@@ -16,7 +16,7 @@
 #' library(picante)
 #' data(phylocom)
 #' phy <- phylocom$phy
-#' comm <- phylocom$sample
+#' comm <- phylocom$comm
 #' subsetted_data <- picante::match.phylo.comm(phy = phy, comm = comm)
 #' phy <- subsetted_data[["phy"]]
 #' comm <- subsetted_data[["comm"]]

@@ -30,10 +30,10 @@
 #'
 #' # Binary null model produces binary output
 #' data(phylocom)
-#' cpr_rand_comm(phylocom$sample, "swap", 100)
+#' cpr_rand_comm(phylocom$comm, "swap", 100)
 #'
 #' # Quantitative null model produces quantitative output
-#' cpr_rand_comm(phylocom$sample, "swap_count", 100)
+#' cpr_rand_comm(phylocom$comm, "swap_count", 100)
 #'
 #' # How to use a custom null model
 #' # 1. Define a randomizing function, e.g. re-sample the matrix while
@@ -47,7 +47,7 @@
 #'   isSeq = FALSE, mode = "integer")
 #'
 #' # 3. Generate the null community
-#' cpr_rand_comm(phylocom$sample, cs_object, 100)
+#' cpr_rand_comm(phylocom$comm, cs_object, 100)
 #'
 cpr_rand_comm <- function(comm, null_model, n_iterations = 1, thin = 1, seed = NULL) {
 

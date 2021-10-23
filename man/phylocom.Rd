@@ -24,9 +24,9 @@ Obtained via the \code{picante} package (Kembel et al. 2010)
 \examples{
 # Example phylogeny
 library(ape)
-phylocom$phylo
+phylocom$phy
 # Example community
-phylocom$sample
+phylocom$comm
 }
 \references{
 Webb, C.O., Ackerly, D.D., and Kembel, S.W. 2008. Phylocom: software
