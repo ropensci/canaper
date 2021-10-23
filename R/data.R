@@ -22,7 +22,6 @@
 #' @srrstats {G5.1} dataset is available (and documented)
 #' @examples
 #' # Example phylogeny
-#' library(ape)
 #' acacia$phy
 #' # Example community
 #' acacia$comm[1:5,1:5]
@@ -47,7 +46,6 @@
 #' @srrstats {G5.1} dataset is available (and documented)
 #' @examples
 #' # Example phylogeny
-#' library(ape)
 #' biod_example$phy
 #' # Example community
 #' biod_example$comm[1:5,1:5]
@@ -75,7 +73,6 @@
 #' @srrstats {G5.1} dataset is available (and documented)
 #' @examples
 #' # Example phylogeny
-#' library(ape)
 #' phylocom$phy
 #' # Example community
 #' phylocom$comm

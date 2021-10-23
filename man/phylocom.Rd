@@ -23,7 +23,6 @@ Obtained via the \code{picante} package (Kembel et al. 2010)
 }
 \examples{
 # Example phylogeny
-library(ape)
 phylocom$phy
 # Example community
 phylocom$comm

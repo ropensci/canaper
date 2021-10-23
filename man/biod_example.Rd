@@ -24,7 +24,6 @@ Corresponds to the the community matrix ("groups" object) and phylogeny from the
 }
 \examples{
 # Example phylogeny
-library(ape)
 biod_example$phy
 # Example community
 biod_example$comm[1:5,1:5]
