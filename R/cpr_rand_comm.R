@@ -23,6 +23,8 @@
 #' @return Matrix
 #' @export
 #' @examples
+#' set.seed(12345)
+#'
 #' # Check list of available pre-defined null models in vegan
 #' vegan::make.commsim()
 #'

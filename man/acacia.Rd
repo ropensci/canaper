@@ -3,7 +3,7 @@
 \docType{data}
 \name{acacia}
 \alias{acacia}
-\title{Community matrix and phylogeny of Acacia in Australia}
+\title{\emph{Acacia} example data}
 \format{
 A list with two elements:
 \describe{
@@ -18,11 +18,6 @@ cells in Australian Albers equal area EPSG:3577 projection. 3037 rows
 a species was observed in a grid cell.}
 }
 }
-\source{
-Mishler, B., Knerr, N., González-Orozco, C. et al. Phylogenetic
-measures of biodiversity and neo- and paleo-endemism in Australian Acacia.
-Nat Commun 5, 4473 (2014). \doi{10.1038/ncomms5473}
-}
 \usage{
 acacia
 }
@@ -35,5 +30,10 @@ library(ape)
 acacia$phy
 # Example community
 acacia$comm[1:5,1:5]
+}
+\references{
+Mishler, B., Knerr, N., González-Orozco, C. et al. Phylogenetic
+measures of biodiversity and neo- and paleo-endemism in Australian Acacia.
+Nat Commun 5, 4473 (2014). \doi{10.1038/ncomms5473}
 }
 \keyword{datasets}

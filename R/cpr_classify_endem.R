@@ -23,6 +23,7 @@
 #'   Australian Acacia. Nat Commun, 5: 4473. \doi{10.1038/ncomms5473}
 #'
 #' @examples
+#' set.seed(12345)
 #' data(phylocom)
 #' rand_test <- cpr_rand_test(
 #'   phylocom$sample, phylocom$phy,

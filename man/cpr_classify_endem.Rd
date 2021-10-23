@@ -28,6 +28,7 @@ For a summary of the classification scheme, see:
 \url{http://biodiverse-analysis-software.blogspot.com/2014/11/canape-categorical-analysis-of-palaeo.html}
 }
 \examples{
+set.seed(12345)
 data(phylocom)
 rand_test <- cpr_rand_test(
   phylocom$sample, phylocom$phy,

@@ -49,6 +49,7 @@ are either more diverse or less than diverse than expected at random). For
 this, set \code{one_sided = FALSE}.
 }
 \examples{
+set.seed(12345)
 data(phylocom)
 rand_test <- cpr_rand_test(
   phylocom$sample, phylocom$phy,

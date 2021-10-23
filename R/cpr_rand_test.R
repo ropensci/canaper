@@ -118,6 +118,7 @@
 #'   \doi{10.1002/ecy.2043}
 #'
 #' @examples
+#' set.seed(12345)
 #' data(phylocom)
 #' cpr_rand_test(phylocom$sample, phylocom$phy, null_model = "curveball", metrics = "pd")
 #'

@@ -12,14 +12,6 @@ A list with three elements:
 \item{traits}{Trait data; a data.frame with 32 species (rows) and 4 traits (columns)}
 }
 }
-\source{
-Webb, C.O., Ackerly, D.D., and Kembel, S.W. 2008. Phylocom: software
-for the analysis of phylogenetic community structure and trait evolution.
-Version 4.0.1. http://www.phylodiversity.net/phylocom/.
-
-Kembel, et al. Picante: R tools for integrating phylogenies and
-ecology, Bioinformatics 26: 1463–1464 \doi{10.1093/bioinformatics/btq166}
-}
 \usage{
 phylocom
 }
@@ -35,5 +27,13 @@ library(ape)
 phylocom$phylo
 # Example community
 phylocom$sample
+}
+\references{
+Webb, C.O., Ackerly, D.D., and Kembel, S.W. 2008. Phylocom: software
+for the analysis of phylogenetic community structure and trait evolution.
+Version 4.0.1. http://www.phylodiversity.net/phylocom/.
+
+Kembel, et al. Picante: R tools for integrating phylogenies and
+ecology, Bioinformatics 26: 1463–1464 \doi{10.1093/bioinformatics/btq166}
 }
 \keyword{datasets}

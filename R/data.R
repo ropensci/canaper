@@ -1,4 +1,4 @@
-#' Community matrix and phylogeny of Acacia in Australia
+#' \emph{Acacia} example data
 #'
 #' Dataset of Australian \emph{Acacia} from Mishler et al. 2014 (Nat. Comm.)
 #'
@@ -14,7 +14,7 @@
 #'   (sites) x 506 columns (species). Data are counts, i.e., the number of times
 #'   a species was observed in a grid cell.}
 #' }
-#' @source Mishler, B., Knerr, N., González-Orozco, C. et al. Phylogenetic
+#' @references Mishler, B., Knerr, N., González-Orozco, C. et al. Phylogenetic
 #' measures of biodiversity and neo- and paleo-endemism in Australian Acacia.
 #' Nat Commun 5, 4473 (2014). \doi{10.1038/ncomms5473}
 #'
@@ -28,7 +28,7 @@
 #' acacia$comm[1:5,1:5]
 "acacia"
 
-#' Test community matrix and phylogeny
+#' Biodiverse example data
 #'
 #' Fictional data for testing purposes from [Biodiverse](https://github.com/shawnlaffan/biodiverse/tree/master/data).
 #'
@@ -41,7 +41,7 @@
 #'   Data are counts, i.e., the number of times
 #'   a species was observed in a grid cell.}
 #' }
-#' @source Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a tool for the spatial analysis of biological and related diversity. Ecography. Vol 33, 643-647 (Version 3.1). \doi{10.1111/j.1600-0587.2010.06237.x}
+#' @references Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a tool for the spatial analysis of biological and related diversity. Ecography. Vol 33, 643-647 (Version 3.1). \doi{10.1111/j.1600-0587.2010.06237.x}
 #'
 #' @srrstats {G1.4} uses roxygen
 #' @srrstats {G5.1} dataset is available (and documented)
@@ -65,10 +65,10 @@
 #'   \item{sample}{Community matrix with 6 sites (rows) and 25 species (columns).}
 #'   \item{traits}{Trait data; a data.frame with 32 species (rows) and 4 traits (columns)}
 #' }
-#' @source Webb, C.O., Ackerly, D.D., and Kembel, S.W. 2008. Phylocom: software
+#' @references Webb, C.O., Ackerly, D.D., and Kembel, S.W. 2008. Phylocom: software
 #'   for the analysis of phylogenetic community structure and trait evolution.
 #'   Version 4.0.1. http://www.phylodiversity.net/phylocom/.
-#' @source Kembel, et al. Picante: R tools for integrating phylogenies and
+#' @references Kembel, et al. Picante: R tools for integrating phylogenies and
 #'   ecology, Bioinformatics 26: 1463–1464 \doi{10.1093/bioinformatics/btq166}
 #'
 #' @srrstats {G1.4} uses roxygen
@@ -101,7 +101,7 @@
 #'   \item{pe_alt_biodiv}{Alternative PE (PE measured on tree with all branchlengths equal; `PHYLO_RPE_NULL2` in Biodiverse)}
 #'   \item{rpe_biodiv}{Relative PE (PE divided by alternative PD; `PHYLO_RPE2` in Biodiverse)}
 #' }
-#' @source Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a tool for the spatial analysis of biological and related diversity. Ecography. Vol 33, 643-647 (Version 3.1). \doi{10.1111/j.1600-0587.2010.06237.x}
+#' @references Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a tool for the spatial analysis of biological and related diversity. Ecography. Vol 33, 643-647 (Version 3.1). \doi{10.1111/j.1600-0587.2010.06237.x}
 #'
 #' @srrstats {G1.4} uses roxygen
 #' @srrstats {G5.1} dataset is available (and documented)

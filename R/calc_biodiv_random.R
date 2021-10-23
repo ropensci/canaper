@@ -23,6 +23,7 @@
 #'   Names of the list correspond to `metrics`.
 #'
 #' @examples
+#' set.seed(12345)
 #' phy <- biod_example$phy
 #' comm <- biod_example$comm
 #' phy_alt <- phy

@@ -37,6 +37,7 @@
 #'   - `< 0.01`, `< 0.05`, `> 0.99`, `> 0.95`, `not significant` (one-sided)
 #'
 #' @examples
+#' set.seed(12345)
 #' data(phylocom)
 #' rand_test <- cpr_rand_test(
 #'   phylocom$sample, phylocom$phy,

@@ -3,7 +3,7 @@
 \docType{data}
 \name{biod_example}
 \alias{biod_example}
-\title{Test community matrix and phylogeny}
+\title{Biodiverse example data}
 \format{
 A list with two elements:
 \describe{
@@ -12,9 +12,6 @@ A list with two elements:
 Data are counts, i.e., the number of times
 a species was observed in a grid cell.}
 }
-}
-\source{
-Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a tool for the spatial analysis of biological and related diversity. Ecography. Vol 33, 643-647 (Version 3.1). \doi{10.1111/j.1600-0587.2010.06237.x}
 }
 \usage{
 biod_example
@@ -31,5 +28,8 @@ library(ape)
 biod_example$phy
 # Example community
 biod_example$comm[1:5,1:5]
+}
+\references{
+Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a tool for the spatial analysis of biological and related diversity. Ecography. Vol 33, 643-647 (Version 3.1). \doi{10.1111/j.1600-0587.2010.06237.x}
 }
 \keyword{datasets}

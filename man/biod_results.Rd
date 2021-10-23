@@ -16,9 +16,6 @@ A tibble (dataframe) with 127 rows and 7 columns. Columns include:
 \item{rpe_biodiv}{Relative PE (PE divided by alternative PD; \code{PHYLO_RPE2} in Biodiverse)}
 }
 }
-\source{
-Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a tool for the spatial analysis of biological and related diversity. Ecography. Vol 33, 643-647 (Version 3.1). \doi{10.1111/j.1600-0587.2010.06237.x}
-}
 \usage{
 biod_results
 }
@@ -34,5 +31,8 @@ For a description of all Biodiverse metrics, \href{https://github.com/shawnlaffa
 }
 \examples{
 biod_results
+}
+\references{
+Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a tool for the spatial analysis of biological and related diversity. Ecography. Vol 33, 643-647 (Version 3.1). \doi{10.1111/j.1600-0587.2010.06237.x}
 }
 \keyword{datasets}
