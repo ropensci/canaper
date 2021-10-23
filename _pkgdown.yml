@@ -27,8 +27,8 @@ reference:
 - contents:
   - acacia
   - biod_example
-  - biod_results
   - phylocom
+  - biod_results
 - title: "Color palettes"
   desc: "Palettes for plotting classification results"
 - contents:
