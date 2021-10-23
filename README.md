@@ -40,9 +40,9 @@ remotes::install_github("joelnitta/canaper")
 
 ## Example usage
 
-These examples will use the dataset from
+These examples use the dataset from
 [Phylocom](http://phylodiversity.net/phylocom/). The dataset includes a
-community (site x species) matrix and a pylogenetic tree.
+community (site x species) matrix and a phylogenetic tree.
 
 ``` r
 library(canaper)
@@ -195,8 +195,9 @@ the right.
 -   Code: [MIT](LICENSE.md)
 -   Example datasets
     -   `acacia`, `biod_example`: [GNU General Public License
-        v3.0](data-raw/LICENSE-gpl.txt)
-    -   `phylocom`: [BSD-3-Clause](data-raw/LICENSE-bsd3.txt)
+        v3.0](https://github.com/joelnitta/canaper/blob/main/data-raw/LICENSE-gpl.txt)
+    -   `phylocom`:
+        [BSD-3-Clause](https://github.com/joelnitta/canaper/blob/main/data-raw/LICENSE-bsd3.txt)
 
 ## References
 
