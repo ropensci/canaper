@@ -193,8 +193,10 @@ the right.
 ## Licenses
 
 -   Code: [MIT](LICENSE.md)
--   Example datasets (`acacia`, `biod_example`): [GNU General Public
-    License v3.0](data-raw/LICENSE.txt)
+-   Example datasets
+    -   `acacia`, `biod_example`: [GNU General Public License
+        v3.0](data-raw/LICENSE-gpl.txt)
+    -   `phylocom`: [BSD-3-Clause](data-raw/LICENSE-bsd3.txt)
 
 ## References
 
