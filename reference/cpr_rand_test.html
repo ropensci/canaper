@@ -293,23 +293,24 @@ model analysis of presence-absence binary matrices. Ecology, 99: 103-115.
 doi: <a href='https://doi.org/10.1002/ecy.2043'>10.1002/ecy.2043</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>12345</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>)</span>
 <span class='fu'>cpr_rand_test</span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>$</span><span class='va'>sample</span>, <span class='va'>phylocom</span><span class='op'>$</span><span class='va'>phy</span>, null_model <span class='op'>=</span> <span class='st'>"curveball"</span>, metrics <span class='op'>=</span> <span class='st'>"pd"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "Dropping tips from the tree because they are not present in the community data:"
 #&gt; [1] "sp16" "sp23" "sp27" "sp28" "sp30" "sp31" "sp32"</div><div class='output co'>#&gt;            pd_obs pd_rand_mean pd_rand_sd  pd_obs_z pd_obs_c_upper
-#&gt; clump1  0.3018868    0.4700000 0.03414337 -4.923744              0
-#&gt; clump2a 0.3207547    0.4637736 0.03669030 -3.898002              0
-#&gt; clump2b 0.3396226    0.4654717 0.03034728 -4.146963              0
-#&gt; clump4  0.4150943    0.4677358 0.03689700 -1.426715              7
-#&gt; even    0.5660377    0.4679245 0.03069426  3.196468            100
-#&gt; random  0.5094340    0.4692453 0.03702931  1.085321             79
+#&gt; clump1  0.3018868    0.4620755 0.03964079 -4.041006              0
+#&gt; clump2a 0.3207547    0.4669811 0.03531139 -4.141056              0
+#&gt; clump2b 0.3396226    0.4694340 0.03210069 -4.043880              0
+#&gt; clump4  0.4150943    0.4643396 0.03401675 -1.447678              5
+#&gt; even    0.5660377    0.4686792 0.03112702  3.127780            100
+#&gt; random  0.5094340    0.4669811 0.03120260  1.360554             87
 #&gt;         pd_obs_c_lower pd_obs_q pd_obs_p_upper pd_obs_p_lower
 #&gt; clump1             100      100           0.00           1.00
 #&gt; clump2a            100      100           0.00           1.00
 #&gt; clump2b            100      100           0.00           1.00
-#&gt; clump4              86      100           0.07           0.86
+#&gt; clump4              88      100           0.05           0.88
 #&gt; even                 0      100           1.00           0.00
-#&gt; random               7      100           0.79           0.07</div><div class='input'>
+#&gt; random               3      100           0.87           0.03</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

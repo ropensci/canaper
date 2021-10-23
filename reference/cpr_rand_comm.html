@@ -184,7 +184,9 @@ will not change the random generator state.</p></td>
     <p>Matrix</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Check list of available pre-defined null models in vegan</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>12345</span><span class='op'>)</span>
+
+<span class='co'># Check list of available pre-defined null models in vegan</span>
 <span class='fu'>vegan</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/vegan/man/commsim.html'>make.commsim</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;  [1] "r00"             "c0"              "r0"              "r0_old"         
 #&gt;  [5] "r1"              "r2"              "quasiswap"       "greedyqswap"    
@@ -198,35 +200,35 @@ will not change the random generator state.</p></td>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>)</span>
 <span class='fu'>cpr_rand_comm</span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>$</span><span class='va'>sample</span>, <span class='st'>"swap"</span>, <span class='fl'>100</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;         sp1 sp10 sp11 sp12 sp13 sp14 sp15 sp17 sp18 sp19 sp2 sp20 sp21 sp22
-#&gt; clump1    1    0    0    1    0    0    0    0    1    0   1    0    0    0
-#&gt; clump2a   1    1    0    1    0    0    1    1    0    0   0    0    0    0
-#&gt; clump2b   1    0    0    0    1    0    0    1    0    1   1    0    0    0
-#&gt; clump4    1    1    0    0    0    0    0    1    1    0   1    1    1    0
-#&gt; even      1    0    0    0    0    1    0    0    0    0   1    0    0    0
-#&gt; random    0    0    1    0    0    0    0    1    0    0   1    0    0    1
+#&gt; clump1    1    0    0    0    0    0    0    1    1    0   1    0    0    0
+#&gt; clump2a   0    1    0    0    0    0    0    1    0    0   1    0    0    1
+#&gt; clump2b   1    1    0    1    0    1    0    0    0    0   1    0    0    0
+#&gt; clump4    1    0    1    0    0    0    0    1    0    1   1    0    1    0
+#&gt; even      1    0    0    0    0    0    0    1    1    0   0    1    0    0
+#&gt; random    1    0    0    1    1    0    1    0    0    0   1    0    0    0
 #&gt;         sp24 sp25 sp26 sp29 sp3 sp4 sp5 sp6 sp7 sp8 sp9
-#&gt; clump1     0    1    0    0   1   0   1   0   0   0   1
-#&gt; clump2a    1    0    0    0   1   1   0   0   0   0   0
-#&gt; clump2b    0    0    0    0   0   1   1   0   1   0   0
-#&gt; clump4     0    0    0    0   0   0   1   0   0   0   0
-#&gt; even       0    0    0    0   1   1   0   1   0   1   1
-#&gt; random     0    1    1    1   0   0   0   0   0   0   1</div><div class='input'>
+#&gt; clump1     0    0    0    1   1   0   0   1   0   0   1
+#&gt; clump2a    0    1    0    0   1   1   1   0   0   0   0
+#&gt; clump2b    0    0    0    0   1   1   0   0   0   0   1
+#&gt; clump4     0    0    0    0   0   0   1   0   0   1   0
+#&gt; even       1    0    1    0   0   0   0   0   1   0   1
+#&gt; random     0    1    0    0   0   1   1   0   0   0   0</div><div class='input'>
 <span class='co'># Quantitative null model produces quantitative output</span>
 <span class='fu'>cpr_rand_comm</span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>$</span><span class='va'>sample</span>, <span class='st'>"swap_count"</span>, <span class='fl'>100</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;         sp1 sp10 sp11 sp12 sp13 sp14 sp15 sp17 sp18 sp19 sp2 sp20 sp21 sp22
-#&gt; clump1    1    0    0    1    0    0    0    0    0    0   0    2    0    0
-#&gt; clump2a   0    1    2    0    0    0    0    1    1    0   2    0    1    0
-#&gt; clump2b   1    2    0    1    0    0    2    1    0    0   2    0    0    0
-#&gt; clump4    0    0    0    0    1    1    0    3    2    2   0    0    0    1
-#&gt; even      0    0    0    0    0    0    0    0    1    0   0    0    0    0
-#&gt; random    3    0    0    1    0    3    0    3    0    0   1    0    0    0
+#&gt; clump1    1    0    0    2    1    0    0    0    1    0   0    0    0    0
+#&gt; clump2a   1    2    2    0    0    1    0    0    2    0   2    0    0    0
+#&gt; clump2b   1    0    0    0    0    0    1    0    0    2   2    1    0    0
+#&gt; clump4    0    0    0    0    0    0    0    5    1    0   0    0    0    0
+#&gt; even      1    0    0    1    0    0    0    0    0    0   0    1    0    1
+#&gt; random    1    1    0    0    0    3    1    3    0    0   1    0    1    0
 #&gt;         sp24 sp25 sp26 sp29 sp3 sp4 sp5 sp6 sp7 sp8 sp9
-#&gt; clump1     0    1    1    0   0   0   1   0   0   1   0
-#&gt; clump2a    0    0    0    0   1   0   1   1   1   0   0
-#&gt; clump2b    0    0    0    0   0   1   0   0   0   0   2
-#&gt; clump4     0    1    0    1   0   0   0   0   0   0   0
-#&gt; even       0    1    0    0   1   1   2   0   0   0   2
-#&gt; random     2    0    1    0   1   1   0   0   0   0   0</div><div class='input'>
+#&gt; clump1     0    0    0    0   1   0   2   0   0   0   0
+#&gt; clump2a    0    0    2    0   0   0   0   0   0   0   0
+#&gt; clump2b    0    2    0    0   0   1   1   0   0   0   1
+#&gt; clump4     1    0    0    0   1   2   0   0   0   1   1
+#&gt; even       0    0    0    0   0   0   0   1   1   0   2
+#&gt; random     1    1    0    1   1   0   1   0   0   0   0</div><div class='input'>
 <span class='co'># How to use a custom null model</span>
 <span class='co'># 1. Define a randomizing function, e.g. re-sample the matrix while</span>
 <span class='co'># preserving total number of presences (same as the "r00" model)</span>
@@ -241,19 +243,19 @@ will not change the random generator state.</p></td>
 <span class='co'># 3. Generate the null community</span>
 <span class='fu'>cpr_rand_comm</span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>$</span><span class='va'>sample</span>, <span class='va'>cs_object</span>, <span class='fl'>100</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;         sp1 sp10 sp11 sp12 sp13 sp14 sp15 sp17 sp18 sp19 sp2 sp20 sp21 sp22
-#&gt; clump1    0    0    0    1    0    1    0    0    0    0   0    0    0    0
-#&gt; clump2a   0    0    1    1    0    0    0    0    1    0   0    0    1    0
-#&gt; clump2b   1    1    0    0    0    1    0    1    0    0   0    1    0    1
-#&gt; clump4    0    0    1    0    1    0    0    0    0    0   1    0    1    0
-#&gt; even      0    0    0    1    0    0    1    1    0    0   0    0    0    0
-#&gt; random    1    0    1    0    0    0    1    0    1    1   1    0    0    1
+#&gt; clump1    0    1    0    0    1    0    1    0    0    0   0    1    0    1
+#&gt; clump2a   0    0    0    0    1    0    0    1    1    0   0    0    0    1
+#&gt; clump2b   0    0    0    0    0    0    0    0    0    0   1    0    0    0
+#&gt; clump4    0    1    1    0    1    1    0    0    0    1   1    1    0    1
+#&gt; even      0    0    1    0    1    0    0    1    1    1   1    0    0    1
+#&gt; random    1    1    0    0    1    0    0    0    0    0   0    0    0    0
 #&gt;         sp24 sp25 sp26 sp29 sp3 sp4 sp5 sp6 sp7 sp8 sp9
-#&gt; clump1     1    0    0    0   0   0   1   1   0   1   1
-#&gt; clump2a    0    0    0    1   0   0   0   0   0   0   0
-#&gt; clump2b    1    1    0    0   0   0   0   0   0   0   0
-#&gt; clump4     0    0    0    0   1   0   1   1   1   1   0
-#&gt; even       0    1    0    1   0   0   0   0   0   1   0
-#&gt; random     0    0    1    0   1   0   0   1   1   1   1</div><div class='input'>
+#&gt; clump1     1    0    0    1   0   0   0   0   0   0   0
+#&gt; clump2a    1    0    0    0   0   0   1   0   1   0   0
+#&gt; clump2b    0    0    1    0   1   0   1   1   0   0   0
+#&gt; clump4     1    0    0    0   1   0   0   0   0   1   1
+#&gt; even       0    0    0    1   0   0   0   0   0   0   1
+#&gt; random     0    0    1    1   1   1   0   1   0   0   0</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

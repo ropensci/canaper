@@ -195,26 +195,27 @@ are either more diverse or less than diverse than expected at random). For
 this, set <code>one_sided = FALSE</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>12345</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>)</span>
 <span class='va'>rand_test</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cpr_rand_test.html'>cpr_rand_test</a></span><span class='op'>(</span>
   <span class='va'>phylocom</span><span class='op'>$</span><span class='va'>sample</span>, <span class='va'>phylocom</span><span class='op'>$</span><span class='va'>phy</span>,
   null_model <span class='op'>=</span> <span class='st'>"curveball"</span>, metrics <span class='op'>=</span> <span class='st'>"pd"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "Dropping tips from the tree because they are not present in the community data:"
 #&gt; [1] "sp16" "sp23" "sp27" "sp28" "sp30" "sp31" "sp32"</div><div class='input'><span class='fu'>cpr_classify_signif</span><span class='op'>(</span><span class='va'>rand_test</span>, <span class='st'>"pd"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;            pd_obs pd_rand_mean pd_rand_sd  pd_obs_z pd_obs_c_upper
-#&gt; clump1  0.3018868    0.4683019 0.03581745 -4.646202              0
-#&gt; clump2a 0.3207547    0.4616981 0.03234341 -4.357716              0
-#&gt; clump2b 0.3396226    0.4662264 0.02816433 -4.495181              0
-#&gt; clump4  0.4150943    0.4688679 0.02942318 -1.827592              2
-#&gt; even    0.5660377    0.4728302 0.03260529  2.858663            100
-#&gt; random  0.5094340    0.4669811 0.03581694  1.185272             85
+#&gt; clump1  0.3018868    0.4620755 0.03964079 -4.041006              0
+#&gt; clump2a 0.3207547    0.4669811 0.03531139 -4.141056              0
+#&gt; clump2b 0.3396226    0.4694340 0.03210069 -4.043880              0
+#&gt; clump4  0.4150943    0.4643396 0.03401675 -1.447678              5
+#&gt; even    0.5660377    0.4686792 0.03112702  3.127780            100
+#&gt; random  0.5094340    0.4669811 0.03120260  1.360554             87
 #&gt;         pd_obs_c_lower pd_obs_q pd_obs_p_upper pd_obs_p_lower       pd_signif
 #&gt; clump1             100      100           0.00           1.00          &lt; 0.01
 #&gt; clump2a            100      100           0.00           1.00          &lt; 0.01
 #&gt; clump2b            100      100           0.00           1.00          &lt; 0.01
-#&gt; clump4              97      100           0.02           0.97 not significant
+#&gt; clump4              88      100           0.05           0.88 not significant
 #&gt; even                 0      100           1.00           0.00          &gt; 0.99
-#&gt; random               8      100           0.85           0.08 not significant</div><div class='input'>
+#&gt; random               3      100           0.87           0.03 not significant</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
