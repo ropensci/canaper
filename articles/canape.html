@@ -91,7 +91,7 @@
       <h1 data-toc-skip>CANAPE example</h1>
                         <h4 class="author">Joel H. Nitta</h4>
             
-            <h4 class="date">23 October, 2021</h4>
+            <h4 class="date">25 October, 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/joelnitta/canaper/blob/master/vignettes/canape.Rmd"><code>vignettes/canape.Rmd</code></a></small>
       <div class="hidden name"><code>canape.Rmd</code></div>
@@ -108,7 +108,6 @@
 <p>Start by loading <code>canaper</code> and some other packages we will use for this vignette:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/joelnitta/canaper">canaper</a></span><span class="op">)</span> <span class="co"># This package :)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ape-package.ird.fr/">ape</a></span><span class="op">)</span> <span class="co"># For handling phylogenetic trees</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span> <span class="co"># For parallel computing</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/collectivemedia/tictoc">tictoc</a></span><span class="op">)</span> <span class="co"># For timing things</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span> <span class="co"># For composing mult-part plots</span>
@@ -185,11 +184,10 @@
   null_model <span class="op">=</span> <span class="st">"curveball"</span>,
   n_reps <span class="op">=</span> <span class="fl">100</span>, n_iterations <span class="op">=</span> <span class="fl">100000</span>,
   tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; [1] "Dropping tips from the tree because they are not present in the community data:"</span>
-<span class="co">#&gt; [1] "Pararchidendron_pruinosum" "Paraserianthes_lophantha" </span>
-<span class="co">#&gt; [3] "saligna"                   "clunies-rossiae"</span>
+<span class="co">#&gt; Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: </span>
+<span class="co">#&gt;  Pararchidendron_pruinosum, Paraserianthes_lophantha, saligna, clunies-rossiae</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># See how long it took</span>
-<span class="co">#&gt; 88.745 sec elapsed</span>
+<span class="co">#&gt; 79.777 sec elapsed</span>
 
 <span class="co"># Switch back to sequential (non-parallel) mode</span>
 <span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></code></pre></div>

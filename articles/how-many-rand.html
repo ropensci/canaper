@@ -91,7 +91,7 @@
       <h1 data-toc-skip>How many randomizations?</h1>
                         <h4 class="author">Joel H. Nitta</h4>
             
-            <h4 class="date">23 October, 2021</h4>
+            <h4 class="date">25 October, 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/joelnitta/canaper/blob/master/vignettes/how-many-rand.Rmd"><code>vignettes/how-many-rand.Rmd</code></a></small>
       <div class="hidden name"><code>how-many-rand.Rmd</code></div>
@@ -125,8 +125,6 @@
 <p>First, let’s load the packages used in this vignette.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/joelnitta/canaper">canaper</a></span><span class="op">)</span> <span class="co"># This package</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">picante</span><span class="op">)</span> <span class="co"># For generating random communities</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cran.r-project.org">vegan</a></span><span class="op">)</span> <span class="co"># For Mantel test</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/collectivemedia/tictoc">tictoc</a></span><span class="op">)</span> <span class="co"># For timing</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span> <span class="co"># For tidy code</span></code></pre></div>
 <p>Next we will test the effects of <code>n_iterations</code>, using the <a href="https://joelnitta.github.io/canaper/reference/biod_example.html">test dataset that comes with <code>canaper</code></a> (and <a href="https://github.com/shawnlaffan/biodiverse/tree/master/data">Biodiverse</a>). I will increase the number of iterations in powers of 10 from 10 to 1,000,000, and compare the correlation between the original matrix and the randomized matrix:</p>
@@ -186,21 +184,21 @@
   null_model <span class="op">=</span> <span class="st">"swap"</span>,
   n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">10</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 6.133 sec elapsed</span>
+<span class="co">#&gt; 5.985 sec elapsed</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">tic</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">res_100_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span>
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>, 
   null_model <span class="op">=</span> <span class="st">"swap"</span>,
   n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">100</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 7.905 sec elapsed</span>
+<span class="co">#&gt; 7.503 sec elapsed</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">tic</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">res_1000_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span>
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>, 
   null_model <span class="op">=</span> <span class="st">"swap"</span>,
   n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">1000</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 76.375 sec elapsed</span>
+<span class="co">#&gt; 72.518 sec elapsed</span>
 
 <span class="co"># Second set</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">67890</span><span class="op">)</span>
