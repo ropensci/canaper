@@ -300,7 +300,7 @@ cpr_rand_test <- function(
 	# Match input between `comm` and `phylo` ----
 	# Match tips of tree and column names of community data frame:
 	# Use only taxa that are in common between phylogeny and community
-	subsetted_data <- picante::match.phylo.comm(phy = phy, comm = comm)
+	subsetted_data <- match_phylo_comm(phy = phy, comm = comm)
 	phy <- subsetted_data[["phy"]]
 	comm <- subsetted_data[["comm"]]
 

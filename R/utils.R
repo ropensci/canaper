@@ -205,3 +205,46 @@ greater_than_or_equal_single <- function(x, y) {
 # Print phylogenies nicely
 #' @importFrom ape print.phylo
 NULL
+
+#' Match taxa between a community data matrix and a phylogeny
+#'
+#' @param phy List of class "phylo"; input phylogeny
+#' @param comm Dataframe or matrix; community data, with species (taxa) in columns
+#' and sites (communities) in rows.
+#'
+#' @return List with two items
+#' - `comm`: Community data matrix trimmed to only species in common between `phy` and comm`
+#' - `phy`: Phylogeny data matrix trimmed to only species in common between `phy` and comm`
+#' @noRd
+#'
+match_phylo_comm <- function(phy, comm) {
+  if (!(is.data.frame(comm) | is.matrix(comm))) {
+    stop("Community data should be a data.frame or matrix with samples in rows and taxa in columns")
+  }
+  res <- list()
+  phytaxa <- phy$tip.label
+  commtaxa <- colnames(comm)
+  if (is.null(commtaxa)) {
+    stop("Community data set lacks taxa (column) names, these are required to match phylogeny and community data")
+  }
+  if (!all(commtaxa %in% phytaxa)) {
+    warning(paste(
+      "Dropping taxa from the community because they are not present in the phylogeny: \n",
+      paste(setdiff(commtaxa, phytaxa), collapse = ", ")
+    ))
+    comm <- comm[, intersect(commtaxa, phytaxa)]
+    commtaxa <- colnames(comm)
+  }
+  if (any(!(phytaxa %in% commtaxa))) {
+    warning(paste(
+      "Dropping tips from the tree because they are not present in the community data: \n",
+      paste(setdiff(phytaxa, commtaxa), collapse = ", ")
+    ))
+    res$phy <- ape::drop.tip(phy, setdiff(phytaxa, commtaxa))
+  }
+  else {
+    res$phy <- phy
+  }
+  res$comm <- comm[, res$phy$tip.label]
+  return(res)
+}

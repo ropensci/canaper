@@ -51,8 +51,6 @@ First, let's load the packages used in this vignette.
 
 ```{r setup, message = FALSE}
 library(canaper) # This package
-library(picante) # For generating random communities
-library(vegan) # For Mantel test
 library(tictoc) # For timing
 library(tidyverse) # For tidy code
 ```

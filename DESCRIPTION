@@ -34,7 +34,6 @@ Imports:
     dplyr,
     furrr,
     phyloregion,
-    picante,
     progressr,
     purrr,
     stats,
@@ -51,7 +50,8 @@ Suggests:
     roxyglobals (>= 0.2.1),
     stringr,
     magrittr,
-    covr
+    covr,
+    picante
 Config/testthat/edition: 3
 Depends: 
     R (>= 3.5.0)

@@ -13,11 +13,10 @@
 #' @return Dataframe
 #' @examples
 #' \dontrun{
-#' library(picante)
 #' data(phylocom)
 #' phy <- phylocom$phy
 #' comm <- phylocom$comm
-#' subsetted_data <- picante::match.phylo.comm(phy = phy, comm = comm)
+#' subsetted_data <- match_phylo_comm(phy = phy, comm = comm)
 #' phy <- subsetted_data[["phy"]]
 #' comm <- subsetted_data[["comm"]]
 #' phy_alt <- phy

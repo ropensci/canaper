@@ -29,7 +29,6 @@ Start by loading `canaper` and some other packages we will use for this vignette
 
 ```{r setup, message = FALSE}
 library(canaper) # This package :)
-library(ape) # For handling phylogenetic trees
 library(future) # For parallel computing
 library(tictoc) # For timing things
 library(patchwork) # For composing mult-part plots

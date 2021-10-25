@@ -28,7 +28,6 @@ Let's get started by loading the packages used in this vignette.
 library(canaper) # This package
 library(tictoc) # For timing
 library(future) # For parallel computing
-library(progressr) # Enable progress bar
 # Set seed for random number generator for reproducible results
 set.seed(12345)
 ```
