@@ -182,6 +182,11 @@ test_that("Input is valid", {
       "'comm' is > 95% absences (zeros). Be sure that 'n_reps' and 'n_iterations' are sufficiently large to ensure adequate mixing of random communities",
       fixed = TRUE
    )
+   # - quiet = TRUE should suppress the warning
+   expect_warning(
+      cpr_rand_test(comm_zero_heavy, biod_example$phy, null_model = "r00", metrics = "pd", quiet = TRUE),
+      NA
+   )
    # - convert comm_zero_heavy to comm_one_heavy,
    # making sure it doesn't break other rules (at least one species / site)
    comm_one_heavy <- comm_zero_heavy
@@ -194,6 +199,11 @@ test_that("Input is valid", {
       cpr_rand_test(comm_one_heavy, biod_example$phy, null_model = "r00", metrics = "pd"),
       "'comm' is > 95% presences (values > 1). Be sure that 'n_reps' and 'n_iterations' are sufficiently large to ensure adequate mixing of random communities",
       fixed = TRUE
+   )
+   # - quiet = TRUE should suppress the warning
+   expect_warning(
+      cpr_rand_test(comm_one_heavy, biod_example$phy, null_model = "r00", metrics = "pd", quiet = TRUE),
+      NA
    )
 })
 
@@ -293,7 +303,6 @@ test_that("Parallelization decreases calculation time", {
    expect_gt(elapsed_time_seq, elapsed_time_parallel)
    expect_lt(elapsed_time_parallel, elapsed_time_seq)
 })
-
 
 #' @srrstats {UL7.5, UL7.5a} Test batch processing, show that results don't
 #'   differ between sequential and parallel

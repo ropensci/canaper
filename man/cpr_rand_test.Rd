@@ -13,7 +13,8 @@ cpr_rand_test(
   thin = 1,
   metrics = c("pd", "rpd", "pe", "rpe"),
   site_col = "site",
-  tbl_out = tibble::is_tibble(comm)
+  tbl_out = tibble::is_tibble(comm),
+  quiet = FALSE
 )
 }
 \arguments{
@@ -51,6 +52,9 @@ contains the site names; only used if \code{comm} is a tibble (object of class
 \item{tbl_out}{Logical vector of length 1; should the output be returned as
 a tibble? If \code{FALSE}, will return a dataframe. Defaults to \code{TRUE} if \code{comm} is
 a tibble.}
+
+\item{quiet}{Logical vector of length 1; if \code{TRUE}, suppress all warnings and
+messages that would be emitted by this function.}
 }
 \value{
 Dataframe. For each of the biodiversity metrics, the following 9 columns

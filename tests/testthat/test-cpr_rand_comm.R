@@ -64,3 +64,15 @@ test_that("The same seed produces the same random communities", {
 	rand_comm_6 <- cpr_rand_comm(phylocom$comm, "curveball", 100, seed = 2323)
 	expect_true(isTRUE(all.equal(rand_comm_5, rand_comm_6)))
 })
+
+test_that("Silencing warnings works", {
+	expect_warning(
+		cpr_rand_test(phylocom$comm, phylocom$phy, "r00", 1, 1, 1, "pd"),
+		"Dropping tips from the tree because they are not present in the community data"
+	)
+	expect_warning(
+		cpr_rand_test(phylocom$comm, phylocom$phy, "r00", 1, 1, 1, "pd", quiet = TRUE),
+		NA
+	)
+})
+
