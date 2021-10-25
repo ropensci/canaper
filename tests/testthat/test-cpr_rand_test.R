@@ -18,11 +18,11 @@ dat$comm_mat <- as.matrix(biod_example$comm)
 
 # For testing that results are same regardless of input type
 # need to have same random seed each time
-set.seed(123)
+set.seed(12345)
 dat$res_from_df <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "swap", n_reps = 10)
-set.seed(123)
+set.seed(12345)
 dat$res_from_tbl <- cpr_rand_test(dat$comm_tbl, biod_example$phy, null_model = "swap", n_reps = 10, tbl_out = FALSE)
-set.seed(123)
+set.seed(12345)
 dat$res_from_mat <- cpr_rand_test(dat$comm_mat, biod_example$phy, null_model = "swap", n_reps = 10)
 
 # For testing output format
@@ -56,7 +56,7 @@ test_that("Input is valid", {
    )
    # input data too small
    comm_small <- biod_example$comm[1:3,]
-   set.seed(123)
+   set.seed(12345)
    comm_small <- matrix(
       data = sample(c(0,1), replace = TRUE, size = length(unlist(comm_small))),
       nrow = nrow(comm_small),
@@ -65,11 +65,11 @@ test_that("Input is valid", {
    colnames(comm_small) <- colnames(biod_example$comm[1:3,])
    comm_small <- comm_small[,colSums(comm_small) > 0]
    expect_error(
-      cpr_rand_test(comm_small, biod_example$phy, null_model = "swap"),
+      cpr_rand_test(comm_small, biod_example$phy, null_model = "swap", quiet = TRUE),
       "'comm' must include at least 5 sites"
    )
    expect_error(
-      cpr_rand_test(biod_example$comm, ape::keep.tip(biod_example$phy, c("sp1", "sp2")), null_model = "swap"),
+      cpr_rand_test(biod_example$comm, ape::keep.tip(biod_example$phy, c("sp1", "sp2")), null_model = "swap", quiet = TRUE),
       "'phy' and 'comm' must share at least 5 species in common"
    )
    # comm with numeric species names
@@ -166,7 +166,7 @@ test_that("Input is valid", {
    )
    # input data with too many zeros or 1s
    # - make comm with >99.5% zeros
-   set.seed(123)
+   set.seed(12345)
    comm_zero_heavy <- matrix(
       data = sample.int(2, replace = TRUE, prob = c(0.005, 0.995), size = length(unlist(biod_example$comm))),
       nrow = nrow(biod_example$comm),
@@ -217,33 +217,33 @@ test_that("Results are same regardless of presence/absence or abundance input", 
    # make presence-absence community
    comm_pa <- apply(biod_example$comm, 2, function(x) ifelse(x > 0, 1, 0))
    # pd
-   set.seed(123)
+   set.seed(12345)
    res_abun_pd <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "swap", n_reps = 10, metrics = "pd")
-   set.seed(123)
+   set.seed(12345)
    res_pa_pd <- cpr_rand_test(comm_pa, biod_example$phy, null_model = "swap", n_reps = 10, metrics = "pd")
    expect_equal(res_abun_pd, res_pa_pd)
    # pe
-   set.seed(123)
+   set.seed(12345)
    res_abun_pe <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "swap", n_reps = 10, metrics = "pe")
-   set.seed(123)
+   set.seed(12345)
    res_pa_pe <- cpr_rand_test(comm_pa, biod_example$phy, null_model = "swap", n_reps = 10, metrics = "pe")
    expect_equal(res_abun_pe, res_pa_pe)
    # rpd
-   set.seed(123)
+   set.seed(12345)
    res_abun_rpd <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "swap", n_reps = 10, metrics = "rpd")
-   set.seed(123)
+   set.seed(12345)
    res_pa_rpd <- cpr_rand_test(comm_pa, biod_example$phy, null_model = "swap", n_reps = 10, metrics = "rpd")
    expect_equal(res_abun_rpd, res_pa_rpd)
    # rpe
-   set.seed(123)
+   set.seed(12345)
    res_abun_rpe <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "swap", n_reps = 10, metrics = "rpe")
-   set.seed(123)
+   set.seed(12345)
    res_pa_rpe <- cpr_rand_test(comm_pa, biod_example$phy, null_model = "swap", n_reps = 10, metrics = "rpe")
    expect_equal(res_abun_rpe, res_pa_rpe)
    # all
-   set.seed(123)
+   set.seed(12345)
    res_abun <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "swap", n_reps = 10)
-   set.seed(123)
+   set.seed(12345)
    res_pa <- cpr_rand_test(comm_pa, biod_example$phy, null_model = "swap", n_reps = 10)
    expect_equal(res_abun, res_pa)
 })
@@ -251,7 +251,7 @@ test_that("Results are same regardless of presence/absence or abundance input", 
 #' @srrstats {UL1.2} Check for default-looking column and rownames
 test_that("Default column and rownames are detected", {
    # Make a dummy community dataframe and phylogeny
-   set.seed(123)
+   set.seed(12345)
    abuns <- runif(10*8, 0, 10) |> as.integer()
    df_default_rows <- data.frame(
       sp1 = abuns[1:10],
@@ -280,15 +280,15 @@ test_that("Parallelization decreases calculation time", {
    future::plan(future::sequential)
    tictoc::tic.clearlog()
    tictoc::tic()
-   set.seed(123)
-   seq_res <- cpr_rand_test(acacia$comm, acacia$phy, null_model = "curveball", n_iterations = 100, n_reps = 100)
+   set.seed(12345)
+   seq_res <- cpr_rand_test(acacia$comm, acacia$phy, null_model = "curveball", n_iterations = 100, n_reps = 100, quiet = TRUE)
    tictoc::toc(log = TRUE, quiet = TRUE)
 
    # Set future resolution to parallelized, with 3 workers
    future::plan(future::multisession, workers = 3)
    tictoc::tic()
-   set.seed(123)
-   parallel_res <- cpr_rand_test(acacia$comm, acacia$phy, null_model = "curveball", n_iterations = 100, n_reps = 100)
+   set.seed(12345)
+   parallel_res <- cpr_rand_test(acacia$comm, acacia$phy, null_model = "curveball", n_iterations = 100, n_reps = 100, quiet = TRUE)
    tictoc::toc(log = TRUE, quiet = TRUE)
    log_list <- tictoc::tic.log(format = FALSE)
    tictoc::tic.clearlog()
@@ -345,7 +345,7 @@ test_that("Seeds work across sequential and parallel", {
 # (for non-random results only)
 test_that("Output is same as when calculated with Biodiverse", {
    # Calculate observed PD, PE, etc using biodiverse test data
-   set.seed(123)
+   set.seed(12345)
    res_compare <- cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = 1, null_model = "swap") |>
       tibble::rownames_to_column("site") |>
       tibble::as_tibble() |>
@@ -406,6 +406,33 @@ test_that("Output is formatted as expected", {
       rownames(dat$res_from_df),
       rownames(biod_example$comm)
    )
+   # Run snapshot test to verify correct output
+   set.seed(12345)
+   expect_snapshot(
+      cpr_rand_test(phylocom$comm, phylocom$phy, null_model = "swap", n_reps = 10, quiet = TRUE)
+   )
+})
+
+test_that("Various randomization algorithms work", {
+   set.seed(12345)
+   algos <- vegan::make.commsim()
+   res_list <- purrr::map(
+      algos,
+      ~cpr_rand_test(
+         biod_example$comm, biod_example$phy,
+         null_model = ., n_iterations = 10, n_reps = 10))
+   # All output should be data frame
+   for (i in 1:length(res_list)) {
+      expect_s3_class(res_list[[i]], "data.frame")
+   } # All values should be numeric
+   for (i in 1:length(res_list)) {
+      expect_true(
+         assertr::assert(
+            res_list[[i]], is.numeric, dplyr::everything(),
+            success_fun = assertr::success_logical)
+         )
+   }
+
 })
 
 # Cleanup ----
