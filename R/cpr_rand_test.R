@@ -146,7 +146,10 @@ cpr_rand_test <- function(comm, phy, null_model,
     #' check input types and lengths, missingness, undefined values, values of univariate char input,
     #' convert to integer before numeric comparisons
     # - null_model
-    assertthat::assert_that(assertthat::is.string(null_model))
+    assertthat::assert_that(
+    	assertthat::is.string(null_model) | inherits(null_model, "commsim"),
+    	msg = "'null_model' must be a string (character vector of length 1) or an object of class 'commsim'"
+    )
     assertthat::assert_that(assertthat::noNA(null_model))
     # - n_reps
     assertthat::assert_that(assertthat::is.number(n_reps))

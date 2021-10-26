@@ -447,5 +447,20 @@ test_that("Various randomization algorithms work", {
   }
 })
 
+test_that("Custom randomization algorithms work", {
+   randomizer <- function(x, n, ...) {
+      array(replicate(n, sample(x)), c(dim(x), n))
+   }
+   cs_object <- vegan::commsim(
+      "r00_model",
+      fun = randomizer, binary = TRUE,
+      isSeq = FALSE, mode = "integer"
+   )
+   set.seed(12345)
+   expect_snapshot(
+      cpr_rand_test(phylocom$comm, phylocom$phy, cs_object, n_reps = 10, quiet = TRUE)
+   )
+})
+
 # Cleanup ----
 remove(dat)
