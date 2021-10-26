@@ -360,19 +360,19 @@ cpr_rand_test <- function(
 		pb <- progressr::progressor(steps = n_reps) # Set up a progress bar
 
 		random_vals <-
-			furrr::future_map(
+			future.apply::future_lapply(
 				1:n_reps,
-				~ {
+				function(x) {
 					pb()
 					calc_biodiv_random(
-						comm, phy, phy_alt,
+						comm = comm, phy = phy, phy_alt = phy_alt,
 						null_model = null_model,
 						n_iterations = n_iterations,
 						thin = thin,
 						metrics = metrics
 					)
 				},
-				.options = furrr::furrr_options(seed = TRUE)
+				future.seed = TRUE
 			)
 
 		# Calculate biodiversity metrics for observed community

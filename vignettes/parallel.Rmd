@@ -34,7 +34,7 @@ set.seed(12345)
 
 ## How to parallelize
 
-`canaper` uses the `furrr` package to handle parallel computing, which in turn uses the `future` package. In these packages, specification of sequential (i.e., no parallel computing) vs. parallel computing, and the number of CPUs (i.e., "cores") to use in parallel is specified **outside** of other functions. This is easiest to see with an example.
+`canaper` uses the `future` package to handle parallel computing. In `future`, specification of sequential (i.e., no parallel computing) vs. parallel computing, and the number of CPUs (i.e., "cores") to use in parallel is specified **outside** of other functions. This is easiest to see with an example.
 
 ### Sequential mode
 

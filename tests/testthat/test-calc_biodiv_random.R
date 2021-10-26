@@ -60,7 +60,10 @@ test_that("Random seeds work", {
 
 test_that("Random seeds work in parallel", {
 
-	skip('WIP: need to figure out how to use furrr reproducibly in a package')
+	skip('WIP: need to figure out how to use future.apply reproducibly in a package')
+	# If run without sourcing files in R/, get error:
+	# Error in calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L) :
+	# 	could not find function "calc_biodiv_random"
 
 	# Change back to sequential when done (including on failure)
 	on.exit(future::plan(future::sequential), add = TRUE)
@@ -69,21 +72,21 @@ test_that("Random seeds work in parallel", {
 	future::plan(future::multisession, workers = 3)
 
 	set.seed(12345)
-	res1 <- furrr::future_map(
+	res1 <- future.apply::future_lapply(
 		1:2,
-		~calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L),
-		.options = furrr::furrr_options(seed = TRUE))
+		function(x) {calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L)},
+		future.seed = TRUE)
 	set.seed(67890)
-	res2 <- furrr::future_map(
+	res2 <- future.apply::future_lapply(
 		1:2,
-		~calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L),
-		.options = furrr::furrr_options(seed = TRUE))
+		function(x) {calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L)},
+		future.seed = TRUE)
 	# Should be able to pass seed as an argument
 	set.seed(12345)
-	res3 <- furrr::future_map(
+	res3 <- future.apply::future_lapply(
 		1:2,
-		~calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L),
-		.options = furrr::furrr_options(seed = TRUE))
+		function(x) {calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L)},
+		future.seed = TRUE)
 	# Different seeds should give different results
 	expect_false(isTRUE(all.equal(res1, res2)))
 	# Same seeds should give same results

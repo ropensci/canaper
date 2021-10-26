@@ -32,7 +32,7 @@ Imports:
     assertr,
     assertthat,
     dplyr,
-    furrr,
+    future.apply,
     phyloregion,
     progressr,
     purrr,

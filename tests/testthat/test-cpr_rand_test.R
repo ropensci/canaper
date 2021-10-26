@@ -322,9 +322,12 @@ test_that("Seeds work across sequential and parallel", {
    expect_true(isTRUE(all.equal(seq_res_1, seq_res_3)))
    expect_false(isTRUE(all.equal(seq_res_1, seq_res_2)))
 
-   skip('WIP: need to figure out how to use furrr reproducibly in a package')
    # Set future resolution to parallelized, with 3 workers
    future::plan(future::multisession, workers = 3)
+   # FIXME: for some bizarre reason, need to "prime" seed with a single run first.
+   # need to come up with a better solution
+   par_res_0 <- cpr_rand_test(phylocom$comm, phylocom$phy, null_model = "curveball", n_iterations = 10, n_reps = 10, quiet = TRUE)
+   # then the rest of the set.seed() calls work
    set.seed(12345)
    par_res_1 <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "curveball", n_iterations = 10, n_reps = 10)
    set.seed(67890)
@@ -333,7 +336,7 @@ test_that("Seeds work across sequential and parallel", {
    par_res_3 <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "curveball", n_iterations = 10, n_reps = 10)
 
    expect_true(isTRUE(all.equal(par_res_1, par_res_3)))
-   expect_true(isTRUE(all.equal(par_res_1, par_res_2)))
+   expect_false(isTRUE(all.equal(par_res_1, par_res_2)))
    expect_true(isTRUE(all.equal(seq_res_1, par_res_1)))
 
    # Change back to sequential
