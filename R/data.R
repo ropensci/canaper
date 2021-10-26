@@ -120,6 +120,20 @@
 #' }
 "cpr_signif_cols"
 
+#' Color palette for plotting results of randomization test, version 2
+#'
+#' Character vector with names corresponding to significance levels and values
+#' corresponding to color codes, with "not significant" colored grey.
+#'
+#' @srrstats {G1.4} uses roxygen
+#'
+#' @examples
+#' cpr_signif_cols_2
+#' \dontrun{
+#' scales::show_col(cpr_signif_cols_2)
+#' }
+"cpr_signif_cols_2"
+
 #' Color palette for plotting results of CANAPE
 #'
 #' Character vector with names corresponding to endemism types
@@ -133,3 +147,17 @@
 #' scales::show_col(cpr_endem_cols)
 #' }
 "cpr_endem_cols"
+
+#' Color palette for plotting results of CANAPE, version 2
+#'
+#' Character vector with names corresponding to endemism types and values
+#' corresponding to color codes, with "not significant" colored grey.
+#'
+#' @srrstats {G1.4} uses roxygen
+#'
+#' @examples
+#' cpr_endem_cols_2
+#' \dontrun{
+#' scales::show_col(cpr_endem_cols_2)
+#' }
+"cpr_endem_cols_2"
