@@ -232,13 +232,16 @@ will not change the random generator state.</p></td>
 <span class='co'># How to use a custom null model</span>
 <span class='co'># 1. Define a randomizing function, e.g. re-sample the matrix while</span>
 <span class='co'># preserving total number of presences (same as the "r00" model)</span>
-<span class='va'>randomizer</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>n</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='va'>randomizer</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>n</span>, <span class='va'>...</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='va'>n</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'># 2. Generate a commsim object</span>
 <span class='va'>cs_object</span> <span class='op'>&lt;-</span> <span class='fu'>vegan</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/vegan/man/commsim.html'>commsim</a></span><span class='op'>(</span>
-  <span class='st'>"r00_model"</span>, fun <span class='op'>=</span> <span class='va'>randomizer</span>, binary <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  isSeq <span class='op'>=</span> <span class='cn'>FALSE</span>, mode <span class='op'>=</span> <span class='st'>"integer"</span><span class='op'>)</span>
+  <span class='st'>"r00_model"</span>,
+  fun <span class='op'>=</span> <span class='va'>randomizer</span>, binary <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  isSeq <span class='op'>=</span> <span class='cn'>FALSE</span>, mode <span class='op'>=</span> <span class='st'>"integer"</span>
+<span class='op'>)</span>
 
 <span class='co'># 3. Generate the null community</span>
 <span class='fu'>cpr_rand_comm</span><span class='op'>(</span><span class='va'>phylocom</span><span class='op'>$</span><span class='va'>comm</span>, <span class='va'>cs_object</span>, <span class='fl'>100</span><span class='op'>)</span>
@@ -255,8 +258,7 @@ will not change the random generator state.</p></td>
 #&gt; clump2b    0    0    1    0   1   0   1   1   0   0   0
 #&gt; clump4     1    0    0    0   1   0   0   0   0   1   1
 #&gt; even       0    0    0    1   0   0   0   0   0   0   1
-#&gt; random     0    0    1    1   1   1   0   1   0   0   0</div><div class='input'>
-</div></pre>
+#&gt; random     0    0    1    1   1   1   0   1   0   0   0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
