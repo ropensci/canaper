@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">canaper</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -123,7 +123,7 @@
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>, 
   null_model <span class="op">=</span> <span class="st">"swap"</span>, n_reps <span class="op">=</span> <span class="fl">50</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 10.028 sec elapsed</span></code></pre></div>
+<span class="co">#&gt; 10.609 sec elapsed</span></code></pre></div>
 <p>Since we have specified 100 random replicates and are not using parallel computing, <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> calculated the various phylogenetic diversity metrics for each of the 100 replicates one at a time.</p>
 </div>
 <div id="parallel-mode" class="section level3">
@@ -145,7 +145,7 @@
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>, 
   null_model <span class="op">=</span> <span class="st">"swap"</span>, n_reps <span class="op">=</span> <span class="fl">50</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 8.572 sec elapsed</span>
+<span class="co">#&gt; 11.395 sec elapsed</span>
 
 <span class="co"># Change back to default sequential mode</span>
 <span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></code></pre></div>
@@ -179,7 +179,7 @@
 <span class="co">#&gt; Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: </span>
 <span class="co">#&gt;  Pararchidendron_pruinosum, Paraserianthes_lophantha, saligna, clunies-rossiae</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 120.529 sec elapsed</span></code></pre></div>
+<span class="co">#&gt; 148.923 sec elapsed</span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Run cpr_rand_test() in parallel with 3 CPUs</span>
 <span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
@@ -190,7 +190,7 @@
 <span class="co">#&gt; Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: </span>
 <span class="co">#&gt;  Pararchidendron_pruinosum, Paraserianthes_lophantha, saligna, clunies-rossiae</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 68.04 sec elapsed</span></code></pre></div>
+<span class="co">#&gt; 77.5 sec elapsed</span></code></pre></div>
 <p>And now we start to see the performance improvements that be can be gained from parallel computing!</p>
 </div>
 <div id="progress-bars" class="section level2">

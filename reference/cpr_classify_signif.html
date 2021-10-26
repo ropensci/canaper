@@ -74,7 +74,7 @@ lie in the extreme of the random values." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">canaper</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -176,10 +176,10 @@ If <code>FALSE</code>, values in the bottom 5% will be classified as significant
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Dataframe with column added for stastistical significance of the
-selected metric. The new column name is the name of the metric with
-<code>_signif</code> appendend. The new column is a character that may contain the
-following values, depending on the null hypothesis:</p><ul>
+    <p>Object of class data.frame with column added for stastistical
+significance of the selected metric. The new column name is the name of the
+metric with <code>_signif</code> appendend. The new column is a character that may
+contain the following values, depending on the null hypothesis:</p><ul>
 <li><p><code>&lt; 0.01</code>, <code>&lt; 0.025</code>, <code>&gt; 0.975</code>, <code>&gt; 0.99</code>, <code>not significant</code> (two-sided)</p></li>
 <li><p><code>&lt; 0.01</code>, <code>&lt; 0.05</code>, <code>&gt; 0.99</code>, <code>&gt; 0.95</code>, <code>not significant</code> (one-sided)</p></li>
 </ul>

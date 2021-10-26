@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Acacia example data — acacia • canaper</title>
+<title>Color palette for plotting results of CANAPE, version 2 — cpr_endem_cols_2 • canaper</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Acacia example data — acacia" />
-<meta property="og:description" content="Dataset of Australian Acacia from Mishler et al. 2014 (Nat. Comm.)" />
+<meta property="og:title" content="Color palette for plotting results of CANAPE, version 2 — cpr_endem_cols_2" />
+<meta property="og:description" content="Character vector with names corresponding to endemism types and values
+corresponding to color codes, with &quot;not significant&quot; colored grey." />
 
 
 
@@ -129,56 +130,30 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1><em>Acacia</em> example data</h1>
+    <h1>Color palette for plotting results of CANAPE, version 2</h1>
     <small class="dont-index">Source: <a href='https://github.com/joelnitta/canaper/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>acacia.Rd</code></div>
+    <div class="hidden name"><code>cpr_endem_cols_2.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Dataset of Australian <em>Acacia</em> from Mishler et al. 2014 (Nat. Comm.)</p>
+    <p>Character vector with names corresponding to endemism types and values
+corresponding to color codes, with "not significant" colored grey.</p>
     </div>
 
-    <pre class="usage"><span class='va'>acacia</span></pre>
+    <pre class="usage"><span class='va'>cpr_endem_cols_2</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A list with two elements:</p><dl>
-<dt>phy</dt><dd><p>Phylogeny of Australian <em>Acacia</em> (list of class "phylo"). Tip
-labels are specific epithet, except for the outgroup, which includes genus
-and specific epithet. Includes 508 ingroup taxa (genus <em>Acacia</em>) and two
-outgroup taxa.</p></dd>
-<dt>comm</dt><dd><p>Community matrix of Australian <em>Acacia</em> (dataframe). Column names
-are specific epithet of each species. Row names are centroids of 50km grid
-cells in Australian Albers equal area EPSG:3577 projection. 3037 rows
-(sites) x 506 columns (species). Data are counts, i.e., the number of times
-a species was observed in a grid cell.</p></dd>
-
-</dl>
-
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Mishler, B., Knerr, N., González-Orozco, C. et al. Phylogenetic
-measures of biodiversity and neo- and paleo-endemism in Australian Acacia.
-Nat Commun 5, 4473 (2014). doi: <a href='https://doi.org/10.1038/ncomms5473'>10.1038/ncomms5473</a></p>
+    <p>An object of class <code>character</code> of length 5.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Example phylogeny</span>
-<span class='va'>acacia</span><span class='op'>$</span><span class='va'>phy</span>
-</div><div class='output co'>#&gt; 
-#&gt; Phylogenetic tree with 510 tips and 509 internal nodes.
-#&gt; 
-#&gt; Tip labels:
-#&gt;   Pararchidendron_pruinosum, Paraserianthes_lophantha, adinophylla, semicircinalis, aphanoclada, inaequilatera, ...
-#&gt; 
-#&gt; Rooted; includes branch lengths.</div><div class='input'><span class='co'># Example community</span>
-<span class='va'>acacia</span><span class='op'>$</span><span class='va'>comm</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
-</div><div class='output co'>#&gt;                     abbreviata acanthaster acanthoclada acinacea aciphylla
-#&gt; '-1025000:-1825000'          0           0            0        0         0
-#&gt; '-1025000:-1875000'          0           0            0        0         0
-#&gt; '-1025000:-1925000'          0           0            0        0         0
-#&gt; '-1025000:-1975000'          0           0            0        0         0
-#&gt; '-1025000:-2025000'          0           0            0        0         0</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>cpr_endem_cols_2</span>
+</div><div class='output co'>#&gt;           paleo             neo not significant           mixed           super 
+#&gt;       "#0072B2"       "#D55E00"        "grey90"       "#009E73"       "#F0E442" </div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/show_col.html'>show_col</a></span><span class='op'>(</span><span class='va'>cpr_endem_cols_2</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
