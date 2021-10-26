@@ -12,10 +12,11 @@
 #' - `pe_alt_obs_p_upper`: Upper *p*-value comparing observed phylogenetic endemism on alternate tree to random values
 #' - `rpe_obs_p_upper`: Upper *p*-value comparing observed relative phylogenetic endemism to random values
 #'
-#' @return Dataframe with column `endem_type` (character) added. Values of
-#'   `endem_type` type include `paleo` (paleoendemic), `neo` (neoendemic), `not
-#'   significant` (what it says), `mixed` (mixed endemism), and `super`
-#'   (super-endemic; both `pe_obs` and `pe_obs_alt` are highly significant).
+#' @return Object of class data.frame with column `endem_type` (character)
+#'   added. Values of `endem_type` type include `paleo` (paleoendemic), `neo`
+#'   (neoendemic), `not significant` (what it says), `mixed` (mixed endemism),
+#'   and `super` (super-endemic; both `pe_obs` and `pe_obs_alt` are highly
+#'   significant).
 #'
 #' @srrstats {G1.0} Cites original ref:
 #' @references Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)

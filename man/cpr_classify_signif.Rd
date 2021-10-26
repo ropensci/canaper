@@ -25,10 +25,10 @@ combined.}
 If \code{FALSE}, values in the bottom 5\% will be classified as significant.}
 }
 \value{
-Dataframe with column added for stastistical significance of the
-selected metric. The new column name is the name of the metric with
-\verb{_signif} appendend. The new column is a character that may contain the
-following values, depending on the null hypothesis:
+Object of class data.frame with column added for stastistical
+significance of the selected metric. The new column name is the name of the
+metric with \verb{_signif} appendend. The new column is a character that may
+contain the following values, depending on the null hypothesis:
 \itemize{
 \item \verb{< 0.01}, \verb{< 0.025}, \verb{> 0.975}, \verb{> 0.99}, \verb{not significant} (two-sided)
 \item \verb{< 0.01}, \verb{< 0.05}, \verb{> 0.99}, \verb{> 0.95}, \verb{not significant} (one-sided)

@@ -15,9 +15,11 @@ cpr_classify_endem(df)
 }}
 }
 \value{
-Dataframe with column \code{endem_type} (character) added. Values of
-\code{endem_type} type include \code{paleo} (paleoendemic), \code{neo} (neoendemic), \verb{not significant} (what it says), \code{mixed} (mixed endemism), and \code{super}
-(super-endemic; both \code{pe_obs} and \code{pe_obs_alt} are highly significant).
+Object of class data.frame with column \code{endem_type} (character)
+added. Values of \code{endem_type} type include \code{paleo} (paleoendemic), \code{neo}
+(neoendemic), \verb{not significant} (what it says), \code{mixed} (mixed endemism),
+and \code{super} (super-endemic; both \code{pe_obs} and \code{pe_obs_alt} are highly
+significant).
 }
 \description{
 Given the results of \code{\link[=cpr_rand_test]{cpr_rand_test()}}, classifies phylogenetic endemism

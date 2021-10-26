@@ -29,10 +29,10 @@
 #'   `TRUE`. If `TRUE`, values in the top 5% will be classified as significant.
 #'   If `FALSE`, values in the bottom 5% will be classified as significant.
 #'
-#' @return Dataframe with column added for stastistical significance of the
-#'   selected metric. The new column name is the name of the metric with
-#'   `_signif` appendend. The new column is a character that may contain the
-#'   following values, depending on the null hypothesis:
+#' @return Object of class data.frame with column added for stastistical
+#'   significance of the selected metric. The new column name is the name of the
+#'   metric with `_signif` appendend. The new column is a character that may
+#'   contain the following values, depending on the null hypothesis:
 #'   - `< 0.01`, `< 0.025`, `> 0.975`, `> 0.99`, `not significant` (two-sided)
 #'   - `< 0.01`, `< 0.05`, `> 0.99`, `> 0.95`, `not significant` (one-sided)
 #'
@@ -57,7 +57,7 @@ cpr_classify_signif <- function(df, metric, one_sided = FALSE, upper = FALSE) {
   #' @srrstats {G2.3, G2.3a} # univariate char input
   assertthat::assert_that(
     metric %in% c("pd", "rpd", "pe", "rpe"),
-    msg = "Biodiversity metrics may only be selected from 'pd', 'rpd', 'pe', or 'rpe'"
+    msg = "Biodiversity metrics may only be selected from 'pd', 'rpd', 'pe', or 'rpe' (case-sensitive)"
   )
   assertthat::assert_that(
     inherits(df, "data.frame"),

@@ -122,7 +122,11 @@
 #' @examples
 #' set.seed(12345)
 #' data(phylocom)
+#' # Returns a dataframe by defualt
 #' cpr_rand_test(phylocom$comm, phylocom$phy, null_model = "curveball", metrics = "pd")
+#'
+#' # Tibbles may be preferable because of the large number of columns
+#' cpr_rand_test(phylocom$comm, phylocom$phy, null_model = "curveball", tbl_out = TRUE)
 #' @srrstats {G1.4} uses roxygen
 #'
 #' @export
