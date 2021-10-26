@@ -41,9 +41,9 @@
 #' data(phylocom)
 #' rand_test <- cpr_rand_test(
 #'   phylocom$comm, phylocom$phy,
-#'   null_model = "curveball", metrics = "pd")
+#'   null_model = "curveball", metrics = "pd"
+#' )
 #' cpr_classify_signif(rand_test, "pd")
-#'
 #' @srrstats {G1.4} uses roxygen
 #'
 #' @export
@@ -61,7 +61,8 @@ cpr_classify_signif <- function(df, metric, one_sided = FALSE, upper = FALSE) {
   )
   assertthat::assert_that(
     inherits(df, "data.frame"),
-    msg = "'df' must be of class 'data.frame'")
+    msg = "'df' must be of class 'data.frame'"
+  )
   assertthat::assert_that(
     isTRUE(paste0(metric, "_obs_p_upper") %in% colnames(df)),
     msg = "'df' does not include percentage of times observed value was higher than random values"

@@ -24,7 +24,7 @@
 #' # Example phylogeny
 #' acacia$phy
 #' # Example community
-#' acacia$comm[1:5,1:5]
+#' acacia$comm[1:5, 1:5]
 "acacia"
 
 #' Biodiverse example data
@@ -48,7 +48,7 @@
 #' # Example phylogeny
 #' biod_example$phy
 #' # Example community
-#' biod_example$comm[1:5,1:5]
+#' biod_example$comm[1:5, 1:5]
 "biod_example"
 
 #' Phylocom example data

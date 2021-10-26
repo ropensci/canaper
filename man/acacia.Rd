@@ -28,7 +28,7 @@ Dataset of Australian \emph{Acacia} from Mishler et al. 2014 (Nat. Comm.)
 # Example phylogeny
 acacia$phy
 # Example community
-acacia$comm[1:5,1:5]
+acacia$comm[1:5, 1:5]
 }
 \references{
 Mishler, B., Knerr, N., González-Orozco, C. et al. Phylogenetic

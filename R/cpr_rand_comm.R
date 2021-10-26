@@ -38,65 +38,67 @@
 #' # How to use a custom null model
 #' # 1. Define a randomizing function, e.g. re-sample the matrix while
 #' # preserving total number of presences (same as the "r00" model)
-#' randomizer <- function(x, n, ...)
-#' 	array(replicate(n, sample(x)), c(dim(x), n))
+#' randomizer <- function(x, n, ...) {
+#'   array(replicate(n, sample(x)), c(dim(x), n))
+#' }
 #'
 #' # 2. Generate a commsim object
 #' cs_object <- vegan::commsim(
-#'   "r00_model", fun = randomizer, binary = TRUE,
-#'   isSeq = FALSE, mode = "integer")
+#'   "r00_model",
+#'   fun = randomizer, binary = TRUE,
+#'   isSeq = FALSE, mode = "integer"
+#' )
 #'
 #' # 3. Generate the null community
 #' cpr_rand_comm(phylocom$comm, cs_object, 100)
-#'
 cpr_rand_comm <- function(comm, null_model, n_iterations = 1, thin = 1, seed = NULL) {
 
-	#' @srrstats {G2.1, G2.6} Check input types and lengths
-	# - comm
-	assertthat::assert_that(inherits(comm, "data.frame") | inherits(comm, "matrix"),
-													msg = "'comm' must be of class 'data.frame' or 'matrix'")
-	assertthat::assert_that(
-		isTRUE(all(unique(purrr::map_chr(comm, class)) %in% c("numeric", "integer"))),
-		msg = "All columns of 'comm' must be numeric or integer class"
-	)
-	# - null_model
-	assertthat::assert_that(
-		assertthat::is.string(null_model) | inherits(null_model, "commsim"),
-		msg = "'null_model' must be a string (character vector of length 1) or an object of class 'commsim'"
-	)
-	if (isTRUE(assertthat::is.string(null_model))) {
-		assertthat::assert_that(assertthat::not_empty(comm))
-		assertthat::assert_that(assertthat::noNA(null_model))
-		assertthat::assert_that(
-			isTRUE(null_model %in% vegan::make.commsim()),
-			msg = paste0("'null_model' must be one of: '", paste0(vegan::make.commsim(), collapse = "', '"), "'")
-		)
-	}
-	# - n_iterations
-	assertthat::assert_that(assertthat::is.number(n_iterations))
-	assertthat::assert_that(assertthat::noNA(n_iterations))
-	assertthat::assert_that(is.finite(n_iterations))
-	n_iterations <- as.integer(n_iterations)
-	assertthat::assert_that(is.integer(n_iterations))
-	assertthat::assert_that(n_iterations > 0, msg = "'n_iterations' must be > 0")
-	# - thin
-	assertthat::assert_that(assertthat::is.number(thin))
-	assertthat::assert_that(assertthat::noNA(thin))
-	assertthat::assert_that(is.finite(thin))
-	thin <- as.integer(thin)
-	assertthat::assert_that(is.integer(thin))
-	assertthat::assert_that(thin > 0, msg = "'thin' must be > 0")
-	# - seed
-	assertthat::assert_that(is.numeric(seed) | is.null(seed))
+  #' @srrstats {G2.1, G2.6} Check input types and lengths
+  # - comm
+  assertthat::assert_that(inherits(comm, "data.frame") | inherits(comm, "matrix"),
+    msg = "'comm' must be of class 'data.frame' or 'matrix'"
+  )
+  assertthat::assert_that(
+    isTRUE(all(unique(purrr::map_chr(comm, class)) %in% c("numeric", "integer"))),
+    msg = "All columns of 'comm' must be numeric or integer class"
+  )
+  # - null_model
+  assertthat::assert_that(
+    assertthat::is.string(null_model) | inherits(null_model, "commsim"),
+    msg = "'null_model' must be a string (character vector of length 1) or an object of class 'commsim'"
+  )
+  if (isTRUE(assertthat::is.string(null_model))) {
+    assertthat::assert_that(assertthat::not_empty(comm))
+    assertthat::assert_that(assertthat::noNA(null_model))
+    assertthat::assert_that(
+      isTRUE(null_model %in% vegan::make.commsim()),
+      msg = paste0("'null_model' must be one of: '", paste0(vegan::make.commsim(), collapse = "', '"), "'")
+    )
+  }
+  # - n_iterations
+  assertthat::assert_that(assertthat::is.number(n_iterations))
+  assertthat::assert_that(assertthat::noNA(n_iterations))
+  assertthat::assert_that(is.finite(n_iterations))
+  n_iterations <- as.integer(n_iterations)
+  assertthat::assert_that(is.integer(n_iterations))
+  assertthat::assert_that(n_iterations > 0, msg = "'n_iterations' must be > 0")
+  # - thin
+  assertthat::assert_that(assertthat::is.number(thin))
+  assertthat::assert_that(assertthat::noNA(thin))
+  assertthat::assert_that(is.finite(thin))
+  thin <- as.integer(thin)
+  assertthat::assert_that(is.integer(thin))
+  assertthat::assert_that(thin > 0, msg = "'thin' must be > 0")
+  # - seed
+  assertthat::assert_that(is.numeric(seed) | is.null(seed))
 
-	# Convert to matrix
-	comm <- as.matrix(comm)
+  # Convert to matrix
+  comm <- as.matrix(comm)
 
-	# Initiate null model
-	null_model <- vegan::nullmodel(comm, null_model)
+  # Initiate null model
+  null_model <- vegan::nullmodel(comm, null_model)
 
-	# Randomize matrix
-	# just take the first simulated community after n_iterations - 1
-	stats::simulate(null_model, nsim = 1, thin = thin, burnin = n_iterations - 1, seed = seed)[,,1]
-
+  # Randomize matrix
+  # just take the first simulated community after n_iterations - 1
+  stats::simulate(null_model, nsim = 1, thin = thin, burnin = n_iterations - 1, seed = seed)[, , 1]
 }

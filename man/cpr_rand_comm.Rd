@@ -52,15 +52,17 @@ cpr_rand_comm(phylocom$comm, "swap_count", 100)
 # How to use a custom null model
 # 1. Define a randomizing function, e.g. re-sample the matrix while
 # preserving total number of presences (same as the "r00" model)
-randomizer <- function(x, n, ...)
-	array(replicate(n, sample(x)), c(dim(x), n))
+randomizer <- function(x, n, ...) {
+  array(replicate(n, sample(x)), c(dim(x), n))
+}
 
 # 2. Generate a commsim object
 cs_object <- vegan::commsim(
-  "r00_model", fun = randomizer, binary = TRUE,
-  isSeq = FALSE, mode = "integer")
+  "r00_model",
+  fun = randomizer, binary = TRUE,
+  isSeq = FALSE, mode = "integer"
+)
 
 # 3. Generate the null community
 cpr_rand_comm(phylocom$comm, cs_object, 100)
-
 }

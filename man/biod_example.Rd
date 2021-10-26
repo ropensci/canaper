@@ -26,7 +26,7 @@ Corresponds to the the community matrix ("groups" object) and phylogeny from the
 # Example phylogeny
 biod_example$phy
 # Example community
-biod_example$comm[1:5,1:5]
+biod_example$comm[1:5, 1:5]
 }
 \references{
 Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a tool for the spatial analysis of biological and related diversity. Ecography. Vol 33, 643-647 (Version 3.1). \doi{10.1111/j.1600-0587.2010.06237.x}

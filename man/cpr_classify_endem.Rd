@@ -32,9 +32,9 @@ set.seed(12345)
 data(phylocom)
 rand_test <- cpr_rand_test(
   phylocom$comm, phylocom$phy,
-  null_model = "curveball", metrics = c("pe", "rpe"))
+  null_model = "curveball", metrics = c("pe", "rpe")
+)
 cpr_classify_endem(rand_test)
-
 }
 \references{
 Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)

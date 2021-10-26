@@ -241,8 +241,7 @@ match_phylo_comm <- function(phy, comm) {
       paste(setdiff(phytaxa, commtaxa), collapse = ", ")
     ))
     res$phy <- ape::drop.tip(phy, setdiff(phytaxa, commtaxa))
-  }
-  else {
+  } else {
     res$phy <- phy
   }
   res$comm <- comm[, res$phy$tip.label]

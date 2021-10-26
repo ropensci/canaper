@@ -13,12 +13,12 @@ biod_comm_raw <- read_csv(here::here("data-raw/example_groups_exported.csv"))
 
 # Convert to dataframe
 biod_comm_df <-
-	biod_comm_raw %>%
-	# clean up column names (species)
-	select(site = ELEMENT, contains("Genus")) %>%
-	rename_with(~str_remove_all(., "Genus\\:")) %>%
-	mutate(across(everything(), ~replace_na(., 0))) %>%
-	column_to_rownames("site")
+  biod_comm_raw %>%
+  # clean up column names (species)
+  select(site = ELEMENT, contains("Genus")) %>%
+  rename_with(~ str_remove_all(., "Genus\\:")) %>%
+  mutate(across(everything(), ~ replace_na(., 0))) %>%
+  column_to_rownames("site")
 
 # Tree data ----
 
@@ -29,10 +29,10 @@ biod_comm_df <-
 tree_raw <- read_lines(here::here("data-raw/example_tree_exported.tre"))
 
 biod_tree <-
-	tree_raw %>%
-	str_remove_all("Genus\\:") %>%
-	paste0(";", collapse = "") %>%
-	ape::read.tree(text = .)
+  tree_raw %>%
+  str_remove_all("Genus\\:") %>%
+  paste0(";", collapse = "") %>%
+  ape::read.tree(text = .)
 
 # Generate Biodiverse analysis results ----
 
@@ -58,20 +58,20 @@ biod_tree <-
 
 # Read in biodiverse analysis results
 biod_results <- read_csv(here::here("data-raw/example_spatial_analysis.csv")) %>%
-	select(
-		site = ELEMENT,
-		pd_biodiv = PD_P,
-		pd_alt_biodiv = PHYLO_RPD_NULL2,
-		rpd_biodiv = PHYLO_RPD2,
-		pe_biodiv = PE_WE_P,
-		pe_alt_biodiv = PHYLO_RPE_NULL2,
-		rpe_biodiv = PHYLO_RPE2
-		)
+  select(
+    site = ELEMENT,
+    pd_biodiv = PD_P,
+    pd_alt_biodiv = PHYLO_RPD_NULL2,
+    rpd_biodiv = PHYLO_RPD2,
+    pe_biodiv = PE_WE_P,
+    pe_alt_biodiv = PHYLO_RPE_NULL2,
+    rpe_biodiv = PHYLO_RPE2
+  )
 
 # Write out data ----
 biod_example <- list(
-	phy = biod_tree,
-	comm = biod_comm_df
+  phy = biod_tree,
+  comm = biod_comm_df
 )
 
 usethis::use_data(biod_example, overwrite = TRUE)
