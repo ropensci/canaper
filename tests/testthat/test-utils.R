@@ -125,4 +125,17 @@ test_that("Matching community and phylogeny data works", {
 		match_phylo_comm(biod_example$phy, comm_small),
 		"Dropping tips from the tree because they are not present in the community data"
 	)
+	# Errors work
+	expect_error(
+		match_phylo_comm(biod_example$phy, 10),
+		"Community data should be a data.frame or matrix with samples in rows and taxa in columns",
+		fixed = TRUE
+	)
+	comm_no_names <- biod_example$comm
+	colnames(comm_no_names) <- NULL
+	expect_error(
+		match_phylo_comm(biod_example$phy, comm_no_names),
+		"Community data set lacks taxa (column) names, these are required to match phylogeny and community data",
+		fixed = TRUE
+	)
 })
