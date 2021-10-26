@@ -10,7 +10,7 @@
   "codeRepository": "https://github.com/joelnitta/canaper",
   "issueTracker": "https://github.com/joelnitta/canaper/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.0.9000",
+  "version": "0.0.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -20,19 +20,46 @@
   "author": [
     {
       "@type": "Person",
-      "givenName": "Joel",
+      "givenName": "Joel H.",
       "familyName": "Nitta",
       "email": "joelnitta@gmail.com",
       "@id": "https://orcid.org/0000-0003-4719-7472"
     }
   ],
-  "contributor": {},
+  "contributor": [
+    {
+      "@type": "Person",
+      "givenName": "Shawn W.",
+      "familyName": "Laffan"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Brent D.",
+      "familyName": "Mishler"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Wataru",
+      "familyName": "Iwasaki",
+      "@id": "https://orcid.org/0000-0002-9169-9245"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Shawn W.",
+      "familyName": "Laffan"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Brent D.",
+      "familyName": "Mishler"
+    }
+  ],
   "copyrightHolder": {},
   "funder": {},
   "maintainer": [
     {
       "@type": "Person",
-      "givenName": "Joel",
+      "givenName": "Joel H.",
       "familyName": "Nitta",
       "email": "joelnitta@gmail.com",
       "@id": "https://orcid.org/0000-0003-4719-7472"
@@ -62,18 +89,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=knitr"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "ape",
-      "name": "ape",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=ape"
     },
     {
       "@type": "SoftwareApplication",
@@ -154,9 +169,57 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=stringr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "magrittr",
+      "name": "magrittr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=magrittr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "covr",
+      "name": "covr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=covr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "picante",
+      "name": "picante",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=picante"
     }
   ],
   "softwareRequirements": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "ape",
+      "name": "ape",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=ape"
+    },
     {
       "@type": "SoftwareApplication",
       "identifier": "assertr",
@@ -195,27 +258,15 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "furrr",
-      "name": "furrr",
+      "identifier": "future.apply",
+      "name": "future.apply",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=furrr"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "magrittr",
-      "name": "magrittr",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=magrittr"
+      "sameAs": "https://CRAN.R-project.org/package=future.apply"
     },
     {
       "@type": "SoftwareApplication",
@@ -228,18 +279,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=phyloregion"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "picante",
-      "name": "picante",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=picante"
     },
     {
       "@type": "SoftwareApplication",
@@ -267,6 +306,11 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "stats",
+      "name": "stats"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "tibble",
       "name": "tibble",
       "provider": {
@@ -279,14 +323,26 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "vegan",
+      "name": "vegan",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=vegan"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
       "version": ">= 3.5.0"
     }
   ],
   "releaseNotes": "https://github.com/joelnitta/canaper/blob/master/NEWS.md",
-  "fileSize": "190.618KB",
-  "contIntegration": "https://github.com/joelnitta/canaper/actions",
+  "fileSize": "7891.09KB",
+  "contIntegration": ["https://github.com/joelnitta/canaper/actions", "https://codecov.io/gh/joelnitta/canaper?branch=main"],
   "developmentStatus": "https://www.repostatus.org/#wip",
   "keywords": [
     "biodiversity",
@@ -314,5 +370,6 @@
       "@id": "https://doi.org/10.5281/zenodo.5094032",
       "sameAs": "https://doi.org/10.5281/zenodo.5094032"
     }
-  ]
+  ],
+  "readme": "https://github.com/joelnitta/canaper/blob/main/README.md"
 }
