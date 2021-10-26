@@ -245,7 +245,7 @@ cpr_rand_test <- function(
 		)
 		#' @srrstats {G2.11, UL1.1} check for class attributes in dataframe
 		numeric_check <- NULL
-		for (i in 1:ncol(comm)) {
+		for (i in seq_along(comm)) {
 			numeric_check[i] <- is.vector(comm[,i], mode = "numeric")
 		}
 		assertthat::assert_that(

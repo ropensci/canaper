@@ -33,6 +33,7 @@ dat$res_df_from_tbl <- cpr_rand_test(dat$comm_tbl, biod_example$phy, null_model 
 # Run tests ----
 
 #' @srrstats {G5.2, G5.2a, G5.2b, UL7.0} tests failure if input is not valid and checks warning messages
+#' @srrstats {G5.0} Use standard dataset for testing (Biodiverse dataset)
 test_that("Input is valid", {
    expect_error(
       cpr_rand_test(biod_example$comm, biod_example$phy, n_reps = -10, null_model = "swap"),
@@ -425,10 +426,10 @@ test_that("Various randomization algorithms work", {
          biod_example$comm, biod_example$phy,
          null_model = ., n_iterations = 10, n_reps = 10))
    # All output should be data frame
-   for (i in 1:length(res_list)) {
+   for (i in seq_along(res_list)) {
       expect_s3_class(res_list[[i]], "data.frame")
    } # All values should be numeric
-   for (i in 1:length(res_list)) {
+   for (i in seq_along(res_list)) {
       expect_true(
          assertr::assert(
             res_list[[i]], is.numeric, dplyr::everything(),
