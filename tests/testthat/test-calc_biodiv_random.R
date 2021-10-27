@@ -58,53 +58,6 @@ test_that("Random seeds work", {
   expect_true(isTRUE(all.equal(res2, res4)))
 })
 
-test_that("Random seeds work in parallel", {
-  skip("WIP: need to figure out how to use future.apply reproducibly in a package")
-  # If run without sourcing files in R/, get error:
-  # Error in calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L) :
-  # 	could not find function "calc_biodiv_random"
-
-  # Change back to sequential when done (including on failure)
-  on.exit(future::plan(future::sequential), add = TRUE)
-
-  # Set future resolution to parallelized, with 3 workers
-  future::plan(future::multisession, workers = 3)
-
-  set.seed(12345)
-  res1 <- future.apply::future_lapply(
-    1:2,
-    function(x) {
-      calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L)
-    },
-    future.seed = TRUE
-  )
-  set.seed(67890)
-  res2 <- future.apply::future_lapply(
-    1:2,
-    function(x) {
-      calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L)
-    },
-    future.seed = TRUE
-  )
-  # Should be able to pass seed as an argument
-  set.seed(12345)
-  res3 <- future.apply::future_lapply(
-    1:2,
-    function(x) {
-      calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L)
-    },
-    future.seed = TRUE
-  )
-  # Different seeds should give different results
-  expect_false(isTRUE(all.equal(res1, res2)))
-  # Same seeds should give same results
-  expect_true(isTRUE(all.equal(res1, res3)))
-
-  # Change back to sequential
-  future::plan(future::sequential)
-})
-
-
 test_that("Output is formatted as expected", {
   #' @srrstats {G5.3} check that output has no missing values
   expect_true(

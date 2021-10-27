@@ -151,8 +151,8 @@ cpr_rand_test <- function(comm, phy, null_model,
     #' convert to integer before numeric comparisons
     # - null_model
     assertthat::assert_that(
-    	assertthat::is.string(null_model) | inherits(null_model, "commsim"),
-    	msg = "'null_model' must be a string (character vector of length 1) or an object of class 'commsim'"
+      assertthat::is.string(null_model) | inherits(null_model, "commsim"),
+      msg = "'null_model' must be a string (character vector of length 1) or an object of class 'commsim'"
     )
     assertthat::assert_that(assertthat::noNA(null_model))
     # - n_reps
@@ -229,7 +229,7 @@ cpr_rand_test <- function(comm, phy, null_model,
       comm <- comm_df
     }
     #' @srrstats {UL1.2} Check for default-looking rownames
-    # Default rownames not allowed because phyloregion::dense2sparse() will convert them to NULL
+    # Default rownames not allowed because dense2sparse() will convert them to NULL
     assertthat::assert_that(
       !identical(rownames(comm), as.character(seq(nrow(comm)))),
       msg = "'comm' cannot have default row names (consecutive integers from 1 to the number of rows)"
@@ -364,7 +364,7 @@ cpr_rand_test <- function(comm, phy, null_model,
     phy$edge.length <- phy$edge.length / sum(phy$edge.length)
 
     # Make sparse community df
-    comm_sparse <- phyloregion::dense2sparse(comm)
+    comm_sparse <- dense2sparse(comm)
 
     # Calculate biodiversity metrics ----
 
@@ -398,26 +398,26 @@ cpr_rand_test <- function(comm, phy, null_model,
 
     # - calculate selected metrics
     if ("pd" %in% metrics) {
-      pd_obs <- phyloregion::PD(comm_sparse, phy)
+      pd_obs <- PD(comm_sparse, phy)
       ses_pd <- get_ses(random_vals, pd_obs, "pd")
     }
 
     if ("rpd" %in% metrics) {
-      if (!exists("pd_obs")) pd_obs <- phyloregion::PD(comm_sparse, phy)
-      pd_alt_obs <- phyloregion::PD(comm_sparse, phy_alt)
+      if (!exists("pd_obs")) pd_obs <- PD(comm_sparse, phy)
+      pd_alt_obs <- PD(comm_sparse, phy_alt)
       ses_pd_alt <- get_ses(random_vals, pd_alt_obs, "pd_alt")
       rpd_obs <- pd_obs / pd_alt_obs
       ses_rpd <- get_ses(random_vals, rpd_obs, "rpd")
     }
 
     if ("pe" %in% metrics) {
-      pe_obs <- phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
+      pe_obs <- phylo_endemism(comm_sparse, phy, weighted = TRUE)
       ses_pe <- get_ses(random_vals, pe_obs, "pe")
     }
 
     if ("rpe" %in% metrics) {
-      if (!exists("pe_obs")) pe_obs <- phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
-      pe_alt_obs <- phyloregion::phylo_endemism(comm_sparse, phy_alt, weighted = TRUE)
+      if (!exists("pe_obs")) pe_obs <- phylo_endemism(comm_sparse, phy, weighted = TRUE)
+      pe_alt_obs <- phylo_endemism(comm_sparse, phy_alt, weighted = TRUE)
       ses_pe_alt <- get_ses(random_vals, pe_alt_obs, "pe_alt")
       rpe_obs <- pe_obs / pe_alt_obs
       ses_rpe <- get_ses(random_vals, rpe_obs, "rpe")

@@ -11,8 +11,8 @@ random_vals <-
     1:100,
     ~ calc_biodiv_random(comm, phy, phy_alt, "curveball", 1000L, metrics = "pe")
   )
-comm_sparse <- phyloregion::dense2sparse(comm)
-pe_obs <- phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
+comm_sparse <- dense2sparse(comm)
+pe_obs <- phylo_endemism(comm_sparse, phy, weighted = TRUE)
 
 # Run tests ----
 

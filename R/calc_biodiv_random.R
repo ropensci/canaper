@@ -115,12 +115,12 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
 
   # Calculations ----
 
-  # Convert comm to sparse matrix format for phyloregions
-  comm_sparse <- phyloregion::dense2sparse(comm)
+  # Convert comm to sparse matrix format
+  comm_sparse <- dense2sparse(comm)
 
   # Generate random community
   random_comm <- cpr_rand_comm(comm, null_model = null_model, n_iterations = n_iterations, thin = thin, seed = seed)
-  random_comm_sparse <- phyloregion::dense2sparse(random_comm)
+  random_comm_sparse <- dense2sparse(random_comm)
 
   # Calculate statistics for random community
   # - set up null vectors first
@@ -132,20 +132,20 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
   rpe <- NULL
 
   # - calculate selected metrics
-  if ("pd" %in% metrics) pd <- phyloregion::PD(random_comm_sparse, phy)
-  if ("pd_alt" %in% metrics) pd_alt <- phyloregion::PD(random_comm_sparse, phy_alt)
+  if ("pd" %in% metrics) pd <- PD(random_comm_sparse, phy)
+  if ("pd_alt" %in% metrics) pd_alt <- PD(random_comm_sparse, phy_alt)
   # pd_alt is inferred by rpd
   if ("rpd" %in% metrics) {
-    if (is.null(pd)) pd <- phyloregion::PD(random_comm_sparse, phy)
-    if (is.null(pd_alt)) pd_alt <- phyloregion::PD(random_comm_sparse, phy_alt)
+    if (is.null(pd)) pd <- PD(random_comm_sparse, phy)
+    if (is.null(pd_alt)) pd_alt <- PD(random_comm_sparse, phy_alt)
     rpd <- pd / pd_alt
   }
   # pe_alt is inferred by rpe
-  if ("pe" %in% metrics) pe <- phyloregion::phylo_endemism(random_comm_sparse, phy, weighted = TRUE)
-  if ("pe_alt" %in% metrics) pe_alt <- phyloregion::phylo_endemism(random_comm_sparse, phy_alt, weighted = TRUE)
+  if ("pe" %in% metrics) pe <- phylo_endemism(random_comm_sparse, phy, weighted = TRUE)
+  if ("pe_alt" %in% metrics) pe_alt <- phylo_endemism(random_comm_sparse, phy_alt, weighted = TRUE)
   if ("rpe" %in% metrics) {
-    if (is.null(pe)) pe <- phyloregion::phylo_endemism(random_comm_sparse, phy, weighted = TRUE)
-    if (is.null(pe_alt)) pe_alt <- phyloregion::phylo_endemism(random_comm_sparse, phy_alt, weighted = TRUE)
+    if (is.null(pe)) pe <- phylo_endemism(random_comm_sparse, phy, weighted = TRUE)
+    if (is.null(pe_alt)) pe_alt <- phylo_endemism(random_comm_sparse, phy_alt, weighted = TRUE)
     rpe <- pe / pe_alt
   }
 

@@ -327,10 +327,6 @@ test_that("Seeds work across sequential and parallel", {
 
   # Set future resolution to parallelized, with 3 workers
   future::plan(future::multisession, workers = 3)
-  # FIXME: for some bizarre reason, need to "prime" seed with a single run first.
-  # need to come up with a better solution
-  par_res_0 <- cpr_rand_test(phylocom$comm, phylocom$phy, null_model = "curveball", n_iterations = 10, n_reps = 10, quiet = TRUE)
-  # then the rest of the set.seed() calls work
   set.seed(12345)
   par_res_1 <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "curveball", n_iterations = 10, n_reps = 10)
   set.seed(67890)
@@ -448,18 +444,18 @@ test_that("Various randomization algorithms work", {
 })
 
 test_that("Custom randomization algorithms work", {
-   randomizer <- function(x, n, ...) {
-      array(replicate(n, sample(x)), c(dim(x), n))
-   }
-   cs_object <- vegan::commsim(
-      "r00_model",
-      fun = randomizer, binary = TRUE,
-      isSeq = FALSE, mode = "integer"
-   )
-   set.seed(12345)
-   expect_snapshot(
-      cpr_rand_test(phylocom$comm, phylocom$phy, cs_object, n_reps = 10, quiet = TRUE)
-   )
+  randomizer <- function(x, n, ...) {
+    array(replicate(n, sample(x)), c(dim(x), n))
+  }
+  cs_object <- vegan::commsim(
+    "r00_model",
+    fun = randomizer, binary = TRUE,
+    isSeq = FALSE, mode = "integer"
+  )
+  set.seed(12345)
+  expect_snapshot(
+    cpr_rand_test(phylocom$comm, phylocom$phy, cs_object, n_reps = 10, quiet = TRUE)
+  )
 })
 
 # Cleanup ----

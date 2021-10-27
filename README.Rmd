@@ -53,7 +53,7 @@ library(canaper)
 
 data(phylocom)
 
-# Example community matrix including 4 "clumped" communities, 
+# Example community matrix including 4 "clumped" communities,
 # one "even" community, and one "random" community
 phylocom$comm
 
@@ -71,7 +71,7 @@ rand_test_results <- cpr_rand_test(phylocom$comm, phylocom$phy, null_model = "sw
 `cpr_rand_test` produces **a lot** of columns (nine per metric), so let's just look at a subset of them:
 
 ```{r rand-test-res}
-rand_test_results[,1:9]
+rand_test_results[, 1:9]
 ```
 
 This is a summary of the columns:
@@ -133,9 +133,10 @@ You can find DOIs for older versions by viewing the "Releases" menu on the right
 
 ## Licenses
 
-- Code: [MIT](LICENSE.md)
+- Original code: [MIT](LICENSE.md)
+- Functions from [phyloregion](https://github.com/darunabas/phyloregion): [AGPL-3](https://github.com/joelnitta/canaper/blob/main/data-raw/LICENSE-agpl-3.txt)
 - Example datasets
-  - `acacia`, `biod_example`: [GNU General Public License v3.0](https://github.com/joelnitta/canaper/blob/main/data-raw/LICENSE-gpl.txt)
+  - `acacia`, `biod_example`: [GPL-3](https://github.com/joelnitta/canaper/blob/main/data-raw/LICENSE-gpl-3.txt)
   - `phylocom`: [BSD-3-Clause](https://github.com/joelnitta/canaper/blob/main/data-raw/LICENSE-bsd3.txt)
 
 ## References

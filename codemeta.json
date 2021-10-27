@@ -205,6 +205,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=picante"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "phyloregion",
+      "name": "phyloregion",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=phyloregion"
     }
   ],
   "softwareRequirements": [
@@ -270,15 +282,32 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "phyloregion",
-      "name": "phyloregion",
+      "identifier": "Matrix",
+      "name": "Matrix",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=phyloregion"
+      "sameAs": "https://CRAN.R-project.org/package=Matrix"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "methods",
+      "name": "methods"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "phangorn",
+      "name": "phangorn",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=phangorn"
     },
     {
       "@type": "SoftwareApplication",
@@ -341,7 +370,7 @@
     }
   ],
   "releaseNotes": "https://github.com/joelnitta/canaper/blob/master/NEWS.md",
-  "fileSize": "7891.09KB",
+  "fileSize": "7891.857KB",
   "contIntegration": ["https://github.com/joelnitta/canaper/actions", "https://codecov.io/gh/joelnitta/canaper?branch=main"],
   "developmentStatus": "https://www.repostatus.org/#wip",
   "keywords": [

@@ -83,10 +83,10 @@ test_that("Printing phylogenies works", {
 test_that("Matching community and phylogeny data works", {
   comm_small <- biod_example$comm[, !colnames(biod_example$comm) %in% c("sp3", "sp5")]
   phy_small <- ape::drop.tip(biod_example$phy, c("sp1", "sp2"))
-  dat_small_1 <- match_phylo_comm(biod_example$phy, comm_small)
-  dat_small_2 <- match_phylo_comm(phy_small, biod_example$comm)
-  dat_small_3 <- match_phylo_comm(phy_small, comm_small)
-  dat_matched <- match_phylo_comm(biod_example$phy, biod_example$comm)
+  dat_small_1 <- suppressWarnings(match_phylo_comm(biod_example$phy, comm_small))
+  dat_small_2 <- suppressWarnings(match_phylo_comm(phy_small, biod_example$comm))
+  dat_small_3 <- suppressWarnings(match_phylo_comm(phy_small, comm_small))
+  dat_matched <- suppressWarnings(match_phylo_comm(biod_example$phy, biod_example$comm))
   dat_small_1_pic <- picante::match.phylo.comm(biod_example$phy, comm_small)
   dat_small_2_pic <- picante::match.phylo.comm(phy_small, biod_example$comm)
   dat_small_3_pic <- picante::match.phylo.comm(phy_small, comm_small)
@@ -108,12 +108,12 @@ test_that("Matching community and phylogeny data works", {
   )
   # Make sure order of community species doesn't matter for PD, PE
   expect_equal(
-    phyloregion::PD(phyloregion::dense2sparse(dat_matched$comm), dat_matched$phy),
-    phyloregion::PD(phyloregion::dense2sparse(biod_example$comm), biod_example$phy)
+    PD(dense2sparse(dat_matched$comm), dat_matched$phy),
+    PD(dense2sparse(biod_example$comm), biod_example$phy)
   )
   expect_equal(
-    phyloregion::phylo_endemism(phyloregion::dense2sparse(dat_matched$comm), dat_matched$phy),
-    phyloregion::phylo_endemism(phyloregion::dense2sparse(biod_example$comm), biod_example$phy)
+    phylo_endemism(dense2sparse(dat_matched$comm), dat_matched$phy),
+    phylo_endemism(dense2sparse(biod_example$comm), biod_example$phy)
   )
   # Warnings work
   expect_warning(
@@ -136,5 +136,29 @@ test_that("Matching community and phylogeny data works", {
     match_phylo_comm(biod_example$phy, comm_no_names),
     "Community data set lacks taxa (column) names, these are required to match phylogeny and community data",
     fixed = TRUE
+  )
+})
+
+test_that("Functions copied from phyloregion work", {
+  expect_equal(
+    dense2sparse(biod_example$comm),
+    phyloregion::dense2sparse(biod_example$comm)
+  )
+  sparse_comm <- dense2sparse(biod_example$comm)
+  expect_equal(
+    phylo_community(sparse_comm, biod_example$phy),
+    phyloregion:::phylo_community(dense2sparse(biod_example$comm), biod_example$phy)
+  )
+  expect_equal(
+    PD(sparse_comm, biod_example$phy),
+    phyloregion::PD(sparse_comm, biod_example$phy)
+  )
+  expect_equal(
+    phylo_endemism(sparse_comm, biod_example$phy, weighted = TRUE),
+    phyloregion::phylo_endemism(sparse_comm, biod_example$phy, weighted = TRUE)
+  )
+  expect_equal(
+    phylo_endemism(sparse_comm, biod_example$phy, weighted = FALSE),
+    phyloregion::phylo_endemism(sparse_comm, biod_example$phy, weighted = FALSE)
   )
 })
