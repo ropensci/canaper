@@ -91,7 +91,7 @@
       <h1 data-toc-skip>CANAPE example</h1>
                         <h4 class="author">Joel H. Nitta</h4>
             
-            <h4 class="date">26 October, 2021</h4>
+            <h4 class="date">27 October, 2021</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/joelnitta/canaper/blob/master/vignettes/canape.Rmd"><code>vignettes/canape.Rmd</code></a></small>
       <div class="hidden name"><code>canape.Rmd</code></div>
@@ -187,7 +187,7 @@
 <span class="co">#&gt; Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: </span>
 <span class="co">#&gt;  Pararchidendron_pruinosum, Paraserianthes_lophantha, saligna, clunies-rossiae</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># See how long it took</span>
-<span class="co">#&gt; 115.568 sec elapsed</span>
+<span class="co">#&gt; 66.765 sec elapsed</span>
 
 <span class="co"># Switch back to sequential (non-parallel) mode</span>
 <span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></code></pre></div>
@@ -197,16 +197,16 @@
 <span class="co">#&gt; # A tibble: 3,037 × 55</span>
 <span class="co">#&gt;    site    pd_obs pd_rand_mean pd_rand_sd pd_obs_z pd_obs_c_upper pd_obs_c_lower</span>
 <span class="co">#&gt;    &lt;chr&gt;    &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 '-1025… 0.0145       0.0224    0.00451 -1.76                 2             98</span>
-<span class="co">#&gt;  2 '-1025… 0.0383       0.0492    0.00792 -1.37                 8             92</span>
-<span class="co">#&gt;  3 '-1025… 0.0379       0.0380    0.00697 -0.00999             54             46</span>
-<span class="co">#&gt;  4 '-1025… 0.0571       0.0616    0.00777 -0.569               33             67</span>
-<span class="co">#&gt;  5 '-1025… 0.0410       0.0415    0.00704 -0.0760              52             48</span>
-<span class="co">#&gt;  6 '-1025… 0.0100       0.0103    0.00230 -0.124               55             45</span>
-<span class="co">#&gt;  7 '-1025… 0.0188       0.0228    0.00408 -0.977               17             83</span>
-<span class="co">#&gt;  8 '-1025… 0.0435       0.0539    0.00725 -1.44                 8             92</span>
-<span class="co">#&gt;  9 '-1025… 0.0111       0.0103    0.00232  0.377               80             20</span>
-<span class="co">#&gt; 10 '-1025… 0.0905       0.0860    0.0103   0.442               68             32</span>
+<span class="co">#&gt;  1 '-1025… 0.0145       0.0223    0.00358  -2.17                1             99</span>
+<span class="co">#&gt;  2 '-1025… 0.0383       0.0494    0.00788  -1.41                7             93</span>
+<span class="co">#&gt;  3 '-1025… 0.0379       0.0370    0.00660   0.141              64             36</span>
+<span class="co">#&gt;  4 '-1025… 0.0571       0.0605    0.00794  -0.419              34             66</span>
+<span class="co">#&gt;  5 '-1025… 0.0410       0.0413    0.00682  -0.0568             51             49</span>
+<span class="co">#&gt;  6 '-1025… 0.0100       0.0101    0.00225  -0.0620             52             47</span>
+<span class="co">#&gt;  7 '-1025… 0.0188       0.0232    0.00429  -1.04               13             87</span>
+<span class="co">#&gt;  8 '-1025… 0.0435       0.0550    0.00797  -1.45                8             92</span>
+<span class="co">#&gt;  9 '-1025… 0.0111       0.0101    0.00227   0.454              83             17</span>
+<span class="co">#&gt; 10 '-1025… 0.0905       0.0873    0.0112    0.290              61             39</span>
 <span class="co">#&gt; # … with 3,027 more rows, and 48 more variables: pd_obs_q &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   pd_obs_p_upper &lt;dbl&gt;, pd_obs_p_lower &lt;dbl&gt;, pd_alt_obs &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   pd_alt_rand_mean &lt;dbl&gt;, pd_alt_rand_sd &lt;dbl&gt;, pd_alt_obs_z &lt;dbl&gt;,</span>
@@ -243,7 +243,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">acacia_canape</span><span class="op">$</span><span class="va">endem_type</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           mixed             neo not significant           paleo           super </span>
-<span class="co">#&gt;             175               9            2786              34              33</span></code></pre></div>
+<span class="co">#&gt;             181              10            2775              41              30</span></code></pre></div>
 </div>
 <div id="classify-signficance" class="section level2">
 <h2 class="hasAnchor">
@@ -262,7 +262,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">acacia_canape</span><span class="op">$</span><span class="va">pd_signif</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;          &lt; 0.01         &lt; 0.025         &gt; 0.975          &gt; 0.99 not significant </span>
-<span class="co">#&gt;             301             219              32              22            2463</span></code></pre></div>
+<span class="co">#&gt;             291             233              28              17            2468</span></code></pre></div>
 </div>
 <div id="visualize-results" class="section level2">
 <h2 class="hasAnchor">
