@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">canaper</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -70,7 +66,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/joelnitta/canaper/">
+  <a href="https://github.com/joelnitta/canaper/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -89,11 +85,11 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>How many randomizations?</h1>
-                        <h4 class="author">Joel H. Nitta</h4>
+                        <h4 data-toc-skip class="author">Joel H. Nitta</h4>
             
-            <h4 class="date">27 October, 2021</h4>
+            <h4 data-toc-skip class="date">20 January, 2022</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/joelnitta/canaper/blob/master/vignettes/how-many-rand.Rmd"><code>vignettes/how-many-rand.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/joelnitta/canaper/blob/HEAD/vignettes/how-many-rand.Rmd" class="external-link"><code>vignettes/how-many-rand.Rmd</code></a></small>
       <div class="hidden name"><code>how-many-rand.Rmd</code></div>
 
     </div>
@@ -101,47 +97,46 @@
     
     
 <p>A central part of CANAPE is comparing observed values with randomizations. It is up to the user to set the number of randomizations… but how does one know if the number of randomizations is sufficient?</p>
-<p>(<strong>This vignette assumes a basic understanding of CANAPE, community data matrices, and randomizations</strong>. If you aren’t familiar with any of these, you should probably see the <a href="https://joelnitta.github.io/canaper/articles/canape.html">the CANAPE example vignette</a> first).</p>
-<div id="a-word-about-randomization-algorithms" class="section level2">
-<h2 class="hasAnchor">
-<a href="#a-word-about-randomization-algorithms" class="anchor"></a>A word about randomization algorithms</h2>
+<p>(<strong>This vignette assumes a basic understanding of CANAPE, community data matrices, and randomizations</strong>. If you aren’t familiar with any of these, you should probably see the <a href="https://joelnitta.github.io/canaper/articles/canape.html" class="external-link">the CANAPE example vignette</a> first).</p>
+<div class="section level2">
+<h2 id="a-word-about-randomization-algorithms">A word about randomization algorithms<a class="anchor" aria-label="anchor" href="#a-word-about-randomization-algorithms"></a>
+</h2>
 <p>There is a rich literature on choice of randomization algorithms in ecology (see references below), so I won’t go into this too much, but <strong>choice of algorithm can have a large impact on results</strong>, so it’s important to understand.</p>
 <p>As described by <span class="citation">Strona, Ulrich, and Gotelli (2018)</span>, randomization algorithms can vary in their degree of degree of conservation; that is, how closely they resemble the original data. At one extreme, some algorithms require row and column sums (i.e., marginal sums) to be perfectly preserved between the original data and the randomized data (more conservative)<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>; at the other, marginal sums may be completely different (less conservative). More conservative algorithms are less prone to type II error but more prone to type I error; the opposite is true for less conservative algorithms. Generally you want the randomization algorithm to only change the one aspect of the data that you are interested in testing. The ultimate choice of algorithm will depend on the data, ecological conditions, and computing restraints.</p>
-<p><code>canaper</code> uses the <a href="https://CRAN.R-project.org/package=vegan"><code>vegan</code> package</a> for randomizations. There are a large number of pre-defined randomization algorithms available in <code>vegan</code><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, as well as the option to provide a user-defined algorithm. For details about each pre-defined algorithm, see <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html">vegan::commsim()</a></code>.</p>
+<p><code>canaper</code> uses the <a href="https://CRAN.R-project.org/package=vegan" class="external-link"><code>vegan</code> package</a> for randomizations. There are a large number of pre-defined randomization algorithms available in <code>vegan</code><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, as well as the option to provide a user-defined algorithm. For details about each pre-defined algorithm, see <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">vegan::commsim()</a></code>.</p>
 <p>For this vignette, I will use the <code>swap</code> algorithm, a “more conservative” algorithm that preserves marginal sums <span class="citation">(Gotelli and Entsminger 2003)</span> and has been widely used in ecological studies<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 </div>
-<div id="replicates-vs--iterations" class="section level2">
-<h2 class="hasAnchor">
-<a href="#replicates-vs--iterations" class="anchor"></a>Replicates vs. iterations</h2>
+<div class="section level2">
+<h2 id="replicates-vs--iterations">Replicates vs. iterations<a class="anchor" aria-label="anchor" href="#replicates-vs--iterations"></a>
+</h2>
 <p>Before proceeding, we need to clarify some terminology. <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> includes two arguments, <code>n_reps</code> and <code>n_iterations</code>. These sound similar but refer to two very different things.</p>
 <p><code>n_reps</code> is the number of random communities to simulate. For example, if <code>n_reps</code> is 100, will we be comparing each observed value (e.g., phylogenetic diversity, <code>pd_obs</code>), with 100 random replicates of <code>pd_obs</code>. If <code>n_reps</code> is too low, we will lack sufficiently statistical power to detect patterns in the data.</p>
 <p><code>n_iterations</code> is only used by some randomization algorithms, the “sequential” algorithms. Sequential algorithms randomize a community matrix by exchanging values between existing cells (“swapping”). As you might guess, the <code>swap</code> algorithm is a sequential algorithm. One such swap is a single “iteration”. If the total number of iterations, <code>n_iterations</code>, is too low, the randomized matrix won’t be sufficiently randomized, and will still resemble the original matrix<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>.</p>
 <p>If either <code>n_reps</code> or <code>n_iterations</code> are set too high, it will take overly long to finish the calculations. So our goal is to set them sufficiently high to achieve proper randomization, but not so high <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> never finishes.</p>
 </div>
-<div id="effect-of-n_iterations" class="section level2">
-<h2 class="hasAnchor">
-<a href="#effect-of-n_iterations" class="anchor"></a>Effect of <code>n_iterations</code>
+<div class="section level2">
+<h2 id="effect-of-n_iterations">Effect of <code>n_iterations</code><a class="anchor" aria-label="anchor" href="#effect-of-n_iterations"></a>
 </h2>
 <p>First, let’s load the packages used in this vignette.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/joelnitta/canaper">canaper</a></span><span class="op">)</span> <span class="co"># This package</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/collectivemedia/tictoc">tictoc</a></span><span class="op">)</span> <span class="co"># For timing</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span> <span class="co"># For tidy code</span></code></pre></div>
-<p>Next we will test the effects of <code>n_iterations</code>, using the <a href="https://joelnitta.github.io/canaper/reference/biod_example.html">test dataset that comes with <code>canaper</code></a> (and <a href="https://github.com/shawnlaffan/biodiverse/tree/master/data">Biodiverse</a>). I will increase the number of iterations in powers of 10 from 10 to 1,000,000, and compare the correlation between the original matrix and the randomized matrix:</p>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/joelnitta/canaper" class="external-link">canaper</a></span><span class="op">)</span> <span class="co"># This package</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/collectivemedia/tictoc" class="external-link">tictoc</a></span><span class="op">)</span> <span class="co"># For timing</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span> <span class="co"># For tidy code</span></code></pre></div>
+<p>Next we will test the effects of <code>n_iterations</code>, using the <a href="https://joelnitta.github.io/canaper/reference/biod_example.html" class="external-link">test dataset that comes with <code>canaper</code></a> (and <a href="https://github.com/shawnlaffan/biodiverse/tree/master/data" class="external-link">Biodiverse</a>). I will increase the number of iterations in powers of 10 from 10 to 1,000,000, and compare the correlation between the original matrix and the randomized matrix:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># "swap" produces a binary matrix, so convert the input matrix to binary too:</span>
-<span class="va">comm_bin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span><span class="op">)</span>
+<span class="va">comm_bin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span><span class="op">)</span>
 <span class="va">comm_bin</span><span class="op">[</span><span class="va">comm_bin</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span>
 
 <span class="co"># Set random number seed so the results are reproducible</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span>
 
 <span class="co"># Use a tibble to hold the data and run loops</span>
-<span class="va">dist_test_res</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
+<span class="va">dist_test_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>
   <span class="co"># Set up a vector from 10 to 10^6 for testing n_iterations</span>
-  n_iter <span class="op">=</span> <span class="fu">magrittr</span><span class="fu">::</span><span class="fu"><a href="https://magrittr.tidyverse.org/reference/aliases.html">raise_to_power</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span>,
+  n_iter <span class="op">=</span> <span class="fu">magrittr</span><span class="fu">::</span><span class="fu"><a href="https://magrittr.tidyverse.org/reference/aliases.html" class="external-link">raise_to_power</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span>,
   <span class="co"># Make one random community for each value of `n_iter`</span>
-  rand_comm <span class="op">=</span> <span class="fu">map</span><span class="op">(</span>
+  rand_comm <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>
     <span class="va">n_iter</span>, 
     <span class="op">~</span><span class="fu"><a href="../reference/cpr_rand_comm.html">cpr_rand_comm</a></span><span class="op">(</span>
       <span class="va">comm_bin</span>, 
@@ -149,59 +144,58 @@
   <span class="co"># Calculate the Pearson correlation (r) between each randomized</span>
   <span class="co"># matrix and the original matrix by converting</span>
   <span class="co"># the matrices to vectors</span>
-  corr <span class="op">=</span> <span class="fu">map_dbl</span><span class="op">(</span>
+  corr <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map_dbl</a></span><span class="op">(</span>
     <span class="va">rand_comm</span>, 
-    <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">comm_bin</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span> <span class="co">#c() converts a matrix to vector</span>
+    <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">comm_bin</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span> <span class="co">#c() converts a matrix to vector</span>
   <span class="op">)</span>
 <span class="op">)</span>
 
 <span class="co"># Plot the results</span>
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">dist_test_res</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">n_iter</span>, y <span class="op">=</span> <span class="va">corr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Num. iterations"</span>, y <span class="op">=</span> <span class="st">"Pearson's r"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">dist_test_res</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">n_iter</span>, y <span class="op">=</span> <span class="va">corr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Num. iterations"</span>, y <span class="op">=</span> <span class="st">"Pearson's r"</span><span class="op">)</span></code></pre></div>
 <p><img src="how-many-rand_files/figure-html/test-n-iter-1.png" width="700"></p>
 <p>From this, we can see that the original community and the randomized community are correlated up to about 1,000 to 10,000 iterations. After that, the correlation coefficient levels off, and doesn’t decrease much further with additional “mixing”<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.</p>
 <p>Note that the number of iterations required <strong>will vary based on the dataset</strong>. It will likely be higher in datasets that are extremely skewed towards a high percentage of presences or absences, since a given swap is unlikely to actually change anything. So I recommend exploring the data as above to determine the minimum number of iterations needed.</p>
 <p>Now that we’ve settled on the number of iterations per random replicate, let’s look into the number of replicates.</p>
 </div>
-<div id="effect-of-n_reps" class="section level2">
-<h2 class="hasAnchor">
-<a href="#effect-of-n_reps" class="anchor"></a>Effect of <code>n_reps</code>
+<div class="section level2">
+<h2 id="effect-of-n_reps">Effect of <code>n_reps</code><a class="anchor" aria-label="anchor" href="#effect-of-n_reps"></a>
 </h2>
 <p>With randomizations, there is no “right” answer, so we can’t test to see that <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> produces the exact answer we’re looking for. Rather, we will check that it starts to <strong>converge on approximately the same result</strong> once <code>n_reps</code> is high enough.</p>
-<p>Here, I will compare the percentile of observed phylogenetic diversity relative to random (<code>pd_obs_p_upper</code>, <a href="https://joelnitta.github.io/canaper/articles/canape.html#classify-endemism">one of the values used for calculating endemism type</a>) between pairs of random communities each generated with the same number of replicates<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>. I will also time calculations for one of each pair.</p>
+<p>Here, I will compare the percentile of observed phylogenetic diversity relative to random (<code>pd_obs_p_upper</code>, <a href="https://joelnitta.github.io/canaper/articles/canape.html#classify-endemism" class="external-link">one of the values used for calculating endemism type</a>) between pairs of random communities each generated with the same number of replicates<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>. I will also time calculations for one of each pair.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Specify a different random seed for each set of randomizations so they give</span>
 <span class="co"># different, reproducible results</span>
 
 <span class="co"># First set</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">tic</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">tic</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">res_10_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span>
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>, 
   null_model <span class="op">=</span> <span class="st">"swap"</span>,
   n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">10</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 1.611 sec elapsed</span>
-<span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">tic</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; 1.939 sec elapsed</span>
+<span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">tic</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">res_100_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span>
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>, 
   null_model <span class="op">=</span> <span class="st">"swap"</span>,
   n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">100</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 7.001 sec elapsed</span>
-<span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">tic</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; 13.167 sec elapsed</span>
+<span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">tic</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">res_1000_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span>
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>, 
   null_model <span class="op">=</span> <span class="st">"swap"</span>,
   n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">1000</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 68.149 sec elapsed</span>
+<span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; 117.484 sec elapsed</span>
 
 <span class="co"># Second set</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">67890</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">67890</span><span class="op">)</span>
 <span class="va">res_10_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span>
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>,
   null_model <span class="op">=</span> <span class="st">"swap"</span>,
@@ -219,21 +213,21 @@
 <code class="sourceCode R"><span class="co"># We will make the same plot repeatedly, so write</span>
 <span class="co"># a quick function to avoid lots of copying and pasting</span>
 <span class="va">plot_comp</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">res_1</span>, <span class="va">res_2</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu">left_join</span><span class="op">(</span>
-  <span class="fu">select</span><span class="op">(</span><span class="va">res_1</span>, <span class="va">site</span>, pd_obs_p_upper_1 <span class="op">=</span> <span class="va">pd_obs_p_upper</span><span class="op">)</span>, 
-  <span class="fu">select</span><span class="op">(</span><span class="va">res_2</span>, <span class="va">site</span>, pd_obs_p_upper_2 <span class="op">=</span> <span class="va">pd_obs_p_upper</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"site"</span><span class="op">)</span> |&gt;
-  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">pd_obs_p_upper_1</span>, y <span class="op">=</span> <span class="va">pd_obs_p_upper_2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_abline</span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">res_1</span>, <span class="va">site</span>, pd_obs_p_upper_1 <span class="op">=</span> <span class="va">pd_obs_p_upper</span><span class="op">)</span>, 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">res_2</span>, <span class="va">site</span>, pd_obs_p_upper_2 <span class="op">=</span> <span class="va">pd_obs_p_upper</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"site"</span><span class="op">)</span> |&gt;
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">pd_obs_p_upper_1</span>, y <span class="op">=</span> <span class="va">pd_obs_p_upper_2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_abline</a></span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, intercept <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 <span class="op">}</span>
 
-<span class="fu">plot_comp</span><span class="op">(</span><span class="va">res_10_1</span>, <span class="va">res_10_2</span><span class="op">)</span> <span class="op">+</span> <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"10 replicates"</span><span class="op">)</span></code></pre></div>
+<span class="fu">plot_comp</span><span class="op">(</span><span class="va">res_10_1</span>, <span class="va">res_10_2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"10 replicates"</span><span class="op">)</span></code></pre></div>
 <p><img src="how-many-rand_files/figure-html/n-reps-plots-1.png" width="700"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">plot_comp</span><span class="op">(</span><span class="va">res_100_1</span>, <span class="va">res_100_2</span><span class="op">)</span> <span class="op">+</span> <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"100 replicates"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">plot_comp</span><span class="op">(</span><span class="va">res_100_1</span>, <span class="va">res_100_2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"100 replicates"</span><span class="op">)</span></code></pre></div>
 <p><img src="how-many-rand_files/figure-html/n-reps-plots-2.png" width="700"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">plot_comp</span><span class="op">(</span><span class="va">res_1000_1</span>, <span class="va">res_1000_2</span><span class="op">)</span> <span class="op">+</span> <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"1000 replicates"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">plot_comp</span><span class="op">(</span><span class="va">res_1000_1</span>, <span class="va">res_1000_2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"1000 replicates"</span><span class="op">)</span></code></pre></div>
 <p><img src="how-many-rand_files/figure-html/n-reps-plots-3.png" width="700"></p>
 <p>This visualization shows how the randomization results converge as <code>n_reps</code> increases.</p>
 <p>The above plots illustrate convergence for one particular aspect of CANAPE, but what about endemism type itself? We can look at that too.</p>
@@ -241,47 +235,47 @@
 <code class="sourceCode R"><span class="co"># Define a helper function that joins two datasets and calculates % agreement</span>
 <span class="co"># on endemism type between them</span>
 <span class="va">calc_agree_endem</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df_1</span>, <span class="va">df_2</span>, <span class="va">n_reps</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu">left_join</span><span class="op">(</span>
-    <span class="va">df_1</span> |&gt; <span class="fu"><a href="../reference/cpr_classify_endem.html">cpr_classify_endem</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu">select</span><span class="op">(</span><span class="va">site</span>, endem_type_1 <span class="op">=</span> <span class="va">endem_type</span><span class="op">)</span>,
-    <span class="va">df_2</span> |&gt; <span class="fu"><a href="../reference/cpr_classify_endem.html">cpr_classify_endem</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu">select</span><span class="op">(</span><span class="va">site</span>, endem_type_2 <span class="op">=</span> <span class="va">endem_type</span><span class="op">)</span>,
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span>
+    <span class="va">df_1</span> |&gt; <span class="fu"><a href="../reference/cpr_classify_endem.html">cpr_classify_endem</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">site</span>, endem_type_1 <span class="op">=</span> <span class="va">endem_type</span><span class="op">)</span>,
+    <span class="va">df_2</span> |&gt; <span class="fu"><a href="../reference/cpr_classify_endem.html">cpr_classify_endem</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">site</span>, endem_type_2 <span class="op">=</span> <span class="va">endem_type</span><span class="op">)</span>,
     by <span class="op">=</span> <span class="st">"site"</span>
   <span class="op">)</span> |&gt;
-    <span class="fu">mutate</span><span class="op">(</span>agree <span class="op">=</span> <span class="va">endem_type_1</span> <span class="op">==</span> <span class="va">endem_type_2</span><span class="op">)</span> |&gt;
-    <span class="fu">summarize</span><span class="op">(</span>agree <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">agree</span><span class="op">)</span>, total <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> |&gt;
-    <span class="fu">mutate</span><span class="op">(</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>agree <span class="op">=</span> <span class="va">endem_type_1</span> <span class="op">==</span> <span class="va">endem_type_2</span><span class="op">)</span> |&gt;
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>agree <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">agree</span><span class="op">)</span>, total <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> |&gt;
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>
       p_agree <span class="op">=</span> <span class="va">agree</span><span class="op">/</span><span class="va">total</span>,
       n_reps <span class="op">=</span> <span class="va">n_reps</span><span class="op">)</span> 
 <span class="op">}</span>
 
-<span class="fu">bind_rows</span><span class="op">(</span>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span>
   <span class="fu">calc_agree_endem</span><span class="op">(</span><span class="va">res_10_1</span>, <span class="va">res_10_2</span>, <span class="fl">10</span><span class="op">)</span>,
   <span class="fu">calc_agree_endem</span><span class="op">(</span><span class="va">res_100_1</span>, <span class="va">res_100_2</span>, <span class="fl">100</span><span class="op">)</span>,
   <span class="fu">calc_agree_endem</span><span class="op">(</span><span class="va">res_1000_1</span>, <span class="va">res_1000_2</span>, <span class="fl">1000</span><span class="op">)</span>,
 <span class="op">)</span>
-<span class="co">#&gt; # A tibble: 3 × 4</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 4</span></span>
 <span class="co">#&gt;   agree total p_agree n_reps</span>
-<span class="co">#&gt;   &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1   101   127   0.795     10</span>
-<span class="co">#&gt; 2   120   127   0.945    100</span>
-<span class="co">#&gt; 3   123   127   0.969   1000</span></code></pre></div>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   101   127   0.795     10</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>   120   127   0.945    100</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   123   127   0.969   <span style="text-decoration: underline;">1</span>000</span></code></pre></div>
 <p>At 1,000 replicates, we see 100% agreement on endemism type between the two randomizations! Convergence doesn’t get better than that<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> :)</p>
 <p>Of course, another important consideration is <strong>how long</strong> calculations take. You can see that time increases with <code>n_reps</code>, but not exactly in a linear fashion. We don’t have the space to go into benchmarking here, but this illustrates the time / <code>n_reps</code> trade-off<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>.</p>
 </div>
-<div id="conclusion" class="section level2">
-<h2 class="hasAnchor">
-<a href="#conclusion" class="anchor"></a>Conclusion</h2>
-<p>In this case (the <a href="https://joelnitta.github.io/canaper/reference/biod_example.html">example dataset</a> that comes with <code>canaper</code>), we see that a minimum of 1,000 random replicates with 10,000 swapping iterations per replicate is probably needed to attain robust results.</p>
+<div class="section level2">
+<h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
+</h2>
+<p>In this case (the <a href="https://joelnitta.github.io/canaper/reference/biod_example.html" class="external-link">example dataset</a> that comes with <code>canaper</code>), we see that a minimum of 1,000 random replicates with 10,000 swapping iterations per replicate is probably needed to attain robust results.</p>
 <p>I hope this vignette helps you determine the settings to use for your own dataset!</p>
 </div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2 unnumbered">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references">
 <div id="ref-Gotelli2003">
-<p>Gotelli, Nicholas J., and Gary L. Entsminger. 2003. “Swap Algorithms in Null Model Analysis.” <em>Ecology</em> 84 (2): 532–35. <a href="https://doi.org/10.1890/0012-9658(2003)084%5B0532:sainma%5D2.0.co;2">https://doi.org/10.1890/0012-9658(2003)084[0532:sainma]2.0.co;2</a>.</p>
+<p>Gotelli, Nicholas J., and Gary L. Entsminger. 2003. “Swap Algorithms in Null Model Analysis.” <em>Ecology</em> 84 (2): 532–35. <a href="https://doi.org/10.1890/0012-9658(2003)084%5B0532:sainma%5D2.0.co;2" class="external-link">https://doi.org/10.1890/0012-9658(2003)084[0532:sainma]2.0.co;2</a>.</p>
 </div>
 <div id="ref-Strona2018">
-<p>Strona, Giovanni, Werner Ulrich, and Nicholas J. Gotelli. 2018. “Bi‐dimensional Null Model Analysis of Presence‐absence Binary Matrices.” <em>Ecology</em> 99 (1): 103–15. <a href="https://doi.org/10.1002/ecy.2043">https://doi.org/10.1002/ecy.2043</a>.</p>
+<p>Strona, Giovanni, Werner Ulrich, and Nicholas J. Gotelli. 2018. “Bi‐dimensional Null Model Analysis of Presence‐absence Binary Matrices.” <em>Ecology</em> 99 (1): 103–15. <a href="https://doi.org/10.1002/ecy.2043" class="external-link">https://doi.org/10.1002/ecy.2043</a>.</p>
 </div>
 </div>
 </div>
@@ -290,12 +284,12 @@
 <ol>
 <li id="fn1"><p>In the case of a community matrix with species as columns and rows as sites, the row sums are the total richness per site and the column sums are the total abundance per species. So preserving these means that rare species stay rare, sites with few species stay that way, etc. Only the species identity in each site changes.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 <li id="fn2"><p>32 as of <code>vegan</code> v2.5.7, though not all may be applicable.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p>The <a href="http://biodiverse-analysis-software.blogspot.com/2020/12/biodiverse-now-includes-independent.html">Biodiverse blog has a nice explanation of the <code>swap</code> algorithm</a>.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p>A third argument, <code>thin</code>, only applies to a small number of algorithms; for details, see <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html">vegan::commsim()</a></code><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>The <a href="http://biodiverse-analysis-software.blogspot.com/2020/12/biodiverse-now-includes-independent.html" class="external-link">Biodiverse blog has a nice explanation of the <code>swap</code> algorithm</a>.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>A third argument, <code>thin</code>, only applies to a small number of algorithms; for details, see <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">vegan::commsim()</a></code><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
 <li id="fn5"><p>In fact the graph suggests that with too much mixing, we might start to come back to the original!<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
 <li id="fn6"><p>Other values based on the randomizations could be checked too (e.g., values ending in <code>_obs_z</code>, <code>_rand_mean</code>, or <code>_rand_sd</code>).<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
 <li id="fn7"><p>Though I wouldn’t expect necessarily expect this from messier, “real-life” datasets.<a href="#fnref7" class="footnote-back">↩︎</a></p></li>
-<li id="fn8"><p>You can of course speed things up with parallelization. For details, see <a href="https://joelnitta.github.io/canaper/articles/canape.html#randomization-test">the CANAPE example vignette</a>.<a href="#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p>You can of course speed things up with parallelization. For details, see <a href="https://joelnitta.github.io/canaper/articles/canape.html#randomization-test" class="external-link">the CANAPE example vignette</a>.<a href="#fnref8" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
@@ -311,11 +305,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Joel H. Nitta.</p>
+  <p></p>
+<p>Developed by Joel H. Nitta.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -323,6 +319,8 @@
 
   
 
+
+  
 
   </body>
 </html>

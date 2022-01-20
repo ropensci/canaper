@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">canaper</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -70,7 +66,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/joelnitta/canaper/">
+  <a href="https://github.com/joelnitta/canaper/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -89,11 +85,11 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>CANAPE example</h1>
-                        <h4 class="author">Joel H. Nitta</h4>
+                        <h4 data-toc-skip class="author">Joel H. Nitta</h4>
             
-            <h4 class="date">27 October, 2021</h4>
+            <h4 data-toc-skip class="date">20 January, 2022</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/joelnitta/canaper/blob/master/vignettes/canape.Rmd"><code>vignettes/canape.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/joelnitta/canaper/blob/HEAD/vignettes/canape.Rmd" class="external-link"><code>vignettes/canape.Rmd</code></a></small>
       <div class="hidden name"><code>canape.Rmd</code></div>
 
     </div>
@@ -101,24 +97,24 @@
     
     
 <p>CANAPE stands for “Categorical Analysis of Neo- And Paleo-Endemism”, and provides insight into the evolutionary processes underlying endemism <span class="citation">(Mishler et al. 2014)</span>. The idea is basically that endemic regions may be so because either they contain range-restricted parts of a phylogeny that have unusually long branch lengths (paleoendemism), or unusually short branch lengths (neoendemism), or a mixture of both. Paleoendemism may reflect old lineages that have survived extinctions; neoendemism may reflect recently speciated lineages that have not yet dispersed.</p>
-<p>This vignette replicates the <a href="https://doi.org/10.1038/ncomms5473">analysis of Mishler et al. 2014</a>, where CANAPE was originally defined.</p>
-<div id="setup" class="section level2">
-<h2 class="hasAnchor">
-<a href="#setup" class="anchor"></a>Setup</h2>
+<p>This vignette replicates the <a href="https://doi.org/10.1038/ncomms5473" class="external-link">analysis of Mishler et al. 2014</a>, where CANAPE was originally defined.</p>
+<div class="section level2">
+<h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
+</h2>
 <p>Start by loading <code>canaper</code> and some other packages we will use for this vignette:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/joelnitta/canaper">canaper</a></span><span class="op">)</span> <span class="co"># This package :)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org">future</a></span><span class="op">)</span> <span class="co"># For parallel computing</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/collectivemedia/tictoc">tictoc</a></span><span class="op">)</span> <span class="co"># For timing things</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span> <span class="co"># For composing mult-part plots</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span> <span class="co"># For data-wrangling and plotting</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/joelnitta/canaper" class="external-link">canaper</a></span><span class="op">)</span> <span class="co"># This package :)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org" class="external-link">future</a></span><span class="op">)</span> <span class="co"># For parallel computing</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/collectivemedia/tictoc" class="external-link">tictoc</a></span><span class="op">)</span> <span class="co"># For timing things</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span> <span class="co"># For composing mult-part plots</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span> <span class="co"># For data-wrangling and plotting</span></code></pre></div>
 </div>
-<div id="dataset" class="section level2">
-<h2 class="hasAnchor">
-<a href="#dataset" class="anchor"></a>Dataset</h2>
+<div class="section level2">
+<h2 id="dataset">Dataset<a class="anchor" aria-label="anchor" href="#dataset"></a>
+</h2>
 <p>The <code>canaper</code> package comes with the dataset used in <span class="citation">Mishler et al. (2014)</span>. Let’s load the data into memory:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">acacia</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">acacia</span><span class="op">)</span></code></pre></div>
 <p>The <code>acacia</code> dataset is a list including two items. The first, <code>phy</code>, is a phylogeny of <em>Acacia</em> species in Australia:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">acacia</span><span class="op">$</span><span class="va">phy</span>
@@ -131,7 +127,7 @@
 <span class="co">#&gt; Rooted; includes branch lengths.</span></code></pre></div>
 <p>The second, <code>comm</code>, is a community dataframe with species as columns and rows as sites. The row names (sites) correspond to the centroids of 50 x 50 km grid cells covering Australia. The community matrix is too large to print out in its entirety, so we will just take a look at the first 8 rows and columns<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">acacia</span><span class="op">$</span><span class="va">comm</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">acacia</span><span class="op">$</span><span class="va">comm</span><span class="op">)</span>
 <span class="co">#&gt; [1] 3037  506</span>
 <span class="va">acacia</span><span class="op">$</span><span class="va">comm</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>
 <span class="co">#&gt;                     abbreviata acanthaster acanthoclada acinacea aciphylla</span>
@@ -153,9 +149,9 @@
 <span class="co">#&gt; '-1025000:-2125000'     0         0           0</span>
 <span class="co">#&gt; '-1025000:-2225000'     0         0           0</span></code></pre></div>
 </div>
-<div id="randomization-test" class="section level2">
-<h2 class="hasAnchor">
-<a href="#randomization-test" class="anchor"></a>Randomization test</h2>
+<div class="section level2">
+<h2 id="randomization-test">Randomization test<a class="anchor" aria-label="anchor" href="#randomization-test"></a>
+</h2>
 <p>There are many metrics that describe the phylogenetic diversity of ecological communities. But how do we know if a given metric is statistically significant? One way is with a randomization test. The general process is:</p>
 <ol style="list-style-type: decimal">
 <li>Generate a set of random communities</li>
@@ -164,20 +160,20 @@
 </ol>
 <p>Observed values that are in the extremes (e.g, the top or lower 5% for a one-sided test, or either the top or bottom 2.5% for a two-sided test) would be considered significantly more or less diverse than random.</p>
 <p>The main purpose of <code>canaper</code> is to perform these randomization tests.</p>
-<p><code>canaper</code> generates random communities using the <a href="https://CRAN.R-project.org/package=vegan"><code>vegan</code> package</a>. There are a large number of pre-defined randomization algorithms available in <code>vegan</code><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, as well as an option to provide a user-defined algorithm. Selecting the appropriate algorithm is not trivial, and can greatly influence results<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. For details about the pre-defined algorithms, see <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html">vegan::commsim()</a></code>.</p>
+<p><code>canaper</code> generates random communities using the <a href="https://CRAN.R-project.org/package=vegan" class="external-link"><code>vegan</code> package</a>. There are a large number of pre-defined randomization algorithms available in <code>vegan</code><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, as well as an option to provide a user-defined algorithm. Selecting the appropriate algorithm is not trivial, and can greatly influence results<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. For details about the pre-defined algorithms, see <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">vegan::commsim()</a></code>.</p>
 <p>This example also demonstrates one of the strengths of <code>canaper</code>: the ability to run randomizations in parallel<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>. This is by far the most time-consuming part of CANAPE, since we have to repeat the calculations many (e.g., hundreds or more) times across the randomized communities to obtain reliable results. Here, we set the number of iterations (<code>n_iterations</code>; i.e., the number of swaps used to produce each randomized community) fairly high because this community matrix is large and includes many zeros; thorough mixing by swapping many times is required to completely randomize the matrix.</p>
 <p>We will use a low number of random communities (<code>n_reps</code>) so things finish relatively quickly; you should consider increasing <code>n_reps</code> for a “real” analysis<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>. We will use the <code>curveball</code> randomization algorithm, which maintains species richness and abundance patterns while randomizing species identity <span class="citation">(Strona et al. 2014)</span><a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Set a parallel back-end, with 3 CPUs running simultaneously</span>
-<span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 
 <span class="co"># Uncomment this to show a progress bar when running cpr_rand_test()</span>
 <span class="co"># progressr::handlers(global = TRUE)</span>
 
 <span class="co"># Set a random number generator seed so we get the same results if this is run again</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">071421</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">071421</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">tic</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Set a timer</span>
+<span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">tic</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Set a timer</span>
 <span class="co"># Run randomization test</span>
 <span class="va">acacia_rand_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span>
   <span class="va">acacia</span><span class="op">$</span><span class="va">comm</span>, <span class="va">acacia</span><span class="op">$</span><span class="va">phy</span>, 
@@ -186,41 +182,41 @@
   tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: </span>
 <span class="co">#&gt;  Pararchidendron_pruinosum, Paraserianthes_lophantha, saligna, clunies-rossiae</span>
-<span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># See how long it took</span>
-<span class="co">#&gt; 66.765 sec elapsed</span>
+<span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># See how long it took</span>
+<span class="co">#&gt; 97.048 sec elapsed</span>
 
 <span class="co"># Switch back to sequential (non-parallel) mode</span>
-<span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></code></pre></div>
 <p>Let’s take a peek at the output.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">acacia_rand_res</span>
-<span class="co">#&gt; # A tibble: 3,037 × 55</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 3,037 × 55</span></span>
 <span class="co">#&gt;    site    pd_obs pd_rand_mean pd_rand_sd pd_obs_z pd_obs_c_upper pd_obs_c_lower</span>
-<span class="co">#&gt;    &lt;chr&gt;    &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 '-1025… 0.0145       0.0223    0.00358  -2.17                1             99</span>
-<span class="co">#&gt;  2 '-1025… 0.0383       0.0494    0.00788  -1.41                7             93</span>
-<span class="co">#&gt;  3 '-1025… 0.0379       0.0370    0.00660   0.141              64             36</span>
-<span class="co">#&gt;  4 '-1025… 0.0571       0.0605    0.00794  -0.419              34             66</span>
-<span class="co">#&gt;  5 '-1025… 0.0410       0.0413    0.00682  -0.0568             51             49</span>
-<span class="co">#&gt;  6 '-1025… 0.0100       0.0101    0.00225  -0.0620             52             47</span>
-<span class="co">#&gt;  7 '-1025… 0.0188       0.0232    0.00429  -1.04               13             87</span>
-<span class="co">#&gt;  8 '-1025… 0.0435       0.0550    0.00797  -1.45                8             92</span>
-<span class="co">#&gt;  9 '-1025… 0.0111       0.0101    0.00227   0.454              83             17</span>
-<span class="co">#&gt; 10 '-1025… 0.0905       0.0873    0.0112    0.290              61             39</span>
-<span class="co">#&gt; # … with 3,027 more rows, and 48 more variables: pd_obs_q &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   pd_obs_p_upper &lt;dbl&gt;, pd_obs_p_lower &lt;dbl&gt;, pd_alt_obs &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   pd_alt_rand_mean &lt;dbl&gt;, pd_alt_rand_sd &lt;dbl&gt;, pd_alt_obs_z &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   pd_alt_obs_c_upper &lt;dbl&gt;, pd_alt_obs_c_lower &lt;dbl&gt;, pd_alt_obs_q &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   pd_alt_obs_p_upper &lt;dbl&gt;, pd_alt_obs_p_lower &lt;dbl&gt;, rpd_obs &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   rpd_rand_mean &lt;dbl&gt;, rpd_rand_sd &lt;dbl&gt;, rpd_obs_z &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   rpd_obs_c_upper &lt;dbl&gt;, rpd_obs_c_lower &lt;dbl&gt;, rpd_obs_q &lt;dbl&gt;, …</span></code></pre></div>
+<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> '-1025… 0.014<span style="text-decoration: underline;">5</span>       0.022<span style="text-decoration: underline;">3</span>    0.003<span style="text-decoration: underline;">58</span>  -<span style="color: #BB0000;">2.17</span>                1             99</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> '-1025… 0.038<span style="text-decoration: underline;">3</span>       0.049<span style="text-decoration: underline;">4</span>    0.007<span style="text-decoration: underline;">88</span>  -<span style="color: #BB0000;">1.41</span>                7             93</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> '-1025… 0.037<span style="text-decoration: underline;">9</span>       0.037<span style="text-decoration: underline;">0</span>    0.006<span style="text-decoration: underline;">60</span>   0.141              64             36</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> '-1025… 0.057<span style="text-decoration: underline;">1</span>       0.060<span style="text-decoration: underline;">5</span>    0.007<span style="text-decoration: underline;">94</span>  -<span style="color: #BB0000;">0.419</span>              34             66</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> '-1025… 0.041<span style="text-decoration: underline;">0</span>       0.041<span style="text-decoration: underline;">3</span>    0.006<span style="text-decoration: underline;">82</span>  -<span style="color: #BB0000;">0.056</span><span style="color: #BB0000; text-decoration: underline;">8</span>             51             49</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> '-1025… 0.010<span style="text-decoration: underline;">0</span>       0.010<span style="text-decoration: underline;">1</span>    0.002<span style="text-decoration: underline;">25</span>  -<span style="color: #BB0000;">0.062</span><span style="color: #BB0000; text-decoration: underline;">0</span>             52             47</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> '-1025… 0.018<span style="text-decoration: underline;">8</span>       0.023<span style="text-decoration: underline;">2</span>    0.004<span style="text-decoration: underline;">29</span>  -<span style="color: #BB0000;">1.04</span>               13             87</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> '-1025… 0.043<span style="text-decoration: underline;">5</span>       0.055<span style="text-decoration: underline;">0</span>    0.007<span style="text-decoration: underline;">97</span>  -<span style="color: #BB0000;">1.45</span>                8             92</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> '-1025… 0.011<span style="text-decoration: underline;">1</span>       0.010<span style="text-decoration: underline;">1</span>    0.002<span style="text-decoration: underline;">27</span>   0.454              83             17</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> '-1025… 0.090<span style="text-decoration: underline;">5</span>       0.087<span style="text-decoration: underline;">3</span>    0.011<span style="text-decoration: underline;">2</span>    0.290              61             39</span>
+<span class="co">#&gt; <span style="color: #949494;"># … with 3,027 more rows, and 48 more variables: pd_obs_q &lt;dbl&gt;,</span></span>
+<span class="co">#&gt; <span style="color: #949494;">#   pd_obs_p_upper &lt;dbl&gt;, pd_obs_p_lower &lt;dbl&gt;, pd_alt_obs &lt;dbl&gt;,</span></span>
+<span class="co">#&gt; <span style="color: #949494;">#   pd_alt_rand_mean &lt;dbl&gt;, pd_alt_rand_sd &lt;dbl&gt;, pd_alt_obs_z &lt;dbl&gt;,</span></span>
+<span class="co">#&gt; <span style="color: #949494;">#   pd_alt_obs_c_upper &lt;dbl&gt;, pd_alt_obs_c_lower &lt;dbl&gt;, pd_alt_obs_q &lt;dbl&gt;,</span></span>
+<span class="co">#&gt; <span style="color: #949494;">#   pd_alt_obs_p_upper &lt;dbl&gt;, pd_alt_obs_p_lower &lt;dbl&gt;, rpd_obs &lt;dbl&gt;,</span></span>
+<span class="co">#&gt; <span style="color: #949494;">#   rpd_rand_mean &lt;dbl&gt;, rpd_rand_sd &lt;dbl&gt;, rpd_obs_z &lt;dbl&gt;,</span></span>
+<span class="co">#&gt; <span style="color: #949494;">#   rpd_obs_c_upper &lt;dbl&gt;, rpd_obs_c_lower &lt;dbl&gt;, rpd_obs_q &lt;dbl&gt;, …</span></span></code></pre></div>
 <p><code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> produces <strong>a lot</strong> of columns. Here, <code>pd_obs</code> is the observed value of phylogenetic diversity (PD). Other columns starting with <code>pd</code> refer to aspects of the randomization: <code>pd_rand_mean</code> is the mean PD across the random communities, <code>pd_rand_sd</code> is the standard deviation of PD across the random communities, <code>pd_obs_z</code> is the standard effect size of PD, etc.</p>
 <p>For details about what each column means, see <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code>.</p>
 </div>
-<div id="classify-endemism" class="section level2">
-<h2 class="hasAnchor">
-<a href="#classify-endemism" class="anchor"></a>Classify endemism</h2>
-<p>The next step in CANAPE is to classify types of endemism. For a full description, see <span class="citation">Mishler et al. (2014)</span>. In short, this defines endemic regions based on combinations of the <em>p</em>-values of phylogenetic endemism (PE; <code>pe_obs</code>) and PE measured on an alternative tree with all branch lengths equal (<code>pe_alt</code>). Here is a summary <a href="http://biodiverse-analysis-software.blogspot.com/2014/11/canape-categorical-analysis-of-palaeo.html">borrowed from the biodiverse blog</a>, modified to use the variables as they are defined in <code>canaper</code>:</p>
+<div class="section level2">
+<h2 id="classify-endemism">Classify endemism<a class="anchor" aria-label="anchor" href="#classify-endemism"></a>
+</h2>
+<p>The next step in CANAPE is to classify types of endemism. For a full description, see <span class="citation">Mishler et al. (2014)</span>. In short, this defines endemic regions based on combinations of the <em>p</em>-values of phylogenetic endemism (PE; <code>pe_obs</code>) and PE measured on an alternative tree with all branch lengths equal (<code>pe_alt</code>). Here is a summary <a href="http://biodiverse-analysis-software.blogspot.com/2014/11/canape-categorical-analysis-of-palaeo.html" class="external-link">borrowed from the biodiverse blog</a>, modified to use the variables as they are defined in <code>canaper</code>:</p>
 <ol style="list-style-type: decimal">
 <li>If either <code>pe_obs</code> or <code>pe_alt_obs</code> are significantly high then we look for paleo- or neo-endemism
 <ol style="list-style-type: lower-alpha">
@@ -240,15 +236,15 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">acacia_canape</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_classify_endem.html">cpr_classify_endem</a></span><span class="op">(</span><span class="va">acacia_rand_res</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">acacia_canape</span><span class="op">$</span><span class="va">endem_type</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">acacia_canape</span><span class="op">$</span><span class="va">endem_type</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           mixed             neo not significant           paleo           super </span>
 <span class="co">#&gt;             181              10            2775              41              30</span></code></pre></div>
 </div>
-<div id="classify-signficance" class="section level2">
-<h2 class="hasAnchor">
-<a href="#classify-signficance" class="anchor"></a>Classify signficance</h2>
-<p>A similar function to <code><a href="../reference/cpr_classify_endem.html">cpr_classify_endem()</a></code> is available to classify significance of the randomization test, <code><a href="../reference/cpr_classify_signif.html">cpr_classify_signif()</a></code>. Note that both of these take a <code>data.frame</code> as input and return a <code>data.frame</code> as output, so they are “pipe-friendly”. The second argument of <code><a href="../reference/cpr_classify_signif.html">cpr_classify_signif()</a></code> is the name of the biodiversity metric that you want to classify. This will add a column <code>*_signif</code> with the significance relative to the random distribution for that metric. For example, <code><a href="../reference/cpr_classify_signif.html">cpr_classify_signif(df, "pd")</a></code> will add the <code>pd_signif</code> column to <code>df</code>.</p>
+<div class="section level2">
+<h2 id="classify-signficance">Classify signficance<a class="anchor" aria-label="anchor" href="#classify-signficance"></a>
+</h2>
+<p>A similar function to <code><a href="../reference/cpr_classify_endem.html">cpr_classify_endem()</a></code> is available to classify significance of the randomization test, <code><a href="../reference/cpr_classify_signif.html">cpr_classify_signif()</a></code>. Note that both of these take a <code>data.frame</code> as input and return a <code>data.frame</code> as output, so they are “pipe-friendly”. The second argument of <code><a href="../reference/cpr_classify_signif.html">cpr_classify_signif()</a></code> is the name of the biodiversity metric that you want to classify. This will add a column <code>*_signif</code> with the significance relative to the random distribution for that metric. For example, <code>cpr_classify_signif(df, "pd")</code> will add the <code>pd_signif</code> column to <code>df</code>.</p>
 <p>We can chain them together as follows:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">acacia_canape</span> <span class="op">&lt;-</span>
@@ -259,80 +255,80 @@
   <span class="fu"><a href="../reference/cpr_classify_signif.html">cpr_classify_signif</a></span><span class="op">(</span><span class="st">"rpe"</span><span class="op">)</span>
 
 <span class="co"># Take a look at one of the significance classifications:</span>
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">acacia_canape</span><span class="op">$</span><span class="va">pd_signif</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">acacia_canape</span><span class="op">$</span><span class="va">pd_signif</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;          &lt; 0.01         &lt; 0.025         &gt; 0.975          &gt; 0.99 not significant </span>
 <span class="co">#&gt;             291             233              28              17            2468</span></code></pre></div>
 </div>
-<div id="visualize-results" class="section level2">
-<h2 class="hasAnchor">
-<a href="#visualize-results" class="anchor"></a>Visualize results</h2>
+<div class="section level2">
+<h2 id="visualize-results">Visualize results<a class="anchor" aria-label="anchor" href="#visualize-results"></a>
+</h2>
 <p>With the randomizations and classification steps taken care of, we can now visualize the results to see how they match up with those of <span class="citation">Mishler et al. (2014)</span>.</p>
 <p>Note that the results will not be identical because we have used a different randomization algorithm from the paper and because of stochasticity in the random values.</p>
 <p>Here is Figure 2, showing the results of the randomization test for PE, RPE, PE, and RPE:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Fist do some data wrangling to make the results easier to plot (add lat/long columns)</span>
 <span class="va">acacia_canape</span> <span class="op">&lt;-</span> <span class="va">acacia_canape</span> |&gt;
-  <span class="fu">separate</span><span class="op">(</span><span class="va">site</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"long"</span>, <span class="st">"lat"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">":"</span><span class="op">)</span> |&gt; 
-  <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span><span class="op">)</span>, <span class="va">parse_number</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">separate</a></span><span class="op">(</span><span class="va">site</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"long"</span>, <span class="st">"lat"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">":"</span><span class="op">)</span> |&gt; 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span><span class="op">)</span>, <span class="va">parse_number</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">a</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">acacia_canape</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, fill <span class="op">=</span> <span class="va">pd_signif</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_tile</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+<span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">acacia_canape</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, fill <span class="op">=</span> <span class="va">pd_signif</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="co"># cpr_signif_cols is a color palette in canaper for significance colors</span>
-  <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_signif_cols</span>, name <span class="op">=</span> <span class="st">"Phylogenetic diversity"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title.position <span class="op">=</span> <span class="st">"top"</span>, label.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_signif_cols</span>, name <span class="op">=</span> <span class="st">"Phylogenetic diversity"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>title.position <span class="op">=</span> <span class="st">"top"</span>, label.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">acacia_canape</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, fill <span class="op">=</span> <span class="va">rpd_signif</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_tile</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_signif_cols</span>, name <span class="op">=</span> <span class="st">"Relative phylogenetic diversity"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title.position <span class="op">=</span> <span class="st">"top"</span>, label.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">acacia_canape</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, fill <span class="op">=</span> <span class="va">rpd_signif</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_signif_cols</span>, name <span class="op">=</span> <span class="st">"Relative phylogenetic diversity"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>title.position <span class="op">=</span> <span class="st">"top"</span>, label.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">c</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">acacia_canape</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, fill <span class="op">=</span> <span class="va">pe_signif</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_tile</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_signif_cols</span>, name <span class="op">=</span> <span class="st">"Phylogenetic endemism"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title.position <span class="op">=</span> <span class="st">"top"</span>, label.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">acacia_canape</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, fill <span class="op">=</span> <span class="va">pe_signif</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_signif_cols</span>, name <span class="op">=</span> <span class="st">"Phylogenetic endemism"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>title.position <span class="op">=</span> <span class="st">"top"</span>, label.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">acacia_canape</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, fill <span class="op">=</span> <span class="va">rpe_signif</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_tile</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_signif_cols</span>, name <span class="op">=</span> <span class="st">"Relative phylogenetic endemism"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title.position <span class="op">=</span> <span class="st">"top"</span>, label.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">acacia_canape</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, fill <span class="op">=</span> <span class="va">rpe_signif</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_signif_cols</span>, name <span class="op">=</span> <span class="st">"Relative phylogenetic endemism"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>title.position <span class="op">=</span> <span class="st">"top"</span>, label.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">a</span> <span class="op">+</span> <span class="va">b</span> <span class="op">+</span> <span class="va">c</span> <span class="op">+</span> <span class="va">d</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span></code></pre></div>
+<span class="va">a</span> <span class="op">+</span> <span class="va">b</span> <span class="op">+</span> <span class="va">c</span> <span class="op">+</span> <span class="va">d</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html" class="external-link">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span></code></pre></div>
 <p><img src="canape_files/figure-html/mishler2014-fig2-1.png" width="672"></p>
 <p>And here is Figure 3, showing the results of CANAPE:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">acacia_canape</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, fill <span class="op">=</span> <span class="va">endem_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_tile</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+<code class="sourceCode R"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">acacia_canape</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, fill <span class="op">=</span> <span class="va">endem_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="co"># cpr_endem_cols is a color palette in canaper for endemism colors</span>
-  <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_endem_cols</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title.position <span class="op">=</span> <span class="st">"top"</span>, label.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span>, legend.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_endem_cols</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>title.position <span class="op">=</span> <span class="st">"top"</span>, label.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span>, legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">acacia_canape</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">pe_alt_obs</span>, y <span class="op">=</span> <span class="va">pe_obs</span>, color <span class="op">=</span> <span class="va">endem_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_abline</span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"darkgrey"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_color_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_endem_cols</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">labs</span><span class="op">(</span>
+<span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">acacia_canape</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">pe_alt_obs</span>, y <span class="op">=</span> <span class="va">pe_obs</span>, color <span class="op">=</span> <span class="va">endem_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_abline</a></span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"darkgrey"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_endem_cols</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>
     x <span class="op">=</span> <span class="st">"Phylogenetic endemism on comparison tree"</span>,
     y <span class="op">=</span> <span class="st">"Phylogenetic endemism on actual tree"</span>
   <span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span>
 
-<span class="va">a</span> <span class="op">+</span> <span class="va">b</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></code></pre></div>
+<span class="va">a</span> <span class="op">+</span> <span class="va">b</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html" class="external-link">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></code></pre></div>
 <p><img src="canape_files/figure-html/mishler2014-fig3-1.png" width="576"></p>
 </div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2 unnumbered">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references">
 <div id="ref-Mishler2014">
-<p>Mishler, Brent D, Nunzio Knerr, Carlos E. González-Orozco, Andrew H. Thornhill, Shawn W. Laffan, and Joseph T. Miller. 2014. “Phylogenetic Measures of Biodiversity and Neo- and Paleo-Endemism in Australian Acacia.” <em>Nature Communications</em> 5: 4473. <a href="https://doi.org/10.1038/ncomms5473">https://doi.org/10.1038/ncomms5473</a>.</p>
+<p>Mishler, Brent D, Nunzio Knerr, Carlos E. González-Orozco, Andrew H. Thornhill, Shawn W. Laffan, and Joseph T. Miller. 2014. “Phylogenetic Measures of Biodiversity and Neo- and Paleo-Endemism in Australian Acacia.” <em>Nature Communications</em> 5: 4473. <a href="https://doi.org/10.1038/ncomms5473" class="external-link">https://doi.org/10.1038/ncomms5473</a>.</p>
 </div>
 <div id="ref-Strona2014">
-<p>Strona, Giovanni, Domenico Nappo, Francesco Boccacci, Simone Fattorini, and Jesus San-Miguel-Ayanz. 2014. “A Fast and Unbiased Procedure to Randomize Ecological Binary Matrices with Fixed Row and Column Totals.” <em>Nature Communications</em> 5 (1): 4114. <a href="https://doi.org/10.1038/ncomms5114">https://doi.org/10.1038/ncomms5114</a>.</p>
+<p>Strona, Giovanni, Domenico Nappo, Francesco Boccacci, Simone Fattorini, and Jesus San-Miguel-Ayanz. 2014. “A Fast and Unbiased Procedure to Randomize Ecological Binary Matrices with Fixed Row and Column Totals.” <em>Nature Communications</em> 5 (1): 4114. <a href="https://doi.org/10.1038/ncomms5114" class="external-link">https://doi.org/10.1038/ncomms5114</a>.</p>
 </div>
 <div id="ref-Strona2018">
-<p>Strona, Giovanni, Werner Ulrich, and Nicholas J. Gotelli. 2018. “Bi‐dimensional Null Model Analysis of Presence‐absence Binary Matrices.” <em>Ecology</em> 99 (1): 103–15. <a href="https://doi.org/10.1002/ecy.2043">https://doi.org/10.1002/ecy.2043</a>.</p>
+<p>Strona, Giovanni, Werner Ulrich, and Nicholas J. Gotelli. 2018. “Bi‐dimensional Null Model Analysis of Presence‐absence Binary Matrices.” <em>Ecology</em> 99 (1): 103–15. <a href="https://doi.org/10.1002/ecy.2043" class="external-link">https://doi.org/10.1002/ecy.2043</a>.</p>
 </div>
 </div>
 </div>
@@ -342,8 +338,8 @@
 <li id="fn1"><p>You might think the dataset is all zeros, but that is not the case. It is just very sparse.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 <li id="fn2"><p>32 as of <code>vegan</code> v2.5.7, though not all may be applicable.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 <li id="fn3"><p>For a good review of randomization algorithms and their implications for analysis results, see <span class="citation">Strona, Ulrich, and Gotelli (2018)</span><a href="#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p>For more information on how and when to use parallel computing in <code>canaper</code>, <a href="https://joelnitta.github.io/canaper/articles/parallel.html">see the “Parallel computing” vignette</a><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
-<li id="fn5"><p>For more information on setting the appropriate number of iterations and replicates, <a href="https://joelnitta.github.io/canaper/articles/how-many-rand.html">see the “How many randomizations?” vigenette</a>.<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>For more information on how and when to use parallel computing in <code>canaper</code>, <a href="https://joelnitta.github.io/canaper/articles/parallel.html" class="external-link">see the “Parallel computing” vignette</a><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>For more information on setting the appropriate number of iterations and replicates, <a href="https://joelnitta.github.io/canaper/articles/how-many-rand.html" class="external-link">see the “How many randomizations?” vigenette</a>.<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
 <li id="fn6"><p><code>curveball</code> is similar to <code>swap</code> but runs much faster so I chose it for this large dataset.<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
@@ -360,11 +356,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Joel H. Nitta.</p>
+  <p></p>
+<p>Developed by Joel H. Nitta.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -372,6 +370,8 @@
 
   
 
+
+  
 
   </body>
 </html>

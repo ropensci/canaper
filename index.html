@@ -20,6 +20,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -32,18 +34,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">canaper</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -71,7 +67,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/joelnitta/canaper/">
+  <a href="https://github.com/joelnitta/canaper/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -88,33 +84,33 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="canaper" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#canaper" class="anchor"></a>canaper</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="canaper">canaper<a class="anchor" aria-label="anchor" href="#canaper"></a>
+</h1></div>
 <!-- badges: start -->
 
-<p>The goal of canaper is to enable <a href="https://doi.org/10.1038/ncomms5473">categorical analysis of neo- and paleo-endemism (CANAPE)</a> in <strong>R</strong>. This is the first implementation in <strong>R</strong> of CANAPE, which was previously only available in <a href="http://shawnlaffan.github.io/biodiverse/">Biodiverse</a>.</p>
-<div id="important-note" class="section level2">
-<h2 class="hasAnchor">
-<a href="#important-note" class="anchor"></a>Important note</h2>
-<p><strong>This package is in early development.</strong> There may be major, breaking changes to functionality in the near future. If you use this package, I highly recommend using a package manager like <a href="https://rstudio.github.io/renv/articles/renv.html">renv</a> so that later updates won’t break your code.</p>
+<p>The goal of canaper is to enable <a href="https://doi.org/10.1038/ncomms5473" class="external-link">categorical analysis of neo- and paleo-endemism (CANAPE)</a> in <strong>R</strong>. This is the first implementation in <strong>R</strong> of CANAPE, which was previously only available in <a href="http://shawnlaffan.github.io/biodiverse/" class="external-link">Biodiverse</a>.</p>
+<div class="section level2">
+<h2 id="important-note">Important note<a class="anchor" aria-label="anchor" href="#important-note"></a>
+</h2>
+<p><strong>This package is in early development.</strong> There may be major, breaking changes to functionality in the near future. If you use this package, I highly recommend using a package manager like <a href="https://rstudio.github.io/renv/articles/renv.html" class="external-link">renv</a> so that later updates won’t break your code.</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install canaper from <a href="https://github.com/">GitHub</a> with:</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>You can install canaper from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"joelnitta/canaper"</span><span class="op">)</span></code></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"joelnitta/canaper"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="example-usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-usage" class="anchor"></a>Example usage</h2>
-<p>These examples use the dataset from <a href="http://phylodiversity.net/phylocom/">Phylocom</a>. The dataset includes a community (site x species) matrix and a phylogenetic tree.</p>
+<div class="section level2">
+<h2 id="example-usage">Example usage<a class="anchor" aria-label="anchor" href="#example-usage"></a>
+</h2>
+<p>These examples use the dataset from <a href="http://phylodiversity.net/phylocom/" class="external-link">Phylocom</a>. The dataset includes a community (site x species) matrix and a phylogenetic tree.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/joelnitta/canaper">canaper</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/joelnitta/canaper" class="external-link">canaper</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">phylocom</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">phylocom</span><span class="op">)</span>
 
 <span class="co"># Example community matrix including 4 "clumped" communities,</span>
 <span class="co"># one "even" community, and one "random" community</span>
@@ -147,7 +143,7 @@
 <span class="co">#&gt; Rooted; includes branch lengths.</span></code></pre></div>
 <p>The main “workhorse” function of <code>canaper</code> is <code><a href="reference/cpr_rand_test.html">cpr_rand_test()</a></code>, which conducts a randomization test to determine if observed values of phylogenetic diversity (PD) and phylogenetic endemism (PE) are significantly different from random. It also calculates the same values on an alternative phylogeny where all branch lengths have been set equal (alternative PD, alternative PE) as well as the ratio of the original value to the alternative value (relative PD, relative PE).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">071421</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">071421</span><span class="op">)</span>
 <span class="va">rand_test_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span><span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span>, null_model <span class="op">=</span> <span class="st">"swap"</span><span class="op">)</span>
 <span class="co">#&gt; Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: </span>
 <span class="co">#&gt;  sp16, sp23, sp27, sp28, sp30, sp31, sp32</span></code></pre></div>
@@ -214,120 +210,125 @@
 <li>
 <code>super</code>: mixed and highly significant (<em>p</em> &lt; 0.01)</li>
 </ul>
-<p>For a more complete example, please <a href="https://joelnitta.github.io/canaper/articles/canape.html">see the vignette</a></p>
+<p>For a more complete example, please <a href="https://joelnitta.github.io/canaper/articles/canape.html" class="external-link">see the vignette</a></p>
 </div>
-<div id="other-information" class="section level2">
-<h2 class="hasAnchor">
-<a href="#other-information" class="anchor"></a>Other information</h2>
-<p>Poster at <a href="https://2021.botanyconference.org/">Botany 2021</a></p>
+<div class="section level2">
+<h2 id="other-information">Other information<a class="anchor" aria-label="anchor" href="#other-information"></a>
+</h2>
+<p>Poster at <a href="https://2021.botanyconference.org/" class="external-link">Botany 2021</a></p>
 <ul>
-<li><a href="https://github.com/joelnitta/botany_poster_2021/raw/main/canaper.pdf">PDF</a></li>
-<li><a href="https://www.youtube.com/watch?v=LXn_ziEli_Q">Video</a></li>
+<li><a href="https://github.com/joelnitta/botany_poster_2021/raw/main/canaper.pdf" class="external-link">PDF</a></li>
+<li><a href="https://www.youtube.com/watch?v=LXn_ziEli_Q" class="external-link">Video</a></li>
 </ul>
 </div>
-<div id="citing-this-package" class="section level2">
-<h2 class="hasAnchor">
-<a href="#citing-this-package" class="anchor"></a>Citing this package</h2>
+<div class="section level2">
+<h2 id="citing-this-package">Citing this package<a class="anchor" aria-label="anchor" href="#citing-this-package"></a>
+</h2>
 <p>If you use this package, please cite it! Here is an example:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>Nitta JH, Laffan SW, Mishler BD, Iwasaki <span class="kw">W.</span> (<span class="dv">2021</span>) canaper<span class="op">:</span><span class="st"> </span>Categorical analysis of neo<span class="op">-</span><span class="st"> </span>and paleo<span class="op">-</span>endemism <span class="cf">in</span> R. doi<span class="op">:</span><span class="st"> </span><span class="fl">10.5281</span><span class="op">/</span>zenodo<span class="fl">.5094032</span></span></code></pre></div>
 <p>The example DOI above is for the overall package.</p>
 <p>Here is the latest DOI, which you should use if you are using the latest version of the package:</p>
-<p><a href="https://zenodo.org/badge/latestdoi/359280907"><img src="https://zenodo.org/badge/359280907.svg" alt="DOI"></a></p>
+<p><a href="https://zenodo.org/badge/latestdoi/359280907" class="external-link"><img src="https://zenodo.org/badge/359280907.svg" alt="DOI"></a></p>
 <p>You can find DOIs for older versions by viewing the “Releases” menu on the right.</p>
 </div>
-<div id="papers-citing-canaper" class="section level2">
-<h2 class="hasAnchor">
-<a href="#papers-citing-canaper" class="anchor"></a>Papers citing <code>canaper</code>
+<div class="section level2">
+<h2 id="papers-citing-canaper">Papers citing <code>canaper</code>
+<a class="anchor" aria-label="anchor" href="#papers-citing-canaper"></a>
 </h2>
 <ul>
-<li>Nitta <em>et al.</em> “Spatial phylogenetics of Japanese ferns: Patterns, processes, and implications for conservation”. bioRxiv <a href="https://doi.org/10.1101/2021.08.26.457744" class="uri">https://doi.org/10.1101/2021.08.26.457744</a>
+<li>Nitta <em>et al.</em> “Spatial phylogenetics of Japanese ferns: Patterns, processes, and implications for conservation”. bioRxiv <a href="https://doi.org/10.1101/2021.08.26.457744" class="external-link uri">https://doi.org/10.1101/2021.08.26.457744</a>
 </li>
 </ul>
 </div>
-<div id="licenses" class="section level2">
-<h2 class="hasAnchor">
-<a href="#licenses" class="anchor"></a>Licenses</h2>
+<div class="section level2">
+<h2 id="licenses">Licenses<a class="anchor" aria-label="anchor" href="#licenses"></a>
+</h2>
 <ul>
 <li>Original code: <a href="LICENSE.html">MIT</a>
 </li>
-<li>Functions from <a href="https://github.com/darunabas/phyloregion">phyloregion</a>: <a href="https://github.com/joelnitta/canaper/blob/main/data-raw/LICENSE-agpl-3.txt">AGPL-3</a>
+<li>Functions from <a href="https://github.com/darunabas/phyloregion" class="external-link">phyloregion</a>: <a href="https://github.com/joelnitta/canaper/blob/main/data-raw/LICENSE-agpl-3.txt" class="external-link">AGPL-3</a>
 </li>
 <li>Example datasets
 <ul>
 <li>
-<code>acacia</code>, <code>biod_example</code>: <a href="https://github.com/joelnitta/canaper/blob/main/data-raw/LICENSE-gpl-3.txt">GPL-3</a>
+<code>acacia</code>, <code>biod_example</code>: <a href="https://github.com/joelnitta/canaper/blob/main/data-raw/LICENSE-gpl-3.txt" class="external-link">GPL-3</a>
 </li>
 <li>
-<code>phylocom</code>: <a href="https://github.com/joelnitta/canaper/blob/main/data-raw/LICENSE-bsd3.txt">BSD-3-Clause</a>
+<code>phylocom</code>: <a href="https://github.com/joelnitta/canaper/blob/main/data-raw/LICENSE-bsd3.txt" class="external-link">BSD-3-Clause</a>
 </li>
 </ul>
 </li>
 </ul>
 </div>
-<div id="references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
-<p>Mishler, B., Knerr, N., González-Orozco, C. <em>et al</em>. Phylogenetic measures of biodiversity and neo- and paleo-endemism in Australian <em>Acacia</em>. <em>Nat Commun</em> 5, 4473 (2014). <a href="https://doi.org/10.1038/ncomms5473" class="uri">https://doi.org/10.1038/ncomms5473</a></p>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<p>Mishler, B., Knerr, N., González-Orozco, C. <em>et al</em>. Phylogenetic measures of biodiversity and neo- and paleo-endemism in Australian <em>Acacia</em>. <em>Nat Commun</em> 5, 4473 (2014). <a href="https://doi.org/10.1038/ncomms5473" class="external-link uri">https://doi.org/10.1038/ncomms5473</a></p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/joelnitta/canaper/">https://​github.com/​joelnitta/​canaper/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/joelnitta/canaper/issues">https://​github.com/​joelnitta/​canaper/​issues</a>
-</li>
+<li><a href="https://github.com/joelnitta/canaper/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/joelnitta/canaper/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 </ul>
 </div>
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html">Citing canaper</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Joel H. Nitta <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-4719-7472" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html#citation">Citing canaper</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://zenodo.org/badge/latestdoi/359280907"><img src="https://zenodo.org/badge/359280907.svg" alt="DOI"></a></li>
-<li><a href="https://github.com/joelnitta/canaper/actions"><img src="https://github.com/joelnitta/canaper/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://www.repostatus.org/#wip"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public."></a></li>
-<li><a href="https://codecov.io/gh/joelnitta/canaper?branch=main"><img src="https://codecov.io/gh/joelnitta/canaper/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li>Joel H. Nitta <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-4719-7472" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://zenodo.org/badge/latestdoi/359280907" class="external-link"><img src="https://zenodo.org/badge/359280907.svg" alt="DOI"></a></li>
+<li><a href="https://github.com/joelnitta/canaper/actions" class="external-link"><img src="https://github.com/joelnitta/canaper/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://www.repostatus.org/#wip" class="external-link"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public."></a></li>
+<li><a href="https://codecov.io/gh/joelnitta/canaper?branch=main" class="external-link"><img src="https://codecov.io/gh/joelnitta/canaper/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+</ul>
 </div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Joel H. Nitta.</p>
+  <p></p>
+<p>Developed by Joel H. Nitta.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -335,6 +336,8 @@
 
   
 
+
+  
 
   </body>
 </html>
