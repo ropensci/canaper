@@ -10,13 +10,13 @@
   "codeRepository": "https://github.com/joelnitta/canaper",
   "issueTracker": "https://github.com/joelnitta/canaper/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.1 (2021-08-10)",
+  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
   "author": [
     {
       "@type": "Person",
@@ -370,7 +370,7 @@
     }
   ],
   "releaseNotes": "https://github.com/joelnitta/canaper/blob/master/NEWS.md",
-  "fileSize": "7891.857KB",
+  "fileSize": "8154.89KB",
   "contIntegration": ["https://github.com/joelnitta/canaper/actions", "https://codecov.io/gh/joelnitta/canaper?branch=main"],
   "developmentStatus": "https://www.repostatus.org/#wip",
   "keywords": [
