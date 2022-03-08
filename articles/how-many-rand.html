@@ -43,7 +43,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -87,7 +87,7 @@
       <h1 data-toc-skip>How many randomizations?</h1>
                         <h4 data-toc-skip class="author">Joel H. Nitta</h4>
             
-            <h4 data-toc-skip class="date">20 January, 2022</h4>
+            <h4 data-toc-skip class="date">08 March, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/joelnitta/canaper/blob/HEAD/vignettes/how-many-rand.Rmd" class="external-link"><code>vignettes/how-many-rand.Rmd</code></a></small>
       <div class="hidden name"><code>how-many-rand.Rmd</code></div>
@@ -178,21 +178,21 @@
   null_model <span class="op">=</span> <span class="st">"swap"</span>,
   n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">10</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 1.939 sec elapsed</span>
+<span class="co">#&gt; 6.461 sec elapsed</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">tic</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">res_100_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span>
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>, 
   null_model <span class="op">=</span> <span class="st">"swap"</span>,
   n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">100</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 13.167 sec elapsed</span>
+<span class="co">#&gt; 7.229 sec elapsed</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">tic</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">res_1000_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span>
   <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>, 
   null_model <span class="op">=</span> <span class="st">"swap"</span>,
   n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">1000</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 117.484 sec elapsed</span>
+<span class="co">#&gt; 69.32 sec elapsed</span>
 
 <span class="co"># Second set</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">67890</span><span class="op">)</span>
@@ -255,9 +255,9 @@
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 4</span></span>
 <span class="co">#&gt;   agree total p_agree n_reps</span>
 <span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   101   127   0.795     10</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   100   127   0.787     10</span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">2</span>   120   127   0.945    100</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   123   127   0.969   <span style="text-decoration: underline;">1</span>000</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   127   127   1       <span style="text-decoration: underline;">1</span>000</span></code></pre></div>
 <p>At 1,000 replicates, we see 100% agreement on endemism type between the two randomizations! Convergence doesn’t get better than that<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> :)</p>
 <p>Of course, another important consideration is <strong>how long</strong> calculations take. You can see that time increases with <code>n_reps</code>, but not exactly in a linear fashion. We don’t have the space to go into benchmarking here, but this illustrates the time / <code>n_reps</code> trade-off<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>.</p>
 </div>

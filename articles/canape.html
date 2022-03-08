@@ -43,7 +43,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -87,7 +87,7 @@
       <h1 data-toc-skip>CANAPE example</h1>
                         <h4 data-toc-skip class="author">Joel H. Nitta</h4>
             
-            <h4 data-toc-skip class="date">20 January, 2022</h4>
+            <h4 data-toc-skip class="date">08 March, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/joelnitta/canaper/blob/HEAD/vignettes/canape.Rmd" class="external-link"><code>vignettes/canape.Rmd</code></a></small>
       <div class="hidden name"><code>canape.Rmd</code></div>
@@ -183,7 +183,7 @@
 <span class="co">#&gt; Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: </span>
 <span class="co">#&gt;  Pararchidendron_pruinosum, Paraserianthes_lophantha, saligna, clunies-rossiae</span>
 <span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># See how long it took</span>
-<span class="co">#&gt; 97.048 sec elapsed</span>
+<span class="co">#&gt; 85.824 sec elapsed</span>
 
 <span class="co"># Switch back to sequential (non-parallel) mode</span>
 <span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></code></pre></div>
@@ -193,16 +193,16 @@
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 3,037 × 55</span></span>
 <span class="co">#&gt;    site    pd_obs pd_rand_mean pd_rand_sd pd_obs_z pd_obs_c_upper pd_obs_c_lower</span>
 <span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> '-1025… 0.014<span style="text-decoration: underline;">5</span>       0.022<span style="text-decoration: underline;">3</span>    0.003<span style="text-decoration: underline;">58</span>  -<span style="color: #BB0000;">2.17</span>                1             99</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> '-1025… 0.038<span style="text-decoration: underline;">3</span>       0.049<span style="text-decoration: underline;">4</span>    0.007<span style="text-decoration: underline;">88</span>  -<span style="color: #BB0000;">1.41</span>                7             93</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> '-1025… 0.037<span style="text-decoration: underline;">9</span>       0.037<span style="text-decoration: underline;">0</span>    0.006<span style="text-decoration: underline;">60</span>   0.141              64             36</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> '-1025… 0.057<span style="text-decoration: underline;">1</span>       0.060<span style="text-decoration: underline;">5</span>    0.007<span style="text-decoration: underline;">94</span>  -<span style="color: #BB0000;">0.419</span>              34             66</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> '-1025… 0.041<span style="text-decoration: underline;">0</span>       0.041<span style="text-decoration: underline;">3</span>    0.006<span style="text-decoration: underline;">82</span>  -<span style="color: #BB0000;">0.056</span><span style="color: #BB0000; text-decoration: underline;">8</span>             51             49</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> '-1025… 0.010<span style="text-decoration: underline;">0</span>       0.010<span style="text-decoration: underline;">1</span>    0.002<span style="text-decoration: underline;">25</span>  -<span style="color: #BB0000;">0.062</span><span style="color: #BB0000; text-decoration: underline;">0</span>             52             47</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> '-1025… 0.018<span style="text-decoration: underline;">8</span>       0.023<span style="text-decoration: underline;">2</span>    0.004<span style="text-decoration: underline;">29</span>  -<span style="color: #BB0000;">1.04</span>               13             87</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> '-1025… 0.043<span style="text-decoration: underline;">5</span>       0.055<span style="text-decoration: underline;">0</span>    0.007<span style="text-decoration: underline;">97</span>  -<span style="color: #BB0000;">1.45</span>                8             92</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> '-1025… 0.011<span style="text-decoration: underline;">1</span>       0.010<span style="text-decoration: underline;">1</span>    0.002<span style="text-decoration: underline;">27</span>   0.454              83             17</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> '-1025… 0.090<span style="text-decoration: underline;">5</span>       0.087<span style="text-decoration: underline;">3</span>    0.011<span style="text-decoration: underline;">2</span>    0.290              61             39</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> '-1025… 0.014<span style="text-decoration: underline;">5</span>       0.022<span style="text-decoration: underline;">4</span>    0.004<span style="text-decoration: underline;">51</span> -<span style="color: #BB0000;">1.76</span>                 2             98</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> '-1025… 0.038<span style="text-decoration: underline;">3</span>       0.049<span style="text-decoration: underline;">1</span>    0.007<span style="text-decoration: underline;">94</span> -<span style="color: #BB0000;">1.37</span>                 8             92</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> '-1025… 0.037<span style="text-decoration: underline;">9</span>       0.037<span style="text-decoration: underline;">9</span>    0.006<span style="text-decoration: underline;">96</span> -<span style="color: #BB0000;">0.006</span><span style="color: #BB0000; text-decoration: underline;">40</span>             54             46</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> '-1025… 0.057<span style="text-decoration: underline;">1</span>       0.061<span style="text-decoration: underline;">6</span>    0.007<span style="text-decoration: underline;">76</span> -<span style="color: #BB0000;">0.570</span>               33             67</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> '-1025… 0.041<span style="text-decoration: underline;">0</span>       0.041<span style="text-decoration: underline;">5</span>    0.007<span style="text-decoration: underline;">04</span> -<span style="color: #BB0000;">0.074</span><span style="color: #BB0000; text-decoration: underline;">7</span>              52             48</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> '-1025… 0.010<span style="text-decoration: underline;">0</span>       0.010<span style="text-decoration: underline;">3</span>    0.002<span style="text-decoration: underline;">30</span> -<span style="color: #BB0000;">0.126</span>               55             45</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> '-1025… 0.018<span style="text-decoration: underline;">8</span>       0.022<span style="text-decoration: underline;">8</span>    0.004<span style="text-decoration: underline;">11</span> -<span style="color: #BB0000;">0.980</span>               17             83</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> '-1025… 0.043<span style="text-decoration: underline;">5</span>       0.053<span style="text-decoration: underline;">9</span>    0.007<span style="text-decoration: underline;">24</span> -<span style="color: #BB0000;">1.44</span>                 8             92</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> '-1025… 0.011<span style="text-decoration: underline;">1</span>       0.010<span style="text-decoration: underline;">3</span>    0.002<span style="text-decoration: underline;">32</span>  0.377               80             20</span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> '-1025… 0.090<span style="text-decoration: underline;">5</span>       0.086<span style="text-decoration: underline;">1</span>    0.010<span style="text-decoration: underline;">2</span>   0.429               67             33</span>
 <span class="co">#&gt; <span style="color: #949494;"># … with 3,027 more rows, and 48 more variables: pd_obs_q &lt;dbl&gt;,</span></span>
 <span class="co">#&gt; <span style="color: #949494;">#   pd_obs_p_upper &lt;dbl&gt;, pd_obs_p_lower &lt;dbl&gt;, pd_alt_obs &lt;dbl&gt;,</span></span>
 <span class="co">#&gt; <span style="color: #949494;">#   pd_alt_rand_mean &lt;dbl&gt;, pd_alt_rand_sd &lt;dbl&gt;, pd_alt_obs_z &lt;dbl&gt;,</span></span>
@@ -239,7 +239,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">acacia_canape</span><span class="op">$</span><span class="va">endem_type</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           mixed             neo not significant           paleo           super </span>
-<span class="co">#&gt;             181              10            2775              41              30</span></code></pre></div>
+<span class="co">#&gt;             175               9            2784              34              35</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="classify-signficance">Classify signficance<a class="anchor" aria-label="anchor" href="#classify-signficance"></a>
@@ -258,7 +258,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">acacia_canape</span><span class="op">$</span><span class="va">pd_signif</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;          &lt; 0.01         &lt; 0.025         &gt; 0.975          &gt; 0.99 not significant </span>
-<span class="co">#&gt;             291             233              28              17            2468</span></code></pre></div>
+<span class="co">#&gt;             303             216              33              21            2464</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="visualize-results">Visualize results<a class="anchor" aria-label="anchor" href="#visualize-results"></a>

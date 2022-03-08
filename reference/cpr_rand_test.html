@@ -28,7 +28,7 @@ Various statistics are calculated from the comparison (see Value below)."><!-- m
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -122,26 +122,29 @@ contains the site names; only used if <code>comm</code> is a tibble (object of c
 <code>tbl_df</code>).</p></dd>
 <dt>tbl_out</dt>
 <dd><p>Logical vector of length 1; should the output be returned as
-a tibble? If <code>FALSE</code>, will return a dataframe. Defaults to <code>TRUE</code> if <code>comm</code> is
-a tibble.</p></dd>
+a tibble? If <code>FALSE</code>, will return a dataframe. Defaults to <code>TRUE</code> if <code>comm</code>
+is a tibble.</p></dd>
 <dt>quiet</dt>
 <dd><p>Logical vector of length 1; if <code>TRUE</code>, suppress all warnings and
 messages that would be emitted by this function.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Dataframe. For each of the biodiversity metrics, the following 9 columns
-will be produced:</p><ul><li><p><code>*_obs</code>: Observed value</p></li>
+    <p>Dataframe. For each of the biodiversity metrics, the following 9
+columns will be produced:</p><ul><li><p><code>*_obs</code>: Observed value</p></li>
 <li><p><code>*_obs_c_lower</code>: Count of times observed value was lower than random values</p></li>
-<li><p><code>*_obs_c_upper</code>: Count of times observed value was higher than random values</p></li>
-<li><p><code>*_obs_p_lower</code>: Percentage of times observed value was lower than random values</p></li>
-<li><p><code>*_obs_p_upper</code>: Percentage of times observed value was higher than random values</p></li>
+<li><p><code>*_obs_c_upper</code>: Count of times observed value was higher than random
+values</p></li>
+<li><p><code>*_obs_p_lower</code>: Percentage of times observed value was lower than random
+values</p></li>
+<li><p><code>*_obs_p_upper</code>: Percentage of times observed value was higher than random
+values</p></li>
 <li><p><code>*_obs_q</code>: Count of the non-NA random values used for comparison</p></li>
 <li><p><code>*_obs_z</code>: Standard effect size (z-score)</p></li>
 <li><p><code>*_rand_mean</code>: Mean of the random values</p></li>
 <li><p><code>*_rand_sd</code>: Standard deviation of the random values</p></li>
-</ul><p>So if you included <code>pd</code> in <code>metrics</code>, the output columns would include <code>pd_obs</code>,
-<code>pd_obs_c_lower</code>, etc...</p>
+</ul><p>So if you included <code>pd</code> in <code>metrics</code>, the output columns would include
+<code>pd_obs</code>, <code>pd_obs_c_lower</code>, etc...</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -149,9 +152,10 @@ will be produced:</p><ul><li><p><code>*_obs</code>: Observed value</p></li>
 <li><p><code>rpd</code>: Relative phylogenetic diversity (Mishler et al 2014)</p></li>
 <li><p><code>pe</code>: Phylogenetic endemism (Rosauer et al 2009)</p></li>
 <li><p><code>rpe</code>: Relative phylogenetic endemism (Mishler et al 2014)</p></li>
-</ul><p>(<code>pe</code> and <code>rpe</code> are needed for CANAPE with <code><a href="cpr_classify_endem.html">cpr_classify_endem</a>()</code>)</p>
-<p>The choice of a randomization algorithm (<code>null_model</code>) is not trivial, and may
-strongly affect results. <code>cpr_rand_test()</code> uses null models provided by
+</ul><p>(<code>pe</code> and <code>rpe</code> are needed for CANAPE with
+<code><a href="cpr_classify_endem.html">cpr_classify_endem</a>()</code>)</p>
+<p>The choice of a randomization algorithm (<code>null_model</code>) is not trivial, and
+may strongly affect results. <code>cpr_rand_test()</code> uses null models provided by
 <code>vegan</code>; for a complete list, see the help file of <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">vegan::commsim()</a></code> or run
 <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">vegan::make.commsim()</a></code>. One frequently used null model is <code>swap</code> (Gotelli &amp;
 Entsminger 2003), which randomizes the community matrix while preserving
@@ -176,20 +180,24 @@ investigated.</p>
 likely cause the some randomization algorithms (e.g., <code>swap</code>) to enter an
 infinite loop. Besides, inferences on very small numbers of species and/or
 sites is not recommended generally.</p>
-<p>The following rules apply to <code>comm</code> input:</p><ul><li><p>If dataframe or matrix, must include row names (site names) and column names (species names).</p></li>
-<li><p>If tibble, a single column (default, <code>site</code>) must be included with site names, and other columns must correspond to species names.</p></li>
+<p>The following rules apply to <code>comm</code> input:</p><ul><li><p>If dataframe or matrix, must include row names (site names) and column
+names (species names).</p></li>
+<li><p>If tibble, a single column (default, <code>site</code>) must be included with site
+names, and other columns must correspond to species names.</p></li>
 <li><p>Column names cannot start with a number and must be unique.</p></li>
 <li><p>Row names (site names) must be unique.</p></li>
-<li><p>Values (other than site names) should only include integers &gt;= 0; non-integer input will be converted to integer.</p></li>
+<li><p>Values (other than site names) should only include integers &gt;= 0;
+non-integer input will be converted to integer.</p></li>
 </ul><p>The results are identical regardless of whether the input for <code>comm</code> is
 abundance or presence-absence data (i.e., abundance weighting is not used).</p>
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Faith DP (1992) Conservation evaluation and phylogenetic diversity.
-Biological Conservation, 61:1–10. doi: <a href="https://doi.org/10.1016/0006-3207(92)91201-3" class="external-link">10.1016/0006-3207(92)91201-3</a></p>
-<p>Gotelli, N.J. and Entsminger, N.J. (2003). Swap algorithms in null
-model analysis. Ecology 84, 532–535.</p>
+    <p>Faith DP (1992) Conservation evaluation and phylogenetic
+diversity. Biological Conservation, 61:1–10.
+doi: <a href="https://doi.org/10.1016/0006-3207(92)91201-3" class="external-link">10.1016/0006-3207(92)91201-3</a></p>
+<p>Gotelli, N.J. and Entsminger, N.J. (2003). Swap algorithms in
+null model analysis. Ecology 84, 532–535.</p>
 <p>Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
 Phylogenetic measures of biodiversity and neo- and paleo-endemism in
 Australian Acacia. Nat Commun, 5: 4473. doi: <a href="https://doi.org/10.1038/ncomms5473" class="external-link">10.1038/ncomms5473</a></p>
@@ -197,9 +205,9 @@ Australian Acacia. Nat Commun, 5: 4473. doi: <a href="https://doi.org/10.1038/nc
 L.G. (2009) Phylogenetic endemism: a new approach for identifying
 geographical concentrations of evolutionary history. Molecular Ecology, 18:
 4061-4072. doi: <a href="https://doi.org/10.1111/j.1365-294X.2009.04311.x" class="external-link">10.1111/j.1365-294X.2009.04311.x</a></p>
-<p>Strona, G., Ulrich, W. and Gotelli, N.J. (2018), Bi-dimensional null
-model analysis of presence-absence binary matrices. Ecology, 99: 103-115.
-doi: <a href="https://doi.org/10.1002/ecy.2043" class="external-link">10.1002/ecy.2043</a></p>
+<p>Strona, G., Ulrich, W. and Gotelli, N.J. (2018), Bi-dimensional
+null model analysis of presence-absence binary matrices.
+Ecology, 99: 103-115. doi: <a href="https://doi.org/10.1002/ecy.2043" class="external-link">10.1002/ecy.2043</a></p>
     </div>
 
     <div id="ref-examples">
@@ -207,7 +215,10 @@ doi: <a href="https://doi.org/10.1002/ecy.2043" class="external-link">10.1002/ec
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">phylocom</span><span class="op">)</span></span>
 <span class="r-in"><span class="co"># Returns a dataframe by defualt</span></span>
-<span class="r-in"><span class="fu">cpr_rand_test</span><span class="op">(</span><span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span>, null_model <span class="op">=</span> <span class="st">"curveball"</span>, metrics <span class="op">=</span> <span class="st">"pd"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">cpr_rand_test</span><span class="op">(</span></span>
+<span class="r-in">  <span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span>,</span>
+<span class="r-in">  null_model <span class="op">=</span> <span class="st">"curveball"</span>, metrics <span class="op">=</span> <span class="st">"pd"</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Dropping tips from the tree because they are not present in the community data: </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>  sp16, sp23, sp27, sp28, sp30, sp31, sp32</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            pd_obs pd_rand_mean pd_rand_sd  pd_obs_z pd_obs_c_upper</span>
@@ -226,7 +237,10 @@ doi: <a href="https://doi.org/10.1002/ecy.2043" class="external-link">10.1002/ec
 <span class="r-out co"><span class="r-pr">#&gt;</span> random               3      100           0.87           0.03</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Tibbles may be preferable because of the large number of columns</span></span>
-<span class="r-in"><span class="fu">cpr_rand_test</span><span class="op">(</span><span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span>, null_model <span class="op">=</span> <span class="st">"curveball"</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">cpr_rand_test</span><span class="op">(</span></span>
+<span class="r-in">  <span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span>,</span>
+<span class="r-in">  null_model <span class="op">=</span> <span class="st">"curveball"</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Dropping tips from the tree because they are not present in the community data: </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>  sp16, sp23, sp27, sp28, sp30, sp31, sp32</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 55</span></span>
