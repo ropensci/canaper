@@ -123,9 +123,6 @@ calc_biodiv_random <- function(
 
   # Calculations ----
 
-  # Convert comm to sparse matrix format for phyloregions
-  comm_sparse <- phyloregion::dense2sparse(comm)
-
   # Generate random community
   random_comm <- cpr_rand_comm(
     comm,
