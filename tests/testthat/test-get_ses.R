@@ -3,9 +3,9 @@
 phy <- biod_example$phy
 comm <- biod_example$comm
 phy_alt <- phy
-phy_alt$edge.length <- rep(x = 1, times = length(phy_alt$edge.length))
-phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length)
-phy$edge.length <- phy$edge.length / sum(phy$edge.length)
+phy_alt$edge.length <- rep(x = 1, times = length(phy_alt$edge.length)) # nolint
+phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length) # nolint
+phy$edge.length <- phy$edge.length / sum(phy$edge.length) # nolint
 random_vals <-
   purrr::map(
     1:100,
@@ -19,10 +19,15 @@ pe_obs <- phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
 test_that("Input is valid", {
   expect_error(
     get_ses(random_vals, pe_obs, "pf"),
-    "Biodiversity metrics may only be selected from 'pd', 'pd_alt', 'rpd', 'pe', 'pe_alt', or 'rpe'"
+    "Biodiversity metrics may only be selected from 'pd', 'pd_alt', 'rpd', 'pe', 'pe_alt', or 'rpe'" # nolint
   )
   expect_error(
-    get_ses(random_vals, purrr::set_names(pe_obs, ~ stringr::str_replace_all(., "0", "1")), "pe"),
+    get_ses(
+      random_vals, purrr::set_names(
+        pe_obs,
+        ~ stringr::str_replace_all(., "0", "1")
+      ), "pe"
+    ),
     "Names don't match between 'obs_vals' and 'random_vals'"
   )
   expect_error(

@@ -3,13 +3,14 @@
 phy <- biod_example$phy
 comm <- biod_example$comm
 phy_alt <- phy
-phy_alt$edge.length <- rep(x = 1, times = length(phy_alt$edge.length))
-phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length)
-phy$edge.length <- phy$edge.length / sum(phy$edge.length)
+phy_alt$edge.length <- rep(x = 1, times = length(phy_alt$edge.length)) # nolint
+phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length) # nolint
+phy$edge.length <- phy$edge.length / sum(phy$edge.length) # nolint
 
 # Run tests ----
 
-#' @srrstats {G5.2, G5.2a, G5.2b, UL7.0} tests failure if input is not valid and checks warning messages
+#' @srrstats {G5.2, G5.2a, G5.2b, UL7.0} tests failure if input is not valid
+# and checks warning messages
 test_that("Input is valid", {
   expect_error(
     calc_biodiv_random(10, phy, phy_alt, "swap", 10L),
@@ -48,8 +49,14 @@ test_that("Random seeds work", {
   res2 <- calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L)
   # Should be able to pass seed as an argument
   set.seed(42)
-  res3 <- calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L, seed = 12345)
-  res4 <- calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L, seed = 67890)
+  res3 <- calc_biodiv_random(
+    comm, phy, phy_alt, "curveball", 100L,
+    seed = 12345
+  )
+  res4 <- calc_biodiv_random(
+    comm, phy, phy_alt, "curveball", 100L,
+    seed = 67890
+  )
   # Different seeds should give different results
   expect_false(isTRUE(all.equal(res1, res2)))
   expect_false(isTRUE(all.equal(res3, res4)))
@@ -59,7 +66,7 @@ test_that("Random seeds work", {
 })
 
 test_that("Random seeds work in parallel", {
-  skip("WIP: need to figure out how to use future.apply reproducibly in a package")
+  skip("WIP: need to figure out how to use future.apply reproducibly in a package") # nolint
   # If run without sourcing files in R/, get error:
   # Error in calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L) :
   # 	could not find function "calc_biodiv_random"
@@ -117,22 +124,49 @@ test_that("Output is formatted as expected", {
 })
 
 test_that("Selected metric shows up in output", {
-  expect_named(calc_biodiv_random(comm, phy, phy_alt, "swap", 10L, metrics = "pd"), "pd")
-  expect_named(calc_biodiv_random(comm, phy, phy_alt, "swap", 10L, metrics = "pe"), "pe")
-  expect_named(calc_biodiv_random(comm, phy, phy_alt, "swap", 10L, metrics = "rpd"), c("pd", "pd_alt", "rpd"), ignore.order = TRUE)
-  expect_named(calc_biodiv_random(comm, phy, phy_alt, "swap", 10L, metrics = "rpe"), c("pe", "pe_alt", "rpe"), ignore.order = TRUE)
+  expect_named(calc_biodiv_random(
+    comm, phy, phy_alt, "swap", 10L,
+    metrics = "pd"
+  ), "pd")
+  expect_named(calc_biodiv_random(
+    comm, phy, phy_alt, "swap", 10L,
+    metrics = "pe"
+  ), "pe")
+  expect_named(calc_biodiv_random(
+    comm, phy, phy_alt, "swap", 10L,
+    metrics = "rpd"
+  ),
+  c("pd", "pd_alt", "rpd"),
+  ignore.order = TRUE
+  )
+  expect_named(calc_biodiv_random(
+    comm, phy, phy_alt, "swap", 10L,
+    metrics = "rpe"
+  ),
+  c("pe", "pe_alt", "rpe"),
+  ignore.order = TRUE
+  )
   expect_named(
-    calc_biodiv_random(comm, phy, phy_alt, "swap", 10L, metrics = c("rpd", "rpe")),
+    calc_biodiv_random(
+      comm, phy, phy_alt, "swap", 10L,
+      metrics = c("rpd", "rpe")
+    ),
     c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe"),
     ignore.order = TRUE
   )
   expect_named(
-    calc_biodiv_random(comm, phy, phy_alt, "swap", 10L, metrics = c("pd", "pe")),
+    calc_biodiv_random(
+      comm, phy, phy_alt, "swap", 10L,
+      metrics = c("pd", "pe")
+    ),
     c("pd", "pe"),
     ignore.order = TRUE
   )
   expect_named(
-    calc_biodiv_random(comm, phy, phy_alt, "swap", 10L, metrics = c("pd", "pe", "pd_alt")),
+    calc_biodiv_random(
+      comm, phy, phy_alt, "swap", 10L,
+      metrics = c("pd", "pe", "pd_alt")
+    ),
     c("pd", "pe", "pd_alt"),
     ignore.order = TRUE
   )

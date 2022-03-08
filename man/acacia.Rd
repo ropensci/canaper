@@ -7,15 +7,15 @@
 \format{
 A list with two elements:
 \describe{
-\item{phy}{Phylogeny of Australian \emph{Acacia} (list of class "phylo"). Tip
-labels are specific epithet, except for the outgroup, which includes genus
-and specific epithet. Includes 508 ingroup taxa (genus \emph{Acacia}) and two
-outgroup taxa.}
-\item{comm}{Community matrix of Australian \emph{Acacia} (dataframe). Column names
-are specific epithet of each species. Row names are centroids of 50km grid
-cells in Australian Albers equal area EPSG:3577 projection. 3037 rows
-(sites) x 506 columns (species). Data are counts, i.e., the number of times
-a species was observed in a grid cell.}
+\item{phy}{Phylogeny of Australian \emph{Acacia} (list of class "phylo").
+Tip labels are specific epithet, except for the outgroup, which includes
+genus and specific epithet. Includes 508 ingroup taxa (genus \emph{Acacia})
+and two outgroup taxa.}
+\item{comm}{Community matrix of Australian \emph{Acacia} (dataframe).
+Column names are specific epithet of each species. Row names are centroids
+of 50km grid cells in Australian Albers equal area EPSG:3577 projection.
+3037 rows (sites) x 506 columns (species). Data are counts, i.e., the
+number of times a species was observed in a grid cell.}
 }
 }
 \usage{

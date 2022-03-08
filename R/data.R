@@ -4,15 +4,15 @@
 #'
 #' @format A list with two elements:
 #' \describe{
-#'   \item{phy}{Phylogeny of Australian \emph{Acacia} (list of class "phylo"). Tip
-#'   labels are specific epithet, except for the outgroup, which includes genus
-#'   and specific epithet. Includes 508 ingroup taxa (genus \emph{Acacia}) and two
-#'   outgroup taxa.}
-#'   \item{comm}{Community matrix of Australian \emph{Acacia} (dataframe). Column names
-#'   are specific epithet of each species. Row names are centroids of 50km grid
-#'   cells in Australian Albers equal area EPSG:3577 projection. 3037 rows
-#'   (sites) x 506 columns (species). Data are counts, i.e., the number of times
-#'   a species was observed in a grid cell.}
+#'   \item{phy}{Phylogeny of Australian \emph{Acacia} (list of class "phylo").
+#'   Tip labels are specific epithet, except for the outgroup, which includes
+#'   genus and specific epithet. Includes 508 ingroup taxa (genus \emph{Acacia})
+#'   and two outgroup taxa.}
+#'   \item{comm}{Community matrix of Australian \emph{Acacia} (dataframe).
+#'   Column names are specific epithet of each species. Row names are centroids
+#'   of 50km grid cells in Australian Albers equal area EPSG:3577 projection.
+#'   3037 rows (sites) x 506 columns (species). Data are counts, i.e., the
+#'   number of times a species was observed in a grid cell.}
 #' }
 #' @references Mishler, B., Knerr, N., González-Orozco, C. et al. Phylogenetic
 #' measures of biodiversity and neo- and paleo-endemism in Australian Acacia.
@@ -29,9 +29,11 @@
 
 #' Biodiverse example data
 #'
-#' Fictional data for testing purposes from [Biodiverse](https://github.com/shawnlaffan/biodiverse/tree/master/data).
+#' Fictional data for testing purposes from
+#' [Biodiverse](https://github.com/shawnlaffan/biodiverse/tree/master/data).
 #'
-#' Corresponds to the the community matrix ("groups" object) and phylogeny from the Biodiverse [example_project.bps](https://github.com/shawnlaffan/biodiverse/raw/fbcad3c1df3667bac1235e822cb48ef6e5884e66/data/example_project.bps).
+#' Corresponds to the the community matrix ("groups" object) and phylogeny from
+#' the Biodiverse [example_project.bps](https://github.com/shawnlaffan/biodiverse/raw/fbcad3c1df3667bac1235e822cb48ef6e5884e66/data/example_project.bps).  # nolint
 #'
 #' @format A list with two elements:
 #' \describe{
@@ -40,7 +42,10 @@
 #'   Data are counts, i.e., the number of times
 #'   a species was observed in a grid cell.}
 #' }
-#' @references Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a tool for the spatial analysis of biological and related diversity. Ecography. Vol 33, 643-647 (Version 3.1). \doi{10.1111/j.1600-0587.2010.06237.x}
+#' @references Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a
+#'   tool for the spatial analysis of biological and related diversity.
+#'   Ecography. Vol 33, 643-647 (Version 3.1).
+#'   \doi{10.1111/j.1600-0587.2010.06237.x}
 #'
 #' @srrstats {G1.4} uses roxygen
 #' @srrstats {G5.1} dataset is available (and documented)
@@ -53,19 +58,22 @@
 
 #' Phylocom example data
 #'
-#' Fictional data for testing purposes from [Phylocom](http://www.phylodiversity.net/phylocom/) (Webb et al. 2008)
+#' Fictional data for testing purposes from
+#' [Phylocom](http://www.phylodiversity.net/phylocom/) (Webb et al. 2008)
 #'
 #' Obtained via the `picante` package (Kembel et al. 2010)
 #'
 #' @format A list with three elements:
 #' \describe{
 #'   \item{phylo}{Phylogeny with 32 tips}
-#'   \item{sample}{Community matrix with 6 sites (rows) and 25 species (columns).}
-#'   \item{traits}{Trait data; a data.frame with 32 species (rows) and 4 traits (columns)}
+#'   \item{sample}{Community matrix with 6 sites (rows) and 25 species
+#'   (columns).}
+#'   \item{traits}{Trait data; a data.frame with 32 species (rows) and 4 traits
+#'   (columns)}
 #' }
-#' @references Webb, C.O., Ackerly, D.D., and Kembel, S.W. 2008. Phylocom: software
-#'   for the analysis of phylogenetic community structure and trait evolution.
-#'   Version 4.0.1. http://www.phylodiversity.net/phylocom/.
+#' @references Webb, C.O., Ackerly, D.D., and Kembel, S.W. 2008. Phylocom:
+#'   software for the analysis of phylogenetic community structure and trait
+#'   evolution. Version 4.0.1. http://www.phylodiversity.net/phylocom/.
 #' @references Kembel, et al. Picante: R tools for integrating phylogenies and
 #'   ecology, Bioinformatics 26: 1463–1464 \doi{10.1093/bioinformatics/btq166}
 #'
@@ -80,25 +88,35 @@
 
 #' Output from Biodiverse
 #'
-#' Output of analyzing test data with [Biodiverse](https://github.com/shawnlaffan/biodiverse).
+#' Output of analyzing test data with
+#' [Biodiverse](https://github.com/shawnlaffan/biodiverse).
 #'
-#' The [example_project.bps](https://github.com/shawnlaffan/biodiverse/raw/fbcad3c1df3667bac1235e822cb48ef6e5884e66/data/example_project.bps)
-#' example data set was used as input, which corresponds to the \code{\link{biod_example}}
-#' dataset in this package.
+#' The [example_project.bps](https://github.com/shawnlaffan/biodiverse/raw/fbcad3c1df3667bac1235e822cb48ef6e5884e66/data/example_project.bps) # nolint
+#' example data set was used as input,which corresponds to the
+#' \code{\link{biod_example}} dataset in this package.
 #'
-#' For a description of all Biodiverse metrics, [see the Biodiverse wiki](https://github.com/shawnlaffan/biodiverse/wiki/Indices).
+#' For a description of all Biodiverse metrics,
+#' [see the Biodiverse wiki](https://github.com/shawnlaffan/biodiverse/wiki/Indices). # nolint
 #'
 #' @format A tibble (dataframe) with 127 rows and 7 columns. Columns include:
 #' \describe{
-#'   \item{site}{Site name; corresponds to row names of \code{\link{biod_example}$comm}}
+#'   \item{site}{Site name; corresponds to row names of
+#'     \code{\link{biod_example}$comm}}
 #'   \item{pd_biodiv}{Phylogenetic diversity (PD; `PD_P` in Biodiverse)}
-#'   \item{pd_alt_biodiv}{Alternative PD (PD measured on tree with all branchlengths equal; `PHYLO_RPD_NULL2` in Biodiverse)}
-#'   \item{rpd_biodiv}{Relative PD (PD divided by alternative PD; `PHYLO_RPD_NULL2` in Biodiverse)}
+#'   \item{pd_alt_biodiv}{Alternative PD (PD measured on tree with all
+#'   branchlengths equal; `PHYLO_RPD_NULL2` in Biodiverse)}
+#'   \item{rpd_biodiv}{Relative PD (PD divided by alternative PD;
+#'     `PHYLO_RPD_NULL2` in Biodiverse)}
 #'   \item{pe_biodiv}{Phylogenetic endemism (PE; `PE_WE_P` in Biodiverse)}
-#'   \item{pe_alt_biodiv}{Alternative PE (PE measured on tree with all branchlengths equal; `PHYLO_RPE_NULL2` in Biodiverse)}
-#'   \item{rpe_biodiv}{Relative PE (PE divided by alternative PD; `PHYLO_RPE2` in Biodiverse)}
+#'   \item{pe_alt_biodiv}{Alternative PE (PE measured on tree with all
+#'     branchlengths equal; `PHYLO_RPE_NULL2` in Biodiverse)}
+#'   \item{rpe_biodiv}{Relative PE (PE divided by alternative PD;
+#'     `PHYLO_RPE2` in Biodiverse)}
 #' }
-#' @references Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a tool for the spatial analysis of biological and related diversity. Ecography. Vol 33, 643-647 (Version 3.1). \doi{10.1111/j.1600-0587.2010.06237.x}
+#' @references Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a
+#'   tool for the spatial analysis of biological and related diversity.
+#'   Ecography. Vol 33, 643-647 (Version 3.1).
+#'   \doi{10.1111/j.1600-0587.2010.06237.x}
 #'
 #' @srrstats {G1.4} uses roxygen
 #' @srrstats {G5.1} dataset is available (and documented)

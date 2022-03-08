@@ -20,7 +20,8 @@ test_that("counting lower values works", {
   expect_equal(count_lower(4, vector("numeric", 0)), NaN)
 })
 
-# see https://stackoverflow.com/questions/2769510/numeric-comparison-difficulty-in-r
+# see
+# https://stackoverflow.com/questions/2769510/numeric-comparison-difficulty-in-r
 test_that("modified equalities work", {
   a <- 0.58
   b <- 0.08
@@ -81,7 +82,8 @@ test_that("Printing phylogenies works", {
 })
 
 test_that("Matching community and phylogeny data works", {
-  comm_small <- biod_example$comm[, !colnames(biod_example$comm) %in% c("sp3", "sp5")]
+  comm_small <- biod_example$comm[, !colnames(biod_example$comm) %in%
+    c("sp3", "sp5")]
   phy_small <- ape::drop.tip(biod_example$phy, c("sp1", "sp2"))
   dat_small_1 <- match_phylo_comm(biod_example$phy, comm_small)
   dat_small_2 <- match_phylo_comm(phy_small, biod_example$comm)
@@ -90,7 +92,9 @@ test_that("Matching community and phylogeny data works", {
   dat_small_1_pic <- picante::match.phylo.comm(biod_example$phy, comm_small)
   dat_small_2_pic <- picante::match.phylo.comm(phy_small, biod_example$comm)
   dat_small_3_pic <- picante::match.phylo.comm(phy_small, comm_small)
-  dat_matched_pic <- picante::match.phylo.comm(biod_example$phy, biod_example$comm)
+  dat_matched_pic <- picante::match.phylo.comm(
+    biod_example$phy, biod_example$comm
+  )
   # Check matching against picante::match.phylo.comm()
   expect_equal(dat_small_1, dat_small_1_pic)
   expect_equal(dat_small_2, dat_small_2_pic)
@@ -108,33 +112,41 @@ test_that("Matching community and phylogeny data works", {
   )
   # Make sure order of community species doesn't matter for PD, PE
   expect_equal(
-    phyloregion::PD(phyloregion::dense2sparse(dat_matched$comm), dat_matched$phy),
-    phyloregion::PD(phyloregion::dense2sparse(biod_example$comm), biod_example$phy)
+    phyloregion::PD(
+      phyloregion::dense2sparse(dat_matched$comm), dat_matched$phy
+    ),
+    phyloregion::PD(
+      phyloregion::dense2sparse(biod_example$comm), biod_example$phy
+    )
   )
   expect_equal(
-    phyloregion::phylo_endemism(phyloregion::dense2sparse(dat_matched$comm), dat_matched$phy),
-    phyloregion::phylo_endemism(phyloregion::dense2sparse(biod_example$comm), biod_example$phy)
+    phyloregion::phylo_endemism(
+      phyloregion::dense2sparse(dat_matched$comm), dat_matched$phy
+    ),
+    phyloregion::phylo_endemism(
+      phyloregion::dense2sparse(biod_example$comm), biod_example$phy
+    )
   )
   # Warnings work
   expect_warning(
     match_phylo_comm(phy_small, biod_example$comm),
-    "Dropping taxa from the community because they are not present in the phylogeny"
+    "Dropping taxa from the community because they are not present in the phylogeny" # nolint
   )
   expect_warning(
     match_phylo_comm(biod_example$phy, comm_small),
-    "Dropping tips from the tree because they are not present in the community data"
+    "Dropping tips from the tree because they are not present in the community data" # nolint
   )
   # Errors work
   expect_error(
     match_phylo_comm(biod_example$phy, 10),
-    "Community data should be a data.frame or matrix with samples in rows and taxa in columns",
+    "Community data should be a data.frame or matrix with samples in rows and taxa in columns", # nolint
     fixed = TRUE
   )
   comm_no_names <- biod_example$comm
   colnames(comm_no_names) <- NULL
   expect_error(
     match_phylo_comm(biod_example$phy, comm_no_names),
-    "Community data set lacks taxa (column) names, these are required to match phylogeny and community data",
+    "Community data set lacks taxa (column) names, these are required to match phylogeny and community data", # nolint
     fixed = TRUE
   )
 })

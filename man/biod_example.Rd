@@ -17,10 +17,12 @@ a species was observed in a grid cell.}
 biod_example
 }
 \description{
-Fictional data for testing purposes from \href{https://github.com/shawnlaffan/biodiverse/tree/master/data}{Biodiverse}.
+Fictional data for testing purposes from
+\href{https://github.com/shawnlaffan/biodiverse/tree/master/data}{Biodiverse}.
 }
 \details{
-Corresponds to the the community matrix ("groups" object) and phylogeny from the Biodiverse \href{https://github.com/shawnlaffan/biodiverse/raw/fbcad3c1df3667bac1235e822cb48ef6e5884e66/data/example_project.bps}{example_project.bps}.
+Corresponds to the the community matrix ("groups" object) and phylogeny from
+the Biodiverse \href{https://github.com/shawnlaffan/biodiverse/raw/fbcad3c1df3667bac1235e822cb48ef6e5884e66/data/example_project.bps}{example_project.bps}.  # nolint
 }
 \examples{
 # Example phylogeny
@@ -29,6 +31,9 @@ biod_example$phy
 biod_example$comm[1:5, 1:5]
 }
 \references{
-Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a tool for the spatial analysis of biological and related diversity. Ecography. Vol 33, 643-647 (Version 3.1). \doi{10.1111/j.1600-0587.2010.06237.x}
+Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a
+tool for the spatial analysis of biological and related diversity.
+Ecography. Vol 33, 643-647 (Version 3.1).
+\doi{10.1111/j.1600-0587.2010.06237.x}
 }
 \keyword{datasets}

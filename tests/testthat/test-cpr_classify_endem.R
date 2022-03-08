@@ -9,11 +9,15 @@ dummy_data <- data.frame(
 
 dummy_res <- cpr_classify_endem(dummy_data)
 
-rand_test <- cpr_rand_test(biod_example$comm, biod_example$phy, null_model = "swap", n_reps = 10, metrics = c("pe", "rpe"))
+rand_test <- cpr_rand_test(
+  biod_example$comm, biod_example$phy,
+  null_model = "swap", n_reps = 10, metrics = c("pe", "rpe")
+)
 
 # Run tests ----
 
-#' @srrstats {G5.2, G5.2a, G5.2b, UL7.0} tests failure if input is not valid and checks warning messages
+#' @srrstats {G5.2, G5.2a, G5.2b, UL7.0} tests failure if input is not valid
+# and checks warning messages
 test_that("Input is valid", {
   data_non_num_1 <- dummy_data
   data_non_num_2 <- dummy_data
@@ -30,7 +34,7 @@ test_that("Input is valid", {
   )
   expect_error(
     cpr_classify_endem(rand_test[, 1:2]),
-    "'df' must include the following columns: 'pe_obs_p_upper', 'pe_alt_obs_p_upper', 'rpe_obs_p_upper'"
+    "'df' must include the following columns: 'pe_obs_p_upper', 'pe_alt_obs_p_upper', 'rpe_obs_p_upper'" # nolint
   )
   expect_error(
     cpr_classify_endem(data_non_num_1),
@@ -50,7 +54,8 @@ test_that("Input is valid", {
   )
 })
 
-#' @srrstats {G5.4a, G5.5} Correctness tests on trivial examples for new implementations
+#' @srrstats {G5.4a, G5.5} Correctness tests on trivial
+# examples for new implementations
 test_that("Calculations work", {
   set.seed(123)
   expect_equal(dummy_res$endem_type[[1]], "paleo")

@@ -1,8 +1,8 @@
 #' Extract standard effect size (and other related statistics) for a single
 #' diversity metric given random values and observed values of the metric
 #'
-#' @srrstats {G2.0a, G2.1a, G2.3b} Documents expectations on lengths, types of vector
-#'   inputs, case-sensitivity
+#' @srrstats {G2.0a, G2.1a, G2.3b} Documents expectations on lengths, types of
+#'   vector inputs, case-sensitivity
 #' @param random_vals List of list of vectors. Each list of vectors is a
 #'   biodiversity metric measured on a random community, in the same order as
 #'   the rows in the input community.
@@ -26,7 +26,10 @@
 #' random_vals <-
 #'   purrr::map(
 #'     1:100,
-#'     ~ calc_biodiv_random(comm, phy, phy_alt, "independentswap", 1000L, metrics = "pe")
+#'     ~ calc_biodiv_random(
+#'       comm, phy, phy_alt, "independentswap", 1000L,
+#'       metrics = "pe"
+#'     )
 #'   )
 #' comm_sparse <- phyloregion::dense2sparse(comm)
 #' pe_obs <- phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
@@ -37,7 +40,8 @@
 #' @srrstats {G1.4, G1.4a} uses roxygen
 #'
 #' @noRd
-get_ses <- function(random_vals, obs_vals, metric = c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")) {
+get_ses <- function(random_vals, obs_vals,
+                    metric = c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")) {
 
   # Check input
   #' @srrstats {G2.1, G2.6} Check input types
@@ -49,7 +53,7 @@ get_ses <- function(random_vals, obs_vals, metric = c("pd", "pd_alt", "rpd", "pe
   #' @srrstats {G2.3, G2.3a} # univariate char input
   assertthat::assert_that(
     all(metric %in% c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")),
-    msg = "Biodiversity metrics may only be selected from 'pd', 'pd_alt', 'rpd', 'pe', 'pe_alt', or 'rpe'"
+    msg = "Biodiversity metrics may only be selected from 'pd', 'pd_alt', 'rpd', 'pe', 'pe_alt', or 'rpe'" # nolint
   )
   assertthat::assert_that(
     !isTRUE(is.null(names(obs_vals))),
@@ -95,9 +99,13 @@ get_ses <- function(random_vals, obs_vals, metric = c("pd", "pd_alt", "rpd", "pe
     rand_sd = purrr::map_dbl(random_values, ~ sd(., na.rm = TRUE)),
     obs_z = (obs_val - rand_mean) / rand_sd,
     # Count number of times observed value is higher than random values
-    obs_c_upper = purrr::map2_dbl(.x = obs_val, .y = random_values, ~ count_higher(.x, .y)),
+    obs_c_upper = purrr::map2_dbl(
+      .x = obs_val, .y = random_values, ~ count_higher(.x, .y)
+    ),
     # Count number of times observed value is lower than random values
-    obs_c_lower = purrr::map2_dbl(.x = obs_val, .y = random_values, ~ count_lower(.x, .y)),
+    obs_c_lower = purrr::map2_dbl(
+      .x = obs_val, .y = random_values, ~ count_lower(.x, .y)
+    ),
     # Count the number of non-NA random values used for comparison
     obs_q = purrr::map_dbl(random_values, ~ sum(!is.na(.))),
     # Calculate p-value for upper tail

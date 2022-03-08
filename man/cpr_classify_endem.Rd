@@ -9,9 +9,12 @@ cpr_classify_endem(df)
 \arguments{
 \item{df}{Input data frame. Must have the following columns:
 \itemize{
-\item \code{pe_obs_p_upper}: Upper \emph{p}-value comparing observed phylogenetic endemism to random values
-\item \code{pe_alt_obs_p_upper}: Upper \emph{p}-value comparing observed phylogenetic endemism on alternate tree to random values
-\item \code{rpe_obs_p_upper}: Upper \emph{p}-value comparing observed relative phylogenetic endemism to random values
+\item \code{pe_obs_p_upper}: Upper \emph{p}-value comparing observed phylogenetic endemism
+to random values
+\item \code{pe_alt_obs_p_upper}: Upper \emph{p}-value comparing observed phylogenetic
+endemism on alternate tree to random values
+\item \code{rpe_obs_p_upper}: Upper \emph{p}-value comparing observed relative phylogenetic
+endemism to random values
 }}
 }
 \value{
@@ -27,7 +30,7 @@ according to CANAPE scheme of Mishler et al. 2014.
 }
 \details{
 For a summary of the classification scheme, see:
-\url{http://biodiverse-analysis-software.blogspot.com/2014/11/canape-categorical-analysis-of-palaeo.html}
+\url{http://biodiverse-analysis-software.blogspot.com/2014/11/canape-categorical-analysis-of-palaeo.html} # nolint
 }
 \examples{
 set.seed(12345)

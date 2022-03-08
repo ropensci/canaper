@@ -1,4 +1,5 @@
-#' @srrstats {G5.2, G5.2a, G5.2b, UL7.0} tests failure if input is not valid and checks warning messages
+#' @srrstats {G5.2, G5.2a, G5.2b, UL7.0} tests failure if input is not valid and
+#' checks warning messages
 test_that("Input is valid", {
   expect_error(
     cpr_classify_signif(1, "pd"),
@@ -10,19 +11,23 @@ test_that("Input is valid", {
   )
   expect_error(
     cpr_classify_signif(data.frame(pd_obs_p_lower = 0.5), "pd"),
-    "'df' does not include percentage of times observed value was higher than random values"
+    "'df' does not include percentage of times observed value was higher than random values" # nolint
   )
   expect_error(
     cpr_classify_signif(data.frame(pd_obs_p_upper = 0.5), "pd"),
-    "'df' does not include percentage of times observed value was lower than random values"
+    "'df' does not include percentage of times observed value was lower than random values" # nolint
   )
   expect_error(
-    cpr_classify_signif(data.frame(pd_obs_p_upper = 2, pd_obs_p_lower = 0.5), "pd"),
-    "Values for percentage of times observed value was higher than random values should be between 0 and 1, inclusive"
+    cpr_classify_signif(
+      data.frame(pd_obs_p_upper = 2, pd_obs_p_lower = 0.5), "pd"
+    ),
+    "Values for percentage of times observed value was higher than random values should be between 0 and 1, inclusive" # nolint
   )
   expect_error(
-    cpr_classify_signif(data.frame(pd_obs_p_upper = 0.5, pd_obs_p_lower = 2), "pd"),
-    "Values for percentage of times observed value was lower than random values should be between 0 and 1, inclusive"
+    cpr_classify_signif(
+      data.frame(pd_obs_p_upper = 0.5, pd_obs_p_lower = 2), "pd"
+    ),
+    "Values for percentage of times observed value was lower than random values should be between 0 and 1, inclusive" # nolint
   )
 })
 

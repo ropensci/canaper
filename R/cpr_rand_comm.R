@@ -51,28 +51,35 @@
 #'
 #' # 3. Generate the null community
 #' cpr_rand_comm(phylocom$comm, cs_object, 100)
-cpr_rand_comm <- function(comm, null_model, n_iterations = 1, thin = 1, seed = NULL) {
+cpr_rand_comm <- function(
+  comm, null_model, n_iterations = 1, thin = 1, seed = NULL) {
 
   #' @srrstats {G2.1, G2.6} Check input types and lengths
   # - comm
-  assertthat::assert_that(inherits(comm, "data.frame") | inherits(comm, "matrix"),
+  assertthat::assert_that(
+    inherits(comm, "data.frame") | inherits(comm, "matrix"),
     msg = "'comm' must be of class 'data.frame' or 'matrix'"
   )
   assertthat::assert_that(
-    isTRUE(all(unique(purrr::map_chr(comm, class)) %in% c("numeric", "integer"))),
+    isTRUE(
+      all(unique(purrr::map_chr(comm, class)) %in% c("numeric", "integer"))
+    ),
     msg = "All columns of 'comm' must be numeric or integer class"
   )
   # - null_model
   assertthat::assert_that(
     assertthat::is.string(null_model) | inherits(null_model, "commsim"),
-    msg = "'null_model' must be a string (character vector of length 1) or an object of class 'commsim'"
+    msg = "'null_model' must be a string (character vector of length 1) or an object of class 'commsim'" # nolint
   )
   if (isTRUE(assertthat::is.string(null_model))) {
     assertthat::assert_that(assertthat::not_empty(comm))
     assertthat::assert_that(assertthat::noNA(null_model))
     assertthat::assert_that(
       isTRUE(null_model %in% vegan::make.commsim()),
-      msg = paste0("'null_model' must be one of: '", paste0(vegan::make.commsim(), collapse = "', '"), "'")
+      msg = paste0(
+        "'null_model' must be one of: '",
+        paste0(vegan::make.commsim(), collapse = "', '"), "'"
+      )
     )
   }
   # - n_iterations
@@ -100,5 +107,8 @@ cpr_rand_comm <- function(comm, null_model, n_iterations = 1, thin = 1, seed = N
 
   # Randomize matrix
   # just take the first simulated community after n_iterations - 1
-  stats::simulate(null_model, nsim = 1, thin = thin, burnin = n_iterations - 1, seed = seed)[, , 1]
+  stats::simulate(
+    null_model,
+    nsim = 1, thin = thin, burnin = n_iterations - 1, seed = seed
+  )[, , 1]
 }

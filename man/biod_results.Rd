@@ -7,32 +7,42 @@
 \format{
 A tibble (dataframe) with 127 rows and 7 columns. Columns include:
 \describe{
-\item{site}{Site name; corresponds to row names of \code{\link{biod_example}$comm}}
+\item{site}{Site name; corresponds to row names of
+\code{\link{biod_example}$comm}}
 \item{pd_biodiv}{Phylogenetic diversity (PD; \code{PD_P} in Biodiverse)}
-\item{pd_alt_biodiv}{Alternative PD (PD measured on tree with all branchlengths equal; \code{PHYLO_RPD_NULL2} in Biodiverse)}
-\item{rpd_biodiv}{Relative PD (PD divided by alternative PD; \code{PHYLO_RPD_NULL2} in Biodiverse)}
+\item{pd_alt_biodiv}{Alternative PD (PD measured on tree with all
+branchlengths equal; \code{PHYLO_RPD_NULL2} in Biodiverse)}
+\item{rpd_biodiv}{Relative PD (PD divided by alternative PD;
+\code{PHYLO_RPD_NULL2} in Biodiverse)}
 \item{pe_biodiv}{Phylogenetic endemism (PE; \code{PE_WE_P} in Biodiverse)}
-\item{pe_alt_biodiv}{Alternative PE (PE measured on tree with all branchlengths equal; \code{PHYLO_RPE_NULL2} in Biodiverse)}
-\item{rpe_biodiv}{Relative PE (PE divided by alternative PD; \code{PHYLO_RPE2} in Biodiverse)}
+\item{pe_alt_biodiv}{Alternative PE (PE measured on tree with all
+branchlengths equal; \code{PHYLO_RPE_NULL2} in Biodiverse)}
+\item{rpe_biodiv}{Relative PE (PE divided by alternative PD;
+\code{PHYLO_RPE2} in Biodiverse)}
 }
 }
 \usage{
 biod_results
 }
 \description{
-Output of analyzing test data with \href{https://github.com/shawnlaffan/biodiverse}{Biodiverse}.
+Output of analyzing test data with
+\href{https://github.com/shawnlaffan/biodiverse}{Biodiverse}.
 }
 \details{
-The \href{https://github.com/shawnlaffan/biodiverse/raw/fbcad3c1df3667bac1235e822cb48ef6e5884e66/data/example_project.bps}{example_project.bps}
-example data set was used as input, which corresponds to the \code{\link{biod_example}}
-dataset in this package.
+The \href{https://github.com/shawnlaffan/biodiverse/raw/fbcad3c1df3667bac1235e822cb48ef6e5884e66/data/example_project.bps}{example_project.bps} # nolint
+example data set was used as input,which corresponds to the
+\code{\link{biod_example}} dataset in this package.
 
-For a description of all Biodiverse metrics, \href{https://github.com/shawnlaffan/biodiverse/wiki/Indices}{see the Biodiverse wiki}.
+For a description of all Biodiverse metrics,
+\href{https://github.com/shawnlaffan/biodiverse/wiki/Indices}{see the Biodiverse wiki}. # nolint
 }
 \examples{
 biod_results
 }
 \references{
-Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a tool for the spatial analysis of biological and related diversity. Ecography. Vol 33, 643-647 (Version 3.1). \doi{10.1111/j.1600-0587.2010.06237.x}
+Laffan, S.W., Lubarsky, E. & Rosauer, D.F. (2010) Biodiverse, a
+tool for the spatial analysis of biological and related diversity.
+Ecography. Vol 33, 643-647 (Version 3.1).
+\doi{10.1111/j.1600-0587.2010.06237.x}
 }
 \keyword{datasets}

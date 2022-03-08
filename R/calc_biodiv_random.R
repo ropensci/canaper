@@ -2,8 +2,8 @@
 #'
 #' For description of metrics available, see \code{\link{cpr_rand_test}()}
 #'
-#' @srrstats {G2.0a, G2.1a, G2.3b} Documents expectations on lengths, types of vector
-#'   inputs, case-sensitivity
+#' @srrstats {G2.0a, G2.1a, G2.3b} Documents expectations on lengths, types of
+#' vector inputs, case-sensitivity
 #' @param comm Dataframe or matrix; input community matrix with communities
 #'   (sites) as rows and species as columns, including row names and column
 #'   names.
@@ -30,21 +30,26 @@
 #' phy_alt$edge.length <- rep(x = 1, times = length(phy_alt$edge.length))
 #' phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length)
 #' phy$edge.length <- phy$edge.length / sum(phy$edge.length)
-#' calc_biodiv_random(comm, phy, phy_alt, "tswap", 1000, metrics = c("pd", "pe", "pd_alt"))
+#' calc_biodiv_random(
+#'   comm, phy, phy_alt, "tswap", 1000,
+#'   metrics = c("pd", "pe", "pd_alt")
+#' )
 #' @srrstats {G1.4, G1.4a} uses roxygen
 #'
 #' @noRd
-calc_biodiv_random <- function(comm, phy, phy_alt,
-                               null_model,
-                               n_iterations = 1, thin = 1,
-                               metrics = c("pd", "rpd", "pe", "rpe", "pd_alt", "pe_alt"),
-                               seed = NULL) {
+calc_biodiv_random <- function(
+  comm, phy, phy_alt,
+  null_model,
+  n_iterations = 1, thin = 1,
+  metrics = c("pd", "rpd", "pe", "rpe", "pd_alt", "pe_alt"),
+  seed = NULL) {
   # Check input ----
   #' @srrstats {G2.1, G2.6} Check input types and lengths
   #' @srrstats {G2.0, G2.2} Assert input length is 1 as needed
   #' @srrstats {G2.3, G2.3a} Check univariate char input
   # - comm
-  assertthat::assert_that(inherits(comm, "data.frame") | inherits(comm, "matrix"),
+  assertthat::assert_that(
+    inherits(comm, "data.frame") | inherits(comm, "matrix"),
     msg = "'comm' must be of class 'data.frame' or 'matrix'"
   )
   # - phy
@@ -59,8 +64,10 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
   )
   # - null_model
   assertthat::assert_that(
-    assertthat::is.string(null_model) | inherits(null_model, "commsim"),
-    msg = "'null_model' must be a string (character vector of length 1) or an object of class 'commsim'"
+    assertthat::is.string(
+      null_model
+    ) | inherits(null_model, "commsim"),
+    msg = "'null_model' must be a string (character vector of length 1) or an object of class 'commsim'" # nolint
   )
   if (isTRUE(assertthat::is.string(null_model))) {
     assertthat::assert_that(assertthat::not_empty(comm))
@@ -81,7 +88,7 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
   assertthat::assert_that(assertthat::noNA(metrics))
   assertthat::assert_that(
     isTRUE(all(metrics %in% c("pd", "rpd", "pe", "rpe", "pd_alt", "pe_alt"))),
-    msg = "'metrics' may only include 'pd', 'rpd', 'pe', 'rpe', 'pd_alt', 'pe_alt'"
+    msg = "'metrics' may only include 'pd', 'rpd', 'pe', 'rpe', 'pd_alt', 'pe_alt'" # nolint
   )
 
   # - Make sure names match between community and tree
@@ -93,16 +100,17 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
     all.equal(sort(phy_alt$tip.label), sort(colnames(comm)))
   ))
 
-  # - Make sure phylogeny has been re-scaled to total branch length of 1 for RPE or RFD
+  # - Make sure phylogeny has been re-scaled to total branch length of 1 for
+  # RPE or RFD
   if (any(metrics %in% c("rpe", "rpd"))) {
     assertthat::assert_that(
-      isTRUE(all.equal(sum(phy$edge.length), 1)),
+      isTRUE(all.equal(sum(phy$edge.length), 1)), # nolint
       msg = "phylogeny not rescaled to total length 1"
     )
   }
   if (any(metrics %in% c("rpe", "rpd"))) {
     assertthat::assert_that(
-      isTRUE(all.equal(sum(phy_alt$edge.length), 1)),
+      isTRUE(all.equal(sum(phy_alt$edge.length), 1)), # nolint
       msg = "alternative phylogeny not rescaled to total length 1"
     )
   }
@@ -119,7 +127,11 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
   comm_sparse <- phyloregion::dense2sparse(comm)
 
   # Generate random community
-  random_comm <- cpr_rand_comm(comm, null_model = null_model, n_iterations = n_iterations, thin = thin, seed = seed)
+  random_comm <- cpr_rand_comm(
+    comm,
+    null_model = null_model,
+    n_iterations = n_iterations, thin = thin, seed = seed
+  )
   random_comm_sparse <- phyloregion::dense2sparse(random_comm)
 
   # Calculate statistics for random community
@@ -133,7 +145,10 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
 
   # - calculate selected metrics
   if ("pd" %in% metrics) pd <- phyloregion::PD(random_comm_sparse, phy)
-  if ("pd_alt" %in% metrics) pd_alt <- phyloregion::PD(random_comm_sparse, phy_alt)
+  if ("pd_alt" %in% metrics) {
+    pd_alt <-
+      phyloregion::PD(random_comm_sparse, phy_alt)
+  }
   # pd_alt is inferred by rpd
   if ("rpd" %in% metrics) {
     if (is.null(pd)) pd <- phyloregion::PD(random_comm_sparse, phy)
@@ -141,16 +156,37 @@ calc_biodiv_random <- function(comm, phy, phy_alt,
     rpd <- pd / pd_alt
   }
   # pe_alt is inferred by rpe
-  if ("pe" %in% metrics) pe <- phyloregion::phylo_endemism(random_comm_sparse, phy, weighted = TRUE)
-  if ("pe_alt" %in% metrics) pe_alt <- phyloregion::phylo_endemism(random_comm_sparse, phy_alt, weighted = TRUE)
+  if ("pe" %in% metrics) {
+    pe <- phyloregion::phylo_endemism(
+      random_comm_sparse, phy,
+      weighted = TRUE
+    )
+  }
+  if ("pe_alt" %in% metrics) {
+    pe_alt <- phyloregion::phylo_endemism(
+      random_comm_sparse, phy_alt,
+      weighted = TRUE
+    )
+  }
   if ("rpe" %in% metrics) {
-    if (is.null(pe)) pe <- phyloregion::phylo_endemism(random_comm_sparse, phy, weighted = TRUE)
-    if (is.null(pe_alt)) pe_alt <- phyloregion::phylo_endemism(random_comm_sparse, phy_alt, weighted = TRUE)
+    if (is.null(pe)) {
+      pe <- phyloregion::phylo_endemism(
+        random_comm_sparse, phy,
+        weighted = TRUE
+      )
+    }
+    if (is.null(pe_alt)) {
+      pe_alt <- phyloregion::phylo_endemism(
+        random_comm_sparse, phy_alt,
+        weighted = TRUE
+      )
+    }
     rpe <- pe / pe_alt
   }
 
   # Output non-NULL results
-  # (note that pd_alt and pe_alt will be included if rpd or rpe were included in `metrics`)
+  # (note that pd_alt and pe_alt will be included if rpd or rpe were included
+  # in `metrics`)
   purrr::compact(
     list(
       pd = pd,

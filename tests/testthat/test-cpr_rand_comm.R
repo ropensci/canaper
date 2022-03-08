@@ -1,8 +1,9 @@
-#' @srrstats {G5.2, G5.2a, G5.2b, UL7.0} tests failure if input is not valid and checks warning messages
+#' @srrstats {G5.2, G5.2a, G5.2b, UL7.0} tests failure if input is not valid and
+#' checks warning messages
 test_that("Input is valid", {
   expect_error(
     cpr_rand_comm(biod_example$comm, 1),
-    "'null_model' must be a string (character vector of length 1) or an object of class 'commsim'",
+    "'null_model' must be a string (character vector of length 1) or an object of class 'commsim'", # nolint
     fixed = TRUE
   )
   expect_error(
@@ -68,10 +69,13 @@ test_that("The same seed produces the same random communities", {
 test_that("Silencing warnings works", {
   expect_warning(
     cpr_rand_test(phylocom$comm, phylocom$phy, "r00", 1, 1, 1, "pd"),
-    "Dropping tips from the tree because they are not present in the community data"
+    "Dropping tips from the tree because they are not present in the community data" # nolint
   )
   expect_warning(
-    cpr_rand_test(phylocom$comm, phylocom$phy, "r00", 1, 1, 1, "pd", quiet = TRUE),
+    cpr_rand_test(
+      phylocom$comm, phylocom$phy, "r00", 1, 1, 1, "pd",
+      quiet = TRUE
+    ),
     NA
   )
 })

@@ -15,7 +15,7 @@
 #' count_higher(4, c(1:10, NaN))
 #' }
 #' @noRd
-count_higher <- function(x, y, na.rm = TRUE) {
+count_higher <- function(x, y, na.rm = TRUE) { # nolint
 
   #' @srrstats {G2.1, G2.6} Check input types and lengths
   assertthat::assert_that(assertthat::is.number(x))
@@ -49,7 +49,7 @@ count_higher <- function(x, y, na.rm = TRUE) {
 #' count_lower(NaN, 1:10)
 #' }
 #' @noRd
-count_lower <- function(x, y, na.rm = TRUE) {
+count_lower <- function(x, y, na.rm = TRUE) { # nolint
 
   #' @srrstats {G2.1, G2.6} Check input types and lengths
   assertthat::assert_that(assertthat::is.number(x))
@@ -66,7 +66,8 @@ count_lower <- function(x, y, na.rm = TRUE) {
   sum((x < y))
 }
 
-#' Version of `<` that allows for modifying tolerance of equality test (`all.equal()`)
+#' Version of `<` that allows for modifying tolerance of equality test
+#' (`all.equal()`)
 #'
 #' Non-vectorized version. Is `x` lesser than `y`?
 #'
@@ -83,7 +84,8 @@ lesser_than_single <- function(x, y) {
   !isTRUE(all.equal(x, y)) && (x < y)
 }
 
-#' Version of `<` that allows for modifying tolerance of equality test (`all.equal()`)
+#' Version of `<` that allows for modifying tolerance of equality test
+#' (`all.equal()`)
 #'
 #' Vectorized version. Is `x` lesser than `y`?
 #'
@@ -101,7 +103,8 @@ lesser_than_single <- function(x, y) {
   purrr::map2_lgl(x, y, lesser_than_single)
 }
 
-#' Version of `=<` that allows for modifying tolerance of equality test (`all.equal()`)
+#' Version of `=<` that allows for modifying tolerance of equality test
+#' (`all.equal()`)
 #'
 #' Non-vectorized version. Is `x` lesser than or equal to `y`?
 #'
@@ -118,7 +121,8 @@ lesser_than_or_equal_single <- function(x, y) {
   isTRUE(all.equal(x, y)) || (x < y)
 }
 
-#' Version of `=<` that allows for modifying tolerance of equality test (`all.equal()`)
+#' Version of `=<` that allows for modifying tolerance of equality test
+#' (`all.equal()`)
 #'
 #' Vectorized version. Is `x` lesser than or equal to `y`?
 #'
@@ -127,14 +131,15 @@ lesser_than_or_equal_single <- function(x, y) {
 #' @param y Numeric vector
 #' @return Logical vector
 #' @noRd
-`%<=%` <- function(x, y) {
+`%<=%` <- function(x, y) { # nolint
   #' @srrstats {G2.1, G2.6} Check input types
   assertthat::assert_that(is.numeric(x))
   assertthat::assert_that(is.numeric(y))
   purrr::map2_lgl(x, y, lesser_than_or_equal_single)
 }
 
-#' Version of `>` that allows for modifying tolerance of equality test (`all.equal()`)
+#' Version of `>` that allows for modifying tolerance of equality test
+#' (`all.equal()`)
 #'
 #' Non-vectorized version. Is `x` greater than `y`?
 #'
@@ -151,7 +156,8 @@ greater_than_single <- function(x, y) {
   !isTRUE(all.equal(x, y)) && (x > y)
 }
 
-#' Version of `>` that allows for modifying tolerance of equality test (`all.equal()`)
+#' Version of `>` that allows for modifying tolerance of equality test
+#' (`all.equal()`)
 #'
 #' Vectorized version. Is `x` greater than `y`?
 #'
@@ -169,7 +175,8 @@ greater_than_single <- function(x, y) {
   purrr::map2_lgl(x, y, greater_than_single)
 }
 
-#' Version of `>=` that allows for modifying tolerance of equality test (`all.equal()`)
+#' Version of `>=` that allows for modifying tolerance of equality test
+#' (`all.equal()`)
 #'
 #' Non-vectorized version. Is `x` greater than or equal to `y`?
 #'
@@ -186,7 +193,8 @@ greater_than_or_equal_single <- function(x, y) {
   isTRUE(all.equal(x, y)) || (x > y)
 }
 
-#' Version of `>=` that allows for modifying tolerance of equality test (`all.equal()`)
+#' Version of `>=` that allows for modifying tolerance of equality test
+#' (`all.equal()`)
 #'
 #' Vectorized version. Is `x` greater than `y`?
 #'
@@ -195,7 +203,7 @@ greater_than_or_equal_single <- function(x, y) {
 #' @param y Numeric vector
 #' @return Logical vector
 #' @noRd
-`%>=%` <- function(x, y) {
+`%>=%` <- function(x, y) { # nolint
   #' @srrstats {G2.1, G2.6} Check input types
   assertthat::assert_that(is.numeric(x))
   assertthat::assert_that(is.numeric(y))
@@ -209,27 +217,29 @@ NULL
 #' Match taxa between a community data matrix and a phylogeny
 #'
 #' @param phy List of class "phylo"; input phylogeny
-#' @param comm Dataframe or matrix; community data, with species (taxa) in columns
-#' and sites (communities) in rows.
+#' @param comm Dataframe or matrix; community data, with species (taxa) in
+#'   columns and sites (communities) in rows.
 #'
 #' @return List with two items
-#' - `comm`: Community data matrix trimmed to only species in common between `phy` and comm`
-#' - `phy`: Phylogeny data matrix trimmed to only species in common between `phy` and comm`
+#' - `comm`: Community data matrix trimmed to only species in common between
+#'   `phy` and comm`
+#' - `phy`: Phylogeny data matrix trimmed to only species in common between
+#'   `phy` and comm`
 #' @noRd
 #'
 match_phylo_comm <- function(phy, comm) {
   if (!(is.data.frame(comm) | is.matrix(comm))) {
-    stop("Community data should be a data.frame or matrix with samples in rows and taxa in columns")
+    stop("Community data should be a data.frame or matrix with samples in rows and taxa in columns") # nolint
   }
   res <- list()
   phytaxa <- phy$tip.label
   commtaxa <- colnames(comm)
   if (is.null(commtaxa)) {
-    stop("Community data set lacks taxa (column) names, these are required to match phylogeny and community data")
+    stop("Community data set lacks taxa (column) names, these are required to match phylogeny and community data") # nolint
   }
   if (!all(commtaxa %in% phytaxa)) {
     warning(paste(
-      "Dropping taxa from the community because they are not present in the phylogeny: \n",
+      "Dropping taxa from the community because they are not present in the phylogeny: \n", # nolint
       paste(setdiff(commtaxa, phytaxa), collapse = ", ")
     ))
     comm <- comm[, intersect(commtaxa, phytaxa)]
@@ -237,7 +247,7 @@ match_phylo_comm <- function(phy, comm) {
   }
   if (any(!(phytaxa %in% commtaxa))) {
     warning(paste(
-      "Dropping tips from the tree because they are not present in the community data: \n",
+      "Dropping tips from the tree because they are not present in the community data: \n", # nolint
       paste(setdiff(phytaxa, commtaxa), collapse = ", ")
     ))
     res$phy <- ape::drop.tip(phy, setdiff(phytaxa, commtaxa))

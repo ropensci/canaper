@@ -13,8 +13,8 @@
 #'   are either more diverse or less than diverse than expected at random). For
 #'   this, set `one_sided = FALSE`.
 #'
-#' @srrstats {G2.0a, G2.1a, G2.3b} Documents expectations on lengths, types of vector
-#'   inputs, case-sensitivity
+#' @srrstats {G2.0a, G2.1a, G2.3b} Documents expectations on lengths, types of
+#'   vector inputs, case-sensitivity
 #' @param df  Input data frame.
 #' @param metric Character vector of length 1; selected metric to classify
 #'   significance. May choose from `pd` (phylogenetic diversity), `rpd`
@@ -57,7 +57,7 @@ cpr_classify_signif <- function(df, metric, one_sided = FALSE, upper = FALSE) {
   #' @srrstats {G2.3, G2.3a} # univariate char input
   assertthat::assert_that(
     metric %in% c("pd", "rpd", "pe", "rpe"),
-    msg = "Biodiversity metrics may only be selected from 'pd', 'rpd', 'pe', or 'rpe' (case-sensitive)"
+    msg = "Biodiversity metrics may only be selected from 'pd', 'rpd', 'pe', or 'rpe' (case-sensitive)" # nolint
   )
   assertthat::assert_that(
     inherits(df, "data.frame"),
@@ -65,32 +65,33 @@ cpr_classify_signif <- function(df, metric, one_sided = FALSE, upper = FALSE) {
   )
   assertthat::assert_that(
     isTRUE(paste0(metric, "_obs_p_upper") %in% colnames(df)),
-    msg = "'df' does not include percentage of times observed value was higher than random values"
+    msg = "'df' does not include percentage of times observed value was higher than random values" # nolint
   )
   assertthat::assert_that(
     isTRUE(paste0(metric, "_obs_p_lower") %in% colnames(df)),
-    msg = "'df' does not include percentage of times observed value was lower than random values"
+    msg = "'df' does not include percentage of times observed value was lower than random values" # nolint
   )
   assertthat::assert_that(
     isTRUE(all(df[[paste0(metric, "_obs_p_lower")]] <= 1)),
-    msg = "Values for percentage of times observed value was lower than random values should be between 0 and 1, inclusive"
+    msg = "Values for percentage of times observed value was lower than random values should be between 0 and 1, inclusive" # nolint
   )
   assertthat::assert_that(
     isTRUE(all(df[[paste0(metric, "_obs_p_lower")]] >= 0)),
-    msg = "Values for percentage of times observed value was lower than random values should be between 0 and 1, inclusive"
+    msg = "Values for percentage of times observed value was lower than random values should be between 0 and 1, inclusive" # nolint
   )
   assertthat::assert_that(
     isTRUE(all(df[[paste0(metric, "_obs_p_upper")]] <= 1)),
-    msg = "Values for percentage of times observed value was higher than random values should be between 0 and 1, inclusive"
+    msg = "Values for percentage of times observed value was higher than random values should be between 0 and 1, inclusive" # nolint
   )
   assertthat::assert_that(
     isTRUE(all(df[[paste0(metric, "_obs_p_upper")]] >= 0)),
-    msg = "Values for percentage of times observed value was higher than random values should be between 0 and 1, inclusive"
+    msg = "Values for percentage of times observed value was higher than random values should be between 0 and 1, inclusive" # nolint
   )
   assertthat::assert_that(assertthat::is.flag(one_sided))
   assertthat::assert_that(assertthat::is.flag(upper))
 
-  #' @srrstats {G3.0} use appropriate tolerances for approximate equality (see utils.R)
+  #' @srrstats {G3.0} use appropriate tolerances for approximate equality
+  #' (see utils.R)
   if (!isTRUE(one_sided)) {
     signif <- dplyr::case_when(
       is.na(df[[paste0(metric, "_obs_p_lower")]]) ~ NA_character_,

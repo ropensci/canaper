@@ -50,29 +50,32 @@ contains the site names; only used if \code{comm} is a tibble (object of class
 \code{tbl_df}).}
 
 \item{tbl_out}{Logical vector of length 1; should the output be returned as
-a tibble? If \code{FALSE}, will return a dataframe. Defaults to \code{TRUE} if \code{comm} is
-a tibble.}
+a tibble? If \code{FALSE}, will return a dataframe. Defaults to \code{TRUE} if \code{comm}
+is a tibble.}
 
 \item{quiet}{Logical vector of length 1; if \code{TRUE}, suppress all warnings and
 messages that would be emitted by this function.}
 }
 \value{
-Dataframe. For each of the biodiversity metrics, the following 9 columns
-will be produced:
+Dataframe. For each of the biodiversity metrics, the following 9
+columns will be produced:
 \itemize{
 \item \verb{*_obs}: Observed value
 \item \verb{*_obs_c_lower}: Count of times observed value was lower than random values
-\item \verb{*_obs_c_upper}: Count of times observed value was higher than random values
-\item \verb{*_obs_p_lower}: Percentage of times observed value was lower than random values
-\item \verb{*_obs_p_upper}: Percentage of times observed value was higher than random values
+\item \verb{*_obs_c_upper}: Count of times observed value was higher than random
+values
+\item \verb{*_obs_p_lower}: Percentage of times observed value was lower than random
+values
+\item \verb{*_obs_p_upper}: Percentage of times observed value was higher than random
+values
 \item \verb{*_obs_q}: Count of the non-NA random values used for comparison
 \item \verb{*_obs_z}: Standard effect size (z-score)
 \item \verb{*_rand_mean}: Mean of the random values
 \item \verb{*_rand_sd}: Standard deviation of the random values
 }
 
-So if you included \code{pd} in \code{metrics}, the output columns would include \code{pd_obs},
-\code{pd_obs_c_lower}, etc...
+So if you included \code{pd} in \code{metrics}, the output columns would include
+\code{pd_obs}, \code{pd_obs_c_lower}, etc...
 }
 \description{
 The observed value of the biodiversity metric(s) will be calculated for the
@@ -88,10 +91,11 @@ The biodiversity metrics (\code{metrics}) available for analysis include:
 \item \code{rpe}: Relative phylogenetic endemism (Mishler et al 2014)
 }
 
-(\code{pe} and \code{rpe} are needed for CANAPE with \code{\link{cpr_classify_endem}()})
+(\code{pe} and \code{rpe} are needed for CANAPE with
+\code{\link{cpr_classify_endem}()})
 
-The choice of a randomization algorithm (\code{null_model}) is not trivial, and may
-strongly affect results. \code{cpr_rand_test()} uses null models provided by
+The choice of a randomization algorithm (\code{null_model}) is not trivial, and
+may strongly affect results. \code{cpr_rand_test()} uses null models provided by
 \code{vegan}; for a complete list, see the help file of \code{\link[vegan:commsim]{vegan::commsim()}} or run
 \code{\link[vegan:commsim]{vegan::make.commsim()}}. One frequently used null model is \code{swap} (Gotelli &
 Entsminger 2003), which randomizes the community matrix while preserving
@@ -122,11 +126,14 @@ sites is not recommended generally.
 
 The following rules apply to \code{comm} input:
 \itemize{
-\item If dataframe or matrix, must include row names (site names) and column names (species names).
-\item If tibble, a single column (default, \code{site}) must be included with site names, and other columns must correspond to species names.
+\item If dataframe or matrix, must include row names (site names) and column
+names (species names).
+\item If tibble, a single column (default, \code{site}) must be included with site
+names, and other columns must correspond to species names.
 \item Column names cannot start with a number and must be unique.
 \item Row names (site names) must be unique.
-\item Values (other than site names) should only include integers >= 0; non-integer input will be converted to integer.
+\item Values (other than site names) should only include integers >= 0;
+non-integer input will be converted to integer.
 }
 
 The results are identical regardless of whether the input for \code{comm} is
@@ -136,17 +143,24 @@ abundance or presence-absence data (i.e., abundance weighting is not used).
 set.seed(12345)
 data(phylocom)
 # Returns a dataframe by defualt
-cpr_rand_test(phylocom$comm, phylocom$phy, null_model = "curveball", metrics = "pd")
+cpr_rand_test(
+  phylocom$comm, phylocom$phy,
+  null_model = "curveball", metrics = "pd"
+)
 
 # Tibbles may be preferable because of the large number of columns
-cpr_rand_test(phylocom$comm, phylocom$phy, null_model = "curveball", tbl_out = TRUE)
+cpr_rand_test(
+  phylocom$comm, phylocom$phy,
+  null_model = "curveball", tbl_out = TRUE
+)
 }
 \references{
-Faith DP (1992) Conservation evaluation and phylogenetic diversity.
-Biological Conservation, 61:1–10. \doi{10.1016/0006-3207(92)91201-3}
+Faith DP (1992) Conservation evaluation and phylogenetic
+diversity. Biological Conservation, 61:1–10.
+\doi{10.1016/0006-3207(92)91201-3}
 
-Gotelli, N.J. and Entsminger, N.J. (2003). Swap algorithms in null
-model analysis. Ecology 84, 532–535.
+Gotelli, N.J. and Entsminger, N.J. (2003). Swap algorithms in
+null model analysis. Ecology 84, 532–535.
 
 Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
 Phylogenetic measures of biodiversity and neo- and paleo-endemism in
@@ -157,7 +171,7 @@ L.G. (2009) Phylogenetic endemism: a new approach for identifying
 geographical concentrations of evolutionary history. Molecular Ecology, 18:
 4061-4072. \doi{10.1111/j.1365-294X.2009.04311.x}
 
-Strona, G., Ulrich, W. and Gotelli, N.J. (2018), Bi-dimensional null
-model analysis of presence-absence binary matrices. Ecology, 99: 103-115.
-\doi{10.1002/ecy.2043}
+Strona, G., Ulrich, W. and Gotelli, N.J. (2018), Bi-dimensional
+null model analysis of presence-absence binary matrices.
+Ecology, 99: 103-115. \doi{10.1002/ecy.2043}
 }
