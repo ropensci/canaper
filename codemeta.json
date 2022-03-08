@@ -205,18 +205,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=picante"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "phyloregion",
-      "name": "phyloregion",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=phyloregion"
     }
   ],
   "softwareRequirements": [
@@ -282,32 +270,15 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "Matrix",
-      "name": "Matrix",
+      "identifier": "phyloregion",
+      "name": "phyloregion",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=Matrix"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "methods",
-      "name": "methods"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "phangorn",
-      "name": "phangorn",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=phangorn"
+      "sameAs": "https://CRAN.R-project.org/package=phyloregion"
     },
     {
       "@type": "SoftwareApplication",

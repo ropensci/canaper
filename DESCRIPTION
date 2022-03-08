@@ -33,9 +33,7 @@ Imports:
     assertthat,
     dplyr,
     future.apply,
-    Matrix,
-    methods,
-    phangorn,
+    phyloregion,
     progressr,
     purrr,
     stats,
@@ -53,8 +51,7 @@ Suggests:
     stringr,
     magrittr,
     covr,
-    picante,
-    phyloregion
+    picante
 Config/testthat/edition: 3
 Depends: 
     R (>= 3.5.0)

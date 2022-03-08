@@ -49,7 +49,7 @@ library(canaper)
 
 data(phylocom)
 
-# Example community matrix including 4 "clumped" communities,
+# Example community matrix including 4 "clumped" communities, 
 # one "even" community, and one "random" community
 phylocom$comm
 #>         sp1 sp10 sp11 sp12 sp13 sp14 sp15 sp17 sp18 sp19 sp2 sp20 sp21 sp22
@@ -91,29 +91,29 @@ value to the alternative value (relative PD, relative PE).
 ``` r
 set.seed(071421)
 rand_test_results <- cpr_rand_test(phylocom$comm, phylocom$phy, null_model = "swap")
-#> Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: 
-#>  sp16, sp23, sp27, sp28, sp30, sp31, sp32
+#> [1] "Dropping tips from the tree because they are not present in the community data:"
+#> [1] "sp16" "sp23" "sp27" "sp28" "sp30" "sp31" "sp32"
 ```
 
 `cpr_rand_test` produces **a lot** of columns (nine per metric), so
 let’s just look at a subset of them:
 
 ``` r
-rand_test_results[, 1:9]
+rand_test_results[,1:9]
 #>            pd_obs pd_rand_mean pd_rand_sd  pd_obs_z pd_obs_c_upper
-#> clump1  0.3018868    0.4675472 0.03623666 -4.571624              0
-#> clump2a 0.3207547    0.4684906 0.03116570 -4.740335              0
-#> clump2b 0.3396226    0.4684906 0.03150994 -4.089754              0
-#> clump4  0.4150943    0.4664151 0.03307178 -1.551799              3
-#> even    0.5660377    0.4641509 0.03517108  2.896891            100
-#> random  0.5094340    0.4713208 0.03295196  1.156629             80
+#> clump1  0.3018868    0.4692453 0.03214267 -5.206739              0
+#> clump2a 0.3207547    0.4762264 0.03263836 -4.763465              0
+#> clump2b 0.3396226    0.4681132 0.03462444 -3.710978              0
+#> clump4  0.4150943    0.4667925 0.03180131 -1.625660              3
+#> even    0.5660377    0.4660377 0.03501739  2.855724            100
+#> random  0.5094340    0.4733962 0.03070539  1.173662             79
 #>         pd_obs_c_lower pd_obs_q pd_obs_p_upper pd_obs_p_lower
 #> clump1             100      100           0.00           1.00
 #> clump2a            100      100           0.00           1.00
 #> clump2b            100      100           0.00           1.00
-#> clump4              90      100           0.03           0.90
+#> clump4              91      100           0.03           0.91
 #> even                 0      100           1.00           0.00
-#> random               7      100           0.80           0.07
+#> random               6      100           0.79           0.06
 ```
 
 This is a summary of the columns:
@@ -145,7 +145,7 @@ canape_results[, "endem_type", drop = FALSE]
 #> clump2a not significant
 #> clump2b not significant
 #> clump4  not significant
-#> even              super
+#> even              mixed
 #> random            mixed
 ```
 
@@ -192,13 +192,10 @@ the right.
 
 ## Licenses
 
--   Original code: [MIT](LICENSE.md)
--   Functions from
-    [phyloregion](https://github.com/darunabas/phyloregion):
-    [AGPL-3](https://github.com/joelnitta/canaper/blob/main/data-raw/LICENSE-agpl-3.txt)
+-   Code: [MIT](LICENSE.md)
 -   Example datasets
-    -   `acacia`, `biod_example`:
-        [GPL-3](https://github.com/joelnitta/canaper/blob/main/data-raw/LICENSE-gpl-3.txt)
+    -   `acacia`, `biod_example`: [GNU General Public License
+        v3.0](https://github.com/joelnitta/canaper/blob/main/data-raw/LICENSE-gpl.txt)
     -   `phylocom`:
         [BSD-3-Clause](https://github.com/joelnitta/canaper/blob/main/data-raw/LICENSE-bsd3.txt)
 
