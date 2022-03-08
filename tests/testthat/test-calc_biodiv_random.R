@@ -66,7 +66,6 @@ test_that("Random seeds work", {
 })
 
 test_that("Random seeds work in parallel", {
-  skip("WIP: need to figure out how to use future.apply reproducibly in a package") # nolint
   # If run without sourcing files in R/, get error:
   # Error in calc_biodiv_random(comm, phy, phy_alt, "curveball", 100L) :
   # 	could not find function "calc_biodiv_random"
@@ -110,7 +109,6 @@ test_that("Random seeds work in parallel", {
   # Change back to sequential
   future::plan(future::sequential)
 })
-
 
 test_that("Output is formatted as expected", {
   #' @srrstats {G5.3} check that output has no missing values
