@@ -53,7 +53,7 @@ The second, `comm`, is a community dataframe with species as columns and rows as
 
 ```{r inspect-data-comm}
 dim(acacia$comm)
-acacia$comm[1:8,1:8]
+acacia$comm[1:8, 1:8]
 ```
 
 ## Randomization test
@@ -73,7 +73,7 @@ The main purpose of `canaper` is to perform these randomization tests.
 This example also demonstrates one of the strengths of `canaper`: the ability to run randomizations in parallel^[For more information on how and when to use parallel computing in `canaper`, [see the "Parallel computing" vignette](https://joelnitta.github.io/canaper/articles/parallel.html)]. 
 This is by far the most time-consuming part of CANAPE, since we have to repeat the calculations many (e.g., hundreds or more) times across the randomized communities to obtain reliable results. Here, we set the number of iterations (`n_iterations`; i.e., the number of swaps used to produce each randomized community) fairly high because this community matrix is large and includes many zeros; thorough mixing by swapping many times is required to completely randomize the matrix. 
 
-We will use a low number of random communities (`n_reps`) so things finish relatively quickly; you should consider increasing `n_reps` for a "real" analysis^[For more information on setting the appropriate number of iterations and replicates, [see the "How many randomizations?" vigenette](https://joelnitta.github.io/canaper/articles/how-many-rand.html).].
+We will use a low number of random communities (`n_reps`) so things finish relatively quickly; you should consider increasing `n_reps` for a "real" analysis^[For more information on setting the appropriate number of iterations and replicates, [see the "How many randomizations?" vignette](https://joelnitta.github.io/canaper/articles/how-many-rand.html).].
 We will use the `curveball` randomization algorithm, which maintains species richness and abundance patterns while randomizing species identity [@Strona2014]^[`curveball` is similar to `swap` but runs much faster so I chose it for this large dataset.].
 
 ```{r acacia-rand}
@@ -81,18 +81,20 @@ We will use the `curveball` randomization algorithm, which maintains species ric
 plan(multisession, workers = 3)
 
 # Uncomment this to show a progress bar when running cpr_rand_test()
-# progressr::handlers(global = TRUE)
+# progressr::handlers(global = TRUE) # nolint
 
-# Set a random number generator seed so we get the same results if this is run again
+# Set a random number generator seed so we get the same results if this is
+# run again
 set.seed(071421)
 
 tic() # Set a timer
 # Run randomization test
 acacia_rand_res <- cpr_rand_test(
-  acacia$comm, acacia$phy, 
+  acacia$comm, acacia$phy,
   null_model = "curveball",
   n_reps = 100, n_iterations = 100000,
-  tbl_out = TRUE)
+  tbl_out = TRUE
+)
 toc() # See how long it took
 
 # Switch back to sequential (non-parallel) mode
@@ -129,7 +131,7 @@ acacia_canape <- cpr_classify_endem(acacia_rand_res)
 table(acacia_canape$endem_type)
 ```
 
-## Classify signficance
+## Classify significance
 
 A similar function to `cpr_classify_endem()` is available to classify significance of the randomization test, `cpr_classify_signif()`. Note that both of these take a `data.frame` as input and return a `data.frame` as output, so they are "pipe-friendly". The second argument of `cpr_classify_signif()` is the name of the biodiversity metric that you want to classify. This will add a column `*_signif` with the significance relative to the random distribution for that metric. For example, `cpr_classify_signif(df, "pd")` will add the `pd_signif` column to `df`.
 
@@ -137,10 +139,10 @@ We can chain them together as follows:
 
 ```{r acacia-classify-signif}
 acacia_canape <-
-  cpr_classify_endem(acacia_rand_res) |> 
-  cpr_classify_signif("pd") |> 
-  cpr_classify_signif("rpd") |> 
-  cpr_classify_signif("pe") |> 
+  cpr_classify_endem(acacia_rand_res) |>
+  cpr_classify_signif("pd") |>
+  cpr_classify_signif("rpd") |>
+  cpr_classify_signif("pe") |>
   cpr_classify_signif("rpe")
 
 # Take a look at one of the significance classifications:
@@ -156,45 +158,57 @@ Note that the results will not be identical because we have used a different ran
 Here is Figure 2, showing the results of the randomization test for PE, RPE, PE, and RPE:
 
 ```{r mishler2014-fig2, fig.height = 7, fig.width = 7}
-# Fist do some data wrangling to make the results easier to plot (add lat/long columns)
+# Fist do some data wrangling to make the results easier to plot
+# (add lat/long columns)
 acacia_canape <- acacia_canape |>
-  separate(site, c("long", "lat"), sep = ":") |> 
+  separate(site, c("long", "lat"), sep = ":") |>
   mutate(across(c(long, lat), parse_number))
 
-a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = pd_signif)) + 
+a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = pd_signif)) +
   geom_tile() +
   # cpr_signif_cols is a color palette in canaper for significance colors
   scale_fill_manual(values = cpr_signif_cols, name = "Phylogenetic diversity") +
   guides(fill = guide_legend(title.position = "top", label.position = "bottom"))
 
-b <- ggplot(acacia_canape, aes(x = long, y = lat, fill = rpd_signif)) + 
+b <- ggplot(acacia_canape, aes(x = long, y = lat, fill = rpd_signif)) +
   geom_tile() +
-  scale_fill_manual(values = cpr_signif_cols, name = "Relative phylogenetic diversity") +
+  scale_fill_manual(
+    values = cpr_signif_cols, name = "Relative phylogenetic diversity"
+  ) +
   guides(fill = guide_legend(title.position = "top", label.position = "bottom"))
 
-c <- ggplot(acacia_canape, aes(x = long, y = lat, fill = pe_signif)) + 
+c <- ggplot(acacia_canape, aes(x = long, y = lat, fill = pe_signif)) +
   geom_tile() +
   scale_fill_manual(values = cpr_signif_cols, name = "Phylogenetic endemism") +
   guides(fill = guide_legend(title.position = "top", label.position = "bottom"))
 
-d <- ggplot(acacia_canape, aes(x = long, y = lat, fill = rpe_signif)) + 
+d <- ggplot(acacia_canape, aes(x = long, y = lat, fill = rpe_signif)) +
   geom_tile() +
-  scale_fill_manual(values = cpr_signif_cols, name = "Relative phylogenetic endemism") +
+  scale_fill_manual(
+    values = cpr_signif_cols, name = "Relative phylogenetic endemism"
+  ) +
   guides(fill = guide_legend(title.position = "top", label.position = "bottom"))
 
-a + b + c + d + plot_annotation(tag_levels = "a") & theme(legend.position = "top")
+a + b + c + d +
+  plot_annotation(tag_levels = "a") & theme(legend.position = "top")
 ```
 
 And here is Figure 3, showing the results of CANAPE:
 
 ```{r,  mishler2014-fig3, fig.height = 10, fig.width = 6}
-a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = endem_type)) + geom_tile() +
+a <- ggplot(acacia_canape, aes(x = long, y = lat, fill = endem_type)) +
+  geom_tile() +
   # cpr_endem_cols is a color palette in canaper for endemism colors
   scale_fill_manual(values = cpr_endem_cols) +
-  guides(fill = guide_legend(title.position = "top", label.position = "bottom")) +
+  guides(
+    fill = guide_legend(title.position = "top", label.position = "bottom")
+  ) +
   theme(legend.position = "bottom", legend.title = element_blank())
 
-b <- ggplot(acacia_canape, aes(x = pe_alt_obs, y = pe_obs, color = endem_type)) + 
+b <- ggplot(
+  acacia_canape,
+  aes(x = pe_alt_obs, y = pe_obs, color = endem_type)
+) +
   geom_abline(slope = 1, color = "darkgrey") +
   geom_point() +
   scale_color_manual(values = cpr_endem_cols) +
