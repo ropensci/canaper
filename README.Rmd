@@ -53,7 +53,7 @@ library(canaper)
 
 data(phylocom)
 
-# Example community matrix including 4 "clumped" communities, 
+# Example community matrix including 4 "clumped" communities,
 # one "even" community, and one "random" community
 phylocom$comm
 
@@ -65,13 +65,16 @@ The main "workhorse" function of `canaper` is `cpr_rand_test()`, which conducts 
 
 ```{r rand-test-example}
 set.seed(071421)
-rand_test_results <- cpr_rand_test(phylocom$comm, phylocom$phy, null_model = "swap")
+rand_test_results <- cpr_rand_test(
+  phylocom$comm, phylocom$phy,
+  null_model = "swap"
+)
 ```
 
 `cpr_rand_test` produces **a lot** of columns (nine per metric), so let's just look at a subset of them:
 
 ```{r rand-test-res}
-rand_test_results[,1:9]
+rand_test_results[, 1:9]
 ```
 
 This is a summary of the columns:
@@ -104,6 +107,16 @@ This data set is very small, so it doesn't include all possible endemism types. 
 
 For a more complete example, please [see the vignette](https://joelnitta.github.io/canaper/articles/canape.html)
 
+## Comparsion with other software
+
+Several other R packages are available to calculate diversity metrics for ecological communities. The non-exhaustive summary below focuses on alpha diversity metrics in comparison with `canaper`, and is **not** a comprehensive description of each package.
+
+- [PhyloMeasures](https://doi.org/10.1111/ecog.01814): Calculates phylogenetic community diversity metrics including MPD, MNTD, PD, phylosor, and unifrac. Null models for matrix randomization include `uniform`, `frequency.by.richness`, and `sequential`.
+- [phyloregion](https://github.com/darunabas/phyloregion): Calculates PD but not MPD or MNTD. Implements sparse matrix encoding to increase computing speed, which is used by `canaper`. Null models for matrix randomization include `tipshuffle`, `rowwise`, and `colwise`. Also performs regionalization based on taxonomic or phylogenetic beta diversity.
+- [picante](https://github.com/skembel/picante): Calculates MPD, MNTD, PD, etc. Null models for community matrix randomization include `frequency`, `richness`, `independentswap`, and `trialswap`.
+- [vegan](https://github.com/vegandevs/vegan): Performs a large range of mostly non-phylogenetic diversity analyses. Includes the largest selection of null models (> 20), according to data type (binary vs. quantitative). `canaper` uses `vegan` to randomize community matrices.
+- [biodiverse](http://shawnlaffan.github.io/biodiverse/): Not an R package, but software written in perl with a GUI. Performs all of the calculations needed for CANAPE, and many other metrics (> 300). Includes `rand_structured` null model as well as spatially structured null models. None of these null models are currently available in any R packages AFAIK, except for `independentswap`.
+
 ## Other information
 
 Poster at [Botany 2021](https://2021.botanyconference.org/)
@@ -130,6 +143,12 @@ You can find DOIs for older versions by viewing the "Releases" menu on the right
 ## Papers citing `canaper`
 
 - Nitta *et al.* "Spatial phylogenetics of Japanese ferns: Patterns, processes, and implications for conservation". bioRxiv https://doi.org/10.1101/2021.08.26.457744
+
+## Contributing and code of conduct
+
+Contributions to `canaper` are welcome! For more information, please see [CONTRIBUTING.md](.github/CONTRIBUTING.md)
+
+Please note that this package is released with a [Contributor Code of Conduct](https://ropensci.org/code-of-conduct/). By contributing to this project, you agree to abide by its terms.
 
 ## Licenses
 

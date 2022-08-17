@@ -42,6 +42,10 @@ Email the person listed as maintainer in the `DESCRIPTION` file of this repo.
 
 Though note that private discussions over email don't help others - of course email is totally warranted if it's a sensitive problem of any kind.
 
+### Code of conduct
+
+Please note that this package is released with a [Contributor Code of Conduct](https://ropensci.org/code-of-conduct/). By contributing to this project, you agree to abide by its terms.
+
 ### Thanks for contributing!
 
 This contributing guide is adapted from the tidyverse contributing guide available at https://raw.githubusercontent.com/r-lib/usethis/master/inst/templates/tidy-contributing.md 
