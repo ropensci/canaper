@@ -85,9 +85,9 @@ test_that("Matching community and phylogeny data works", {
   comm_small <- biod_example$comm[, !colnames(biod_example$comm) %in%
     c("sp3", "sp5")]
   phy_small <- ape::drop.tip(biod_example$phy, c("sp1", "sp2"))
-  dat_small_1 <- match_phylo_comm(biod_example$phy, comm_small)
-  dat_small_2 <- match_phylo_comm(phy_small, biod_example$comm)
-  dat_small_3 <- match_phylo_comm(phy_small, comm_small)
+  dat_small_1 <- match_phylo_comm(biod_example$phy, comm_small, silent = TRUE)
+  dat_small_2 <- match_phylo_comm(phy_small, biod_example$comm, silent = TRUE)
+  dat_small_3 <- match_phylo_comm(phy_small, comm_small, silent = TRUE)
   dat_matched <- match_phylo_comm(biod_example$phy, biod_example$comm)
   dat_small_1_pic <- picante::match.phylo.comm(biod_example$phy, comm_small)
   dat_small_2_pic <- picante::match.phylo.comm(phy_small, biod_example$comm)
@@ -135,6 +135,15 @@ test_that("Matching community and phylogeny data works", {
   expect_warning(
     match_phylo_comm(biod_example$phy, comm_small),
     "Dropping tips from the tree because they are not present in the community data" # nolint
+  )
+  # Silencing warnings works
+  expect_warning(
+    match_phylo_comm(phy_small, biod_example$comm, silent = TRUE),
+    regexp = NA
+  )
+  expect_warning(
+    match_phylo_comm(biod_example$phy, comm_small, silent = TRUE),
+    regexp = NA
   )
   # Errors work
   expect_error(

@@ -131,7 +131,7 @@ lesser_than_or_equal_single <- function(x, y) {
 #' @param y Numeric vector
 #' @return Logical vector
 #' @noRd
-`%<=%` <- function(x, y) { # nolint
+`%<=%` <- function(x, y) {
   #' @srrstats {G2.1, G2.6} Check input types
   assertthat::assert_that(is.numeric(x))
   assertthat::assert_that(is.numeric(y))
@@ -203,7 +203,7 @@ greater_than_or_equal_single <- function(x, y) {
 #' @param y Numeric vector
 #' @return Logical vector
 #' @noRd
-`%>=%` <- function(x, y) { # nolint
+`%>=%` <- function(x, y) {
   #' @srrstats {G2.1, G2.6} Check input types
   assertthat::assert_that(is.numeric(x))
   assertthat::assert_that(is.numeric(y))
@@ -219,6 +219,8 @@ NULL
 #' @param phy List of class "phylo"; input phylogeny
 #' @param comm Dataframe or matrix; community data, with species (taxa) in
 #'   columns and sites (communities) in rows.
+#' @param silent Logical vector of length 1; should warnings be silenced?
+#' Default FALSE.
 #'
 #' @return List with two items
 #' - `comm`: Community data matrix trimmed to only species in common between
@@ -227,8 +229,8 @@ NULL
 #'   `phy` and comm`
 #' @noRd
 #'
-match_phylo_comm <- function(phy, comm) {
-  if (!(is.data.frame(comm) | is.matrix(comm))) {
+match_phylo_comm <- function(phy, comm, silent = FALSE) {
+  if (!(is.data.frame(comm) || is.matrix(comm))) {
     stop("Community data should be a data.frame or matrix with samples in rows and taxa in columns") # nolint
   }
   res <- list()
@@ -237,19 +239,24 @@ match_phylo_comm <- function(phy, comm) {
   if (is.null(commtaxa)) {
     stop("Community data set lacks taxa (column) names, these are required to match phylogeny and community data") # nolint
   }
+  assertthat::assert_that(assertthat::is.flag(silent))
   if (!all(commtaxa %in% phytaxa)) {
-    warning(paste(
-      "Dropping taxa from the community because they are not present in the phylogeny: \n", # nolint
-      paste(setdiff(commtaxa, phytaxa), collapse = ", ")
-    ))
+    if (!silent) {
+      warning(paste(
+        "Dropping taxa from the community because they are not present in the phylogeny: \n", # nolint
+        paste(setdiff(commtaxa, phytaxa), collapse = ", ")
+      ))
+    }
     comm <- comm[, intersect(commtaxa, phytaxa)]
     commtaxa <- colnames(comm)
   }
   if (any(!(phytaxa %in% commtaxa))) {
-    warning(paste(
-      "Dropping tips from the tree because they are not present in the community data: \n", # nolint
-      paste(setdiff(phytaxa, commtaxa), collapse = ", ")
-    ))
+    if (!silent) {
+      warning(paste(
+        "Dropping tips from the tree because they are not present in the community data: \n", # nolint
+        paste(setdiff(phytaxa, commtaxa), collapse = ", ")
+      ))
+    }
     res$phy <- ape::drop.tip(phy, setdiff(phytaxa, commtaxa))
   } else {
     res$phy <- phy
