@@ -1,8 +1,5 @@
 {
-  "@context": [
-    "https://doi.org/10.5063/schema/codemeta-2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "canaper",
   "description": "Provides functions to conduct categorical analysis of neo- and paleo-endemism (CANAPE).",
@@ -16,7 +13,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
+  "runtimePlatform": "R version 4.2.0 (2022-04-22)",
   "author": [
     {
       "@type": "Person",
@@ -54,8 +51,6 @@
       "familyName": "Mishler"
     }
   ],
-  "copyrightHolder": {},
-  "funder": {},
   "maintainer": [
     {
       "@type": "Person",
@@ -207,8 +202,8 @@
       "sameAs": "https://CRAN.R-project.org/package=picante"
     }
   ],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
       "@type": "SoftwareApplication",
       "identifier": "ape",
       "name": "ape",
@@ -220,7 +215,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=ape"
     },
-    {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "assertr",
       "name": "assertr",
@@ -232,7 +227,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=assertr"
     },
-    {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "assertthat",
       "name": "assertthat",
@@ -244,7 +239,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=assertthat"
     },
-    {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "dplyr",
       "name": "dplyr",
@@ -256,7 +251,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=dplyr"
     },
-    {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "future.apply",
       "name": "future.apply",
@@ -268,7 +263,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=future.apply"
     },
-    {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "phyloregion",
       "name": "phyloregion",
@@ -280,7 +275,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=phyloregion"
     },
-    {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "progressr",
       "name": "progressr",
@@ -292,7 +287,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=progressr"
     },
-    {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "purrr",
       "name": "purrr",
@@ -304,12 +299,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=purrr"
     },
-    {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "stats",
       "name": "stats"
     },
-    {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "tibble",
       "name": "tibble",
@@ -321,7 +316,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tibble"
     },
-    {
+    "11": {
       "@type": "SoftwareApplication",
       "identifier": "vegan",
       "name": "vegan",
@@ -333,21 +328,15 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=vegan"
     },
-    {
+    "12": {
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
-      "version": ">= 3.5.0"
-    }
-  ],
-  "releaseNotes": "https://github.com/joelnitta/canaper/blob/master/NEWS.md",
-  "fileSize": "8154.89KB",
-  "contIntegration": ["https://github.com/joelnitta/canaper/actions", "https://codecov.io/gh/joelnitta/canaper?branch=main"],
-  "developmentStatus": "https://www.repostatus.org/#wip",
-  "keywords": [
-    "biodiversity",
-    "canape"
-  ],
+      "version": ">= 4.1.0"
+    },
+    "SystemRequirements": null
+  },
+  "fileSize": "8277.237KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -371,5 +360,9 @@
       "sameAs": "https://doi.org/10.5281/zenodo.5094032"
     }
   ],
-  "readme": "https://github.com/joelnitta/canaper/blob/main/README.md"
+  "releaseNotes": "https://github.com/joelnitta/canaper/blob/master/NEWS.md",
+  "readme": "https://github.com/joelnitta/canaper/blob/main/README.md",
+  "contIntegration": ["https://github.com/joelnitta/canaper/actions", "https://codecov.io/gh/joelnitta/canaper?branch=main"],
+  "developmentStatus": "https://www.repostatus.org/#wip",
+  "keywords": ["biodiversity", "canape"]
 }

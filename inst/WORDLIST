@@ -145,6 +145,7 @@ Strona
 styler
 sublicenses
 Sublicensing
+SystemRequirements
 testthat
 tibble
 tictoc
@@ -158,3 +159,4 @@ WIP
 wip
 WIPO
 www
+zenodo
