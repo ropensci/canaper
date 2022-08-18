@@ -31,13 +31,12 @@
 #' data(phylocom)
 #' rand_test <- cpr_rand_test(
 #'   phylocom$comm, phylocom$phy,
-#'   null_model = "curveball", metrics = c("pe", "rpe")
+#'   null_model = "curveball", metrics = c("pe", "rpe"), n_reps = 50
 #' )
 #' cpr_classify_endem(rand_test)
 #' @srrstats {G1.4} uses roxygen
 #' @export
 cpr_classify_endem <- function(df) {
-
   # Check input
   #' @srrstats {G2.1, G2.6} Check input types
   assertthat::assert_that(

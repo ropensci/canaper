@@ -114,7 +114,7 @@ test_that("Input is valid", {
   )
   # comm with numeric species names
   comm_num_names <- biod_example$comm
-  colnames(comm_num_names) <- 1:dim(comm_num_names)[2]
+  colnames(comm_num_names) <- seq_len(dim(comm_num_names)[2])
   phy_num_names <- biod_example$phy
   phy_num_names$tip.label <- colnames(comm_num_names) # nolint
   expect_error(
@@ -400,18 +400,18 @@ test_that("Parallelization decreases calculation time", {
   seq_res <- cpr_rand_test(
     acacia$comm, acacia$phy,
     null_model = "curveball",
-    n_iterations = 100, n_reps = 100, quiet = TRUE
+    n_iterations = 100, n_reps = 50, quiet = TRUE
   )
   tictoc::toc(log = TRUE, quiet = TRUE)
 
-  # Set future resolution to parallelized, with 3 workers
-  future::plan(future::multisession, workers = 3)
+  # Set future resolution to parallelized, with 2 workers
+  future::plan(future::multisession, workers = 2)
   tictoc::tic()
   set.seed(12345)
   parallel_res <- cpr_rand_test(
     acacia$comm, acacia$phy,
     null_model = "curveball",
-    n_iterations = 100, n_reps = 100, quiet = TRUE
+    n_iterations = 100, n_reps = 50, quiet = TRUE
   )
   tictoc::toc(log = TRUE, quiet = TRUE)
   log_list <- tictoc::tic.log(format = FALSE)
@@ -511,21 +511,21 @@ test_that("Output is same as when calculated with Biodiverse", {
   expect_equal(res_compare$rpe_obs, res_compare$rpe_biodiv)
 })
 
-test_that("Output is different with different random seeds, and same with same random seed", { # nolint
+test_that("Output is different with diff. seeds, and same w/same seed", {
   set.seed(12345)
   res_1 <- cpr_rand_test(
     biod_example$comm, biod_example$phy,
-    n_reps = 100, null_model = "curveball"
+    n_reps = 25, null_model = "curveball"
   )
   set.seed(67890)
   res_2 <- cpr_rand_test(
     biod_example$comm, biod_example$phy,
-    n_reps = 100, null_model = "curveball"
+    n_reps = 25, null_model = "curveball"
   )
   set.seed(12345)
   res_3 <- cpr_rand_test(
     biod_example$comm, biod_example$phy,
-    n_reps = 100, null_model = "curveball"
+    n_reps = 25, null_model = "curveball"
   )
   expect_false(isTRUE(all.equal(res_1, res_2)))
   expect_true(isTRUE(all.equal(res_1, res_3)))
