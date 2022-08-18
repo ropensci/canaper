@@ -17,7 +17,11 @@ Authors@R:
     person(given = "Wataru",
            family = "Iwasaki",
            role = c("ctb"),
-           comment = c(ORCID = "0000-0002-9169-9245"))
+           comment = c(ORCID = "0000-0002-9169-9245")),
+    person(given = "Klaus",
+           family = "Schliep",
+           role = c("rev"),
+           comment = c(ORCID = "0000-0003-2941-0161"))
            )
 Description: Provides functions to conduct categorical analysis of neo- and paleo-endemism (CANAPE).
 License: MIT + file LICENSE

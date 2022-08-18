@@ -24,6 +24,7 @@ Other contributors:
   \item Shawn W. Laffan [contributor, data contributor]
   \item Brent D. Mishler [contributor, data contributor]
   \item Wataru Iwasaki (\href{https://orcid.org/0000-0002-9169-9245}{ORCID}) [contributor]
+  \item Klaus Schliep (\href{https://orcid.org/0000-0003-2941-0161}{ORCID}) [reviewer]
 }
 
 }
