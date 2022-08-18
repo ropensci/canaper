@@ -71,21 +71,23 @@ dist_test_res <- tibble(
   n_iter = magrittr::raise_to_power(10, 1:6),
   # Make one random community for each value of `n_iter`
   rand_comm = map(
-    n_iter, 
-    ~cpr_rand_comm(
-      comm_bin, 
-      null_model = "swap", n_iterations = .)),
+    n_iter,
+    ~ cpr_rand_comm(
+      comm_bin,
+      null_model = "swap", n_iterations = .
+    )
+  ),
   # Calculate the Pearson correlation (r) between each randomized
   # matrix and the original matrix by converting
   # the matrices to vectors
   corr = map_dbl(
-    rand_comm, 
-    ~cor(c(comm_bin), c(.)) #c() converts a matrix to vector
+    rand_comm,
+    ~ cor(c(comm_bin), c(.)) # c() converts a matrix to vector
   )
 )
 
 # Plot the results
-ggplot(dist_test_res, aes(x = n_iter, y = corr)) + 
+ggplot(dist_test_res, aes(x = n_iter, y = corr)) +
   geom_point() +
   geom_line() +
   scale_x_log10() +
@@ -108,25 +110,31 @@ Here, I will compare the percentile of observed phylogenetic diversity relative 
 # Specify a different random seed for each set of randomizations so they give
 # different, reproducible results
 
+# Set a parallel back-end, with 2 CPUs running simultaneously to speed things up
+plan(multisession, workers = 2)
+
 # First set
 set.seed(12345)
 tic()
 res_10_1 <- cpr_rand_test(
-  biod_example$comm, biod_example$phy, 
+  biod_example$comm, biod_example$phy,
   null_model = "swap",
-  n_iterations = 10000, n_reps = 10, tbl_out = TRUE)
+  n_iterations = 10000, n_reps = 10, tbl_out = TRUE
+)
 toc()
 tic()
 res_100_1 <- cpr_rand_test(
-  biod_example$comm, biod_example$phy, 
+  biod_example$comm, biod_example$phy,
   null_model = "swap",
-  n_iterations = 10000, n_reps = 100, tbl_out = TRUE)
+  n_iterations = 10000, n_reps = 100, tbl_out = TRUE
+)
 toc()
 tic()
 res_1000_1 <- cpr_rand_test(
-  biod_example$comm, biod_example$phy, 
+  biod_example$comm, biod_example$phy,
   null_model = "swap",
-  n_iterations = 10000, n_reps = 1000, tbl_out = TRUE)
+  n_iterations = 10000, n_reps = 1000, tbl_out = TRUE
+)
 toc()
 
 # Second set
@@ -134,15 +142,21 @@ set.seed(67890)
 res_10_2 <- cpr_rand_test(
   biod_example$comm, biod_example$phy,
   null_model = "swap",
-  n_iterations = 10000, n_reps = 10, tbl_out = TRUE)
+  n_iterations = 10000, n_reps = 10, tbl_out = TRUE
+)
 res_100_2 <- cpr_rand_test(
-  biod_example$comm, biod_example$phy, 
+  biod_example$comm, biod_example$phy,
   null_model = "swap",
-  n_iterations = 10000, n_reps = 100, tbl_out = TRUE)
+  n_iterations = 10000, n_reps = 100, tbl_out = TRUE
+)
 res_1000_2 <- cpr_rand_test(
-  biod_example$comm, biod_example$phy, 
+  biod_example$comm, biod_example$phy,
   null_model = "swap",
-  n_iterations = 10000, n_reps = 1000, tbl_out = TRUE)
+  n_iterations = 10000, n_reps = 1000, tbl_out = TRUE
+)
+
+# Switch back to sequential (non-parallel) mode
+plan(sequential)
 ```
 
 Next, plot the results.
@@ -152,11 +166,13 @@ Next, plot the results.
 # a quick function to avoid lots of copying and pasting
 plot_comp <- function(res_1, res_2) {
   left_join(
-  select(res_1, site, pd_obs_p_upper_1 = pd_obs_p_upper), 
-  select(res_2, site, pd_obs_p_upper_2 = pd_obs_p_upper), by = "site") |>
-  ggplot(aes(x = pd_obs_p_upper_1, y = pd_obs_p_upper_2)) + 
-  geom_point() +
-  geom_abline(slope = 1, intercept = 0)
+    select(res_1, site, pd_obs_p_upper_1 = pd_obs_p_upper),
+    select(res_2, site, pd_obs_p_upper_2 = pd_obs_p_upper),
+    by = "site"
+  ) |>
+    ggplot(aes(x = pd_obs_p_upper_1, y = pd_obs_p_upper_2)) +
+    geom_point() +
+    geom_abline(slope = 1, intercept = 0)
 }
 
 plot_comp(res_10_1, res_10_2) + labs(title = "10 replicates")
@@ -180,8 +196,9 @@ calc_agree_endem <- function(df_1, df_2, n_reps) {
     mutate(agree = endem_type_1 == endem_type_2) |>
     summarize(agree = sum(agree), total = n()) |>
     mutate(
-      p_agree = agree/total,
-      n_reps = n_reps) 
+      p_agree = agree / total,
+      n_reps = n_reps
+    )
 }
 
 bind_rows(
@@ -191,9 +208,9 @@ bind_rows(
 )
 ```
 
-At 1,000 replicates, we see 100% agreement on endemism type between the two randomizations! Convergence doesn't get better than that^[Though I wouldn't expect necessarily expect this from messier, "real-life" datasets.] :)
+At 1,000 replicates, we see very high agreement on endemism type between the two randomizations.
 
-Of course, another important consideration is **how long** calculations take. You can see that time increases with `n_reps`, but not exactly in a linear fashion. We don't have the space to go into benchmarking here, but this illustrates the time / `n_reps` trade-off^[You can of course speed things up with parallelization. For details, see [the CANAPE example vignette](https://joelnitta.github.io/canaper/articles/canape.html#randomization-test).].
+Of course, another important consideration is **how long** calculations take. You can see that time increases with `n_reps`, but not exactly in a linear fashion. We don't have the space to go into benchmarking here, but this illustrates the time / `n_reps` trade-off^[You can of course speed things up with parallelization, as done here. For details, see [the CANAPE example vignette](https://joelnitta.github.io/canaper/articles/canape.html#randomization-test).].
 
 ## Conclusion
 

@@ -77,8 +77,8 @@ We will use a low number of random communities (`n_reps`) so things finish relat
 We will use the `curveball` randomization algorithm, which maintains species richness and abundance patterns while randomizing species identity [@Strona2014]^[`curveball` is similar to `swap` but runs much faster so I chose it for this large dataset.].
 
 ```{r acacia-rand}
-# Set a parallel back-end, with 3 CPUs running simultaneously
-plan(multisession, workers = 3)
+# Set a parallel back-end, with 2 CPUs running simultaneously
+plan(multisession, workers = 2)
 
 # Uncomment this to show a progress bar when running cpr_rand_test()
 # progressr::handlers(global = TRUE) # nolint
@@ -92,7 +92,7 @@ tic() # Set a timer
 acacia_rand_res <- cpr_rand_test(
   acacia$comm, acacia$phy,
   null_model = "curveball",
-  n_reps = 100, n_iterations = 100000,
+  n_reps = 20, n_iterations = 100000,
   tbl_out = TRUE
 )
 toc() # See how long it took
@@ -153,7 +153,7 @@ table(acacia_canape$pd_signif)
 
 With the randomizations and classification steps taken care of, we can now visualize the results to see how they match up with those of @Mishler2014.
 
-Note that the results will not be identical because we have used a different randomization algorithm from the paper and because of stochasticity in the random values.
+Note that the results will not be identical because we have used a different randomization algorithm from the paper and because of stochasticity in the random values, as well as fewer replicates for the randomization test.
 
 Here is Figure 2, showing the results of the randomization test for PE, RPE, PE, and RPE:
 
