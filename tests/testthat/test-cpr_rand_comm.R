@@ -23,10 +23,10 @@ test_that("Row and column sums are preserved for FF null models", {
   row_sums_original <- rowSums(binary_comm)
   set.seed(12345)
   # Make random communities
-  rand_swap <- cpr_rand_comm(binary_comm, "swap", 100)
-  rand_tswap <- cpr_rand_comm(binary_comm, "tswap", 100)
-  rand_curve <- cpr_rand_comm(binary_comm, "curveball", 100)
-  rand_00 <- cpr_rand_comm(binary_comm, "r00", 100)
+  rand_swap <- cpr_rand_comm_intern(binary_comm, "swap", 100)
+  rand_tswap <- cpr_rand_comm_intern(binary_comm, "tswap", 100)
+  rand_curve <- cpr_rand_comm_intern(binary_comm, "curveball", 100)
+  rand_00 <- cpr_rand_comm_intern(binary_comm, "r00", 100)
   # Check
   expect_equal(colSums(rand_swap), col_sums_original)
   expect_equal(rowSums(rand_swap), row_sums_original)
@@ -41,28 +41,43 @@ test_that("Row and column sums are preserved for FF null models", {
 
 test_that("Different seeds produce different random communities", {
   set.seed(12345)
-  rand_comm_1 <- cpr_rand_comm(phylocom$comm, "curveball", 100)
+  rand_comm_1 <- cpr_rand_comm_intern(phylocom$comm, "curveball", 100)
   set.seed(67890)
-  rand_comm_2 <- cpr_rand_comm(phylocom$comm, "curveball", 100)
+  rand_comm_2 <- cpr_rand_comm_intern(phylocom$comm, "curveball", 100)
   expect_false(isTRUE(all.equal(rand_comm_1, rand_comm_2)))
-  rand_comm_3 <- cpr_rand_comm(phylocom$comm, "curveball", 100, seed = 2020)
-  rand_comm_4 <- cpr_rand_comm(phylocom$comm, "curveball", 100, seed = 2121)
+  rand_comm_3 <- cpr_rand_comm_intern(
+    phylocom$comm, "curveball", 100,
+    seed = 2020
+  )
+  rand_comm_4 <- cpr_rand_comm_intern(
+    phylocom$comm, "curveball", 100,
+    seed = 2121
+  )
   expect_false(isTRUE(all.equal(rand_comm_3, rand_comm_4)))
 })
 
 test_that("The same seed produces the same random communities", {
   set.seed(12345)
-  rand_comm_1 <- cpr_rand_comm(phylocom$comm, "curveball", 100)
+  rand_comm_1 <- cpr_rand_comm_intern(phylocom$comm, "curveball", 100)
   set.seed(12345)
-  rand_comm_2 <- cpr_rand_comm(phylocom$comm, "curveball", 100)
+  rand_comm_2 <- cpr_rand_comm_intern(phylocom$comm, "curveball", 100)
   expect_true(isTRUE(all.equal(rand_comm_1, rand_comm_2)))
-  rand_comm_3 <- cpr_rand_comm(phylocom$comm, "curveball", 100, seed = 2020)
-  rand_comm_4 <- cpr_rand_comm(phylocom$comm, "curveball", 100, seed = 2020)
+  rand_comm_3 <- cpr_rand_comm_intern(
+    phylocom$comm, "curveball", 100,
+    seed = 2020
+  )
+  rand_comm_4 <- cpr_rand_comm_intern(
+    phylocom$comm, "curveball", 100,
+    seed = 2020
+  )
   expect_true(isTRUE(all.equal(rand_comm_3, rand_comm_4)))
   set.seed(2323)
-  rand_comm_5 <- cpr_rand_comm(phylocom$comm, "curveball", 100)
+  rand_comm_5 <- cpr_rand_comm_intern(phylocom$comm, "curveball", 100)
   set.seed(42)
-  rand_comm_6 <- cpr_rand_comm(phylocom$comm, "curveball", 100, seed = 2323)
+  rand_comm_6 <- cpr_rand_comm_intern(
+    phylocom$comm, "curveball", 100,
+    seed = 2323
+  )
   expect_true(isTRUE(all.equal(rand_comm_5, rand_comm_6)))
 })
 

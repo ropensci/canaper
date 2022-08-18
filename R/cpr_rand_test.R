@@ -150,7 +150,6 @@ cpr_rand_test <- function(comm, phy, null_model,
                           metrics = c("pd", "rpd", "pe", "rpe"),
                           site_col = "site", tbl_out = tibble::is_tibble(comm),
                           quiet = FALSE) {
-
   # First check `quiet` flag
   assertthat::assert_that(assertthat::is.flag(quiet))
 
@@ -309,13 +308,23 @@ cpr_rand_test <- function(comm, phy, null_model,
     #' Warn if community matrix is >95% present or absent and defaults are
     #' unchanged
     percent_present <- (sum(unlist(comm) > 0)) / (length(unlist(comm)))
-    if (percent_present > 0.95 && n_reps_input == 100 && n_iterations_input == 10000) { # nolint
+    if (
+      percent_present > 0.95 &&
+        n_reps_input == 100 &&
+        n_iterations_input == 10000
+    ) {
+      # nolint
       warning(
         "'comm' is > 95% presences (values > 1). Be sure that 'n_reps' and 'n_iterations' are sufficiently large to ensure adequate mixing of random communities", # nolint
         call. = FALSE
       )
     }
-    if (percent_present < 0.05 && n_reps_input == 100 && n_iterations_input == 10000) { # nolint
+    if (
+      percent_present < 0.05 &&
+        n_reps_input == 100 &&
+        n_iterations_input == 10000
+    ) {
+      # nolint
       warning(
         "'comm' is > 95% absences (zeros). Be sure that 'n_reps' and 'n_iterations' are sufficiently large to ensure adequate mixing of random communities", # nolint
         call. = FALSE
@@ -399,6 +408,25 @@ cpr_rand_test <- function(comm, phy, null_model,
 
     # Make sparse community df
     comm_sparse <- phyloregion::dense2sparse(comm)
+
+    # Check phylogenies after modifications
+    #' @srrstats {G2.1} Check input types
+    assertthat::assert_that(
+      is.list(phy_alt) && inherits(phy_alt, "phylo"),
+      msg = "'phy_alt' must be a list of class 'phylo'"
+    )
+    assertthat::assert_that(
+      !isTRUE((all.equal(phy, phy_alt))),
+      msg = "'phy' and 'phy_alt' should not be identical"
+    )
+    assertthat::assert_that(
+      isTRUE(all.equal(sum(phy$edge.length), 1)), # nolint
+      msg = "phylogeny not rescaled to total length 1"
+    )
+    assertthat::assert_that(
+      isTRUE(all.equal(sum(phy_alt$edge.length), 1)), # nolint
+      msg = "alternative phylogeny not rescaled to total length 1"
+    )
 
     # Calculate biodiversity metrics ----
 

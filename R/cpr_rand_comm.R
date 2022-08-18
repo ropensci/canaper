@@ -52,8 +52,8 @@
 #' # 3. Generate the null community
 #' cpr_rand_comm(phylocom$comm, cs_object, 100)
 cpr_rand_comm <- function(
-  comm, null_model, n_iterations = 1, thin = 1, seed = NULL) {
-
+  comm, null_model, n_iterations = 1, thin = 1, seed = NULL
+) {
   #' @srrstats {G2.1, G2.6} Check input types and lengths
   # - comm
   assertthat::assert_that(
@@ -99,6 +99,26 @@ cpr_rand_comm <- function(
   # - seed
   assertthat::assert_that(is.numeric(seed) | is.null(seed))
 
+  # Randomize matrix
+  cpr_rand_comm_intern(
+    comm = comm, null_model = null_model,
+    n_iterations = n_iterations,
+    thin = thin, seed = seed
+  )
+}
+
+#' Randomize a single community matrix, internal version
+#'
+#' Does not run checks on input, to reduce computational burden when
+#' repeating many times to generate null distribution.
+#' Meant for internal use only.
+#'
+#' @inherit cpr_rand_comm params return
+#'
+#' @noRd
+cpr_rand_comm_intern <- function(
+  comm, null_model, n_iterations = 1, thin = 1, seed = NULL
+) {
   # Convert to matrix
   comm <- as.matrix(comm)
 

@@ -38,93 +38,12 @@
 #'
 #' @noRd
 calc_biodiv_random <- function(
-  comm, phy, phy_alt,
-  null_model,
-  n_iterations = 1, thin = 1,
+  comm, phy, phy_alt, null_model, n_iterations = 1, thin = 1,
   metrics = c("pd", "rpd", "pe", "rpe", "pd_alt", "pe_alt"),
-  seed = NULL) {
-  # Check input ----
-  #' @srrstats {G2.1, G2.6} Check input types and lengths
-  #' @srrstats {G2.0, G2.2} Assert input length is 1 as needed
-  #' @srrstats {G2.3, G2.3a} Check univariate char input
-  # - comm
-  assertthat::assert_that(
-    inherits(comm, "data.frame") | inherits(comm, "matrix"),
-    msg = "'comm' must be of class 'data.frame' or 'matrix'"
-  )
-  # - phy
-  assertthat::assert_that(
-    is.list(phy) && inherits(phy, "phylo"),
-    msg = "'phy' must be a list of class 'phylo'"
-  )
-  # - phy_alt
-  assertthat::assert_that(
-    is.list(phy_alt) && inherits(phy_alt, "phylo"),
-    msg = "'phy_alt' must be a list of class 'phylo'"
-  )
-  # - null_model
-  assertthat::assert_that(
-    assertthat::is.string(
-      null_model
-    ) | inherits(null_model, "commsim"),
-    msg = "'null_model' must be a string (character vector of length 1) or an object of class 'commsim'" # nolint
-  )
-  if (isTRUE(assertthat::is.string(null_model))) {
-    assertthat::assert_that(assertthat::not_empty(comm))
-    assertthat::assert_that(assertthat::noNA(null_model))
-  }
-  # - n_iterations
-  assertthat::assert_that(assertthat::is.number(n_iterations))
-  assertthat::assert_that(assertthat::noNA(n_iterations))
-  assertthat::assert_that(is.finite(n_iterations))
-  n_iterations <- as.integer(n_iterations)
-  assertthat::assert_that(n_iterations > 0, msg = "'n_iterations' must be > 0")
-  # - thin
-  assertthat::assert_that(assertthat::is.number(thin))
-  assertthat::assert_that(assertthat::noNA(thin))
-  assertthat::assert_that(is.finite(thin))
-  # - metrics
-  assertthat::assert_that(is.character(metrics))
-  assertthat::assert_that(assertthat::noNA(metrics))
-  assertthat::assert_that(
-    isTRUE(all(metrics %in% c("pd", "rpd", "pe", "rpe", "pd_alt", "pe_alt"))),
-    msg = "'metrics' may only include 'pd', 'rpd', 'pe', 'rpe', 'pd_alt', 'pe_alt'" # nolint
-  )
-
-  # - Make sure names match between community and tree
-  assertthat::assert_that(isTRUE(
-    all.equal(sort(phy$tip.label), sort(colnames(comm)))
-  ))
-
-  assertthat::assert_that(isTRUE(
-    all.equal(sort(phy_alt$tip.label), sort(colnames(comm)))
-  ))
-
-  # - Make sure phylogeny has been re-scaled to total branch length of 1 for
-  # RPE or RFD
-  if (any(metrics %in% c("rpe", "rpd"))) {
-    assertthat::assert_that(
-      isTRUE(all.equal(sum(phy$edge.length), 1)), # nolint
-      msg = "phylogeny not rescaled to total length 1"
-    )
-  }
-  if (any(metrics %in% c("rpe", "rpd"))) {
-    assertthat::assert_that(
-      isTRUE(all.equal(sum(phy_alt$edge.length), 1)), # nolint
-      msg = "alternative phylogeny not rescaled to total length 1"
-    )
-  }
-
-  # - Check that phy_alt is different from phy
-  assertthat::assert_that(
-    !isTRUE((all.equal(phy, phy_alt))),
-    msg = "'phy' and 'phy_alt' should not be identical"
-  )
-
-  # Calculations ----
-
+  seed = NULL
+) {
   # Generate random community
-  random_comm <- cpr_rand_comm(
+  random_comm <- cpr_rand_comm_intern(
     comm,
     null_model = null_model,
     n_iterations = n_iterations, thin = thin, seed = seed
