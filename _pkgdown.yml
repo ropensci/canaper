@@ -1,35 +1,31 @@
+url: https://joelnitta.github.io/canaper/
 home:
   title: Categorical Analysis of Neo- and Paleo-endemism in R
-  description: >
+  description: |
     Provides functions to conduct categorical analysis of neo- and paleo-endemism (CANAPE) in R.
-
 authors:
   Joel Nitta:
-    href: "https://joelnitta.com"
-
+    href: https://joelnitta.com
 template:
   params:
     bootswatch: lumen
 reference:
-- title: "Community matrix randomization"
-- contents:
-  - cpr_rand_comm
-- title: "Randomization tests"
-  desc: "The main focus of this package, conducting randomization tests of biodiversity metrics"
-- contents:
-  - cpr_rand_test
-- title: "Classification"
-  desc: "Functions to classify the results of the randomization test"
-- contents:
-  - starts_with("cpr_classify")
-- title: "Data"
-  desc: "Datasets included in this package"
+- title: Community matrix randomization
+- contents: cpr_rand_comm
+- title: Randomization tests
+  desc: The main focus of this package, conducting randomization tests of biodiversity
+    metrics
+- contents: cpr_rand_test
+- title: Classification
+  desc: Functions to classify the results of the randomization test
+- contents: starts_with("cpr_classify")
+- title: Data
+  desc: Datasets included in this package
 - contents:
   - acacia
   - biod_example
   - phylocom
   - biod_results
-- title: "Color palettes"
-  desc: "Palettes for plotting classification results"
-- contents:
-  - matches("_cols")
+- title: Color palettes
+  desc: Palettes for plotting classification results
+- contents: matches("_cols")
