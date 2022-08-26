@@ -15,7 +15,8 @@
 #' count_higher(4, c(1:10, NaN))
 #' }
 #' @noRd
-count_higher <- function(x, y, na.rm = TRUE) { # nolint
+count_higher <- function(x, y, na.rm = TRUE) {
+  # nolint
 
   #' @srrstats {G2.1, G2.6} Check input types and lengths
   assertthat::assert_that(assertthat::is.number(x))
@@ -49,7 +50,8 @@ count_higher <- function(x, y, na.rm = TRUE) { # nolint
 #' count_lower(NaN, 1:10)
 #' }
 #' @noRd
-count_lower <- function(x, y, na.rm = TRUE) { # nolint
+count_lower <- function(x, y, na.rm = TRUE) {
+  # nolint
 
   #' @srrstats {G2.1, G2.6} Check input types and lengths
   assertthat::assert_that(assertthat::is.number(x))
@@ -263,4 +265,21 @@ match_phylo_comm <- function(phy, comm, silent = FALSE) {
   }
   res$comm <- comm[, res$phy$tip.label]
   return(res)
+}
+
+#' Skip an extended test, depending on presence of environmental variable
+#' CANAPER_EXTENDED_TESTS
+#'
+#' @return Invisibly return TRUE if environmental variable
+#'   CANAPER_EXTENDED_TESTS does not exist; otherwise, returns
+#'   `testthat::skip()`
+#' @noRd
+#'
+skip_extended_if_no_commit <- function() {
+  if (identical(Sys.getenv("CANAPER_EXTENDED_TESTS"), "")) {
+    return(invisible(TRUE))
+  }
+  testthat::skip(
+    "Commit didn't contain 'run-extended' so extended tests skipped"
+  )
 }
