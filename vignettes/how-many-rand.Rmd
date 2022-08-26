@@ -53,6 +53,7 @@ First, let's load the packages used in this vignette.
 library(canaper) # This package
 library(tictoc) # For timing
 library(tidyverse) # For tidy code
+library(future) # For parallelization
 ```
 
 Next we will test the effects of `n_iterations`, using the [test dataset that comes with `canaper`](https://joelnitta.github.io/canaper/reference/biod_example.html) (and [Biodiverse](https://github.com/shawnlaffan/biodiverse/tree/master/data)). I will increase the number of iterations in powers of 10 from 10 to 1,000,000, and compare the correlation between the original matrix and the randomized matrix:
