@@ -1,9 +1,12 @@
-pandoc: 2.7.3
-pkgdown: 2.0.2
+pandoc: 2.14.2
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   canape: canape.html
   how-many-rand: how-many-rand.html
   parallel: parallel.html
-last_built: 2022-03-08T06:22Z
+last_built: 2022-08-26T09:13Z
+urls:
+  reference: https://joelnitta.github.io/canaper/reference
+  article: https://joelnitta.github.io/canaper/articles
 

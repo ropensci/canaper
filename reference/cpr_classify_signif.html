@@ -73,32 +73,41 @@ lie in the extreme of the random values.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cpr_classify_signif</span><span class="op">(</span><span class="va">df</span>, <span class="va">metric</span>, one_sided <span class="op">=</span> <span class="cn">FALSE</span>, upper <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cpr_classify_signif</span><span class="op">(</span><span class="va">df</span>, <span class="va">metric</span>, one_sided <span class="op">=</span> <span class="cn">FALSE</span>, upper <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>df</dt>
 <dd><p>Input data frame.</p></dd>
+
+
 <dt>metric</dt>
 <dd><p>Character vector of length 1; selected metric to classify
 significance. May choose from <code>pd</code> (phylogenetic diversity), <code>rpd</code>
 (relative phylogenetic diversity), <code>pe</code> (phylogenentic endemism), <code>rpe</code>
 (relative phylogenetic endemism) (case-sensitive).</p></dd>
+
+
 <dt>one_sided</dt>
 <dd><p>Logical vector of length 1; is the null hypothesis
 one-sided? If <code>TRUE</code>, values will be classified as significant if they are
 in <strong>either</strong> the top 5% <strong>or</strong> bottom 5%. If <code>FALSE</code>, values will be
 classified as significant if they are in the top 2.5% or bottom 2.5%,
 combined.</p></dd>
+
+
 <dt>upper</dt>
 <dd><p>Logical vector of length 1; only applies if <code>one_sided</code> is
 <code>TRUE</code>. If <code>TRUE</code>, values in the top 5% will be classified as significant.
 If <code>FALSE</code>, values in the bottom 5% will be classified as significant.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Object of class data.frame with column added for stastistical
+    
+
+<p>Object of class data.frame with column added for stastistical
 significance of the selected metric. The new column name is the name of the
 metric with <code>_signif</code> appendend. The new column is a character that may
 contain the following values, depending on the null hypothesis:</p><ul><li><p><code>&lt; 0.01</code>, <code>&lt; 0.025</code>, <code>&gt; 0.975</code>, <code>&gt; 0.99</code>, <code>not significant</code> (two-sided)</p></li>
@@ -117,15 +126,15 @@ this, set <code>one_sided = FALSE</code>.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">phylocom</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">rand_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span>,</span>
-<span class="r-in">  null_model <span class="op">=</span> <span class="st">"curveball"</span>, metrics <span class="op">=</span> <span class="st">"pd"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">phylocom</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rand_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span>,</span></span>
+<span class="r-in"><span>  null_model <span class="op">=</span> <span class="st">"curveball"</span>, metrics <span class="op">=</span> <span class="st">"pd"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Dropping tips from the tree because they are not present in the community data: </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>  sp16, sp23, sp27, sp28, sp30, sp31, sp32</span>
-<span class="r-in"><span class="fu">cpr_classify_signif</span><span class="op">(</span><span class="va">rand_test</span>, <span class="st">"pd"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">cpr_classify_signif</span><span class="op">(</span><span class="va">rand_test</span>, <span class="st">"pd"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            pd_obs pd_rand_mean pd_rand_sd  pd_obs_z pd_obs_c_upper</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> clump1  0.3018868    0.4620755 0.03964079 -4.041006              0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> clump2a 0.3207547    0.4669811 0.03531139 -4.141056              0</span>
@@ -154,7 +163,7 @@ this, set <code>one_sided = FALSE</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

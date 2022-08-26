@@ -71,7 +71,7 @@ matrix was used as input.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cpr_rand_comm</span><span class="op">(</span><span class="va">comm</span>, <span class="va">null_model</span>, n_iterations <span class="op">=</span> <span class="fl">1</span>, thin <span class="op">=</span> <span class="fl">1</span>, seed <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cpr_rand_comm</span><span class="op">(</span><span class="va">comm</span>, <span class="va">null_model</span>, n_iterations <span class="op">=</span> <span class="fl">1</span>, thin <span class="op">=</span> <span class="fl">1</span>, seed <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -81,6 +81,8 @@ matrix was used as input.</p>
 sites (communities) as rows and species as columns. Values of each cell are
 the presence/absence (0 or 1) or number of individuals (abundance) of each
 species in each site.</p></dd>
+
+
 <dt>null_model</dt>
 <dd><p>Character vector of length 1 or object of class <code>commsim</code>;
 either the name of the model to use for generating random communities (null
@@ -88,40 +90,49 @@ model), or a custom null model. For full list of available predefined null
 models, see the help file of <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">vegan::commsim()</a></code>, or run
 <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">vegan::make.commsim()</a></code>. An object of class <code>commsim</code> can be generated with
 <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">vegan::commsim()</a></code> (see Examples).</p></dd>
+
+
 <dt>n_iterations</dt>
 <dd><p>Numeric vector of length 1; number of iterations for
 sequential null models. Ignored by non-sequential null models.</p></dd>
+
+
 <dt>thin</dt>
 <dd><p>Numeric vector of length 1; thinning parameter used by some
 null models in <code>vegan</code> (e.g., <code>quasiswap</code>); ignored for other models.</p></dd>
+
+
 <dt>seed</dt>
 <dd><p>Integer vector of length 1 or NULL; random seed that will be used
 in a call to <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed()</a></code> before randomizing the matrix. Default (<code>NULL</code>)
 will not change the random generator state.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Matrix</p>
+    
+
+<p>Matrix</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Check list of available pre-defined null models in vegan</span></span>
-<span class="r-in"><span class="fu">vegan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">make.commsim</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "r00"             "c0"              "r0"              "r0_old"         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "r1"              "r2"              "quasiswap"       "greedyqswap"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "swap"            "tswap"           "curveball"       "backtrack"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "r2dtable"        "swap_count"      "quasiswap_count" "swsh_samp"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "swsh_both"       "swsh_samp_r"     "swsh_samp_c"     "swsh_both_r"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "swsh_both_c"     "abuswap_r"       "abuswap_c"       "r00_samp"       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "c0_samp"         "r0_samp"         "r00_ind"         "c0_ind"         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "r0_ind"          "r00_both"        "c0_both"         "r0_both"        </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Binary null model produces binary output</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">phylocom</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">cpr_rand_comm</span><span class="op">(</span><span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="st">"swap"</span>, <span class="fl">100</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Check list of available pre-defined null models in vegan</span></span></span>
+<span class="r-in"><span><span class="fu">vegan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">make.commsim</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "r00"             "c0"              "r0"              "r1"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "r2"              "quasiswap"       "greedyqswap"     "swap"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "tswap"           "curveball"       "backtrack"       "r2dtable"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "swap_count"      "quasiswap_count" "swsh_samp"       "swsh_both"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "swsh_samp_r"     "swsh_samp_c"     "swsh_both_r"     "swsh_both_c"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [21] "abuswap_r"       "abuswap_c"       "r00_samp"        "c0_samp"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [25] "r0_samp"         "r00_ind"         "c0_ind"          "r0_ind"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [29] "r00_both"        "c0_both"         "r0_both"        </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Binary null model produces binary output</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">phylocom</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">cpr_rand_comm</span><span class="op">(</span><span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="st">"swap"</span>, <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         sp1 sp10 sp11 sp12 sp13 sp14 sp15 sp17 sp18 sp19 sp2 sp20 sp21 sp22</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> clump1    1    0    0    0    0    0    0    1    1    0   1    0    0    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> clump2a   0    1    0    0    0    0    0    1    0    0   1    0    0    1</span>
@@ -136,9 +147,9 @@ will not change the random generator state.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> clump4     0    0    0    0   0   0   1   0   0   1   0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> even       1    0    1    0   0   0   0   0   1   0   1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> random     0    1    0    0   0   1   1   0   0   0   0</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Quantitative null model produces quantitative output</span></span>
-<span class="r-in"><span class="fu">cpr_rand_comm</span><span class="op">(</span><span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="st">"swap_count"</span>, <span class="fl">100</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Quantitative null model produces quantitative output</span></span></span>
+<span class="r-in"><span><span class="fu">cpr_rand_comm</span><span class="op">(</span><span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="st">"swap_count"</span>, <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         sp1 sp10 sp11 sp12 sp13 sp14 sp15 sp17 sp18 sp19 sp2 sp20 sp21 sp22</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> clump1    1    0    0    2    1    0    0    0    1    0   0    0    0    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> clump2a   1    2    2    0    0    1    0    0    2    0   2    0    0    0</span>
@@ -153,23 +164,23 @@ will not change the random generator state.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> clump4     1    0    0    0   1   2   0   0   0   1   1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> even       0    0    0    0   0   0   0   1   1   0   2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> random     1    1    0    1   1   0   1   0   0   0   0</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># How to use a custom null model</span></span>
-<span class="r-in"><span class="co"># 1. Define a randomizing function, e.g. re-sample the matrix while</span></span>
-<span class="r-in"><span class="co"># preserving total number of presences (same as the "r00" model)</span></span>
-<span class="r-in"><span class="va">randomizer</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">n</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="va">n</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># 2. Generate a commsim object</span></span>
-<span class="r-in"><span class="va">cs_object</span> <span class="op">&lt;-</span> <span class="fu">vegan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">commsim</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="st">"r00_model"</span>,</span>
-<span class="r-in">  fun <span class="op">=</span> <span class="va">randomizer</span>, binary <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">  isSeq <span class="op">=</span> <span class="cn">FALSE</span>, mode <span class="op">=</span> <span class="st">"integer"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># 3. Generate the null community</span></span>
-<span class="r-in"><span class="fu">cpr_rand_comm</span><span class="op">(</span><span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="va">cs_object</span>, <span class="fl">100</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># How to use a custom null model</span></span></span>
+<span class="r-in"><span><span class="co"># 1. Define a randomizing function, e.g. re-sample the matrix while</span></span></span>
+<span class="r-in"><span><span class="co"># preserving total number of presences (same as the "r00" model)</span></span></span>
+<span class="r-in"><span><span class="va">randomizer</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">n</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="va">n</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># 2. Generate a commsim object</span></span></span>
+<span class="r-in"><span><span class="va">cs_object</span> <span class="op">&lt;-</span> <span class="fu">vegan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">commsim</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"r00_model"</span>,</span></span>
+<span class="r-in"><span>  fun <span class="op">=</span> <span class="va">randomizer</span>, binary <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  isSeq <span class="op">=</span> <span class="cn">FALSE</span>, mode <span class="op">=</span> <span class="st">"integer"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># 3. Generate the null community</span></span></span>
+<span class="r-in"><span><span class="fu">cpr_rand_comm</span><span class="op">(</span><span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="va">cs_object</span>, <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         sp1 sp10 sp11 sp12 sp13 sp14 sp15 sp17 sp18 sp19 sp2 sp20 sp21 sp22</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> clump1    0    1    0    0    1    0    1    0    0    0   0    1    0    1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> clump2a   0    0    0    0    1    0    0    1    1    0   0    0    0    1</span>
@@ -198,7 +209,7 @@ will not change the random generator state.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

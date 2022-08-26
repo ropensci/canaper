@@ -71,7 +71,7 @@ according to CANAPE scheme of Mishler et al. 2014.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cpr_classify_endem</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cpr_classify_endem</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -84,11 +84,17 @@ endemism on alternate tree to random values</p></li>
 <li><p><code>rpe_obs_p_upper</code>: Upper <em>p</em>-value comparing observed relative phylogenetic
 endemism to random values</p></li>
 </ul></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Object of class data.frame with column <code>endem_type</code> (character)
-added. Values of <code>endem_type</code> type include <code>paleo</code> (paleoendemic), <code>neo</code>(neoendemic), <code>not significant</code> (what it says), <code>mixed</code> (mixed endemism),
+    
+
+<p>Object of class data.frame with column <code>endem_type</code> (character)
+added. Values of <code>endem_type</code> type include <code>paleo</code> (paleoendemic), <code>neo</code></p>
+
+
+<p>(neoendemic), <code>not significant</code> (what it says), <code>mixed</code> (mixed endemism),
 and <code>super</code> (super-endemic; both <code>pe_obs</code> and <code>pe_obs_alt</code> are highly
 significant).</p>
     </div>
@@ -101,69 +107,69 @@ significant).</p>
     <h2>References</h2>
     <p>Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
 Phylogenetic measures of biodiversity and neo- and paleo-endemism in
-Australian Acacia. Nat Commun, 5: 4473. doi: <a href="https://doi.org/10.1038/ncomms5473" class="external-link">10.1038/ncomms5473</a></p>
+Australian Acacia. Nat Commun, 5: 4473. <a href="https://doi.org/10.1038/ncomms5473" class="external-link">doi:10.1038/ncomms5473</a></p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">phylocom</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">rand_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span>,</span>
-<span class="r-in">  null_model <span class="op">=</span> <span class="st">"curveball"</span>, metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pe"</span>, <span class="st">"rpe"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">phylocom</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rand_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span>,</span></span>
+<span class="r-in"><span>  null_model <span class="op">=</span> <span class="st">"curveball"</span>, metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pe"</span>, <span class="st">"rpe"</span><span class="op">)</span>, n_reps <span class="op">=</span> <span class="fl">50</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Dropping tips from the tree because they are not present in the community data: </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>  sp16, sp23, sp27, sp28, sp30, sp31, sp32</span>
-<span class="r-in"><span class="fu">cpr_classify_endem</span><span class="op">(</span><span class="va">rand_test</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">cpr_classify_endem</span><span class="op">(</span><span class="va">rand_test</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            pe_obs pe_rand_mean pe_rand_sd   pe_obs_z pe_obs_c_upper</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump1  0.1333333    0.1626069 0.02966082 -0.9869446             18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump2a 0.1081761    0.1694874 0.03082893 -1.9887590              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump2b 0.1286164    0.1723491 0.03079849 -1.4199627              6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump4  0.1411950    0.1702075 0.02787481 -1.0408171             13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> even    0.2506289    0.1630692 0.02978852  2.9393787            100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> random  0.2380503    0.1622799 0.02685895  2.8210498             99</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump1  0.1333333    0.1629245 0.02851269 -1.0378255              9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump2a 0.1081761    0.1679182 0.03453727 -1.7297874              0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump2b 0.1286164    0.1736981 0.03249949 -1.3871528              3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump4  0.1411950    0.1679182 0.02795142 -0.9560614              6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> even    0.2506289    0.1626918 0.02900013  3.0323008             50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> random  0.2380503    0.1648491 0.02384301  3.0701355             50</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         pe_obs_c_lower pe_obs_q pe_obs_p_upper pe_obs_p_lower pe_alt_obs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump1              81      100           0.18           0.81  0.1472222</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump2a            100      100           0.00           1.00  0.1194444</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump2b             94      100           0.06           0.94  0.1420139</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump4              85      100           0.13           0.85  0.1454861</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> even                 0      100           1.00           0.00  0.2246528</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> random               1      100           0.99           0.01  0.2211806</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump1              40       50           0.18           0.80  0.1472222</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump2a             50       50           0.00           1.00  0.1194444</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump2b             47       50           0.06           0.94  0.1420139</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump4              43       50           0.12           0.86  0.1454861</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> even                 0       50           1.00           0.00  0.2246528</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> random               0       50           1.00           0.00  0.2211806</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         pe_alt_rand_mean pe_alt_rand_sd pe_alt_obs_z pe_alt_obs_c_upper</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump1         0.1624965     0.02339824   -0.6527971                 30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump2a        0.1706840     0.02549820   -2.0095373                  1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump2b        0.1704757     0.02347660   -1.2123480                 12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump4         0.1659583     0.02137130   -0.9579306                 15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> even           0.1653681     0.02309614    2.5668666                100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> random         0.1650174     0.02162218    2.5974812                 99</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump1         0.1641319     0.02219599   -0.7618367                 14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump2a        0.1682569     0.02697502   -1.8095448                  1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump2b        0.1719306     0.02484078   -1.2043369                  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump4         0.1638819     0.02212919   -0.8312928                  8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> even           0.1652639     0.02152674    2.7588421                 50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> random         0.1665347     0.01738758    3.1428089                 50</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         pe_alt_obs_c_lower pe_alt_obs_q pe_alt_obs_p_upper pe_alt_obs_p_lower</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump1                  70          100               0.30               0.70</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump2a                 99          100               0.01               0.99</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump2b                 88          100               0.12               0.88</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump4                  85          100               0.15               0.85</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> even                     0          100               1.00               0.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> random                   1          100               0.99               0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump1                  36           50               0.28               0.72</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump2a                 49           50               0.02               0.98</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump2b                 45           50               0.10               0.90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump4                  42           50               0.16               0.84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> even                     0           50               1.00               0.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> random                   0           50               1.00               0.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           rpe_obs rpe_rand_mean rpe_rand_sd  rpe_obs_z rpe_obs_c_upper</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump1  0.9056604     0.9990213  0.09849594 -0.9478653               5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump2a 0.9056604     0.9920766  0.09284487 -0.9307594               6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump2b 0.9056604     1.0104896  0.11063714 -0.9475050               7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump4  0.9705048     1.0263369  0.11074938 -0.5041305              46</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> even    1.1156280     0.9830377  0.08516802  1.5568087              89</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> random  1.0762714     0.9830892  0.09818383  0.9490594              86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump1  0.9056604     0.9914623  0.10229538 -0.8387665               3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump2a 0.9056604     0.9943639  0.09463083 -0.9373636               3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump2b 0.9056604     1.0085663  0.10964487 -0.9385383               5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump4  0.9705048     1.0265177  0.11951675 -0.4686615              24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> even    1.1156280     0.9813165  0.08701376  1.5435668              44</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> random  1.0762714     0.9900219  0.10324640  0.8353757              43</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         rpe_obs_c_lower rpe_obs_q rpe_obs_p_upper rpe_obs_p_lower</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump1               88       100            0.05            0.88</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump2a              86       100            0.06            0.86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump2b              87       100            0.07            0.87</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clump4               54       100            0.46            0.54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> even                 11       100            0.89            0.11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> random               14       100            0.86            0.14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump1               43        50            0.06            0.86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump2a              45        50            0.06            0.90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump2b              43        50            0.10            0.86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clump4               26        50            0.48            0.52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> even                  6        50            0.88            0.12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> random                7        50            0.86            0.14</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              endem_type</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> clump1  not significant</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> clump2a not significant</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> clump2b not significant</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> clump4  not significant</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> even              super</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> random            mixed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> random            super</span>
 </code></pre></div>
     </div>
   </div>
@@ -178,7 +184,7 @@ Australian Acacia. Nat Commun, 5: 4473. doi: <a href="https://doi.org/10.1038/nc
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

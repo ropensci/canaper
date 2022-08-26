@@ -73,18 +73,18 @@ Various statistics are calculated from the comparison (see <strong>Value</strong
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cpr_rand_test</span><span class="op">(</span>
-  <span class="va">comm</span>,
-  <span class="va">phy</span>,
-  <span class="va">null_model</span>,
-  n_reps <span class="op">=</span> <span class="fl">100</span>,
-  n_iterations <span class="op">=</span> <span class="fl">10000</span>,
-  thin <span class="op">=</span> <span class="fl">1</span>,
-  metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pd"</span>, <span class="st">"rpd"</span>, <span class="st">"pe"</span>, <span class="st">"rpe"</span><span class="op">)</span>,
-  site_col <span class="op">=</span> <span class="st">"site"</span>,
-  tbl_out <span class="op">=</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/is_tibble.html" class="external-link">is_tibble</a></span><span class="op">(</span><span class="va">comm</span><span class="op">)</span>,
-  quiet <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cpr_rand_test</span><span class="op">(</span></span>
+<span>  <span class="va">comm</span>,</span>
+<span>  <span class="va">phy</span>,</span>
+<span>  <span class="va">null_model</span>,</span>
+<span>  n_reps <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  n_iterations <span class="op">=</span> <span class="fl">10000</span>,</span>
+<span>  thin <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pd"</span>, <span class="st">"rpd"</span>, <span class="st">"pe"</span>, <span class="st">"rpe"</span><span class="op">)</span>,</span>
+<span>  site_col <span class="op">=</span> <span class="st">"site"</span>,</span>
+<span>  tbl_out <span class="op">=</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/is_tibble.html" class="external-link">is_tibble</a></span><span class="op">(</span><span class="va">comm</span><span class="op">)</span>,</span>
+<span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -95,8 +95,12 @@ sites (communities) as rows and species as columns. Either presence-absence
 data (values only 0s or 1s) or abundance data (values &gt;= 0) accepted, but
 calculations do not use abundance-weighting, so results from abundance data
 will be the same as if converted to presence-absence before analysis.</p></dd>
+
+
 <dt>phy</dt>
 <dd><p>List of class <code>phylo</code>; input phylogeny.</p></dd>
+
+
 <dt>null_model</dt>
 <dd><p>Character vector of length 1 or object of class <code>commsim</code>;
 either the name of the model to use for generating random communities (null
@@ -104,33 +108,50 @@ model), or a custom null model. For full list of available predefined null
 models, see the help file of <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">vegan::commsim()</a></code>, or run
 <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">vegan::make.commsim()</a></code>. An object of class <code>commsim</code> can be generated with
 <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">vegan::commsim()</a></code> (see <strong>Examples</strong> in <code><a href="cpr_rand_comm.html">cpr_rand_comm</a>()</code>).</p></dd>
+
+
 <dt>n_reps</dt>
 <dd><p>Numeric vector of length 1; number of random communities to
 replicate.</p></dd>
+
+
 <dt>n_iterations</dt>
 <dd><p>Numeric vector of length 1; number of iterations to use
 for sequential null models; ignored for non-sequential models.</p></dd>
+
+
 <dt>thin</dt>
 <dd><p>Numeric vector of length 1; thinning parameter used by some
 null models in <code>vegan</code> (e.g., <code>quasiswap</code>); ignored for other models.</p></dd>
+
+
 <dt>metrics</dt>
 <dd><p>Character vector; names of biodiversity metrics to calculate.
 May include one or more of: <code>pd</code>, <code>rpd</code>, <code>pe</code>, <code>rpe</code> (case-sensitive).</p></dd>
+
+
 <dt>site_col</dt>
 <dd><p>Character vector of length 1; name of column in <code>comm</code> that
 contains the site names; only used if <code>comm</code> is a tibble (object of class
 <code>tbl_df</code>).</p></dd>
+
+
 <dt>tbl_out</dt>
 <dd><p>Logical vector of length 1; should the output be returned as
 a tibble? If <code>FALSE</code>, will return a dataframe. Defaults to <code>TRUE</code> if <code>comm</code>
 is a tibble.</p></dd>
+
+
 <dt>quiet</dt>
 <dd><p>Logical vector of length 1; if <code>TRUE</code>, suppress all warnings and
 messages that would be emitted by this function.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Dataframe. For each of the biodiversity metrics, the following 9
+    
+
+<p>Dataframe. For each of the biodiversity metrics, the following 9
 columns will be produced:</p><ul><li><p><code>*_obs</code>: Observed value</p></li>
 <li><p><code>*_obs_c_lower</code>: Count of times observed value was lower than random values</p></li>
 <li><p><code>*_obs_c_upper</code>: Count of times observed value was higher than random
@@ -195,30 +216,30 @@ abundance or presence-absence data (i.e., abundance weighting is not used).</p>
     <h2>References</h2>
     <p>Faith DP (1992) Conservation evaluation and phylogenetic
 diversity. Biological Conservation, 61:1–10.
-doi: <a href="https://doi.org/10.1016/0006-3207(92)91201-3" class="external-link">10.1016/0006-3207(92)91201-3</a></p>
+<a href="https://doi.org/10.1016/0006-3207%2892%2991201-3" class="external-link">doi:10.1016/0006-3207(92)91201-3</a></p>
 <p>Gotelli, N.J. and Entsminger, N.J. (2003). Swap algorithms in
 null model analysis. Ecology 84, 532–535.</p>
 <p>Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
 Phylogenetic measures of biodiversity and neo- and paleo-endemism in
-Australian Acacia. Nat Commun, 5: 4473. doi: <a href="https://doi.org/10.1038/ncomms5473" class="external-link">10.1038/ncomms5473</a></p>
+Australian Acacia. Nat Commun, 5: 4473. <a href="https://doi.org/10.1038/ncomms5473" class="external-link">doi:10.1038/ncomms5473</a></p>
 <p>Rosauer, D., Laffan, S.W., Crisp, M.D., Donnellan, S.C. and Cook,
 L.G. (2009) Phylogenetic endemism: a new approach for identifying
 geographical concentrations of evolutionary history. Molecular Ecology, 18:
-4061-4072. doi: <a href="https://doi.org/10.1111/j.1365-294X.2009.04311.x" class="external-link">10.1111/j.1365-294X.2009.04311.x</a></p>
+4061-4072. <a href="https://doi.org/10.1111/j.1365-294X.2009.04311.x" class="external-link">doi:10.1111/j.1365-294X.2009.04311.x</a></p>
 <p>Strona, G., Ulrich, W. and Gotelli, N.J. (2018), Bi-dimensional
 null model analysis of presence-absence binary matrices.
-Ecology, 99: 103-115. doi: <a href="https://doi.org/10.1002/ecy.2043" class="external-link">10.1002/ecy.2043</a></p>
+Ecology, 99: 103-115. <a href="https://doi.org/10.1002/ecy.2043" class="external-link">doi:10.1002/ecy.2043</a></p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">phylocom</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># Returns a dataframe by defualt</span></span>
-<span class="r-in"><span class="fu">cpr_rand_test</span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span>,</span>
-<span class="r-in">  null_model <span class="op">=</span> <span class="st">"curveball"</span>, metrics <span class="op">=</span> <span class="st">"pd"</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">phylocom</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Returns a dataframe by defualt</span></span></span>
+<span class="r-in"><span><span class="fu">cpr_rand_test</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span>,</span></span>
+<span class="r-in"><span>  null_model <span class="op">=</span> <span class="st">"curveball"</span>, metrics <span class="op">=</span> <span class="st">"pd"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Dropping tips from the tree because they are not present in the community data: </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>  sp16, sp23, sp27, sp28, sp30, sp31, sp32</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            pd_obs pd_rand_mean pd_rand_sd  pd_obs_z pd_obs_c_upper</span>
@@ -235,30 +256,30 @@ Ecology, 99: 103-115. doi: <a href="https://doi.org/10.1002/ecy.2043" class="ext
 <span class="r-out co"><span class="r-pr">#&gt;</span> clump4              88      100           0.05           0.88</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> even                 0      100           1.00           0.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> random               3      100           0.87           0.03</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Tibbles may be preferable because of the large number of columns</span></span>
-<span class="r-in"><span class="fu">cpr_rand_test</span><span class="op">(</span></span>
-<span class="r-in">  <span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span>,</span>
-<span class="r-in">  null_model <span class="op">=</span> <span class="st">"curveball"</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Tibbles may be preferable because of the large number of columns</span></span></span>
+<span class="r-in"><span><span class="fu">cpr_rand_test</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span>,</span></span>
+<span class="r-in"><span>  null_model <span class="op">=</span> <span class="st">"curveball"</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Dropping tips from the tree because they are not present in the community data: </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>  sp16, sp23, sp27, sp28, sp30, sp31, sp32</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 55</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   site    pd_obs pd_rand_mean pd_rand_sd pd_obs_z pd_obs_c_upper pd_obs_c_lower</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> clump1   0.302        0.468     0.037<span style="text-decoration: underline;">4</span>    -<span style="color: #BB0000;">4.43</span>              0            100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> clump2a  0.321        0.467     0.034<span style="text-decoration: underline;">4</span>    -<span style="color: #BB0000;">4.26</span>              0            100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> clump2b  0.340        0.474     0.034<span style="text-decoration: underline;">1</span>    -<span style="color: #BB0000;">3.93</span>              0            100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> clump4   0.415        0.466     0.036<span style="text-decoration: underline;">6</span>    -<span style="color: #BB0000;">1.39</span>              5             90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> even     0.566        0.460     0.033<span style="text-decoration: underline;">0</span>     3.21            100              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> random   0.509        0.466     0.031<span style="text-decoration: underline;">6</span>     1.38             84              3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 48 more variables: pd_obs_q &lt;dbl&gt;, pd_obs_p_upper &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   pd_obs_p_lower &lt;dbl&gt;, pd_alt_obs &lt;dbl&gt;, pd_alt_rand_mean &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   site    pd_obs pd_ra…¹ pd_ra…² pd_ob…³ pd_ob…⁴ pd_ob…⁵ pd_ob…⁶ pd_ob…⁷ pd_ob…⁸</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> clump1   0.302   0.468  0.037<span style="text-decoration: underline;">4</span>   -<span style="color: #BB0000;">4.43</span>       0     100     100    0       1   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> clump2a  0.321   0.467  0.034<span style="text-decoration: underline;">4</span>   -<span style="color: #BB0000;">4.26</span>       0     100     100    0       1   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> clump2b  0.340   0.474  0.034<span style="text-decoration: underline;">1</span>   -<span style="color: #BB0000;">3.93</span>       0     100     100    0       1   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> clump4   0.415   0.466  0.036<span style="text-decoration: underline;">6</span>   -<span style="color: #BB0000;">1.39</span>       5      90     100    0.05    0.9 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> even     0.566   0.460  0.033<span style="text-decoration: underline;">0</span>    3.21     100       0     100    1       0   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> random   0.509   0.466  0.031<span style="text-decoration: underline;">6</span>    1.38      84       3     100    0.84    0.03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 45 more variables: pd_alt_obs &lt;dbl&gt;, pd_alt_rand_mean &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   pd_alt_rand_sd &lt;dbl&gt;, pd_alt_obs_z &lt;dbl&gt;, pd_alt_obs_c_upper &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   pd_alt_obs_c_lower &lt;dbl&gt;, pd_alt_obs_q &lt;dbl&gt;, pd_alt_obs_p_upper &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   pd_alt_obs_p_lower &lt;dbl&gt;, rpd_obs &lt;dbl&gt;, rpd_rand_mean &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   rpd_rand_sd &lt;dbl&gt;, rpd_obs_z &lt;dbl&gt;, rpd_obs_c_upper &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   rpd_obs_c_lower &lt;dbl&gt;, rpd_obs_q &lt;dbl&gt;, rpd_obs_p_upper &lt;dbl&gt;, …</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   rpd_obs_c_lower &lt;dbl&gt;, rpd_obs_q &lt;dbl&gt;, rpd_obs_p_upper &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   rpd_obs_p_lower &lt;dbl&gt;, pe_obs &lt;dbl&gt;, pe_rand_mean &lt;dbl&gt;, …</span></span>
 </code></pre></div>
     </div>
   </div>
@@ -273,7 +294,7 @@ Ecology, 99: 103-115. doi: <a href="https://doi.org/10.1002/ecy.2043" class="ext
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

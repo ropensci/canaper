@@ -71,7 +71,7 @@ Biodiverse."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="va">biod_results</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="va">biod_results</span></span></code></pre></div>
     </div>
 
     <div id="format">
@@ -117,26 +117,27 @@ example data set was used as input,which corresponds to the
     <p>Laffan, S.W., Lubarsky, E. &amp; Rosauer, D.F. (2010) Biodiverse, a
 tool for the spatial analysis of biological and related diversity.
 Ecography. Vol 33, 643-647 (Version 3.1).
-doi: <a href="https://doi.org/10.1111/j.1600-0587.2010.06237.x" class="external-link">10.1111/j.1600-0587.2010.06237.x</a></p>
+<a href="https://doi.org/10.1111/j.1600-0587.2010.06237.x" class="external-link">doi:10.1111/j.1600-0587.2010.06237.x</a></p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">biod_results</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">biod_results</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 127 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    site    pd_biodiv pd_alt_biodiv rpd_biodiv pe_biodiv pe_alt_biodiv rpe_biodiv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 195000…    0.046<span style="text-decoration: underline;">9</span>        0.069<span style="text-decoration: underline;">0</span>      0.680   0.006<span style="text-decoration: underline;">61</span>       0.002<span style="text-decoration: underline;">90</span>      2.28 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 195000…    0.046<span style="text-decoration: underline;">9</span>        0.069<span style="text-decoration: underline;">0</span>      0.680   0.006<span style="text-decoration: underline;">61</span>       0.002<span style="text-decoration: underline;">90</span>      2.28 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 205000…    0.093<span style="text-decoration: underline;">1</span>        0.172       0.540   0.008<span style="text-decoration: underline;">33</span>       0.005<span style="text-decoration: underline;">04</span>      1.65 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 205000…    0.046<span style="text-decoration: underline;">9</span>        0.069<span style="text-decoration: underline;">0</span>      0.680   0.006<span style="text-decoration: underline;">61</span>       0.002<span style="text-decoration: underline;">90</span>      2.28 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 215000…    0.046<span style="text-decoration: underline;">9</span>        0.155       0.302   0.001<span style="text-decoration: underline;">46</span>       0.002<span style="text-decoration: underline;">36</span>      0.620</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 215000…    0.068<span style="text-decoration: underline;">3</span>        0.172       0.396   0.002<span style="text-decoration: underline;">59</span>       0.003<span style="text-decoration: underline;">27</span>      0.793</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 215000…    0.093<span style="text-decoration: underline;">1</span>        0.172       0.540   0.008<span style="text-decoration: underline;">33</span>       0.005<span style="text-decoration: underline;">04</span>      1.65 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 225000…    0.046<span style="text-decoration: underline;">9</span>        0.155       0.302   0.001<span style="text-decoration: underline;">73</span>       0.002<span style="text-decoration: underline;">58</span>      0.673</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 225000…    0.093<span style="text-decoration: underline;">1</span>        0.172       0.540   0.008<span style="text-decoration: underline;">06</span>       0.004<span style="text-decoration: underline;">82</span>      1.67 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 225000…    0.182         0.276       0.659   0.010<span style="text-decoration: underline;">9</span>        0.007<span style="text-decoration: underline;">55</span>      1.45 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 117 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    site            pd_biodiv pd_alt_biodiv rpd_biodiv pe_biodiv pe_alt…¹ rpe_b…²</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 1950000:1350000    0.046<span style="text-decoration: underline;">9</span>        0.069<span style="text-decoration: underline;">0</span>      0.680   0.006<span style="text-decoration: underline;">61</span>  0.002<span style="text-decoration: underline;">90</span>   2.28 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 1950000:1450000    0.046<span style="text-decoration: underline;">9</span>        0.069<span style="text-decoration: underline;">0</span>      0.680   0.006<span style="text-decoration: underline;">61</span>  0.002<span style="text-decoration: underline;">90</span>   2.28 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2050000:1250000    0.093<span style="text-decoration: underline;">1</span>        0.172       0.540   0.008<span style="text-decoration: underline;">33</span>  0.005<span style="text-decoration: underline;">04</span>   1.65 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2050000:1350000    0.046<span style="text-decoration: underline;">9</span>        0.069<span style="text-decoration: underline;">0</span>      0.680   0.006<span style="text-decoration: underline;">61</span>  0.002<span style="text-decoration: underline;">90</span>   2.28 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2150000:1050000    0.046<span style="text-decoration: underline;">9</span>        0.155       0.302   0.001<span style="text-decoration: underline;">46</span>  0.002<span style="text-decoration: underline;">36</span>   0.620</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2150000:1150000    0.068<span style="text-decoration: underline;">3</span>        0.172       0.396   0.002<span style="text-decoration: underline;">59</span>  0.003<span style="text-decoration: underline;">27</span>   0.793</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2150000:1250000    0.093<span style="text-decoration: underline;">1</span>        0.172       0.540   0.008<span style="text-decoration: underline;">33</span>  0.005<span style="text-decoration: underline;">04</span>   1.65 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2250000:1050000    0.046<span style="text-decoration: underline;">9</span>        0.155       0.302   0.001<span style="text-decoration: underline;">73</span>  0.002<span style="text-decoration: underline;">58</span>   0.673</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2250000:1250000    0.093<span style="text-decoration: underline;">1</span>        0.172       0.540   0.008<span style="text-decoration: underline;">06</span>  0.004<span style="text-decoration: underline;">82</span>   1.67 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2250000:950000     0.182         0.276       0.659   0.010<span style="text-decoration: underline;">9</span>   0.007<span style="text-decoration: underline;">55</span>   1.45 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 117 more rows, and abbreviated variable names ¹​pe_alt_biodiv,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ²​rpe_biodiv</span></span>
 </code></pre></div>
     </div>
   </div>
@@ -151,7 +152,7 @@ doi: <a href="https://doi.org/10.1111/j.1600-0587.2010.06237.x" class="external-
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
