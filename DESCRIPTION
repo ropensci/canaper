@@ -56,7 +56,8 @@ Suggests:
     stringr,
     magrittr,
     covr,
-    picante
+    picante,
+    withr
 Config/testthat/edition: 3
 Depends: 
     R (>= 4.1.0)
