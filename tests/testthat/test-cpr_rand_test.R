@@ -392,6 +392,9 @@ test_that("Parallelization decreases calculation time", {
   # Change back to sequential when done (including on failure)
   on.exit(future::plan(future::sequential), add = TRUE)
 
+  # For CI, skip this test if the phrase 'run-extended' is not in the commit
+  skip_extended_if_no_commit()
+
   # Set future resolution to sequential (no parallelization)
   future::plan(future::sequential)
   tictoc::tic.clearlog()
@@ -400,7 +403,7 @@ test_that("Parallelization decreases calculation time", {
   seq_res <- cpr_rand_test(
     acacia$comm, acacia$phy,
     null_model = "curveball",
-    n_iterations = 100, n_reps = 50, quiet = TRUE
+    n_iterations = 100, n_reps = 200, quiet = TRUE
   )
   tictoc::toc(log = TRUE, quiet = TRUE)
 
@@ -411,7 +414,7 @@ test_that("Parallelization decreases calculation time", {
   parallel_res <- cpr_rand_test(
     acacia$comm, acacia$phy,
     null_model = "curveball",
-    n_iterations = 100, n_reps = 50, quiet = TRUE
+    n_iterations = 100, n_reps = 200, quiet = TRUE
   )
   tictoc::toc(log = TRUE, quiet = TRUE)
   log_list <- tictoc::tic.log(format = FALSE)
