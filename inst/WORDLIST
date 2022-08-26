@@ -8,10 +8,12 @@ assertr
 assertthat
 aut
 benchmarking
+biod
 Biodiverse
 biodiverse
 Bioinformatics
 bioRxiv
+bootswatch
 branchlengths
 BugReports
 canaper
@@ -29,10 +31,12 @@ contIntegration
 copyrightable
 copyrightHolder
 covr
+cpr
 cran
 cre
 ctb
 datePublished
+desc
 developmentStatus
 DOI
 doi
@@ -44,6 +48,7 @@ Ecography
 Endemism
 endemism
 Entsminger
+env
 EPSG
 et
 exhuastive
@@ -57,6 +62,7 @@ givenName
 gmail
 González
 Gotelli
+href
 http
 https
 ingroup
@@ -64,6 +70,7 @@ inrease
 io
 issueTracker
 Iwasaki
+JamesIves
 joelnitta
 Kembel
 Knerr
@@ -99,8 +106,10 @@ paleo
 paleoendemic
 paleoendemism
 Paleoendemism
+pandoc
 parallelization
 parallelize
+params
 parellelization
 perl
 phangorn
@@ -112,6 +121,7 @@ phylogenies
 PhyloMeasures
 phyloregion
 phylosor
+pkgdown
 pre
 programmingLanguage
 progressr
@@ -135,6 +145,8 @@ RoxygenNote
 roxyglobals
 RPD
 RPE
+Rscript
+rspm
 runtimePlatform
 sameAs
 Schliep
@@ -156,6 +168,7 @@ testthat
 tibble
 tictoc
 tidyverse
+ubuntu
 Ulrich
 unifrac
 vigenette
