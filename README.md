@@ -221,9 +221,9 @@ the right.
 
 ## Papers citing `canaper`
 
--   Nitta *et al.* “Spatial phylogenetics of Japanese ferns: Patterns,
-    processes, and implications for conservation”. bioRxiv
-    <https://doi.org/10.1101/2021.08.26.457744>
+-   Nitta *et al.* 2022 “Spatial phylogenetics of Japanese ferns:
+    Patterns, processes, and implications for conservation”. *American
+    Journal of Botany* 109, 727-745 <https://doi.org/10.1002/ajb2.1848>
 
 ## Contributing and code of conduct
 
