@@ -267,19 +267,19 @@ match_phylo_comm <- function(phy, comm, silent = FALSE) {
   return(res)
 }
 
-#' Skip an extended test, depending on presence of environmental variable
+#' Skip an extended test, depending on value of environmental variable
 #' CANAPER_EXTENDED_TESTS
 #'
 #' @return Invisibly return TRUE if environmental variable
-#'   CANAPER_EXTENDED_TESTS does not exist; otherwise, returns
+#'   CANAPER_EXTENDED_TESTS is 'true' (test not skipped); otherwise, returns
 #'   `testthat::skip()`
 #' @noRd
 #'
-skip_extended_if_no_commit <- function() {
-  if (identical(Sys.getenv("CANAPER_EXTENDED_TESTS"), "")) {
-    return(invisible(TRUE))
+skip_extended <- function() {
+  if (identical(Sys.getenv("CANAPER_EXTENDED_TESTS"), "true")) {
+    return(invisible(TRUE)) # don't skip if CANAPER_EXTENDED_TESTS is 'true'
   }
   testthat::skip(
-    "Commit didn't contain 'run-extended' so extended tests skipped"
+    "Skipping extended tests"
   )
 }

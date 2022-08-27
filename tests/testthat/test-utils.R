@@ -160,12 +160,12 @@ test_that("Matching community and phylogeny data works", {
   )
 })
 
-test_that("skip_extended_if_no_commit works", {
+test_that("skip_extended works", {
   # Test that a skip happens
-  withr::local_envvar(CANAPER_EXTENDED_TESTS = "true")
-  expect_condition(skip_extended_if_no_commit(), class = "skip")
+  withr::local_envvar(CANAPER_EXTENDED_TESTS = "")
+  expect_condition(skip_extended(), class = "skip")
 
   # Test that a skip doesn't happen
-  withr::local_envvar(CANAPER_EXTENDED_TESTS = "")
-  expect_condition(skip_extended_if_no_commit(), NA, class = "skip")
+  withr::local_envvar(CANAPER_EXTENDED_TESTS = "true")
+  expect_condition(skip_extended(), NA, class = "skip")
 })

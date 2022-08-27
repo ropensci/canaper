@@ -392,8 +392,12 @@ test_that("Parallelization decreases calculation time", {
   # Change back to sequential when done (including on failure)
   on.exit(future::plan(future::sequential), add = TRUE)
 
-  # For CI, skip this test if the phrase 'run-extended' is not in the commit
-  skip_extended_if_no_commit()
+  # This test is skipped by default because of its long run time.
+  # To include the test locally, first run
+  # withr::local_envvar(CANAPER_EXTENDED_TESTS = "true") # nolint
+  # To include the test in CI (github actions), include the phrase
+  # 'run-extended' in the commit
+  skip_extended()
 
   # Set future resolution to sequential (no parallelization)
   future::plan(future::sequential)
