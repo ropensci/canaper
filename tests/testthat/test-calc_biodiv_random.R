@@ -40,8 +40,8 @@ test_that("Random seeds work in parallel", {
   # Change back to sequential when done (including on failure)
   on.exit(future::plan(future::sequential), add = TRUE)
 
-  # Set future resolution to parallelized, with 3 workers
-  future::plan(future::multisession, workers = 3)
+  # Set future resolution to parallelized, with 2 workers
+  future::plan(future::multisession, workers = 2)
 
   set.seed(12345)
   res1 <- future.apply::future_lapply(

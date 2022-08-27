@@ -464,8 +464,8 @@ test_that("Seeds work across sequential and parallel", {
   expect_true(isTRUE(all.equal(seq_res_1, seq_res_3)))
   expect_false(isTRUE(all.equal(seq_res_1, seq_res_2)))
 
-  # Set future resolution to parallelized, with 3 workers
-  future::plan(future::multisession, workers = 3)
+  # Set future resolution to parallelized, with 2 workers
+  future::plan(future::multisession, workers = 2)
   set.seed(12345)
   par_res_1 <- cpr_rand_test(
     biod_example$comm, biod_example$phy,
