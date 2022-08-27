@@ -15,7 +15,7 @@
 #' count_higher(4, c(1:10, NaN))
 #' }
 #' @noRd
-count_higher <- function(x, y, na.rm = TRUE) {
+count_higher <- function(x, y, na_rm = TRUE) {
   # nolint
 
   #' @srrstats {G2.1, G2.6} Check input types and lengths
@@ -23,7 +23,7 @@ count_higher <- function(x, y, na.rm = TRUE) {
   assertthat::assert_that(is.numeric(y))
 
   # remove any NAs before making comparison
-  if (isTRUE(na.rm)) y <- y[!is.na(y)]
+  if (isTRUE(na_rm)) y <- y[!is.na(y)]
 
   # if comparison is zero length, return NA
   if (length(y) == 0) {
@@ -37,7 +37,7 @@ count_higher <- function(x, y, na.rm = TRUE) {
 #'
 #' @param x Number to count
 #' @param y Vector of numbers to compare
-#' @param na.rm = Logical; should NA values in the comparison
+#' @param na_rm = Logical; should NA values in the comparison
 #' vector be removed before making comparison?
 #'
 #' @return Number of times x is lower than y
@@ -50,7 +50,7 @@ count_higher <- function(x, y, na.rm = TRUE) {
 #' count_lower(NaN, 1:10)
 #' }
 #' @noRd
-count_lower <- function(x, y, na.rm = TRUE) {
+count_lower <- function(x, y, na_rm = TRUE) {
   # nolint
 
   #' @srrstats {G2.1, G2.6} Check input types and lengths
@@ -58,7 +58,7 @@ count_lower <- function(x, y, na.rm = TRUE) {
   assertthat::assert_that(is.numeric(y))
 
   # remove any NAs before making comparison
-  if (isTRUE(na.rm)) y <- y[!is.na(y)]
+  if (isTRUE(na_rm)) y <- y[!is.na(y)]
 
   # if comparison is zero length, return NA
   if (length(y) == 0) {
