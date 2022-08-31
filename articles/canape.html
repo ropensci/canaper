@@ -87,7 +87,7 @@
       <h1 data-toc-skip>CANAPE example</h1>
                         <h4 data-toc-skip class="author">Joel H. Nitta</h4>
             
-            <h4 data-toc-skip class="date">27 August, 2022</h4>
+            <h4 data-toc-skip class="date">31 August, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/joelnitta/canaper/blob/HEAD/vignettes/canape.Rmd" class="external-link"><code>vignettes/canape.Rmd</code></a></small>
       <div class="hidden name"><code>canape.Rmd</code></div>
@@ -128,26 +128,26 @@
 <p>The second, <code>comm</code>, is a community dataframe with species as columns and rows as sites. The row names (sites) correspond to the centroids of 50 x 50 km grid cells covering Australia. The community matrix is too large to print out in its entirety, so we will just take a look at the first 8 rows and columns<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">acacia</span><span class="op">$</span><span class="va">comm</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 3037  506</span></span>
+<span><span class="co">#&gt; [1] 3037  508</span></span>
 <span><span class="va">acacia</span><span class="op">$</span><span class="va">comm</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span></span>
-<span><span class="co">#&gt;                     abbreviata acanthaster acanthoclada acinacea aciphylla</span></span>
-<span><span class="co">#&gt; '-1025000:-1825000'          0           0            0        0         0</span></span>
-<span><span class="co">#&gt; '-1025000:-1875000'          0           0            0        0         0</span></span>
-<span><span class="co">#&gt; '-1025000:-1925000'          0           0            0        0         0</span></span>
-<span><span class="co">#&gt; '-1025000:-1975000'          0           0            0        0         0</span></span>
-<span><span class="co">#&gt; '-1025000:-2025000'          0           0            0        0         0</span></span>
-<span><span class="co">#&gt; '-1025000:-2075000'          0           0            0        0         0</span></span>
-<span><span class="co">#&gt; '-1025000:-2125000'          0           0            0        0         0</span></span>
-<span><span class="co">#&gt; '-1025000:-2225000'          0           0            0        0         0</span></span>
-<span><span class="co">#&gt;                     acoma acradenia acrionastes</span></span>
-<span><span class="co">#&gt; '-1025000:-1825000'     0         0           0</span></span>
-<span><span class="co">#&gt; '-1025000:-1875000'     0         0           0</span></span>
-<span><span class="co">#&gt; '-1025000:-1925000'     0         0           0</span></span>
-<span><span class="co">#&gt; '-1025000:-1975000'     0         0           0</span></span>
-<span><span class="co">#&gt; '-1025000:-2025000'     0         0           0</span></span>
-<span><span class="co">#&gt; '-1025000:-2075000'     0         0           0</span></span>
-<span><span class="co">#&gt; '-1025000:-2125000'     0         0           0</span></span>
-<span><span class="co">#&gt; '-1025000:-2225000'     0         0           0</span></span></code></pre></div>
+<span><span class="co">#&gt;                   abbreviata acanthaster acanthoclada acinacea aciphylla acoma</span></span>
+<span><span class="co">#&gt; -1025000:-1825000          0           0            0        0         0     0</span></span>
+<span><span class="co">#&gt; -1025000:-1875000          0           0            0        0         0     0</span></span>
+<span><span class="co">#&gt; -1025000:-1925000          0           0            0        0         0     0</span></span>
+<span><span class="co">#&gt; -1025000:-1975000          0           0            0        0         0     0</span></span>
+<span><span class="co">#&gt; -1025000:-2025000          0           0            0        0         0     0</span></span>
+<span><span class="co">#&gt; -1025000:-2075000          0           0            0        0         0     0</span></span>
+<span><span class="co">#&gt; -1025000:-2125000          0           0            0        0         0     0</span></span>
+<span><span class="co">#&gt; -1025000:-2225000          0           0            0        0         0     0</span></span>
+<span><span class="co">#&gt;                   acradenia acrionastes</span></span>
+<span><span class="co">#&gt; -1025000:-1825000         0           0</span></span>
+<span><span class="co">#&gt; -1025000:-1875000         0           0</span></span>
+<span><span class="co">#&gt; -1025000:-1925000         0           0</span></span>
+<span><span class="co">#&gt; -1025000:-1975000         0           0</span></span>
+<span><span class="co">#&gt; -1025000:-2025000         0           0</span></span>
+<span><span class="co">#&gt; -1025000:-2075000         0           0</span></span>
+<span><span class="co">#&gt; -1025000:-2125000         0           0</span></span>
+<span><span class="co">#&gt; -1025000:-2225000         0           0</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="randomization-test">Randomization test<a class="anchor" aria-label="anchor" href="#randomization-test"></a>
@@ -183,9 +183,9 @@
 <span>  tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: </span></span>
-<span><span class="co">#&gt;  Pararchidendron_pruinosum, Paraserianthes_lophantha, saligna, clunies-rossiae</span></span>
+<span><span class="co">#&gt;  Pararchidendron_pruinosum, Paraserianthes_lophantha</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># See how long it took</span></span>
-<span><span class="co">#&gt; 24.798 sec elapsed</span></span>
+<span><span class="co">#&gt; 35.723 sec elapsed</span></span>
 <span></span>
 <span><span class="co"># Switch back to sequential (non-parallel) mode</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></code></pre></div>
@@ -195,16 +195,16 @@
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3,037 × 55</span></span></span>
 <span><span class="co">#&gt;    site   pd_obs pd_ra…¹ pd_ra…² pd_ob…³ pd_ob…⁴ pd_ob…⁵ pd_ob…⁶ pd_ob…⁷ pd_ob…⁸</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> '-102… 0.014<span style="text-decoration: underline;">5</span>  0.021<span style="text-decoration: underline;">5</span> 0.003<span style="text-decoration: underline;">85</span> -<span style="color: #BB0000;">1.82</span>         0      20      20    0       1   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> '-102… 0.038<span style="text-decoration: underline;">3</span>  0.052<span style="text-decoration: underline;">1</span> 0.007<span style="text-decoration: underline;">62</span> -<span style="color: #BB0000;">1.81</span>         0      20      20    0       1   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> '-102… 0.037<span style="text-decoration: underline;">9</span>  0.037<span style="text-decoration: underline;">2</span> 0.006<span style="text-decoration: underline;">56</span>  0.106       11       9      20    0.55    0.45</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> '-102… 0.057<span style="text-decoration: underline;">1</span>  0.062<span style="text-decoration: underline;">2</span> 0.007<span style="text-decoration: underline;">78</span> -<span style="color: #BB0000;">0.651</span>        6      14      20    0.3     0.7 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> '-102… 0.041<span style="text-decoration: underline;">0</span>  0.040<span style="text-decoration: underline;">8</span> 0.006<span style="text-decoration: underline;">01</span>  0.020<span style="text-decoration: underline;">8</span>      10      10      20    0.5     0.5 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> '-102… 0.010<span style="text-decoration: underline;">0</span>  0.011<span style="text-decoration: underline;">0</span> 0.002<span style="text-decoration: underline;">13</span> -<span style="color: #BB0000;">0.471</span>       11       9      20    0.55    0.45</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> '-102… 0.018<span style="text-decoration: underline;">8</span>  0.023<span style="text-decoration: underline;">6</span> 0.004<span style="text-decoration: underline;">82</span> -<span style="color: #BB0000;">1.01</span>         3      17      20    0.15    0.85</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> '-102… 0.043<span style="text-decoration: underline;">5</span>  0.054<span style="text-decoration: underline;">1</span> 0.009<span style="text-decoration: underline;">62</span> -<span style="color: #BB0000;">1.10</span>         3      17      20    0.15    0.85</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> '-102… 0.011<span style="text-decoration: underline;">1</span>  0.010<span style="text-decoration: underline;">5</span> 0.001<span style="text-decoration: underline;">95</span>  0.349       14       6      20    0.7     0.3 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> '-102… 0.090<span style="text-decoration: underline;">5</span>  0.085<span style="text-decoration: underline;">3</span> 0.009<span style="text-decoration: underline;">94</span>  0.519       14       6      20    0.7     0.3 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> -102… 0.014<span style="text-decoration: underline;">5</span>  0.024<span style="text-decoration: underline;">1</span>  0.005<span style="text-decoration: underline;">82</span> -<span style="color: #BB0000;">1.65</span>         1      19      20    0.05    0.95</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> -102… 0.038<span style="text-decoration: underline;">2</span>  0.048<span style="text-decoration: underline;">9</span>  0.007<span style="text-decoration: underline;">42</span> -<span style="color: #BB0000;">1.44</span>         1      19      20    0.05    0.95</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> -102… 0.037<span style="text-decoration: underline;">8</span>  0.037<span style="text-decoration: underline;">3</span>  0.005<span style="text-decoration: underline;">90</span>  0.080<span style="text-decoration: underline;">3</span>      10      10      20    0.5     0.5 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> -102… 0.057<span style="text-decoration: underline;">0</span>  0.062<span style="text-decoration: underline;">3</span>  0.009<span style="text-decoration: underline;">17</span> -<span style="color: #BB0000;">0.573</span>        7      13      20    0.35    0.65</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> -102… 0.040<span style="text-decoration: underline;">9</span>  0.041<span style="text-decoration: underline;">5</span>  0.005<span style="text-decoration: underline;">75</span> -<span style="color: #BB0000;">0.119</span>       11       9      20    0.55    0.45</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> -102… 0.009<span style="text-decoration: underline;">98</span> 0.010<span style="text-decoration: underline;">3</span>  0.001<span style="text-decoration: underline;">78</span> -<span style="color: #BB0000;">0.190</span>        8      12      20    0.4     0.6 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> -102… 0.018<span style="text-decoration: underline;">7</span>  0.021<span style="text-decoration: underline;">4</span>  0.003<span style="text-decoration: underline;">94</span> -<span style="color: #BB0000;">0.689</span>        6      14      20    0.3     0.7 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> -102… 0.043<span style="text-decoration: underline;">4</span>  0.056<span style="text-decoration: underline;">4</span>  0.007<span style="text-decoration: underline;">82</span> -<span style="color: #BB0000;">1.66</span>         1      19      20    0.05    0.95</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> -102… 0.011<span style="text-decoration: underline;">1</span>  0.009<span style="text-decoration: underline;">89</span> 0.001<span style="text-decoration: underline;">73</span>  0.704       17       3      20    0.85    0.15</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> -102… 0.090<span style="text-decoration: underline;">3</span>  0.087<span style="text-decoration: underline;">8</span>  0.010<span style="text-decoration: underline;">4</span>   0.246       11       9      20    0.55    0.45</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 3,027 more rows, 45 more variables: pd_alt_obs &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   pd_alt_rand_mean &lt;dbl&gt;, pd_alt_rand_sd &lt;dbl&gt;, pd_alt_obs_z &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   pd_alt_obs_c_upper &lt;dbl&gt;, pd_alt_obs_c_lower &lt;dbl&gt;, pd_alt_obs_q &lt;dbl&gt;,</span></span></span>
@@ -241,7 +241,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">acacia_canape</span><span class="op">$</span><span class="va">endem_type</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;           mixed             neo not significant           paleo           super </span></span>
-<span><span class="co">#&gt;              87              20            2797              52              81</span></span></code></pre></div>
+<span><span class="co">#&gt;             105              13            2791              58              70</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="classify-significance">Classify significance<a class="anchor" aria-label="anchor" href="#classify-significance"></a>
@@ -260,7 +260,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">acacia_canape</span><span class="op">$</span><span class="va">pd_signif</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;          &lt; 0.01          &gt; 0.99 not significant </span></span>
-<span><span class="co">#&gt;             591              80            2366</span></span></code></pre></div>
+<span><span class="co">#&gt;             609              95            2333</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="visualize-results">Visualize results<a class="anchor" aria-label="anchor" href="#visualize-results"></a>
