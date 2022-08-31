@@ -57,7 +57,10 @@ Suggests:
     magrittr,
     covr,
     picante,
-    withr
+    withr,
+    fs,
+    readr,
+    usethis
 Config/testthat/edition: 3
 Depends: 
     R (>= 4.1.0)

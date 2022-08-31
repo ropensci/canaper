@@ -62,6 +62,7 @@ eval
 exhuastive
 familyName
 fileSize
+fs
 fsf
 funder
 getRversion
@@ -147,6 +148,7 @@ rcmdcheck
 Rds
 README
 readme
+readr
 regionalization
 relatedLink
 releaseNotes
@@ -196,6 +198,7 @@ tidyverse
 ubuntu
 Ulrich
 unifrac
+usethis
 vigenette
 VignetteBuilder
 Wataru
