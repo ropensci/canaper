@@ -221,6 +221,14 @@ the right.
 
 ## Papers citing `canaper`
 
+-   Ellepola *et al.* 2022. “The role of climate and islands in species
+    diversification and reproductive-mode evolution of Old World tree
+    frogs”. *Communications Biology* 5, 347
+    <https://doi.org/10.1038/s42003-022-03292-1>
+-   Lu *et al.* 2022 “A comprehensive evaluation of flowering plant
+    diversity and conservation priority for national park planning in
+    China”. *Fundamental Research*
+    <https://doi.org/10.1016/j.fmre.2022.08.008>
 -   Nitta *et al.* 2022 “Spatial phylogenetics of Japanese ferns:
     Patterns, processes, and implications for conservation”. *American
     Journal of Botany* 109, 727-745 <https://doi.org/10.1002/ajb2.1848>
