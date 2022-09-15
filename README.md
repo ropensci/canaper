@@ -162,7 +162,7 @@ types. In total, they include:
 - `super`: mixed and highly significant (*p* \< 0.01)
 
 For a more complete example, please [see the
-vignette](https://joelnitta.github.io/canaper/articles/canape.html)
+vignette](https://docs.ropensci.org/canaper/articles/canape.html)
 
 ## Comparsion with other software
 

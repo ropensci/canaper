@@ -12,7 +12,7 @@ Provides functions to conduct categorical analysis of neo- and paleo-endemism (C
 Useful links:
 \itemize{
   \item \url{https://github.com/ropensci/canaper}
-  \item \url{https://joelnitta.github.io/canaper/}
+  \item \url{https://docs.ropensci.org/canaper/}
   \item Report bugs at \url{https://github.com/ropensci/canaper/issues}
 }
 
