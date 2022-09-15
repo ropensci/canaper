@@ -12,7 +12,7 @@
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![Codecov test
-coverage](https://codecov.io/gh/joelnitta/canaper/branch/main/graph/badge.svg)](https://codecov.io/gh/joelnitta/canaper?branch=main)
+coverage](https://codecov.io/gh/ropensci/canaper/branch/main/graph/badge.svg)](https://codecov.io/gh/ropensci/canaper?branch=main)
 <!-- badges: end -->
 
 The goal of canaper is to enable [categorical analysis of neo- and
@@ -35,7 +35,7 @@ You can install canaper from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("joelnitta/canaper")
+remotes::install_github("ropensci/canaper")
 ```
 
 ## Example usage
