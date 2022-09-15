@@ -5,8 +5,8 @@
   "description": "Provides functions to conduct categorical analysis of neo- and paleo-endemism (CANAPE).",
   "name": "canaper: Categorical Analysis of Neo- And Paleo-Endemism",
   "relatedLink": "https://joelnitta.github.io/canaper/",
-  "codeRepository": "https://github.com/joelnitta/canaper",
-  "issueTracker": "https://github.com/joelnitta/canaper/issues",
+  "codeRepository": "https://github.com/ropensci/canaper",
+  "issueTracker": "https://github.com/ropensci/canaper/issues",
   "license": "https://spdx.org/licenses/MIT",
   "version": "0.0.2",
   "programmingLanguage": {
@@ -385,7 +385,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "9237.93KB",
+  "fileSize": "9254.295KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -404,14 +404,14 @@
       ],
       "name": "canaper: Categorical analysis of neo- and paleo-endemism in {R}",
       "identifier": "10.5281/zenodo.5094032",
-      "url": "https://github.com/joelnitta/canaper",
+      "url": "https://github.com/ropensci/canaper",
       "@id": "https://doi.org/10.5281/zenodo.5094032",
       "sameAs": "https://doi.org/10.5281/zenodo.5094032"
     }
   ],
-  "releaseNotes": "https://github.com/joelnitta/canaper/blob/master/NEWS.md",
-  "readme": "https://github.com/joelnitta/canaper/blob/main/README.md",
-  "contIntegration": ["https://github.com/joelnitta/canaper/actions", "https://codecov.io/gh/joelnitta/canaper?branch=main"],
+  "releaseNotes": "https://github.com/ropensci/canaper/blob/master/NEWS.md",
+  "readme": "https://github.com/ropensci/canaper/blob/main/README.md",
+  "contIntegration": ["https://github.com/ropensci/canaper/actions", "https://codecov.io/gh/joelnitta/canaper?branch=main"],
   "developmentStatus": "https://www.repostatus.org/#wip",
   "keywords": ["biodiversity", "canape"]
 }

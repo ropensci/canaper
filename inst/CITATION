@@ -1,4 +1,4 @@
-citHeader("This is how you can cite canaper in publications (please replace the DOI below with the one matching the version in use; for more information, see the README at https://github.com/joelnitta/canaper)")
+citHeader("This is how you can cite canaper in publications (please replace the DOI below with the one matching the version in use; for more information, see the README at https://github.com/ropensci/canaper)")
 
 citEntry(
   entry    = "Manual",
@@ -7,7 +7,7 @@ citEntry(
                      as.person("Wataru Iwasaki")
           ),
   year     = "2021",
-  url      = "https://github.com/joelnitta/canaper",
+  url      = "https://github.com/ropensci/canaper",
   doi = "10.5281/zenodo.5094032",
   textVersion = paste("Nitta JH, Iwasaki W. (2021) canaper: Categorical analysis of neo- and paleo-endemism in R. doi: 10.5281/zenodo.5094032")
 )

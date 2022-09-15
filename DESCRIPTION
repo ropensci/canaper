@@ -29,9 +29,9 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE, roclets = c ("collate", "namespace", "rd", "roxyglobals::global_roclet", "srr::srr_stats_roclet"))
 RoxygenNote: 7.2.1
-URL: https://github.com/joelnitta/canaper,
+URL: https://github.com/ropensci/canaper,
     https://joelnitta.github.io/canaper/
-BugReports: https://github.com/joelnitta/canaper/issues
+BugReports: https://github.com/ropensci/canaper/issues
 Imports: 
     ape,
     assertr,
