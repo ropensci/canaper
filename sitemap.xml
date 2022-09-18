@@ -1,84 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://joelnitta.github.io/canaper/404.html</loc>
+    <loc>https://docs.ropensci.org/canaper/404.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/CONTRIBUTING.html</loc>
+    <loc>https://docs.ropensci.org/canaper/CONTRIBUTING.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/LICENSE-text.html</loc>
+    <loc>https://docs.ropensci.org/canaper/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/LICENSE.html</loc>
+    <loc>https://docs.ropensci.org/canaper/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/articles/canape.html</loc>
+    <loc>https://docs.ropensci.org/canaper/articles/canape.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/articles/how-many-rand.html</loc>
+    <loc>https://docs.ropensci.org/canaper/articles/how-many-rand.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/articles/index.html</loc>
+    <loc>https://docs.ropensci.org/canaper/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/articles/parallel.html</loc>
+    <loc>https://docs.ropensci.org/canaper/articles/parallel.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/authors.html</loc>
+    <loc>https://docs.ropensci.org/canaper/authors.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/index.html</loc>
+    <loc>https://docs.ropensci.org/canaper/index.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/issue_template.html</loc>
+    <loc>https://docs.ropensci.org/canaper/issue_template.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/news/index.html</loc>
+    <loc>https://docs.ropensci.org/canaper/news/index.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/pull_request_template.html</loc>
+    <loc>https://docs.ropensci.org/canaper/pull_request_template.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/reference/acacia.html</loc>
+    <loc>https://docs.ropensci.org/canaper/reference/acacia.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/reference/biod_example.html</loc>
+    <loc>https://docs.ropensci.org/canaper/reference/biod_example.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/reference/biod_results.html</loc>
+    <loc>https://docs.ropensci.org/canaper/reference/biod_results.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/reference/canaper-package.html</loc>
+    <loc>https://docs.ropensci.org/canaper/reference/canaper-package.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/reference/cpr_classify_endem.html</loc>
+    <loc>https://docs.ropensci.org/canaper/reference/cpr_classify_endem.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/reference/cpr_classify_signif.html</loc>
+    <loc>https://docs.ropensci.org/canaper/reference/cpr_classify_signif.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/reference/cpr_endem_cols.html</loc>
+    <loc>https://docs.ropensci.org/canaper/reference/cpr_endem_cols.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/reference/cpr_endem_cols_2.html</loc>
+    <loc>https://docs.ropensci.org/canaper/reference/cpr_endem_cols_2.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/reference/cpr_rand_comm.html</loc>
+    <loc>https://docs.ropensci.org/canaper/reference/cpr_rand_comm.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/reference/cpr_rand_test.html</loc>
+    <loc>https://docs.ropensci.org/canaper/reference/cpr_rand_test.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/reference/cpr_signif_cols.html</loc>
+    <loc>https://docs.ropensci.org/canaper/reference/cpr_signif_cols.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/reference/cpr_signif_cols_2.html</loc>
+    <loc>https://docs.ropensci.org/canaper/reference/cpr_signif_cols_2.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/reference/index.html</loc>
+    <loc>https://docs.ropensci.org/canaper/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://joelnitta.github.io/canaper/reference/phylocom.html</loc>
+    <loc>https://docs.ropensci.org/canaper/reference/phylocom.html</loc>
   </url>
 </urlset>

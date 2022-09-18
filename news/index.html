@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">canaper</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.3</span>
       </span>
     </div>
 
@@ -45,7 +45,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/joelnitta/canaper/" class="external-link">
+  <a href="https://github.com/ropensci/canaper/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -60,32 +60,51 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href="https://github.com/joelnitta/canaper/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/ropensci/canaper/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.0.3" id="canaper-003">canaper 0.0.3<a class="anchor" aria-label="anchor" href="#canaper-003"></a></h2>
+<p>Includes improvements in response to review on ropensci (<a href="https://github.com/ropensci/software-review/issues/475" class="external-link uri">https://github.com/ropensci/software-review/issues/475</a>) ### DOCUMENTATION</p>
+<ul><li><p>Update README with comparisons to other packages (d8aaf8de5193166d52ab890d8267090ea2f8ef6a)</p></li>
+<li><p>Add link to CONTRIBUTING.md to README (d8aaf8de5193166d52ab890d8267090ea2f8ef6a)</p></li>
+<li><p>Change Depends: R (&gt;= 3.5.0) to Depends: R (&gt;= 4.1.0) in DESCRIPTION (0f334965fb5a3fe5034eb1bc682b5051548eddb1)</p></li>
+<li><p>Add <a href="https://github.com/KlausVigo" class="external-link">@KlausVigo</a> as reviewer to DESCRIPTION (6e9b3d55202e2294a6436280ca6b01db13d92974)</p></li>
+</ul><div class="section level4">
+<h4 id="bug-fixes-0-0-3">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-3"></a></h4>
+<ul><li>Delete redundant checks in internal functions (bccd0278dd3de5853680d9979ca26c1aa38a7fb3)</li></ul></div>
+<div class="section level4">
+<h4 id="tests-0-0-3">TESTS<a class="anchor" aria-label="anchor" href="#tests-0-0-3"></a></h4>
+<ul><li><p>Make skipping of extended tests default (<a href="https://github.com/joelnitta/canaper/blob/76c277490dcecd0f32df351c48c8f8c891674aad/tests/testthat/test-cpr_rand_test.R#L395" class="external-link uri">https://github.com/joelnitta/canaper/blob/76c277490dcecd0f32df351c48c8f8c891674aad/tests/testthat/test-cpr_rand_test.R#L395</a>)</p></li>
+<li><p>Decrease number of replicates so tests finish faster (12bbe36bf5516a2a63c1235c76234708c4c5432d, f3af4671d679020aeaa97b1a038b3b5a96633f42)</p></li>
+</ul></div>
+<div class="section level4">
+<h4 id="other-0-0-3">OTHER<a class="anchor" aria-label="anchor" href="#other-0-0-3"></a></h4>
+<ul><li>Import functions from phyloregion instead of copying (7e8b24950912bfa2a5e10cf4dd9cfa8910d74e76)</li></ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.0.2" id="canaper-002">canaper 0.0.2<a class="anchor" aria-label="anchor" href="#canaper-002"></a></h2>
 <div class="section level4">
 <h4 id="bug-fixes-0-0-2">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-2"></a></h4>
 <ul><li>
-<a href="https://github.com/joelnitta/canaper/commit/acb40172c2d5ffb04e13519c6cad7c6d00fa451a" class="external-link">Fix bug</a> where <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> was failing to return identical results after <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed()</a></code> when parallelization is on</li></ul></div>
+<a href="https://github.com/ropensci/canaper/commit/acb40172c2d5ffb04e13519c6cad7c6d00fa451a" class="external-link">Fix bug</a> where <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> was failing to return identical results after <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed()</a></code> when parallelization is on</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.0.1" id="canaper-001">canaper 0.0.1<a class="anchor" aria-label="anchor" href="#canaper-001"></a></h2>
 <div class="section level4">
 <h4 id="new-features-0-0-1">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-0-0-1"></a></h4>
-<ul><li><p><a href="https://github.com/joelnitta/canaper/commit/2f3318c1d62f401d7c99bdcc16c64194359c3fbe" class="external-link">Add <code>cpr_rand_comm()</code> function</a> for generating a random community</p></li>
+<ul><li><p><a href="https://github.com/ropensci/canaper/commit/2f3318c1d62f401d7c99bdcc16c64194359c3fbe" class="external-link">Add <code>cpr_rand_comm()</code> function</a> for generating a random community</p></li>
 <li><p>Implement user-provided community matrix randomization functions</p></li>
 </ul></div>
 <div class="section level4">
 <h4 id="breaking-changes-0-0-1">BREAKING CHANGES<a class="anchor" aria-label="anchor" href="#breaking-changes-0-0-1"></a></h4>
 <ul><li>
-<a href="https://github.com/joelnitta/canaper/commit/b0a2d47130398eb62e28eba4783057f781763645" class="external-link">Use <code>vegan</code></a> for community matrix randomizations instead of <code>picante</code>
+<a href="https://github.com/ropensci/canaper/commit/b0a2d47130398eb62e28eba4783057f781763645" class="external-link">Use <code>vegan</code></a> for community matrix randomizations instead of <code>picante</code>
 </li></ul></div>
 <div class="section level4">
 <h4 id="bug-fixes-0-0-1">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-0-0-1"></a></h4>
-<ul><li><p><a href="https://github.com/joelnitta/canaper/commit/2f3318c1d62f401d7c99bdcc16c64194359c3fbe" class="external-link">Fix error</a> in classification of endemism types with <code><a href="../reference/cpr_classify_endem.html">cpr_classify_endem()</a></code>, where super-endemic cells were previously being assigned if <code>pe_obs_p_upper</code> <strong>or</strong> <code>pe_obs_alt_p_upper</code> were highly significant (P &gt; 0.99), to requiring <strong>both</strong> to be highly significant</p></li>
-<li><p><a href="https://github.com/joelnitta/canaper/commit/50ed6e975d14adba334f06a984d521ff69ed961c" class="external-link">Fix calculation</a> of RPD, RPE where alternative tree had all branch lengths converted to same value, to converting only non-zero branch lengths to same value</p></li>
+<ul><li><p><a href="https://github.com/ropensci/canaper/commit/2f3318c1d62f401d7c99bdcc16c64194359c3fbe" class="external-link">Fix error</a> in classification of endemism types with <code><a href="../reference/cpr_classify_endem.html">cpr_classify_endem()</a></code>, where super-endemic cells were previously being assigned if <code>pe_obs_p_upper</code> <strong>or</strong> <code>pe_obs_alt_p_upper</code> were highly significant (P &gt; 0.99), to requiring <strong>both</strong> to be highly significant</p></li>
+<li><p><a href="https://github.com/ropensci/canaper/commit/50ed6e975d14adba334f06a984d521ff69ed961c" class="external-link">Fix calculation</a> of RPD, RPE where alternative tree had all branch lengths converted to same value, to converting only non-zero branch lengths to same value</p></li>
 </ul></div>
 </div>
     <div class="section level2">

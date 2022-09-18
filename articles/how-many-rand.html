@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">canaper</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.3</span>
       </span>
     </div>
 
@@ -66,7 +66,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/joelnitta/canaper/" class="external-link">
+  <a href="https://github.com/ropensci/canaper/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -87,9 +87,9 @@
       <h1 data-toc-skip>How many randomizations?</h1>
                         <h4 data-toc-skip class="author">Joel H. Nitta</h4>
             
-            <h4 data-toc-skip class="date">06 September, 2022</h4>
+            <h4 data-toc-skip class="date">18 September, 2022</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/joelnitta/canaper/blob/HEAD/vignettes/how-many-rand.Rmd" class="external-link"><code>vignettes/how-many-rand.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/canaper/blob/HEAD/vignettes/how-many-rand.Rmd" class="external-link"><code>vignettes/how-many-rand.Rmd</code></a></small>
       <div class="hidden name"><code>how-many-rand.Rmd</code></div>
 
     </div>
@@ -97,7 +97,7 @@
     
     
 <p>A central part of CANAPE is comparing observed values with randomizations. It is up to the user to set the number of randomizations… but how does one know if the number of randomizations is sufficient?</p>
-<p>(<strong>This vignette assumes a basic understanding of CANAPE, community data matrices, and randomizations</strong>. If you aren’t familiar with any of these, you should probably see the <a href="https://joelnitta.github.io/canaper/articles/canape.html">the CANAPE example vignette</a> first).</p>
+<p>(<strong>This vignette assumes a basic understanding of CANAPE, community data matrices, and randomizations</strong>. If you aren’t familiar with any of these, you should probably see the <a href="https://docs.ropensci.org/canaper/articles/canape.html">the CANAPE example vignette</a> first).</p>
 <div class="section level2">
 <h2 id="a-word-about-randomization-algorithms">A word about randomization algorithms<a class="anchor" aria-label="anchor" href="#a-word-about-randomization-algorithms"></a>
 </h2>
@@ -119,11 +119,11 @@
 </h2>
 <p>First, let’s load the packages used in this vignette.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/joelnitta/canaper" class="external-link">canaper</a></span><span class="op">)</span> <span class="co"># This package</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/collectivemedia/tictoc" class="external-link">tictoc</a></span><span class="op">)</span> <span class="co"># For timing</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/canaper">canaper</a></span><span class="op">)</span> <span class="co"># This package</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jabiru/tictoc" class="external-link">tictoc</a></span><span class="op">)</span> <span class="co"># For timing</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span> <span class="co"># For tidy code</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org" class="external-link">future</a></span><span class="op">)</span> <span class="co"># For parallelization</span></span></code></pre></div>
-<p>Next we will test the effects of <code>n_iterations</code>, using the <a href="https://joelnitta.github.io/canaper/reference/biod_example.html">test dataset that comes with <code>canaper</code></a> (and <a href="https://github.com/shawnlaffan/biodiverse/tree/master/data" class="external-link">Biodiverse</a>). I will increase the number of iterations in powers of 10 from 10 to 1,000,000, and compare the correlation between the original matrix and the randomized matrix:</p>
+<p>Next we will test the effects of <code>n_iterations</code>, using the <a href="https://docs.ropensci.org/canaper/reference/biod_example.html">test dataset that comes with <code>canaper</code></a> (and <a href="https://github.com/shawnlaffan/biodiverse/tree/master/data" class="external-link">Biodiverse</a>). I will increase the number of iterations in powers of 10 from 10 to 1,000,000, and compare the correlation between the original matrix and the randomized matrix:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># "swap" produces a binary matrix, so convert the input matrix to binary too:</span></span>
 <span><span class="va">comm_bin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span><span class="op">)</span></span>
@@ -168,7 +168,7 @@
 <h2 id="effect-of-n_reps">Effect of <code>n_reps</code><a class="anchor" aria-label="anchor" href="#effect-of-n_reps"></a>
 </h2>
 <p>With randomizations, there is no “right” answer, so we can’t test to see that <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> produces the exact answer we’re looking for. Rather, we will check that it starts to <strong>converge on approximately the same result</strong> once <code>n_reps</code> is high enough.</p>
-<p>Here, I will compare the percentile of observed phylogenetic diversity relative to random (<code>pd_obs_p_upper</code>, <a href="https://joelnitta.github.io/canaper/articles/canape.html#classify-endemism">one of the values used for calculating endemism type</a>) between pairs of random communities each generated with the same number of replicates<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>. I will also time calculations for one of each pair.</p>
+<p>Here, I will compare the percentile of observed phylogenetic diversity relative to random (<code>pd_obs_p_upper</code>, <a href="https://docs.ropensci.org/canaper/articles/canape.html#classify-endemism">one of the values used for calculating endemism type</a>) between pairs of random communities each generated with the same number of replicates<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>. I will also time calculations for one of each pair.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Specify a different random seed for each set of randomizations so they give</span></span>
 <span><span class="co"># different, reproducible results</span></span>
@@ -185,7 +185,7 @@
 <span>  n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">10</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 11.281 sec elapsed</span></span>
+<span><span class="co">#&gt; 16.638 sec elapsed</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">tic</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">res_100_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span></span>
 <span>  <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>,</span>
@@ -193,7 +193,7 @@
 <span>  n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">100</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 6.583 sec elapsed</span></span>
+<span><span class="co">#&gt; 7.468 sec elapsed</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">tic</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">res_1000_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span></span>
 <span>  <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>,</span>
@@ -201,7 +201,7 @@
 <span>  n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">1000</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 63.267 sec elapsed</span></span>
+<span><span class="co">#&gt; 68.122 sec elapsed</span></span>
 <span></span>
 <span><span class="co"># Second set</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">67890</span><span class="op">)</span></span>
@@ -282,7 +282,7 @@
 <div class="section level2">
 <h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
 </h2>
-<p>In this case (the <a href="https://joelnitta.github.io/canaper/reference/biod_example.html">example dataset</a> that comes with <code>canaper</code>), we see that a minimum of 1,000 random replicates with 10,000 swapping iterations per replicate is probably needed to attain robust results.</p>
+<p>In this case (the <a href="https://docs.ropensci.org/canaper/reference/biod_example.html">example dataset</a> that comes with <code>canaper</code>), we see that a minimum of 1,000 random replicates with 10,000 swapping iterations per replicate is probably needed to attain robust results.</p>
 <p>I hope this vignette helps you determine the settings to use for your own dataset!</p>
 </div>
 <div class="section level2 unnumbered">
@@ -306,7 +306,7 @@ Strona, Giovanni, Werner Ulrich, and Nicholas J. Gotelli. 2018. <span>“Bi‐di
 <li id="fn4"><p>A third argument, <code>thin</code>, only applies to a small number of algorithms; for details, see <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">vegan::commsim()</a></code><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
 <li id="fn5"><p>In fact the graph suggests that with too much mixing, we might start to come back to the original!<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
 <li id="fn6"><p>Other values based on the randomizations could be checked too (e.g., values ending in <code>_obs_z</code>, <code>_rand_mean</code>, or <code>_rand_sd</code>).<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
-<li id="fn7"><p>You can of course speed things up with parallelization, as done here. For details, see <a href="https://joelnitta.github.io/canaper/articles/canape.html#randomization-test">the CANAPE example vignette</a>.<a href="#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>You can of course speed things up with parallelization, as done here. For details, see <a href="https://docs.ropensci.org/canaper/articles/canape.html#randomization-test">the CANAPE example vignette</a>.<a href="#fnref7" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>

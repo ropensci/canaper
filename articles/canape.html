@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">canaper</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.3</span>
       </span>
     </div>
 
@@ -66,7 +66,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/joelnitta/canaper/" class="external-link">
+  <a href="https://github.com/ropensci/canaper/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -87,9 +87,9 @@
       <h1 data-toc-skip>CANAPE example</h1>
                         <h4 data-toc-skip class="author">Joel H. Nitta</h4>
             
-            <h4 data-toc-skip class="date">06 September, 2022</h4>
+            <h4 data-toc-skip class="date">18 September, 2022</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/joelnitta/canaper/blob/HEAD/vignettes/canape.Rmd" class="external-link"><code>vignettes/canape.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/canaper/blob/HEAD/vignettes/canape.Rmd" class="external-link"><code>vignettes/canape.Rmd</code></a></small>
       <div class="hidden name"><code>canape.Rmd</code></div>
 
     </div>
@@ -103,9 +103,9 @@
 </h2>
 <p>Start by loading <code>canaper</code> and some other packages we will use for this vignette:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/joelnitta/canaper" class="external-link">canaper</a></span><span class="op">)</span> <span class="co"># This package :)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/canaper">canaper</a></span><span class="op">)</span> <span class="co"># This package :)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org" class="external-link">future</a></span><span class="op">)</span> <span class="co"># For parallel computing</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/collectivemedia/tictoc" class="external-link">tictoc</a></span><span class="op">)</span> <span class="co"># For timing things</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jabiru/tictoc" class="external-link">tictoc</a></span><span class="op">)</span> <span class="co"># For timing things</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span> <span class="co"># For composing mult-part plots</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span> <span class="co"># For data-wrangling and plotting</span></span></code></pre></div>
 </div>
@@ -185,7 +185,7 @@
 <span><span class="co">#&gt; Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: </span></span>
 <span><span class="co">#&gt;  Pararchidendron_pruinosum, Paraserianthes_lophantha</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># See how long it took</span></span>
-<span><span class="co">#&gt; 25.497 sec elapsed</span></span>
+<span><span class="co">#&gt; 38.643 sec elapsed</span></span>
 <span></span>
 <span><span class="co"># Switch back to sequential (non-parallel) mode</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></code></pre></div>
@@ -352,8 +352,8 @@ Strona, Giovanni, Werner Ulrich, and Nicholas J. Gotelli. 2018. <span>“Bi‐di
 <li id="fn1"><p>You might think the dataset is all zeros, but that is not the case. It is just very sparse.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 <li id="fn2"><p>31 as of <code>vegan</code> v2.6.2, though not all may be applicable.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 <li id="fn3"><p>For a good review of randomization algorithms and their implications for analysis results, see <span class="citation">Strona, Ulrich, and Gotelli (2018)</span><a href="#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p>For more information on how and when to use parallel computing in <code>canaper</code>, <a href="https://joelnitta.github.io/canaper/articles/parallel.html">see the “Parallel computing” vignette</a><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
-<li id="fn5"><p>For more information on setting the appropriate number of iterations and replicates, <a href="https://joelnitta.github.io/canaper/articles/how-many-rand.html">see the “How many randomizations?” vignette</a>.<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>For more information on how and when to use parallel computing in <code>canaper</code>, <a href="https://docs.ropensci.org/canaper/articles/parallel.html">see the “Parallel computing” vignette</a><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>For more information on setting the appropriate number of iterations and replicates, <a href="https://docs.ropensci.org/canaper/articles/how-many-rand.html">see the “How many randomizations?” vignette</a>.<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
 <li id="fn6"><p><code>curveball</code> is similar to <code>swap</code> but runs much faster so I chose it for this large dataset.<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>

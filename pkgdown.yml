@@ -5,8 +5,8 @@ articles:
   canape: canape.html
   how-many-rand: how-many-rand.html
   parallel: parallel.html
-last_built: 2022-09-06T08:35Z
+last_built: 2022-09-18T07:01Z
 urls:
-  reference: https://joelnitta.github.io/canaper/reference
-  article: https://joelnitta.github.io/canaper/articles
+  reference: https://docs.ropensci.org/canaper/reference
+  article: https://docs.ropensci.org/canaper/articles
 

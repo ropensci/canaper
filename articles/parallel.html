@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">canaper</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.3</span>
       </span>
     </div>
 
@@ -66,7 +66,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/joelnitta/canaper/" class="external-link">
+  <a href="https://github.com/ropensci/canaper/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -87,9 +87,9 @@
       <h1 data-toc-skip>Parallel computing</h1>
                         <h4 data-toc-skip class="author">Joel H. Nitta</h4>
             
-            <h4 data-toc-skip class="date">06 September, 2022</h4>
+            <h4 data-toc-skip class="date">18 September, 2022</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/joelnitta/canaper/blob/HEAD/vignettes/parallel.Rmd" class="external-link"><code>vignettes/parallel.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/canaper/blob/HEAD/vignettes/parallel.Rmd" class="external-link"><code>vignettes/parallel.Rmd</code></a></small>
       <div class="hidden name"><code>parallel.Rmd</code></div>
 
     </div>
@@ -97,11 +97,11 @@
     
     
 <p>One feature of <code>canaper</code> is the ability to use parallel computing (running calculations on multiple CPUs simultaneously) to speed up analysis. The parallel computing is used during the randomizations carried out by <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code>, since this function involves calculating the same values on many random replicates. This vignette shows how and when to use parallel computing to speed up <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code>.</p>
-<p>(<strong>This vignette assumes a basic understanding of CANAPE, community data matrices, and randomizations</strong>. If you aren’t familiar with any of these, you should probably see the <a href="https://joelnitta.github.io/canaper/articles/canape.html">the CANAPE example vignette</a> first).</p>
+<p>(<strong>This vignette assumes a basic understanding of CANAPE, community data matrices, and randomizations</strong>. If you aren’t familiar with any of these, you should probably see the <a href="https://docs.ropensci.org/canaper/articles/canape.html">the CANAPE example vignette</a> first).</p>
 <p>Let’s get started by loading the packages used in this vignette.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/joelnitta/canaper" class="external-link">canaper</a></span><span class="op">)</span> <span class="co"># This package</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/collectivemedia/tictoc" class="external-link">tictoc</a></span><span class="op">)</span> <span class="co"># For timing</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/canaper">canaper</a></span><span class="op">)</span> <span class="co"># This package</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jabiru/tictoc" class="external-link">tictoc</a></span><span class="op">)</span> <span class="co"># For timing</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org" class="external-link">future</a></span><span class="op">)</span> <span class="co"># For parallel computing</span></span>
 <span><span class="co"># Set seed for random number generator for reproducible results</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span></code></pre></div>
@@ -120,7 +120,7 @@
 <span>  null_model <span class="op">=</span> <span class="st">"swap"</span>, n_reps <span class="op">=</span> <span class="fl">50</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 11.73 sec elapsed</span></span></code></pre></div>
+<span><span class="co">#&gt; 14.473 sec elapsed</span></span></code></pre></div>
 <p>Since we have specified 50 random replicates and are not using parallel computing, <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> calculated the various phylogenetic diversity metrics for each of the 50 replicates one at a time.</p>
 </div>
 <div class="section level3">
@@ -143,7 +143,7 @@
 <span>  null_model <span class="op">=</span> <span class="st">"swap"</span>, n_reps <span class="op">=</span> <span class="fl">50</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 9.665 sec elapsed</span></span>
+<span><span class="co">#&gt; 13.199 sec elapsed</span></span>
 <span></span>
 <span><span class="co"># Change back to default sequential mode</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></code></pre></div>
@@ -181,7 +181,7 @@
 <span><span class="co">#&gt; Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: </span></span>
 <span><span class="co">#&gt;  Pararchidendron_pruinosum, Paraserianthes_lophantha</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 52.521 sec elapsed</span></span></code></pre></div>
+<span><span class="co">#&gt; 69.982 sec elapsed</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run cpr_rand_test() in parallel with 2 CPUs</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -196,7 +196,7 @@
 <span><span class="co">#&gt; Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: </span></span>
 <span><span class="co">#&gt;  Pararchidendron_pruinosum, Paraserianthes_lophantha</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 37.911 sec elapsed</span></span></code></pre></div>
+<span><span class="co">#&gt; 54.11 sec elapsed</span></span></code></pre></div>
 <p>And now we start to see the performance improvements that be can be gained from parallel computing!<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 </div>
 <div class="section level2">
