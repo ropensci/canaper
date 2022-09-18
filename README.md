@@ -15,7 +15,7 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 coverage](https://codecov.io/gh/ropensci/canaper/branch/main/graph/badge.svg)](https://codecov.io/gh/ropensci/canaper?branch=main)
 <!-- badges: end -->
 
-The goal of canaper is to enable [categorical analysis of neo- and
+The goal of `canaper` is to enable [categorical analysis of neo- and
 paleo-endemism (CANAPE)](https://doi.org/10.1038/ncomms5473) in **R**.
 This is the first implementation in **R** of CANAPE, which was
 previously only available in
@@ -23,15 +23,18 @@ previously only available in
 
 ## Important note
 
-**This package is in early development.** There may be major, breaking
-changes to functionality in the near future. If you use this package, I
-highly recommend using a package manager like
-[renv](https://rstudio.github.io/renv/articles/renv.html) so that later
-updates won’t break your code.
-
 ## Installation
 
-You can install canaper from [GitHub](https://github.com/) with:
+`canaper` is not currently available on CRAN.
+
+You can install `canaper` from [r-universe](https://r-universe.dev)
+with:
+
+``` r
+install.packages("canaper", repos = "https://ropensci.r-universe.dev")
+```
+
+or, you can install `canaper` from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("remotes")
@@ -121,19 +124,19 @@ rand_test_results[, 1:9]
 
 This is a summary of the columns:
 
-- `*_obs`: Observed value
-- `*_obs_c_lower`: Count of times observed value was lower than random
-  values
-- `*_obs_c_upper`: Count of times observed value was higher than random
-  values
-- `*_obs_p_lower`: Percentage of times observed value was lower than
-  random values
-- `*_obs_p_upper`: Percentage of times observed value was higher than
-  random values
-- `*_obs_q`: Count of the non-NA random values used for comparison
-- `*_obs_z`: Standard effect size (z-score)
-- `*_rand_mean`: Mean of the random values
-- `*_rand_sd`: Standard deviation of the random values
+-   `*_obs`: Observed value
+-   `*_obs_c_lower`: Count of times observed value was lower than random
+    values
+-   `*_obs_c_upper`: Count of times observed value was higher than
+    random values
+-   `*_obs_p_lower`: Percentage of times observed value was lower than
+    random values
+-   `*_obs_p_upper`: Percentage of times observed value was higher than
+    random values
+-   `*_obs_q`: Count of the non-NA random values used for comparison
+-   `*_obs_z`: Standard effect size (z-score)
+-   `*_rand_mean`: Mean of the random values
+-   `*_rand_sd`: Standard deviation of the random values
 
 The next step in CANAPE is to classify endemism types according to the
 significance of PE, alternative PE, and relative PE. This adds a column
@@ -155,11 +158,11 @@ canape_results[, "endem_type", drop = FALSE]
 This data set is very small, so it doesn’t include all possible endemism
 types. In total, they include:
 
-- `paleo`: paleoendemic
-- `neo`: neoendemic
-- `not significant` (what it says)
-- `mixed`: mixture of both paleo and neo
-- `super`: mixed and highly significant (*p* \< 0.01)
+-   `paleo`: paleoendemic
+-   `neo`: neoendemic
+-   `not significant` (what it says)
+-   `mixed`: mixture of both paleo and neo
+-   `super`: mixed and highly significant (*p* \< 0.01)
 
 For a more complete example, please [see the
 vignette](https://docs.ropensci.org/canaper/articles/canape.html)
@@ -171,43 +174,45 @@ for ecological communities. The non-exhaustive summary below focuses on
 alpha diversity metrics in comparison with `canaper`, and is **not** a
 comprehensive description of each package.
 
-- [PhyloMeasures](https://doi.org/10.1111/ecog.01814): Calculates
-  phylogenetic community diversity metrics including MPD, MNTD, PD,
-  phylosor, and unifrac. Null models for matrix randomization include
-  `uniform`, `frequency.by.richness`, and `sequential`.
-- [phyloregion](https://github.com/darunabas/phyloregion): Calculates PD
-  but not MPD or MNTD. Implements sparse matrix encoding to increase
-  computing speed, which is used by `canaper`. Null models for matrix
-  randomization include `tipshuffle`, `rowwise`, and `colwise`. Also
-  performs regionalization based on taxonomic or phylogenetic beta
-  diversity.
-- [picante](https://github.com/skembel/picante): Calculates MPD, MNTD,
-  PD, etc. Null models for community matrix randomization include
-  `frequency`, `richness`, `independentswap`, and `trialswap`.
-- [vegan](https://github.com/vegandevs/vegan): Performs a large range of
-  mostly non-phylogenetic diversity analyses. Includes the largest
-  selection of null models (\> 20), according to data type (binary
-  vs. quantitative). `canaper` uses `vegan` to randomize community
-  matrices.
-- [biodiverse](http://shawnlaffan.github.io/biodiverse/): Not an R
-  package, but software written in perl with a GUI. Performs all of the
-  calculations needed for CANAPE, and many other metrics (\> 300).
-  Includes `rand_structured` null model as well as spatially structured
-  null models. None of these null models are currently available in any
-  R packages AFAIK, except for `independentswap`.
+-   [PhyloMeasures](https://doi.org/10.1111/ecog.01814): Calculates
+    phylogenetic community diversity metrics including MPD, MNTD, PD,
+    phylosor, and unifrac. Null models for matrix randomization include
+    `uniform`, `frequency.by.richness`, and `sequential`.
+-   [phyloregion](https://github.com/darunabas/phyloregion): Calculates
+    PD but not MPD or MNTD. Implements sparse matrix encoding to
+    increase computing speed, which is used by `canaper`. Null models
+    for matrix randomization include `tipshuffle`, `rowwise`, and
+    `colwise`. Also performs regionalization based on taxonomic or
+    phylogenetic beta diversity.
+-   [picante](https://github.com/skembel/picante): Calculates MPD, MNTD,
+    PD, etc. Null models for community matrix randomization include
+    `frequency`, `richness`, `independentswap`, and `trialswap`.
+-   [vegan](https://github.com/vegandevs/vegan): Performs a large range
+    of mostly non-phylogenetic diversity analyses. Includes the largest
+    selection of null models (> 20), according to data type (binary
+    vs. quantitative). `canaper` uses `vegan` to randomize community
+    matrices.
+-   [biodiverse](http://shawnlaffan.github.io/biodiverse/): Not an R
+    package, but software written in perl with a GUI. Performs all of
+    the calculations needed for CANAPE, and many other metrics (> 300).
+    Includes `rand_structured` null model as well as spatially
+    structured null models. None of these null models are currently
+    available in any R packages AFAIK, except for `independentswap`.
 
 ## Other information
 
 Poster at [Botany 2021](https://2021.botanyconference.org/)
 
-- [PDF](https://github.com/joelnitta/botany_poster_2021/raw/main/canaper.pdf)
-- [Video](https://www.youtube.com/watch?v=LXn_ziEli_Q)
+-   [PDF](https://github.com/joelnitta/botany_poster_2021/raw/main/canaper.pdf)
+-   [Video](https://www.youtube.com/watch?v=LXn_ziEli_Q)
 
 ## Citing this package
 
 If you use this package, please cite it! Here is an example:
 
-    Nitta JH, Laffan SW, Mishler BD, Iwasaki W. (2021) canaper: Categorical analysis of neo- and paleo-endemism in R. doi: 10.5281/zenodo.5094032
+-   Nitta JH, Laffan SW, Mishler BD, Iwasaki W. (2021) canaper:
+    Categorical analysis of neo- and paleo-endemism in R. doi:
+    10.5281/zenodo.5094032
 
 The example DOI above is for the overall package.
 
@@ -221,17 +226,17 @@ the right.
 
 ## Papers citing `canaper`
 
-- Ellepola *et al.* 2022. “The role of climate and islands in species
-  diversification and reproductive-mode evolution of Old World tree
-  frogs”. *Communications Biology* 5, 347
-  <https://doi.org/10.1038/s42003-022-03292-1>
-- Lu *et al.* 2022 “A comprehensive evaluation of flowering plant
-  diversity and conservation priority for national park planning in
-  China”. *Fundamental Research*
-  <https://doi.org/10.1016/j.fmre.2022.08.008>
-- Nitta *et al.* 2022 “Spatial phylogenetics of Japanese ferns:
-  Patterns, processes, and implications for conservation”. *American
-  Journal of Botany* 109, 727-745 <https://doi.org/10.1002/ajb2.1848>
+-   Ellepola *et al.* 2022. “The role of climate and islands in species
+    diversification and reproductive-mode evolution of Old World tree
+    frogs”. *Communications Biology* 5, 347
+    <https://doi.org/10.1038/s42003-022-03292-1>
+-   Lu *et al.* 2022 “A comprehensive evaluation of flowering plant
+    diversity and conservation priority for national park planning in
+    China”. *Fundamental Research*
+    <https://doi.org/10.1016/j.fmre.2022.08.008>
+-   Nitta *et al.* 2022 “Spatial phylogenetics of Japanese ferns:
+    Patterns, processes, and implications for conservation”. *American
+    Journal of Botany* 109, 727-745 <https://doi.org/10.1002/ajb2.1848>
 
 ## Contributing and code of conduct
 
@@ -244,12 +249,12 @@ project, you agree to abide by its terms.
 
 ## Licenses
 
-- Code: [MIT](LICENSE.md)
-- Example datasets
-  - `acacia`, `biod_example`: [GNU General Public License
-    v3.0](https://github.com/ropensci/canaper/blob/main/data-raw/LICENSE-gpl.txt)
-  - `phylocom`:
-    [BSD-3-Clause](https://github.com/ropensci/canaper/blob/main/data-raw/LICENSE-bsd3.txt)
+-   Code: [MIT](LICENSE.md)
+-   Example datasets
+    -   `acacia`, `biod_example`: [GNU General Public License
+        v3.0](https://github.com/ropensci/canaper/blob/main/data-raw/LICENSE-gpl.txt)
+    -   `phylocom`:
+        [BSD-3-Clause](https://github.com/ropensci/canaper/blob/main/data-raw/LICENSE-bsd3.txt)
 
 ## References
 

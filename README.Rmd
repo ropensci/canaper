@@ -28,15 +28,19 @@ knitr::opts_chunk$set(
 #' @srrstats {G1.1} documents novelty
 ```
 
-The goal of canaper is to enable [categorical analysis of neo- and paleo-endemism (CANAPE)](https://doi.org/10.1038/ncomms5473) in **R**. This is the first implementation in **R** of CANAPE, which was previously only available in [Biodiverse](http://shawnlaffan.github.io/biodiverse/).
-
-## Important note
-
-**This package is in early development.** There may be major, breaking changes to functionality in the near future. If you use this package, I highly recommend using a package manager like [renv](https://rstudio.github.io/renv/articles/renv.html) so that later updates won't break your code.
+The goal of `canaper` is to enable [categorical analysis of neo- and paleo-endemism (CANAPE)](https://doi.org/10.1038/ncomms5473) in **R**. This is the first implementation in **R** of CANAPE, which was previously only available in [Biodiverse](http://shawnlaffan.github.io/biodiverse/).
 
 ## Installation
 
-You can install canaper from [GitHub](https://github.com/) with:
+`canaper` is not currently available on CRAN.
+
+You can install `canaper` from [r-universe](https://r-universe.dev) with:
+
+``` r
+install.packages("canaper", repos = "https://ropensci.r-universe.dev")
+```
+
+or, you can install `canaper` from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("remotes")
@@ -128,9 +132,7 @@ Poster at [Botany 2021](https://2021.botanyconference.org/)
 
 If you use this package, please cite it! Here is an example:
 
-```
-Nitta JH, Laffan SW, Mishler BD, Iwasaki W. (2021) canaper: Categorical analysis of neo- and paleo-endemism in R. doi: 10.5281/zenodo.5094032
-```
+- Nitta JH, Laffan SW, Mishler BD, Iwasaki W. (2021) canaper: Categorical analysis of neo- and paleo-endemism in R. doi: 10.5281/zenodo.5094032
 
 The example DOI above is for the overall package. 
 
