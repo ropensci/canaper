@@ -20,6 +20,8 @@ branchlengths
 BugReports
 canaper
 centroids
+citEntry
+citHeader
 CMD
 cmd
 Codecov
@@ -84,6 +86,7 @@ io
 issueTracker
 Iwasaki
 JamesIves
+JH
 joelnitta
 Kembel
 Knerr
@@ -132,6 +135,7 @@ params
 parellelization
 pc
 perl
+personList
 phangorn
 phylo
 Phylocom
@@ -162,6 +166,7 @@ reprex
 rmarkdown
 roclet
 roclets
+ropensci
 Rosauer
 Roxygen
 roxygen
@@ -194,6 +199,7 @@ Sublicensing
 sudo
 SystemRequirements
 testthat
+textVersion
 tibble
 tictoc
 tidyverse

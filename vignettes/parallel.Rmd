@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 One feature of `canaper` is the ability to use parallel computing (running calculations on multiple CPUs simultaneously) to speed up analysis. The parallel computing is used during the randomizations carried out by `cpr_rand_test()`, since this function involves calculating the same values on many random replicates. This vignette shows how and when to use parallel computing to speed up `cpr_rand_test()`.
 
-(**This vignette assumes a basic understanding of CANAPE, community data matrices, and randomizations**. If you aren't familiar with any of these, you should probably see the [the CANAPE example vignette](https://joelnitta.github.io/canaper/articles/canape.html) first).
+(**This vignette assumes a basic understanding of CANAPE, community data matrices, and randomizations**. If you aren't familiar with any of these, you should probably see the [the CANAPE example vignette](https://docs.ropensci.org/canaper/articles/canape.html) first).
 
 Let's get started by loading the packages used in this vignette.
 

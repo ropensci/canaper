@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 A central part of CANAPE is comparing observed values with randomizations. It is up to the user to set the number of randomizations... but how does one know if the number of randomizations is sufficient?
 
-(**This vignette assumes a basic understanding of CANAPE, community data matrices, and randomizations**. If you aren't familiar with any of these, you should probably see the [the CANAPE example vignette](https://joelnitta.github.io/canaper/articles/canape.html) first).
+(**This vignette assumes a basic understanding of CANAPE, community data matrices, and randomizations**. If you aren't familiar with any of these, you should probably see the [the CANAPE example vignette](https://docs.ropensci.org/canaper/articles/canape.html) first).
 
 ## A word about randomization algorithms
 
@@ -56,7 +56,7 @@ library(tidyverse) # For tidy code
 library(future) # For parallelization
 ```
 
-Next we will test the effects of `n_iterations`, using the [test dataset that comes with `canaper`](https://joelnitta.github.io/canaper/reference/biod_example.html) (and [Biodiverse](https://github.com/shawnlaffan/biodiverse/tree/master/data)). I will increase the number of iterations in powers of 10 from 10 to 1,000,000, and compare the correlation between the original matrix and the randomized matrix:
+Next we will test the effects of `n_iterations`, using the [test dataset that comes with `canaper`](https://docs.ropensci.org/canaper/reference/biod_example.html) (and [Biodiverse](https://github.com/shawnlaffan/biodiverse/tree/master/data)). I will increase the number of iterations in powers of 10 from 10 to 1,000,000, and compare the correlation between the original matrix and the randomized matrix:
 
 ```{r test-n-iter}
 # "swap" produces a binary matrix, so convert the input matrix to binary too:
@@ -105,7 +105,7 @@ Now that we've settled on the number of iterations per random replicate, let's l
 
 With randomizations, there is no "right" answer, so we can't test to see that `cpr_rand_test()` produces the exact answer we're looking for. Rather, we will check that it starts to **converge on approximately the same result** once `n_reps` is high enough. 
 
-Here, I will compare the percentile of observed phylogenetic diversity relative to random (`pd_obs_p_upper`, [one of the values used for calculating endemism type](https://joelnitta.github.io/canaper/articles/canape.html#classify-endemism)) between pairs of random communities each generated with the same number of replicates^[Other values based on the randomizations could be checked too (e.g., values ending in `_obs_z`, `_rand_mean`, or `_rand_sd`).]. I will also time calculations for one of each pair.
+Here, I will compare the percentile of observed phylogenetic diversity relative to random (`pd_obs_p_upper`, [one of the values used for calculating endemism type](https://docs.ropensci.org/canaper/articles/canape.html#classify-endemism)) between pairs of random communities each generated with the same number of replicates^[Other values based on the randomizations could be checked too (e.g., values ending in `_obs_z`, `_rand_mean`, or `_rand_sd`).]. I will also time calculations for one of each pair.
 
 ```{r n-reps-sets}
 # Specify a different random seed for each set of randomizations so they give
@@ -211,11 +211,11 @@ bind_rows(
 
 At 1,000 replicates, we see very high agreement on endemism type between the two randomizations.
 
-Of course, another important consideration is **how long** calculations take. You can see that time increases with `n_reps`, but not exactly in a linear fashion. We don't have the space to go into benchmarking here, but this illustrates the time / `n_reps` trade-off^[You can of course speed things up with parallelization, as done here. For details, see [the CANAPE example vignette](https://joelnitta.github.io/canaper/articles/canape.html#randomization-test).].
+Of course, another important consideration is **how long** calculations take. You can see that time increases with `n_reps`, but not exactly in a linear fashion. We don't have the space to go into benchmarking here, but this illustrates the time / `n_reps` trade-off^[You can of course speed things up with parallelization, as done here. For details, see [the CANAPE example vignette](https://docs.ropensci.org/canaper/articles/canape.html#randomization-test).].
 
 ## Conclusion
 
-In this case (the [example dataset](https://joelnitta.github.io/canaper/reference/biod_example.html) that comes with `canaper`), we see that a minimum of 1,000 random replicates with 10,000 swapping iterations per replicate is probably needed to attain robust results. 
+In this case (the [example dataset](https://docs.ropensci.org/canaper/reference/biod_example.html) that comes with `canaper`), we see that a minimum of 1,000 random replicates with 10,000 swapping iterations per replicate is probably needed to attain robust results. 
 
 I hope this vignette helps you determine the settings to use for your own dataset!
 

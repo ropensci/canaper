@@ -7,15 +7,15 @@
 <!-- badges: start -->
 
 [![DOI](https://zenodo.org/badge/359280907.svg)](https://zenodo.org/badge/latestdoi/359280907)
-[![R-CMD-check](https://github.com/joelnitta/canaper/workflows/R-CMD-check/badge.svg)](https://github.com/joelnitta/canaper/actions)
+[![R-CMD-check](https://github.com/ropensci/canaper/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/canaper/actions)
 [![Project Status: WIP – Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![Codecov test
-coverage](https://codecov.io/gh/joelnitta/canaper/branch/main/graph/badge.svg)](https://codecov.io/gh/joelnitta/canaper?branch=main)
+coverage](https://codecov.io/gh/ropensci/canaper/branch/main/graph/badge.svg)](https://codecov.io/gh/ropensci/canaper?branch=main)
 <!-- badges: end -->
 
-The goal of canaper is to enable [categorical analysis of neo- and
+The goal of `canaper` is to enable [categorical analysis of neo- and
 paleo-endemism (CANAPE)](https://doi.org/10.1038/ncomms5473) in **R**.
 This is the first implementation in **R** of CANAPE, which was
 previously only available in
@@ -23,19 +23,22 @@ previously only available in
 
 ## Important note
 
-**This package is in early development.** There may be major, breaking
-changes to functionality in the near future. If you use this package, I
-highly recommend using a package manager like
-[renv](https://rstudio.github.io/renv/articles/renv.html) so that later
-updates won’t break your code.
-
 ## Installation
 
-You can install canaper from [GitHub](https://github.com/) with:
+`canaper` is not currently available on CRAN.
+
+You can install `canaper` from [r-universe](https://r-universe.dev)
+with:
+
+``` r
+install.packages("canaper", repos = "https://ropensci.r-universe.dev")
+```
+
+or, you can install `canaper` from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("joelnitta/canaper")
+remotes::install_github("ropensci/canaper")
 ```
 
 ## Example usage
@@ -162,7 +165,7 @@ types. In total, they include:
 -   `super`: mixed and highly significant (*p* \< 0.01)
 
 For a more complete example, please [see the
-vignette](https://joelnitta.github.io/canaper/articles/canape.html)
+vignette](https://docs.ropensci.org/canaper/articles/canape.html)
 
 ## Comparsion with other software
 
@@ -186,12 +189,12 @@ comprehensive description of each package.
     `frequency`, `richness`, `independentswap`, and `trialswap`.
 -   [vegan](https://github.com/vegandevs/vegan): Performs a large range
     of mostly non-phylogenetic diversity analyses. Includes the largest
-    selection of null models (\> 20), according to data type (binary
+    selection of null models (> 20), according to data type (binary
     vs. quantitative). `canaper` uses `vegan` to randomize community
     matrices.
 -   [biodiverse](http://shawnlaffan.github.io/biodiverse/): Not an R
     package, but software written in perl with a GUI. Performs all of
-    the calculations needed for CANAPE, and many other metrics (\> 300).
+    the calculations needed for CANAPE, and many other metrics (> 300).
     Includes `rand_structured` null model as well as spatially
     structured null models. None of these null models are currently
     available in any R packages AFAIK, except for `independentswap`.
@@ -207,7 +210,9 @@ Poster at [Botany 2021](https://2021.botanyconference.org/)
 
 If you use this package, please cite it! Here is an example:
 
-    Nitta JH, Laffan SW, Mishler BD, Iwasaki W. (2021) canaper: Categorical analysis of neo- and paleo-endemism in R. doi: 10.5281/zenodo.5094032
+-   Nitta JH, Laffan SW, Mishler BD, Iwasaki W. (2021) canaper:
+    Categorical analysis of neo- and paleo-endemism in R. doi:
+    10.5281/zenodo.5094032
 
 The example DOI above is for the overall package.
 
@@ -247,9 +252,9 @@ project, you agree to abide by its terms.
 -   Code: [MIT](LICENSE.md)
 -   Example datasets
     -   `acacia`, `biod_example`: [GNU General Public License
-        v3.0](https://github.com/joelnitta/canaper/blob/main/data-raw/LICENSE-gpl.txt)
+        v3.0](https://github.com/ropensci/canaper/blob/main/data-raw/LICENSE-gpl.txt)
     -   `phylocom`:
-        [BSD-3-Clause](https://github.com/joelnitta/canaper/blob/main/data-raw/LICENSE-bsd3.txt)
+        [BSD-3-Clause](https://github.com/ropensci/canaper/blob/main/data-raw/LICENSE-bsd3.txt)
 
 ## References
 
