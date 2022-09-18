@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/ropensci/canaper",
   "issueTracker": "https://github.com/ropensci/canaper/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -385,7 +385,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "9254.324KB",
+  "fileSize": "280.144KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -410,8 +410,6 @@
     }
   ],
   "releaseNotes": "https://github.com/ropensci/canaper/blob/master/NEWS.md",
-  "readme": "https://github.com/ropensci/canaper/blob/main/README.md",
-  "contIntegration": ["https://github.com/ropensci/canaper/actions", "https://codecov.io/gh/joelnitta/canaper?branch=main"],
-  "developmentStatus": "https://www.repostatus.org/#wip",
-  "keywords": ["biodiversity", "canape"]
+  "contIntegration": ["https://github.com/ropensci/canaper/actions", "https://codecov.io/gh/ropensci/canaper?branch=main"],
+  "developmentStatus": "https://www.repostatus.org/#wip"
 }
