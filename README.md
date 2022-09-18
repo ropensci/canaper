@@ -17,11 +17,6 @@ coverage](https://codecov.io/gh/ropensci/canaper/branch/main/graph/badge.svg)](h
 
 The goal of `canaper` is to enable [categorical analysis of neo- and
 paleo-endemism (CANAPE)](https://doi.org/10.1038/ncomms5473) in **R**.
-This is the first implementation in **R** of CANAPE, which was
-previously only available in
-[Biodiverse](http://shawnlaffan.github.io/biodiverse/).
-
-## Important note
 
 ## Installation
 
