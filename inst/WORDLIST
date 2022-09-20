@@ -9,6 +9,7 @@ args
 assertr
 assertthat
 aut
+BD
 benchmarking
 biod
 Biodiverse
@@ -178,6 +179,7 @@ Rscript
 rspm
 rstudio
 RStudio
+runiverse
 runtimePlatform
 sameAs
 saveRDS
