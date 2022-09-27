@@ -11,7 +11,9 @@ template:
     bootswatch: lumen
 reference:
 - title: Community matrix randomization
-- contents: cpr_rand_comm
+- contents:
+  - cpr_rand_comm
+  - cpr_iter_test
 - title: Randomization tests
   desc: The main focus of this package, conducting randomization tests of biodiversity
     metrics
