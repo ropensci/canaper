@@ -1,29 +1,40 @@
 #' Make a palette of colors for plotting CANAPE results
 #'
+#' Palettes can also be loaded by name directly (see "Other colors" below).
+#'
 #' Palettes with the name 'mishler2014' correspond to colors used in Mishler et
-#' al. 2014. This color scheme has been widely used since to show CANAPE
-#' results, but some colors may not be distinguishable to people with
-#' color vision deficiency (CVD).
-#' 
+#' al. 2014. This color scheme has been widely used to show CANAPE
+#' results, but some colors may not be distinguishable to people with color
+#' vision deficiency (CVD).
+#'
 #' Palettes with the name 'canaper1' or 'canaper2' are based on the Okabe-Ito
-#' palette and should be more CVD-friendly.
+#' palette (endemism; Okabe & Ito 2002) or RColorBrewer (significance) and
+#' should be CVD-friendly.
+#'
+#' Names of colors correspond to either endemism type or
+#' *p*-rank output by [cpr_classify_endem()] or [cpr_classify_signif()],
+#' respectively.
 #'
 #' @param name Character vector of length 1; name of palette to select. Must be
-#' one of 'misher2014', 'canaper1', or 'canaper2'
+#'   one of 'mishler2014', 'canaper1', or 'canaper2'
 #' @param type Character vector of length 1; type of palette to select. Must be
-#' one of 'endem' (endemism) or 'signif' (*p*-rank significance)
+#'  one of 'endem' (endemism) or 'signif' (*p*-rank significance)
 #' @references Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
-#'   Phylogenetic measures of biodiversity and neo- and paleo-endemism in
-#'   Australian Acacia. Nat Commun, 5: 4473. \doi{10.1038/ncomms5473}
+#'   Phylogenetic measures of biodiversity and
+#'   neo- and paleo-endemism in Australian Acacia. Nat Commun, 5: 4473.
+#'   \doi{10.1038/ncomms5473}
+#' @references Okabe, M., & Ito, K. (2002) Color
+#'   Universal Design (CUD) - How to make figures and presentations that are
+#'   friendly to Colorblind people. J*FLY Data
+#'   Depository for Drosophila Researchers. <https://jfly.uni-koeln.de/color>
 #' @return Named character vector; color hex codes
+#' @family colors
 #' @export
-cpr_make_pal <- function(
-  name = c(
-    "mishler2014", "canaper1", "canaper2"),
-  type = c(
-    "endem", "signif"
-  )
-  ) {
+#' @examples
+#' cpr_make_pal("mishler2014", "endem")
+#' cpr_make_pal("canaper1", "endem")
+#' scales::show_col(cpr_make_pal("mishler2014", "endem"))
+cpr_make_pal <- function(name, type) {
   # Check input: name
   assertthat::assert_that(assertthat::is.string(name))
   assertthat::assert_that(assertthat::noNA(name))
@@ -38,10 +49,22 @@ cpr_make_pal <- function(
     type %in% c("endem", "signif"),
     msg = "'type' may only include 'endem' or 'signif'"
   )
-  if (type == "endem" && type == "mishler2014") return(mishler2014_endem)
-  if (type == "endem" && type == "canaper1") return(canaper1_endem)
-  if (type == "endem" && type == "canaper2") return(canaper2_endem)
-  if (type == "signif" && type == "mishler2014") return(mishler2014_signif)
-  if (type == "signif" && type == "canaper1") return(canaper1_endem)
-  if (type == "signif" && type == "canaper2") return(canaper2_endem)
+  if (type == "endem" && name == "mishler2014") {
+    return(mishler_endem_cols)
   }
+  if (type == "endem" && name == "canaper1") {
+    return(cpr_endem_cols)
+  }
+  if (type == "endem" && name == "canaper2") {
+    return(cpr_endem_cols_2)
+  }
+  if (type == "signif" && name == "mishler2014") {
+    return(mishler_signif_cols)
+  }
+  if (type == "signif" && name == "canaper1") {
+    return(cpr_signif_cols)
+  }
+  if (type == "signif" && name == "canaper2") {
+    return(cpr_signif_cols_2)
+  }
+}

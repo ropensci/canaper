@@ -27,6 +27,31 @@ cpr_signif_cols_2 <-
 
 usethis::use_data(cpr_signif_cols_2, overwrite = TRUE)
 
+# - Randomization, Mishler 2014
+mishler_signif_cols <-
+  c(
+    "< 0.01" = "#7D170E", #  Dark red
+    "< 0.025" = "#E73323", # Light red
+    "not significant" = "#FAFAD6", # Beige
+    "> 0.975" = "#5577F7", # Light blue
+    "> 0.99" = "#2E4086" # Dark blue
+  )
+
+usethis::use_data(mishler_signif_cols, overwrite = TRUE)
+
+# - Mishler 2014
+# original biodiverse colors
+mishler_endem_cols <-
+  c(
+    "neo" = "#E73323",
+    "paleo" = "#5577F7",
+    "not significant" = "#FAFAD6",
+    "mixed" = "#BF84F8",
+    "super" = "#8E25F6"
+  )
+
+usethis::use_data(mishler_endem_cols, overwrite = TRUE)
+
 # - CANAPE (Okabe-Ito CVD safe)
 cpr_endem_cols <-
   c(
@@ -55,8 +80,8 @@ usethis::use_data(cpr_endem_cols_2, overwrite = TRUE)
 # - cpr_signif_cols
 tibble(
   var_a = names(cpr_signif_cols),
-  var_b = 1:length(cpr_signif_cols),
-  var_c = 1:length(cpr_signif_cols),
+  var_b = seq_along(cpr_signif_cols),
+  var_c = seq_along(cpr_signif_cols),
 ) |>
   ggplot(aes(x = var_b, y = var_c, color = var_a)) +
   geom_point(size = 3) +
@@ -68,8 +93,8 @@ colorBlindness::cvdPlot()
 # - cpr_signif_cols_2
 tibble(
   var_a = names(cpr_signif_cols_2),
-  var_b = 1:length(cpr_signif_cols_2),
-  var_c = 1:length(cpr_signif_cols_2),
+  var_b = seq_along(cpr_signif_cols_2),
+  var_c = seq_along(cpr_signif_cols_2),
 ) |>
   ggplot(aes(x = var_b, y = var_c, color = var_a)) +
   geom_point(size = 3) +
@@ -81,8 +106,8 @@ colorBlindness::cvdPlot()
 # - cpr_endem_cols
 tibble(
   var_a = names(cpr_endem_cols),
-  var_b = 1:length(cpr_endem_cols),
-  var_c = 1:length(cpr_endem_cols),
+  var_b = seq_along(cpr_endem_cols),
+  var_c = seq_along(cpr_endem_cols),
 ) |>
   ggplot(aes(x = var_b, y = var_c, color = var_a)) +
   geom_point(size = 3) +
@@ -94,8 +119,8 @@ colorBlindness::cvdPlot()
 # - cpr_endem_cols_2
 tibble(
   var_a = names(cpr_endem_cols_2),
-  var_b = 1:length(cpr_endem_cols_2),
-  var_c = 1:length(cpr_endem_cols_2),
+  var_b = seq_along(cpr_endem_cols_2),
+  var_c = seq_along(cpr_endem_cols_2),
 ) |>
   ggplot(aes(x = var_b, y = var_c, color = var_a)) +
   geom_point(size = 3) +

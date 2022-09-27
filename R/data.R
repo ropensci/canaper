@@ -124,58 +124,101 @@
 #' biod_results
 "biod_results"
 
-#' Color palette for plotting results of randomization test
+#' Original color palette for plotting results of CANAPE
+#'
+#' Character vector with names corresponding to endemism types
+#' and values corresponding to color codes. Original palette used by
+#' Mishler et al. (2014). May not be distinguishable to people with
+#' color-vision deficiency (CVD).
+#'
+#' @srrstats {G1.4} uses roxygen
+#'
+#' @family colors
+#'
+#' @references Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
+#'   Phylogenetic measures of biodiversity and neo- and paleo-endemism in
+#'   Australian Acacia. Nat Commun, 5: 4473. \doi{10.1038/ncomms5473}
+#'
+#' @examples
+#' mishler_signif_cols
+#' scales::show_col(mishler_signif_cols)
+"mishler_signif_cols"
+
+#' CVD-friendly color palette for plotting results of randomization test
 #'
 #' Character vector with names corresponding to significance levels
 #' and values corresponding to color codes.
 #'
 #' @srrstats {G1.4} uses roxygen
 #'
+#' @family colors
+#'
 #' @examples
 #' cpr_signif_cols
-#' \dontrun{
 #' scales::show_col(cpr_signif_cols)
-#' }
 "cpr_signif_cols"
 
-#' Color palette for plotting results of randomization test, version 2
+#' CVD-friendly color palette for plotting results of randomization test,
+#' version 2
 #'
 #' Character vector with names corresponding to significance levels and values
 #' corresponding to color codes, with "not significant" colored grey.
 #'
 #' @srrstats {G1.4} uses roxygen
 #'
+#' @family colors
+#'
 #' @examples
 #' cpr_signif_cols_2
-#' \dontrun{
 #' scales::show_col(cpr_signif_cols_2)
-#' }
 "cpr_signif_cols_2"
 
-#' Color palette for plotting results of CANAPE
+#' Original color palette for plotting results of CANAPE
 #'
 #' Character vector with names corresponding to endemism types
-#' and values corresponding to color codes.
+#' and values corresponding to color codes. Original palette used by
+#' Mishler et al. (2014). May not be distinguishable to people with
+#' color-vision deficiency (CVD).
 #'
 #' @srrstats {G1.4} uses roxygen
+#'
+#' @family colors
+#'
+#' @references Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
+#'   Phylogenetic measures of biodiversity and neo- and paleo-endemism in
+#'   Australian Acacia. Nat Commun, 5: 4473. \doi{10.1038/ncomms5473}
+#'
+#' @examples
+#' mishler_endem_cols
+#' scales::show_col(mishler_endem_cols)
+"mishler_endem_cols"
+
+#' CVD-friendly color palette for plotting results of CANAPE
+#'
+#' Character vector with names corresponding to endemism types
+#' and values corresponding to color codes. Should be distinguishable to
+#' people with color-vision deficiency (CVD).
+#'
+#' @srrstats {G1.4} uses roxygen
+#'
+#' @family colors
 #'
 #' @examples
 #' cpr_endem_cols
-#' \dontrun{
 #' scales::show_col(cpr_endem_cols)
-#' }
 "cpr_endem_cols"
 
-#' Color palette for plotting results of CANAPE, version 2
+#' CVD-friendly color palette for plotting results of CANAPE, version 2
 #'
 #' Character vector with names corresponding to endemism types and values
-#' corresponding to color codes, with "not significant" colored grey.
+#' corresponding to color codes, with "not significant" colored grey. Should
+#' be distinguishable to people with color-vision deficiency (CVD).
 #'
 #' @srrstats {G1.4} uses roxygen
 #'
+#' @family colors
+#'
 #' @examples
 #' cpr_endem_cols_2
-#' \dontrun{
 #' scales::show_col(cpr_endem_cols_2)
-#' }
 "cpr_endem_cols_2"

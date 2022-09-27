@@ -19,7 +19,7 @@ reference:
 - title: Classification
   desc: Functions to classify the results of the randomization test
 - contents: starts_with("cpr_classify")
-- title: Data
+- title: Datasets
   desc: Datasets included in this package
 - contents:
   - acacia
@@ -27,5 +27,12 @@ reference:
   - phylocom
   - biod_results
 - title: Color palettes
-  desc: Palettes for plotting classification results
-- contents: matches("_cols")
+  desc: Colors for plotting classification results
+- contents:
+  - cpr_make_pal
+  - mishler_endem_cols
+  - cpr_endem_cols
+  - cpr_endem_cols_2
+  - mishler_signif_cols
+  - cpr_signif_cols
+  - cpr_signif_cols_2

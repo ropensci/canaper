@@ -29,6 +29,7 @@ Codecov
 codecov
 codemeta
 codeRepository
+colorBlindness
 Commun
 Comparsion
 ComputerLanguage
@@ -42,6 +43,7 @@ cpr
 cran
 cre
 ctb
+CVD
 datePublished
 deps
 desc
@@ -53,9 +55,11 @@ doi
 DOIs
 Donnellan
 dplyr
+Drosophila
 dtc
 Ecography
 Ellepola
+endem
 Endemism
 endemism
 Entsminger
@@ -77,6 +81,7 @@ givenName
 gmail
 González
 Gotelli
+grey
 hashFiles
 href
 http
@@ -105,7 +110,9 @@ macOS
 magrittr
 md
 MERCHANTABILITY
+misher
 Mishler
+mishler
 MNTD
 MPD
 MYPKG
@@ -117,6 +124,7 @@ Nitta
 nolint
 noncommercially
 nonendemic
+Okabe
 ORCID
 orcid
 Orozco
@@ -152,6 +160,7 @@ programmingLanguage
 progressr
 purrr
 rcmdcheck
+RColorBrewer
 Rds
 README
 readme
@@ -184,6 +193,7 @@ runtimePlatform
 sameAs
 saveRDS
 Schliep
+signif
 SoftwareApplication
 softwareRequirements
 SoftwareSourceCode

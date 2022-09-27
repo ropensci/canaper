@@ -3,7 +3,8 @@
 \docType{data}
 \name{cpr_signif_cols_2}
 \alias{cpr_signif_cols_2}
-\title{Color palette for plotting results of randomization test, version 2}
+\title{CVD-friendly color palette for plotting results of randomization test,
+version 2}
 \format{
 An object of class \code{character} of length 5.
 }
@@ -16,8 +17,16 @@ corresponding to color codes, with "not significant" colored grey.
 }
 \examples{
 cpr_signif_cols_2
-\dontrun{
 scales::show_col(cpr_signif_cols_2)
 }
+\seealso{
+Other colors: 
+\code{\link{cpr_endem_cols_2}},
+\code{\link{cpr_endem_cols}},
+\code{\link{cpr_make_pal}()},
+\code{\link{cpr_signif_cols}},
+\code{\link{mishler_endem_cols}},
+\code{\link{mishler_signif_cols}}
 }
+\concept{colors}
 \keyword{datasets}
