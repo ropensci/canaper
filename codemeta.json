@@ -14,7 +14,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.0 (2022-04-22)",
+  "runtimePlatform": "R version 4.2.1 (2022-06-23)",
   "author": [
     {
       "@type": "Person",
@@ -249,6 +249,30 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=usethis"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "scales",
+      "name": "scales",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=scales"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "colorBlindness",
+      "name": "colorBlindness",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=colorBlindness"
     }
   ],
   "softwareRequirements": {
@@ -385,7 +409,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "280.144KB",
+  "fileSize": "9701.825KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -410,6 +434,13 @@
     }
   ],
   "releaseNotes": "https://github.com/ropensci/canaper/blob/master/NEWS.md",
+  "readme": "https://github.com/ropensci/canaper/blob/main/README.md",
   "contIntegration": ["https://github.com/ropensci/canaper/actions", "https://codecov.io/gh/ropensci/canaper?branch=main"],
-  "developmentStatus": "https://www.repostatus.org/#wip"
+  "developmentStatus": "https://www.repostatus.org/#active",
+  "review": {
+    "@type": "Review",
+    "url": "https://github.com/ropensci/software-review/issues/475",
+    "provider": "https://ropensci.org"
+  },
+  "keywords": ["biodiversity", "canape"]
 }

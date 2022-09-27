@@ -3,7 +3,7 @@
 \docType{data}
 \name{cpr_endem_cols_2}
 \alias{cpr_endem_cols_2}
-\title{Color palette for plotting results of CANAPE, version 2}
+\title{CVD-friendly color palette for plotting results of CANAPE, version 2}
 \format{
 An object of class \code{character} of length 5.
 }
@@ -12,12 +12,21 @@ cpr_endem_cols_2
 }
 \description{
 Character vector with names corresponding to endemism types and values
-corresponding to color codes, with "not significant" colored grey.
+corresponding to color codes, with "not significant" colored grey. Should
+be distinguishable to people with color-vision deficiency (CVD).
 }
 \examples{
 cpr_endem_cols_2
-\dontrun{
 scales::show_col(cpr_endem_cols_2)
 }
+\seealso{
+Other colors: 
+\code{\link{cpr_endem_cols}},
+\code{\link{cpr_make_pal}()},
+\code{\link{cpr_signif_cols_2}},
+\code{\link{cpr_signif_cols}},
+\code{\link{mishler_endem_cols}},
+\code{\link{mishler_signif_cols}}
 }
+\concept{colors}
 \keyword{datasets}

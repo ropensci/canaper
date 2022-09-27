@@ -3,7 +3,7 @@
 \docType{data}
 \name{cpr_signif_cols}
 \alias{cpr_signif_cols}
-\title{Color palette for plotting results of randomization test}
+\title{CVD-friendly color palette for plotting results of randomization test}
 \format{
 An object of class \code{character} of length 5.
 }
@@ -16,8 +16,16 @@ and values corresponding to color codes.
 }
 \examples{
 cpr_signif_cols
-\dontrun{
 scales::show_col(cpr_signif_cols)
 }
+\seealso{
+Other colors: 
+\code{\link{cpr_endem_cols_2}},
+\code{\link{cpr_endem_cols}},
+\code{\link{cpr_make_pal}()},
+\code{\link{cpr_signif_cols_2}},
+\code{\link{mishler_endem_cols}},
+\code{\link{mishler_signif_cols}}
 }
+\concept{colors}
 \keyword{datasets}
