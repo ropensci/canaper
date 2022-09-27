@@ -49,53 +49,36 @@ If either `n_reps` or `n_iterations` are set too high, it will take overly long 
 
 First, let's load the packages used in this vignette.
 
-```{r setup, message = FALSE}
+```{r setup}
 library(canaper) # This package
 library(tictoc) # For timing
 library(tidyverse) # For tidy code
 library(future) # For parallelization
 ```
 
-Next we will test the effects of `n_iterations`, using the [test dataset that comes with `canaper`](https://docs.ropensci.org/canaper/reference/biod_example.html) (and [Biodiverse](https://github.com/shawnlaffan/biodiverse/tree/master/data)). I will increase the number of iterations in powers of 10 from 10 to 1,000,000, and compare the correlation between the original matrix and the randomized matrix:
+Next we will test the effects of `n_iterations`, using the [test dataset that comes with `canaper`](https://docs.ropensci.org/canaper/reference/biod_example.html) (and [Biodiverse](https://github.com/shawnlaffan/biodiverse/tree/master/data)). I will increase the number of iterations in powers of 10 from 10 to 100,000, and compare the correlation between the original matrix and the randomized matrix. This can be done using the `cpr_iter_test()` function:
 
 ```{r test-n-iter}
-# "swap" produces a binary matrix, so convert the input matrix to binary too:
-comm_bin <- as.matrix(biod_example$comm)
-comm_bin[comm_bin > 0] <- 1
-
-# Set random number seed so the results are reproducible
-set.seed(12345)
-
-# Use a tibble to hold the data and run loops
-dist_test_res <- tibble(
-  # Set up a vector from 10 to 10^6 for testing n_iterations
-  n_iter = magrittr::raise_to_power(10, 1:6),
-  # Make one random community for each value of `n_iter`
-  rand_comm = map(
-    n_iter,
-    ~ cpr_rand_comm(
-      comm_bin,
-      null_model = "swap", n_iterations = .
-    )
-  ),
-  # Calculate the Pearson correlation (r) between each randomized
-  # matrix and the original matrix by converting
-  # the matrices to vectors
-  corr = map_dbl(
-    rand_comm,
-    ~ cor(c(comm_bin), c(.)) # c() converts a matrix to vector
-  )
+# Test iterations from 10 to 10^5
+dist_test_res <- cpr_iter_test(
+  comm = biod_example$comm,
+  null_model = "swap",
+  n_iter_test = magrittr::raise_to_power(10, 1:5),
+  seed = 123
 )
 
+# Check the output
+dist_test_res
+
 # Plot the results
-ggplot(dist_test_res, aes(x = n_iter, y = corr)) +
+ggplot(dist_test_res, aes(x = n_iter, y = dist)) +
   geom_point() +
   geom_line() +
   scale_x_log10() +
-  labs(x = "Num. iterations", y = "Pearson's r")
+  labs(x = "Num. iterations", y = "Distance")
 ```
 
-From this, we can see that the original community and the randomized community are correlated up to about 1,000 to 10,000 iterations. After that, the correlation coefficient levels off, and doesn't decrease much further with additional "mixing"^[In fact the graph suggests that with too much mixing, we might start to come back to the original!].
+From this, we can see that the original community and the randomized community reach a maximum distance at ca. 1,000 to 10,000 iterations. After that, the distances level off, and don't increase with additional "mixing"^[In fact with too much mixing, we might start to come back to the original!].
 
 Note that the number of iterations required **will vary based on the dataset**. It will likely be higher in datasets that are extremely skewed towards a high percentage of presences or absences, since a given swap is unlikely to actually change anything. So I recommend exploring the data as above to determine the minimum number of iterations needed.
 
