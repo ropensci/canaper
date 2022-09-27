@@ -146,11 +146,11 @@
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 3</span></span></span>
 <span><span class="co">#&gt;   n_iter  dist    time</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     10  6.32 0.005<span style="text-decoration: underline;">15</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>    100 16.9  0.004<span style="text-decoration: underline;">25</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   <span style="text-decoration: underline;">1</span>000 23.6  0.011<span style="text-decoration: underline;">5</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  <span style="text-decoration: underline;">10</span>000 23.8  0.089<span style="text-decoration: underline;">6</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> <span style="text-decoration: underline;">100</span>000 23.4  0.872</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     10  6.32 0.006<span style="text-decoration: underline;">34</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>    100 16.9  0.004<span style="text-decoration: underline;">1</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   <span style="text-decoration: underline;">1</span>000 23.6  0.010<span style="text-decoration: underline;">4</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  <span style="text-decoration: underline;">10</span>000 23.8  0.072<span style="text-decoration: underline;">0</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> <span style="text-decoration: underline;">100</span>000 23.4  0.747</span></span>
 <span></span>
 <span><span class="co"># Plot the results</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">dist_test_res</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">n_iter</span>, y <span class="op">=</span> <span class="va">dist</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -184,7 +184,7 @@
 <span>  n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">10</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 15.183 sec elapsed</span></span>
+<span><span class="co">#&gt; 16.117 sec elapsed</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">tic</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">res_100_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span></span>
 <span>  <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>,</span>
@@ -192,7 +192,7 @@
 <span>  n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">100</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 7.947 sec elapsed</span></span>
+<span><span class="co">#&gt; 7.054 sec elapsed</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">tic</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">res_1000_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span></span>
 <span>  <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>,</span>
@@ -200,7 +200,7 @@
 <span>  n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">1000</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 70.434 sec elapsed</span></span>
+<span><span class="co">#&gt; 60.918 sec elapsed</span></span>
 <span></span>
 <span><span class="co"># Second set</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">67890</span><span class="op">)</span></span>

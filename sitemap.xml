@@ -67,6 +67,9 @@
     <loc>https://docs.ropensci.org/canaper/reference/cpr_iter_test.html</loc>
   </url>
   <url>
+    <loc>https://docs.ropensci.org/canaper/reference/cpr_make_pal.html</loc>
+  </url>
+  <url>
     <loc>https://docs.ropensci.org/canaper/reference/cpr_rand_comm.html</loc>
   </url>
   <url>
@@ -80,6 +83,12 @@
   </url>
   <url>
     <loc>https://docs.ropensci.org/canaper/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://docs.ropensci.org/canaper/reference/mishler_endem_cols.html</loc>
+  </url>
+  <url>
+    <loc>https://docs.ropensci.org/canaper/reference/mishler_signif_cols.html</loc>
   </url>
   <url>
     <loc>https://docs.ropensci.org/canaper/reference/phylocom.html</loc>
