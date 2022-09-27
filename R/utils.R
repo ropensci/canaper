@@ -283,3 +283,15 @@ skip_extended <- function() {
     "Skipping extended tests"
   )
 }
+
+# Helper function to time cpr_rand_comm_intern
+cpr_rand_comm_intern_timed <- function(time_units, time_digits, ...) {
+  start <- Sys.time()
+  res <- cpr_rand_comm_intern(...)
+  end <- Sys.time()
+  time_elapsed <- difftime(end, start, units = time_units)
+  time_elapsed <- round(time_elapsed, time_digits)
+  time_elapsed <- as.numeric(time_elapsed)
+  attributes(res) <- list(time = time_elapsed)
+  res
+}

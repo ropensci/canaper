@@ -3,6 +3,7 @@
 export(cpr_classify_endem)
 export(cpr_classify_signif)
 export(cpr_make_pal)
+export(cpr_iter_test)
 export(cpr_rand_comm)
 export(cpr_rand_test)
 importFrom(ape,print.phylo)
