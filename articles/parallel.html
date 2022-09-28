@@ -87,7 +87,7 @@
       <h1 data-toc-skip>Parallel computing</h1>
                         <h4 data-toc-skip class="author">Joel H. Nitta</h4>
             
-            <h4 data-toc-skip class="date">27 September, 2022</h4>
+            <h4 data-toc-skip class="date">28 September, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/canaper/blob/HEAD/vignettes/parallel.Rmd" class="external-link"><code>vignettes/parallel.Rmd</code></a></small>
       <div class="hidden name"><code>parallel.Rmd</code></div>
@@ -120,7 +120,7 @@
 <span>  null_model <span class="op">=</span> <span class="st">"swap"</span>, n_reps <span class="op">=</span> <span class="fl">50</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 13.789 sec elapsed</span></span></code></pre></div>
+<span><span class="co">#&gt; 13.604 sec elapsed</span></span></code></pre></div>
 <p>Since we have specified 50 random replicates and are not using parallel computing, <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> calculated the various phylogenetic diversity metrics for each of the 50 replicates one at a time.</p>
 </div>
 <div class="section level3">
@@ -143,7 +143,7 @@
 <span>  null_model <span class="op">=</span> <span class="st">"swap"</span>, n_reps <span class="op">=</span> <span class="fl">50</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 12.59 sec elapsed</span></span>
+<span><span class="co">#&gt; 12.254 sec elapsed</span></span>
 <span></span>
 <span><span class="co"># Change back to default sequential mode</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></code></pre></div>
@@ -181,7 +181,7 @@
 <span><span class="co">#&gt; Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: </span></span>
 <span><span class="co">#&gt;  Pararchidendron_pruinosum, Paraserianthes_lophantha</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 64.63 sec elapsed</span></span></code></pre></div>
+<span><span class="co">#&gt; 65.139 sec elapsed</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run cpr_rand_test() in parallel with 2 CPUs</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -196,7 +196,7 @@
 <span><span class="co">#&gt; Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: </span></span>
 <span><span class="co">#&gt;  Pararchidendron_pruinosum, Paraserianthes_lophantha</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 49.778 sec elapsed</span></span></code></pre></div>
+<span><span class="co">#&gt; 48.029 sec elapsed</span></span></code></pre></div>
 <p>And now we start to see the performance improvements that be can be gained from parallel computing!<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 </div>
 <div class="section level2">

@@ -87,7 +87,7 @@
       <h1 data-toc-skip>How many randomizations?</h1>
                         <h4 data-toc-skip class="author">Joel H. Nitta</h4>
             
-            <h4 data-toc-skip class="date">27 September, 2022</h4>
+            <h4 data-toc-skip class="date">28 September, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/canaper/blob/HEAD/vignettes/how-many-rand.Rmd" class="external-link"><code>vignettes/how-many-rand.Rmd</code></a></small>
       <div class="hidden name"><code>how-many-rand.Rmd</code></div>
@@ -121,107 +121,98 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/canaper">canaper</a></span><span class="op">)</span> <span class="co"># This package</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jabiru/tictoc" class="external-link">tictoc</a></span><span class="op">)</span> <span class="co"># For timing</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span> <span class="co"># For tidy code</span></span>
-<span><span class="co">#&gt; ── <span style="font-weight: bold;">Attaching packages</span> ─────────────────────────────────────── tidyverse 1.3.2 ──</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2</span> 3.3.6      <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">purrr  </span> 0.3.4 </span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble </span> 3.1.8      <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dplyr  </span> 1.0.10</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tidyr  </span> 1.2.1      <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">stringr</span> 1.4.1 </span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">readr  </span> 2.1.2      <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">forcats</span> 0.5.2 </span></span>
-<span><span class="co">#&gt; ── <span style="font-weight: bold;">Conflicts</span> ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">filter()</span> masks <span style="color: #0000BB;">stats</span>::filter()</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">lag()</span>    masks <span style="color: #0000BB;">stats</span>::lag()</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org" class="external-link">future</a></span><span class="op">)</span> <span class="co"># For parallelization</span></span></code></pre></div>
-<p>Next we will test the effects of <code>n_iterations</code>, using the <a href="https://docs.ropensci.org/canaper/reference/biod_example.html">test dataset that comes with <code>canaper</code></a> (and <a href="https://github.com/shawnlaffan/biodiverse/tree/master/data" class="external-link">Biodiverse</a>). I will increase the number of iterations in powers of 10 from 10 to 100,000, and compare the correlation between the original matrix and the randomized matrix. This can be done using the <code><a href="../reference/cpr_iter_test.html">cpr_iter_test()</a></code> function:</p>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span> <span class="co"># For tidy code</span></span></code></pre></div>
+<p>Next we will test the effects of <code>n_iterations</code>, using the <a href="https://docs.ropensci.org/canaper/reference/biod_example.html">test dataset that comes with <code>canaper</code></a> (and <a href="https://github.com/shawnlaffan/biodiverse/tree/master/data" class="external-link">Biodiverse</a>). I will compare the percentage similarity between the original matrix and successive iterations of a randomized matrix. This can be done using the <code><a href="../reference/cpr_iter_sim.html">cpr_iter_sim()</a></code> function:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Test iterations from 10 to 10^5</span></span>
-<span><span class="va">dist_test_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_iter_test.html">cpr_iter_test</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="co"># Conduct up to 10,000 iterations (swaps),</span></span>
+<span><span class="co"># recording similarity every 10 iterations</span></span>
+<span><span class="va">iter_sim_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_iter_sim.html">cpr_iter_sim</a></span><span class="op">(</span></span>
 <span>  comm <span class="op">=</span> <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>,</span>
 <span>  null_model <span class="op">=</span> <span class="st">"swap"</span>,</span>
-<span>  n_iter_test <span class="op">=</span> <span class="fu">magrittr</span><span class="fu">::</span><span class="fu"><a href="https://magrittr.tidyverse.org/reference/aliases.html" class="external-link">raise_to_power</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>,</span>
+<span>  n_iterations <span class="op">=</span> <span class="fl">10000</span>,</span>
+<span>  thin <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">123</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Check the output</span></span>
-<span><span class="va">dist_test_res</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 3</span></span></span>
-<span><span class="co">#&gt;   n_iter  dist    time</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     10  6.32 0.006<span style="text-decoration: underline;">34</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>    100 16.9  0.004<span style="text-decoration: underline;">1</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   <span style="text-decoration: underline;">1</span>000 23.6  0.010<span style="text-decoration: underline;">4</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>  <span style="text-decoration: underline;">10</span>000 23.8  0.072<span style="text-decoration: underline;">0</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> <span style="text-decoration: underline;">100</span>000 23.4  0.747</span></span>
+<span><span class="va">iter_sim_res</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,000 × 2</span></span></span>
+<span><span class="co">#&gt;    iteration similarity</span></span>
+<span><span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>        10      0.990</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>        20      0.981</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>        30      0.973</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>        40      0.965</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>        50      0.957</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>        60      0.949</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>        70      0.944</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>        80      0.938</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>        90      0.934</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>       100      0.928</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 990 more rows</span></span></span>
 <span></span>
 <span><span class="co"># Plot the results</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">dist_test_res</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">n_iter</span>, y <span class="op">=</span> <span class="va">dist</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">iter_sim_res</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iteration</span>, y <span class="op">=</span> <span class="va">similarity</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Num. iterations"</span>, y <span class="op">=</span> <span class="st">"Distance"</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Num. iterations"</span>, y <span class="op">=</span> <span class="st">"% Similarity"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="how-many-rand_files/figure-html/test-n-iter-1.png" width="700"></p>
-<p>From this, we can see that the original community and the randomized community reach a maximum distance at ca. 1,000 to 10,000 iterations. After that, the distances level off, and don’t increase with additional “mixing”<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.</p>
-<p>Note that the number of iterations required <strong>will vary based on the dataset</strong>. It will likely be higher in datasets that are extremely skewed towards a high percentage of presences or absences, since a given swap is unlikely to actually change anything. So I recommend exploring the data as above to determine the minimum number of iterations needed.</p>
-<p>Now that we’ve settled on the number of iterations per random replicate, let’s look into the number of replicates.</p>
+<p>From this, we can see that the original community and the randomized community reach a maximum dissimilarity at ca. 500–1,000 iterations. After that, the randomized community doesn’t become any more different with additional “mixing”.</p>
+<p>Note that the number of iterations required <strong>will vary based on the dataset</strong>. Large matrices with many zeros will likely take more iterations, and even then still retain relatively high similarity between the original matrix and the randomized matrix. So I recommend exploring the data as above to determine the minimum number of iterations needed.</p>
+<p>Now that we’ve settled on the number of iterations per random replicate (1,000), let’s look into the number of replicates.</p>
 </div>
 <div class="section level2">
 <h2 id="effect-of-n_reps">Effect of <code>n_reps</code><a class="anchor" aria-label="anchor" href="#effect-of-n_reps"></a>
 </h2>
 <p>With randomizations, there is no “right” answer, so we can’t test to see that <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> produces the exact answer we’re looking for. Rather, we will check that it starts to <strong>converge on approximately the same result</strong> once <code>n_reps</code> is high enough.</p>
-<p>Here, I will compare the percentile of observed phylogenetic diversity relative to random (<code>pd_obs_p_upper</code>, <a href="https://docs.ropensci.org/canaper/articles/canape.html#classify-endemism">one of the values used for calculating endemism type</a>) between pairs of random communities each generated with the same number of replicates<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>. I will also time calculations for one of each pair.</p>
+<p>Here, I will compare the percentile of observed phylogenetic diversity relative to random (<code>pd_obs_p_upper</code>, <a href="https://docs.ropensci.org/canaper/articles/canape.html#classify-endemism">one of the values used for calculating endemism type</a>) between pairs of random communities each generated with the same number of replicates<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>. I will also time calculations for one of each pair.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Specify a different random seed for each set of randomizations so they give</span></span>
 <span><span class="co"># different, reproducible results</span></span>
 <span></span>
-<span><span class="co"># Set a parallel back-end, with 2 CPUs running simultaneously to speed things up</span></span>
-<span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># First set</span></span>
+<span><span class="co"># First set (time these)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">tic</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">res_10_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span></span>
 <span>  <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>,</span>
 <span>  null_model <span class="op">=</span> <span class="st">"swap"</span>,</span>
-<span>  n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">10</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  n_iterations <span class="op">=</span> <span class="fl">1000</span>, n_reps <span class="op">=</span> <span class="fl">10</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 16.117 sec elapsed</span></span>
+<span><span class="co">#&gt; 6.718 sec elapsed</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">tic</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">res_100_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span></span>
 <span>  <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>,</span>
 <span>  null_model <span class="op">=</span> <span class="st">"swap"</span>,</span>
-<span>  n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">100</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  n_iterations <span class="op">=</span> <span class="fl">1000</span>, n_reps <span class="op">=</span> <span class="fl">100</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 7.054 sec elapsed</span></span>
+<span><span class="co">#&gt; 2.7 sec elapsed</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">tic</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">res_1000_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span></span>
 <span>  <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>,</span>
 <span>  null_model <span class="op">=</span> <span class="st">"swap"</span>,</span>
-<span>  n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">1000</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  n_iterations <span class="op">=</span> <span class="fl">1000</span>, n_reps <span class="op">=</span> <span class="fl">1000</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 60.918 sec elapsed</span></span>
+<span><span class="co">#&gt; 24.72 sec elapsed</span></span>
 <span></span>
 <span><span class="co"># Second set</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">67890</span><span class="op">)</span></span>
 <span><span class="va">res_10_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span></span>
 <span>  <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>,</span>
 <span>  null_model <span class="op">=</span> <span class="st">"swap"</span>,</span>
-<span>  n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">10</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  n_iterations <span class="op">=</span> <span class="fl">1000</span>, n_reps <span class="op">=</span> <span class="fl">10</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">res_100_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span></span>
 <span>  <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>,</span>
 <span>  null_model <span class="op">=</span> <span class="st">"swap"</span>,</span>
-<span>  n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">100</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  n_iterations <span class="op">=</span> <span class="fl">1000</span>, n_reps <span class="op">=</span> <span class="fl">100</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">res_1000_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span></span>
 <span>  <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>,</span>
 <span>  null_model <span class="op">=</span> <span class="st">"swap"</span>,</span>
-<span>  n_iterations <span class="op">=</span> <span class="fl">10000</span>, n_reps <span class="op">=</span> <span class="fl">1000</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Switch back to sequential (non-parallel) mode</span></span>
-<span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></code></pre></div>
+<span>  n_iterations <span class="op">=</span> <span class="fl">1000</span>, n_reps <span class="op">=</span> <span class="fl">1000</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Next, plot the results.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># We will make the same plot repeatedly, so write</span></span>
@@ -272,16 +263,16 @@
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 4</span></span></span>
 <span><span class="co">#&gt;   agree total p_agree n_reps</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   100   127   0.787     10</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   114   127   0.898     10</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>   120   127   0.945    100</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   127   127   1       <span style="text-decoration: underline;">1</span>000</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>   126   127   0.992   <span style="text-decoration: underline;">1</span>000</span></span></code></pre></div>
 <p>At 1,000 replicates, we see very high agreement on endemism type between the two randomizations.</p>
-<p>Of course, another important consideration is <strong>how long</strong> calculations take. You can see that time increases with <code>n_reps</code>, but not exactly in a linear fashion. We don’t have the space to go into benchmarking here, but this illustrates the time / <code>n_reps</code> trade-off<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>.</p>
+<p>Of course, another important consideration is <strong>how long</strong> calculations take. You can see that time increases with <code>n_reps</code>, but not exactly in a linear fashion. We don’t have the space to go into benchmarking here, but this illustrates the time / <code>n_reps</code> trade-off<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>.</p>
 </div>
 <div class="section level2">
 <h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
 </h2>
-<p>In this case (the <a href="https://docs.ropensci.org/canaper/reference/biod_example.html">example dataset</a> that comes with <code>canaper</code>), we see that a minimum of 1,000 random replicates with 10,000 swapping iterations per replicate is probably needed to attain robust results.</p>
+<p>In this case (the <a href="https://docs.ropensci.org/canaper/reference/biod_example.html">example dataset</a> that comes with <code>canaper</code>), we see that a minimum of 1,000 random replicates with 1,000 swapping iterations per replicate is probably needed to attain robust results.</p>
 <p>I hope this vignette helps you determine the settings to use for your own dataset!</p>
 </div>
 <div class="section level2 unnumbered">
@@ -303,9 +294,8 @@ Strona, Giovanni, Werner Ulrich, and Nicholas J. Gotelli. 2018. <span>“Bi‐di
 <li id="fn2"><p>31 as of <code>vegan</code> v2.6.2, though not all may be applicable.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 <li id="fn3"><p>The <a href="http://biodiverse-analysis-software.blogspot.com/2020/12/biodiverse-now-includes-independent.html" class="external-link">Biodiverse blog has a nice explanation of the <code>swap</code> algorithm</a>.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
 <li id="fn4"><p>A third argument, <code>thin</code>, only applies to a small number of algorithms; for details, see <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">vegan::commsim()</a></code><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
-<li id="fn5"><p>In fact with too much mixing, we might start to come back to the original!<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
-<li id="fn6"><p>Other values based on the randomizations could be checked too (e.g., values ending in <code>_obs_z</code>, <code>_rand_mean</code>, or <code>_rand_sd</code>).<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
-<li id="fn7"><p>You can of course speed things up with parallelization, as done here. For details, see <a href="https://docs.ropensci.org/canaper/articles/canape.html#randomization-test">the CANAPE example vignette</a>.<a href="#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>Other values based on the randomizations could be checked too (e.g., values ending in <code>_obs_z</code>, <code>_rand_mean</code>, or <code>_rand_sd</code>).<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>You may be able to speed things up with parallelization, depending on the dataset. For details, see <a href="https://docs.ropensci.org/canaper/articles/canape.html#randomization-test">the CANAPE example vignette</a>.<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
