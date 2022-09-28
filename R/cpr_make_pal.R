@@ -29,6 +29,7 @@
 #'   Depository for Drosophila Researchers. <https://jfly.uni-koeln.de/color>
 #' @return Named character vector; color hex codes
 #' @family colors
+#' @autoglobal
 #' @export
 #' @examples
 #' cpr_make_pal("mishler2014", "endem")

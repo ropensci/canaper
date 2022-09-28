@@ -13,11 +13,12 @@ reference:
 - title: Community matrix randomization
 - contents:
   - cpr_rand_comm
-  - cpr_iter_test
+  - cpr_iter_sim
 - title: Randomization tests
   desc: The main focus of this package, conducting randomization tests of biodiversity
     metrics
-- contents: cpr_rand_test
+- contents:
+  - cpr_rand_test
 - title: Classification
   desc: Functions to classify the results of the randomization test
 - contents: starts_with("cpr_classify")
