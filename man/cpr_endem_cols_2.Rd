@@ -11,9 +11,19 @@ An object of class \code{character} of length 5.
 cpr_endem_cols_2
 }
 \description{
-Character vector with names corresponding to endemism types and values
-corresponding to color codes, with "not significant" colored grey. Should
-be distinguishable to people with color-vision deficiency (CVD).
+Character vector with names corresponding to endemism types
+and values corresponding to color codes. Should be distinguishable to
+people with color vision deficiency (CVD).
+}
+\details{
+Color scheme:
+\itemize{
+\item paleo: dark blue
+\item neo: red
+\item not significant: light grey
+\item mixed: green
+\item super: yellow
+}
 }
 \examples{
 cpr_endem_cols_2
@@ -21,6 +31,8 @@ scales::show_col(cpr_endem_cols_2)
 }
 \seealso{
 Other colors: 
+\code{\link{cpr_endem_cols_3}},
+\code{\link{cpr_endem_cols_4}},
 \code{\link{cpr_endem_cols}},
 \code{\link{cpr_make_pal}()},
 \code{\link{cpr_signif_cols_2}},

@@ -15,7 +15,11 @@ test_that("Input is valid", {
   )
   expect_error(
     cpr_make_pal("foobar", "endem"),
-    "'name' may only include 'mishler2014', 'canaper1', or 'canaper2'"
+    "'name' may only include 'mishler2014', 'canaper1', 'canaper2', 'canaper3', or 'canaper4'" # nolint
+  )
+  expect_error(
+    cpr_make_pal("canaper4", "signif"),
+    "No palette available with that name and type"
   )
 })
 
@@ -31,6 +35,14 @@ test_that("Output is formatted as expected", {
   expect_equal(
     cpr_make_pal("canaper2", "endem"),
     cpr_endem_cols_2
+  )
+  expect_equal(
+    cpr_make_pal("canaper3", "endem"),
+    cpr_endem_cols_3
+  )
+  expect_equal(
+    cpr_make_pal("canaper4", "endem"),
+    cpr_endem_cols_4
   )
   expect_equal(
     cpr_make_pal("mishler2014", "signif"),

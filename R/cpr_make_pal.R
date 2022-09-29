@@ -13,10 +13,10 @@
 #'
 #' Names of colors correspond to either endemism type or
 #' *p*-rank output by [cpr_classify_endem()] or [cpr_classify_signif()],
-#' respectively.
+#' respectively. Not all names are all available for both types.
 #'
 #' @param name Character vector of length 1; name of palette to select. Must be
-#'   one of 'mishler2014', 'canaper1', or 'canaper2'
+#'   one of 'mishler2014', 'canaper1', 'canaper2', 'canaper3', or 'canaper4'
 #' @param type Character vector of length 1; type of palette to select. Must be
 #'  one of 'endem' (endemism) or 'signif' (*p*-rank significance)
 #' @references Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
@@ -40,8 +40,8 @@ cpr_make_pal <- function(name, type) {
   assertthat::assert_that(assertthat::is.string(name))
   assertthat::assert_that(assertthat::noNA(name))
   assertthat::assert_that(
-    name %in% c("mishler2014", "canaper1", "canaper2"),
-    msg = "'name' may only include 'mishler2014', 'canaper1', or 'canaper2'"
+    name %in% c("mishler2014", "canaper1", "canaper2", "canaper3", "canaper4"),
+    msg = "'name' may only include 'mishler2014', 'canaper1', 'canaper2', 'canaper3', or 'canaper4'" # nolint
   )
   # Check input: type
   assertthat::assert_that(assertthat::is.string(type))
@@ -50,22 +50,16 @@ cpr_make_pal <- function(name, type) {
     type %in% c("endem", "signif"),
     msg = "'type' may only include 'endem' or 'signif'"
   )
-  if (type == "endem" && name == "mishler2014") {
-    return(mishler_endem_cols)
-  }
-  if (type == "endem" && name == "canaper1") {
-    return(cpr_endem_cols)
-  }
-  if (type == "endem" && name == "canaper2") {
-    return(cpr_endem_cols_2)
-  }
-  if (type == "signif" && name == "mishler2014") {
-    return(mishler_signif_cols)
-  }
-  if (type == "signif" && name == "canaper1") {
-    return(cpr_signif_cols)
-  }
-  if (type == "signif" && name == "canaper2") {
-    return(cpr_signif_cols_2)
-  }
+  color_spec <- paste(type, name, sep = "_")
+  switch(color_spec,
+    endem_mishler2014 = mishler_endem_cols,
+    endem_canaper1 = cpr_endem_cols,
+    endem_canaper2 = cpr_endem_cols_2,
+    endem_canaper3 = cpr_endem_cols_3,
+    endem_canaper4 = cpr_endem_cols_4,
+    signif_mishler2014 = mishler_signif_cols,
+    signif_canaper1 = cpr_signif_cols,
+    signif_canaper2 = cpr_signif_cols_2,
+    stop("No palette available with that name and type")
+  )
 }

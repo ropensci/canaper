@@ -64,7 +64,7 @@ cpr_endem_cols <-
 
 usethis::use_data(cpr_endem_cols, overwrite = TRUE)
 
-# - CANAPE, grey version
+# - CANAPE, grey version (2)
 cpr_endem_cols_2 <-
   c(
     "paleo" = "#0072B2", # dark blue
@@ -75,6 +75,30 @@ cpr_endem_cols_2 <-
   )
 
 usethis::use_data(cpr_endem_cols_2, overwrite = TRUE)
+
+# - CANAPE, grey version
+cpr_endem_cols_3 <-
+  c(
+    "paleo" = "#0072B2", # dark blue
+    "neo" = "#D55E00", # red
+    "not significant" = "grey90", # Light Grey
+    "mixed" = "#009E73", # green
+    "super" = "#E69F00" # orange
+  )
+
+usethis::use_data(cpr_endem_cols_3, overwrite = TRUE)
+
+# - CANAPE, grey version
+cpr_endem_cols_4 <-
+  c(
+    "paleo" = "#56B4E9", # light blue
+    "neo" = "#D55E00", # red
+    "not significant" = "grey90", # Light Grey
+    "mixed" = "#009E73", # green
+    "super" = "#E69F00" # orange
+  )
+
+usethis::use_data(cpr_endem_cols_4, overwrite = TRUE)
 
 # Test the colors, check they are CVD-safe
 # - cpr_signif_cols

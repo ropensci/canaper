@@ -129,7 +129,7 @@
 #' Character vector with names corresponding to endemism types
 #' and values corresponding to color codes. Original palette used by
 #' Mishler et al. (2014). May not be distinguishable to people with
-#' color-vision deficiency (CVD).
+#' color vision deficiency (CVD).
 #'
 #' @srrstats {G1.4} uses roxygen
 #'
@@ -178,7 +178,14 @@
 #' Character vector with names corresponding to endemism types
 #' and values corresponding to color codes. Original palette used by
 #' Mishler et al. (2014). May not be distinguishable to people with
-#' color-vision deficiency (CVD).
+#' color vision deficiency (CVD).
+#'
+#' Color scheme:
+#' - paleo: blue
+#' - neo: red
+#' - not significant: beige
+#' - mixed: light purple
+#' - super: dark purple
 #'
 #' @srrstats {G1.4} uses roxygen
 #'
@@ -197,7 +204,14 @@
 #'
 #' Character vector with names corresponding to endemism types
 #' and values corresponding to color codes. Should be distinguishable to
-#' people with color-vision deficiency (CVD).
+#' people with color vision deficiency (CVD).
+#'
+#' Color scheme:
+#' - paleo: dark blue
+#' - neo: red
+#' - not significant: beige
+#' - mixed: green
+#' - super: yellow
 #'
 #' @srrstats {G1.4} uses roxygen
 #'
@@ -210,9 +224,16 @@
 
 #' CVD-friendly color palette for plotting results of CANAPE, version 2
 #'
-#' Character vector with names corresponding to endemism types and values
-#' corresponding to color codes, with "not significant" colored grey. Should
-#' be distinguishable to people with color-vision deficiency (CVD).
+#' Character vector with names corresponding to endemism types
+#' and values corresponding to color codes. Should be distinguishable to
+#' people with color vision deficiency (CVD).
+#'
+#' Color scheme:
+#' - paleo: dark blue
+#' - neo: red
+#' - not significant: light grey
+#' - mixed: green
+#' - super: yellow
 #'
 #' @srrstats {G1.4} uses roxygen
 #'
@@ -222,3 +243,47 @@
 #' cpr_endem_cols_2
 #' scales::show_col(cpr_endem_cols_2)
 "cpr_endem_cols_2"
+
+#' CVD-friendly color palette for plotting results of CANAPE, version 3
+#'
+#' Character vector with names corresponding to endemism types
+#' and values corresponding to color codes. Should be distinguishable to
+#' people with color vision deficiency (CVD).
+#'
+#' Color scheme:
+#' - paleo: dark blue
+#' - neo: red
+#' - not significant: light grey
+#' - mixed: green
+#' - super: orange
+#'
+#' @srrstats {G1.4} uses roxygen
+#'
+#' @family colors
+#'
+#' @examples
+#' cpr_endem_cols_3
+#' scales::show_col(cpr_endem_cols_3)
+"cpr_endem_cols_3"
+
+#' CVD-friendly color palette for plotting results of CANAPE, version 4
+#'
+#' Character vector with names corresponding to endemism types
+#' and values corresponding to color codes. Should be distinguishable to
+#' people with color vision deficiency (CVD).
+#'
+#' Color scheme:
+#' - paleo: light blue
+#' - neo: red
+#' - not significant: light grey
+#' - mixed: green
+#' - super: yellow
+#'
+#' @srrstats {G1.4} uses roxygen
+#'
+#' @family colors
+#'
+#' @examples
+#' cpr_endem_cols_4
+#' scales::show_col(cpr_endem_cols_4)
+"cpr_endem_cols_4"

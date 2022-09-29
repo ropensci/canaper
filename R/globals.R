@@ -4,6 +4,8 @@ utils::globalVariables(c(
   "mishler_endem_cols", # <cpr_make_pal>
   "cpr_endem_cols", # <cpr_make_pal>
   "cpr_endem_cols_2", # <cpr_make_pal>
+  "cpr_endem_cols_3", # <cpr_make_pal>
+  "cpr_endem_cols_4", # <cpr_make_pal>
   "mishler_signif_cols", # <cpr_make_pal>
   "cpr_signif_cols", # <cpr_make_pal>
   "cpr_signif_cols_2", # <cpr_make_pal>

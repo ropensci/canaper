@@ -8,7 +8,7 @@ cpr_make_pal(name, type)
 }
 \arguments{
 \item{name}{Character vector of length 1; name of palette to select. Must be
-one of 'mishler2014', 'canaper1', or 'canaper2'}
+one of 'mishler2014', 'canaper1', 'canaper2', 'canaper3', or 'canaper4'}
 
 \item{type}{Character vector of length 1; type of palette to select. Must be
 one of 'endem' (endemism) or 'signif' (\emph{p}-rank significance)}
@@ -31,7 +31,7 @@ should be CVD-friendly.
 
 Names of colors correspond to either endemism type or
 \emph{p}-rank output by \code{\link[=cpr_classify_endem]{cpr_classify_endem()}} or \code{\link[=cpr_classify_signif]{cpr_classify_signif()}},
-respectively.
+respectively. Not all names are all available for both types.
 }
 \examples{
 cpr_make_pal("mishler2014", "endem")
@@ -52,6 +52,8 @@ Depository for Drosophila Researchers. \url{https://jfly.uni-koeln.de/color}
 \seealso{
 Other colors: 
 \code{\link{cpr_endem_cols_2}},
+\code{\link{cpr_endem_cols_3}},
+\code{\link{cpr_endem_cols_4}},
 \code{\link{cpr_endem_cols}},
 \code{\link{cpr_signif_cols_2}},
 \code{\link{cpr_signif_cols}},
