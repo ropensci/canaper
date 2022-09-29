@@ -26,7 +26,7 @@
 #' @references Okabe, M., & Ito, K. (2002) Color
 #'   Universal Design (CUD) - How to make figures and presentations that are
 #'   friendly to Colorblind people. J*FLY Data
-#'   Depository for Drosophila Researchers. <https://jfly.uni-koeln.de/color>
+#'   Depository for Drosophila Researchers. <https://jfly.uni-koeln.de/color/>
 #' @return Named character vector; color hex codes
 #' @family colors
 #' @autoglobal

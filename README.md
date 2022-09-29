@@ -11,7 +11,7 @@
 [![Project Status:
 active.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Codecov test
-coverage](https://codecov.io/gh/ropensci/canaper/branch/main/graph/badge.svg)](https://codecov.io/gh/ropensci/canaper?branch=main)
+coverage](https://codecov.io/gh/ropensci/canaper/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ropensci/canaper?branch=main)
 [![ropensci
 review](https://badges.ropensci.org/475_status.svg)](https://github.com/ropensci/software-review/issues/475)
 ![runiverse](https://ropensci.r-universe.dev/badges/canaper)
@@ -41,7 +41,7 @@ remotes::install_github("ropensci/canaper")
 ## Example usage
 
 These examples use the dataset from
-[Phylocom](http://phylodiversity.net/phylocom/). The dataset includes a
+[Phylocom](https://phylodiversity.net/phylocom/). The dataset includes a
 community (site x species) matrix and a phylogenetic tree.
 
 ``` r
@@ -249,7 +249,7 @@ project, you agree to abide by its terms.
 - Code: [MIT](LICENSE.md)
 - Example datasets
   - `acacia`, `biod_example`: [GNU General Public License
-    v3.0](https://github.com/ropensci/canaper/blob/main/data-raw/LICENSE-gpl.txt)
+    v3.0](https://github.com/ropensci/canaper/blob/main/data-raw/LICENSE-gpl-3.txt)
   - `phylocom`:
     [BSD-3-Clause](https://github.com/ropensci/canaper/blob/main/data-raw/LICENSE-bsd3.txt)
 

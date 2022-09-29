@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 [![DOI](https://zenodo.org/badge/359280907.svg)](https://zenodo.org/badge/latestdoi/359280907)
 [![R-CMD-check](https://github.com/ropensci/canaper/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/canaper/actions)
 [![Project Status: active.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Codecov test coverage](https://codecov.io/gh/ropensci/canaper/branch/main/graph/badge.svg)](https://codecov.io/gh/ropensci/canaper?branch=main)
+[![Codecov test coverage](https://codecov.io/gh/ropensci/canaper/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ropensci/canaper?branch=main)
 [![ropensci review](https://badges.ropensci.org/475_status.svg)](https://github.com/ropensci/software-review/issues/475)
 ![runiverse](https://ropensci.r-universe.dev/badges/canaper)
 <!-- badges: end -->
@@ -51,7 +51,7 @@ remotes::install_github("ropensci/canaper")
 
 ## Example usage
 
-These examples use the dataset from [Phylocom](http://phylodiversity.net/phylocom/). 
+These examples use the dataset from [Phylocom](https://phylodiversity.net/phylocom/). 
 The dataset includes a community (site x species) matrix and a phylogenetic tree.
 
 ```{r example-data}
@@ -160,7 +160,7 @@ Please note that this package is released with a [Contributor Code of Conduct](h
 
 - Code: [MIT](LICENSE.md)
 - Example datasets
-  - `acacia`, `biod_example`: [GNU General Public License v3.0](https://github.com/ropensci/canaper/blob/main/data-raw/LICENSE-gpl.txt)
+  - `acacia`, `biod_example`: [GNU General Public License v3.0](https://github.com/ropensci/canaper/blob/main/data-raw/LICENSE-gpl-3.txt)
   - `phylocom`: [BSD-3-Clause](https://github.com/ropensci/canaper/blob/main/data-raw/LICENSE-bsd3.txt)
 
 ## References

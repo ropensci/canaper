@@ -59,7 +59,7 @@
 #' Phylocom example data
 #'
 #' Fictional data for testing purposes from
-#' [Phylocom](http://www.phylodiversity.net/phylocom/) (Webb et al. 2008)
+#' [Phylocom](https://www.phylodiversity.net/phylocom/) (Webb et al. 2008)
 #'
 #' Obtained via the `picante` package (Kembel et al. 2010)
 #'

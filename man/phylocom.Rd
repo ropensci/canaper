@@ -19,7 +19,7 @@ phylocom
 }
 \description{
 Fictional data for testing purposes from
-\href{http://www.phylodiversity.net/phylocom/}{Phylocom} (Webb et al. 2008)
+\href{https://www.phylodiversity.net/phylocom/}{Phylocom} (Webb et al. 2008)
 }
 \details{
 Obtained via the \code{picante} package (Kembel et al. 2010)
