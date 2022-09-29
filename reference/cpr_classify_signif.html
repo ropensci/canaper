@@ -85,7 +85,7 @@ lie in the extreme of the random values.</p>
 <dt>metric</dt>
 <dd><p>Character vector of length 1; selected metric to classify
 significance. May choose from <code>pd</code> (phylogenetic diversity), <code>rpd</code>
-(relative phylogenetic diversity), <code>pe</code> (phylogenentic endemism), <code>rpe</code>
+(relative phylogenetic diversity), <code>pe</code> (phylogenetic endemism), <code>rpe</code>
 (relative phylogenetic endemism) (case-sensitive).</p></dd>
 
 
@@ -107,9 +107,9 @@ If <code>FALSE</code>, values in the bottom 5% will be classified as significant
     <h2>Value</h2>
     
 
-<p>Object of class data.frame with column added for stastistical
+<p>Object of class data.frame with column added for statistical
 significance of the selected metric. The new column name is the name of the
-metric with <code>_signif</code> appendend. The new column is a character that may
+metric with <code>_signif</code> appended. The new column is a character that may
 contain the following values, depending on the null hypothesis:</p><ul><li><p><code>&lt; 0.01</code>, <code>&lt; 0.025</code>, <code>&gt; 0.975</code>, <code>&gt; 0.99</code>, <code>not significant</code> (two-sided)</p></li>
 <li><p><code>&lt; 0.01</code>, <code>&lt; 0.05</code>, <code>&gt; 0.99</code>, <code>&gt; 0.95</code>, <code>not significant</code> (one-sided)</p></li>
 </ul></div>
