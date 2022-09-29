@@ -11,6 +11,5 @@
 ^codecov\.yml$
 ^\.pre-commit-config\.yaml$
 ^doc$
-^Meta$
 ^\.lintr$
 ^\.vscode$
