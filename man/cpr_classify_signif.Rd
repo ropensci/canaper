@@ -11,7 +11,7 @@ cpr_classify_signif(df, metric, one_sided = FALSE, upper = FALSE)
 
 \item{metric}{Character vector of length 1; selected metric to classify
 significance. May choose from \code{pd} (phylogenetic diversity), \code{rpd}
-(relative phylogenetic diversity), \code{pe} (phylogenentic endemism), \code{rpe}
+(relative phylogenetic diversity), \code{pe} (phylogenetic endemism), \code{rpe}
 (relative phylogenetic endemism) (case-sensitive).}
 
 \item{one_sided}{Logical vector of length 1; is the null hypothesis
@@ -25,9 +25,9 @@ combined.}
 If \code{FALSE}, values in the bottom 5\% will be classified as significant.}
 }
 \value{
-Object of class data.frame with column added for stastistical
+Object of class data.frame with column added for statistical
 significance of the selected metric. The new column name is the name of the
-metric with \verb{_signif} appendend. The new column is a character that may
+metric with \verb{_signif} appended. The new column is a character that may
 contain the following values, depending on the null hypothesis:
 \itemize{
 \item \verb{< 0.01}, \verb{< 0.025}, \verb{> 0.975}, \verb{> 0.99}, \verb{not significant} (two-sided)
