@@ -7,8 +7,23 @@ test_that("Input is valid", {
     fixed = TRUE
   )
   expect_error(
+    cpr_rand_comm(biod_example$comm, "foobar"),
+    "'null_model' must be one of",
+    fixed = TRUE
+  )
+  expect_error(
     cpr_rand_comm(data.frame(a = c("a", "b")), 1),
     "All columns of 'comm' must be numeric or integer class",
+    fixed = TRUE
+  )
+  expect_error(
+    cpr_rand_comm(biod_example$comm, "curveball", n_iterations = -2),
+    "'n_iterations' must be > 0",
+    fixed = TRUE
+  )
+  expect_error(
+    cpr_rand_comm(biod_example$comm, "curveball", thin = -2),
+    "'thin' must be > 0",
     fixed = TRUE
   )
 })
