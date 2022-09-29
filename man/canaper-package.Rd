@@ -6,6 +6,8 @@
 \alias{canaper-package}
 \title{canaper: Categorical Analysis of Neo- And Paleo-Endemism}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Provides functions to conduct categorical analysis of neo- and paleo-endemism (CANAPE).
 }
 \seealso{
