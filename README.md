@@ -244,6 +244,13 @@ Please note that this package is released with a [Contributor Code of
 Conduct](https://ropensci.org/code-of-conduct/). By contributing to this
 project, you agree to abide by its terms.
 
+## Note to developers
+
+[roxyglobals](https://github.com/anthonynorth/roxyglobals) is used to
+maintain `R/globals.R`, but is not available on CRAN. You will need to
+install this package from github and use the `@autoglobal` or `@global`
+roxygen tags to develop functions with globals.
+
 ## Licenses
 
 - Code: [MIT](LICENSE.md)
