@@ -1,6 +1,6 @@
 Package: canaper
 Title: Categorical Analysis of Neo- And Paleo-Endemism
-Version: 0.0.3
+Version: 1.0.0
 Authors@R: 
     c(
     person(given = "Joel H.",
