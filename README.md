@@ -247,9 +247,9 @@ project, you agree to abide by its terms.
 ## Note to developers
 
 [roxyglobals](https://github.com/anthonynorth/roxyglobals) is used to
-maintain `R/globals.R`, but is not available on CRAN. You will need to
-install this package from github and use the `@autoglobal` or `@global`
-roxygen tags to develop functions with globals.
+maintain [`R/globals.R`](R/globals.R), but is not available on CRAN. You
+will need to install this package from github and use the `@autoglobal`
+or `@global` roxygen tags to develop functions with globals.
 
 ## Licenses
 
