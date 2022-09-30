@@ -49,6 +49,7 @@ deps
 desc
 dev
 developmentStatus
+devtools
 dir
 DOI
 doi
@@ -75,6 +76,7 @@ fs
 fsf
 funder
 getRversion
+gfortran
 gh
 github
 givenName
@@ -107,11 +109,14 @@ licensors
 linter
 linters
 linux
+LTS
 Lubarsky
 macOS
 magrittr
 md
 MERCHANTABILITY
+MiKTeK
+mingw
 misher
 Mishler
 mishler
@@ -126,6 +131,7 @@ Nitta
 nolint
 noncommercially
 nonendemic
+NOTEs
 Okabe
 ORCID
 orcid
@@ -158,6 +164,7 @@ phyloregion
 phylosor
 pkgdown
 pre
+PREPERROR
 priori
 programmingLanguage
 progressr
@@ -176,6 +183,7 @@ renv
 repo
 repostatus
 reprex
+rhub
 rmarkdown
 roclet
 roclets
