@@ -103,9 +103,12 @@ test_that("Custom models work", {
     fun = randomizer, binary = TRUE,
     isSeq = FALSE, mode = "integer"
   )
-  cpr_iter_sim(
-    comm = biod_example$comm,
-    null_model = cs_object,
-    seed = 123
+  expect_error(
+    cpr_iter_sim(
+      comm = biod_example$comm,
+      null_model = cs_object,
+      seed = 123
+    ),
+    NA
   )
 })
