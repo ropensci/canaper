@@ -238,7 +238,7 @@ the right.
 ## Contributing and code of conduct
 
 Contributions to `canaper` are welcome! For more information, please see
-[CONTRIBUTING.md](.github/CONTRIBUTING.md)
+[CONTRIBUTING.md](https://github.com/ropensci/canaper/blob/main/.github/CONTRIBUTING.md)
 
 Please note that this package is released with a [Contributor Code of
 Conduct](https://ropensci.org/code-of-conduct/). By contributing to this
@@ -253,7 +253,7 @@ or `@global` roxygen tags to develop functions with globals.
 
 ## Licenses
 
-- Code: [MIT](LICENSE.md)
+- Code: [MIT](https://github.com/ropensci/canaper/blob/main/LICENSE.md)
 - Example datasets
   - `acacia`, `biod_example`: [GNU General Public License
     v3.0](https://github.com/ropensci/canaper/blob/main/data-raw/LICENSE-gpl-3.txt)
