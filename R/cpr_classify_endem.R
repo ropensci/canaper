@@ -27,6 +27,7 @@
 #'   Australian Acacia. Nat Commun, 5: 4473. \doi{10.1038/ncomms5473}
 #'
 #' @examples
+#' \donttest{
 #' set.seed(12345)
 #' data(phylocom)
 #' rand_test <- cpr_rand_test(
@@ -34,6 +35,7 @@
 #'   null_model = "curveball", metrics = c("pe", "rpe"), n_reps = 50
 #' )
 #' cpr_classify_endem(rand_test)
+#' }
 #' @srrstats {G1.4} uses roxygen
 #' @export
 cpr_classify_endem <- function(df) {

@@ -33,6 +33,7 @@ For a summary of the classification scheme, see:
 \url{http://biodiverse-analysis-software.blogspot.com/2014/11/canape-categorical-analysis-of-palaeo.html} # nolint
 }
 \examples{
+\donttest{
 set.seed(12345)
 data(phylocom)
 rand_test <- cpr_rand_test(
@@ -40,6 +41,7 @@ rand_test <- cpr_rand_test(
   null_model = "curveball", metrics = c("pe", "rpe"), n_reps = 50
 )
 cpr_classify_endem(rand_test)
+}
 }
 \references{
 Mishler, B., Knerr, N., González-Orozco, C. et al.  (2014)
