@@ -1,5 +1,73 @@
 # CRAN submission for canaper 1.0.0
 
+## Resubmission 2022-10-03
+
+This is a resubmission. I have made the following changes:
+
+* Use URLs instead of relative links for CONTRIBUTING.md and LICENSE.md
+
+* Wrap some slightly long-running examples (`cpr_rand_test()`, `cpr_classify_end()`, `cpr_classify_signif()`) in `/donttest{}`. None take more than 2 s when running manually, but some go over 5 s during tests.
+
+* Precompile vignettes. This saves probably 2-3 minutes off of build time.
+
+* Updated the date on the LICENSE to 2022.
+
+Test environments are as in the original submission.
+
+I found the following NOTEs remain, but I believe these are all false positives as explained below (and in the original submission):
+
+```
+Possibly misspelled words in DESCRIPTION:
+  Endemism (2:47)
+  endemism (26:83)
+  neo (26:68)
+```
+
+Not misspelled.
+
+```
+
+Found the following (possibly) invalid URLs:
+  URL: https://doi.org/10.1002/ajb2.1848
+    From: README.md
+    Status: 503
+    Message: Service Unavailable
+  URL: https://doi.org/10.1002/ecy.2043
+    From: inst/doc/canape.html
+          inst/doc/how-many-rand.html
+    Status: 503
+    Message: Service Unavailable
+  URL: https://doi.org/10.1111/ecog.01814
+    From: README.md
+    Status: 503
+    Message: Service Unavailable
+  URL: https://doi.org/10.1890/0012-9658(2003)084[0532:sainma]2.0.co;2
+    From: inst/doc/how-many-rand.html
+    Status: 503
+    Message: Service Unavailable
+```
+
+All of these URLs work correctly.
+
+```
+* checking for detritus in the temp directory ... NOTE
+Found the following files/directories:
+  'lastMiKTeXException'
+```
+
+As previously noted in [R-hub issue #503](https://github.com/r-hub/rhub/issues/503), `'lastMiKTeXException'` has been flagged as a bug in MiKTeK and probably can be safely ignored.
+
+```
+* checking HTML version of manual ... NOTE
+Skipping checking HTML validation: no command 'tidy' found
+```
+
+It seems `Skipping checking HTML validation: no command 'tidy' found` could be suppressed by setting `_R_CHECK_RD_VALIDATE_RD2HTML_` to false, but [apparently that just turns off HTML validation](https://developer.r-project.org/blosxom.cgi/R-devel/2022/04/28), which happens anyways.
+
+Please let me know if anything else needs fixing.
+
+## Original submission
+
 2022-09-30
 
 This is the first submission of canaper to CRAN, so it has no reverse dependencies.
