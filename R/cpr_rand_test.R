@@ -129,19 +129,21 @@
 #'   Ecology, 99: 103-115. \doi{10.1002/ecy.2043}
 #'
 #' @examples
+#' \donttest{
 #' set.seed(12345)
 #' data(phylocom)
 #' # Returns a dataframe by defualt
 #' cpr_rand_test(
 #'   phylocom$comm, phylocom$phy,
-#'   null_model = "curveball", metrics = "pd"
+#'   null_model = "curveball", metrics = "pd", n_reps = 10
 #' )
 #'
 #' # Tibbles may be preferable because of the large number of columns
 #' cpr_rand_test(
 #'   phylocom$comm, phylocom$phy,
-#'   null_model = "curveball", tbl_out = TRUE
+#'   null_model = "curveball", tbl_out = TRUE, n_reps = 10
 #' )
+#' }
 #' @srrstats {G1.4} uses roxygen
 #'
 #' @export

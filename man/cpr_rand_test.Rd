@@ -140,19 +140,21 @@ The results are identical regardless of whether the input for \code{comm} is
 abundance or presence-absence data (i.e., abundance weighting is not used).
 }
 \examples{
+\donttest{
 set.seed(12345)
 data(phylocom)
 # Returns a dataframe by defualt
 cpr_rand_test(
   phylocom$comm, phylocom$phy,
-  null_model = "curveball", metrics = "pd"
+  null_model = "curveball", metrics = "pd", n_reps = 10
 )
 
 # Tibbles may be preferable because of the large number of columns
 cpr_rand_test(
   phylocom$comm, phylocom$phy,
-  null_model = "curveball", tbl_out = TRUE
+  null_model = "curveball", tbl_out = TRUE, n_reps = 10
 )
+}
 }
 \references{
 Faith DP (1992) Conservation evaluation and phylogenetic

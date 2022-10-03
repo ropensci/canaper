@@ -37,15 +37,16 @@
 #'   - `< 0.01`, `< 0.05`, `> 0.99`, `> 0.95`, `not significant` (one-sided)
 #'
 #' @examples
+#' \donttest{
 #' set.seed(12345)
 #' data(phylocom)
 #' rand_test <- cpr_rand_test(
 #'   phylocom$comm, phylocom$phy,
-#'   null_model = "curveball", metrics = "pd"
+#'   null_model = "curveball", metrics = "pd", n_reps = 50
 #' )
 #' cpr_classify_signif(rand_test, "pd")
+#' }
 #' @srrstats {G1.4} uses roxygen
-#'
 #' @export
 cpr_classify_signif <- function(df, metric, one_sided = FALSE, upper = FALSE) {
   # Check input
