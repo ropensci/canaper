@@ -124,7 +124,7 @@ acacia_rand_res <- cpr_rand_test(
 #> Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: 
 #>  Pararchidendron_pruinosum, Paraserianthes_lophantha
 toc() # See how long it took
-#> 17.214 sec elapsed
+#> 18.502 sec elapsed
 
 # Switch back to sequential (non-parallel) mode
 plan(sequential)
@@ -216,6 +216,8 @@ Note that the results will not be identical because we have used a different ran
 Here is Figure 2, showing the results of the randomization test for PE, RPE, PE, and RPE:
 
 
+
+
 ```r
 # Fist do some data wrangling to make the results easier to plot
 # (add lat/long columns)
@@ -291,5 +293,7 @@ a + b + plot_layout(ncol = 1) + plot_annotation(tag_levels = "a")
 ```
 
 ![CANAPE results](vigfig-mishler2014-fig3-1.png)
+
+
 
 ## References

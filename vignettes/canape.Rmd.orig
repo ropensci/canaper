@@ -158,6 +158,10 @@ Note that the results will not be identical because we have used a different ran
 
 Here is Figure 2, showing the results of the randomization test for PE, RPE, PE, and RPE:
 
+```{r theme-set, echo = FALSE}
+old <- theme_set(theme_grey())
+```
+
 ```{r mishler2014-fig2, fig.height = 7, fig.width = 7, fig.cap = "Significance results"}
 # Fist do some data wrangling to make the results easier to plot
 # (add lat/long columns)
@@ -227,6 +231,10 @@ b <- ggplot(
   theme(legend.position = "none")
 
 a + b + plot_layout(ncol = 1) + plot_annotation(tag_levels = "a")
+```
+
+```{r theme-reset, echo = FALSE}
+theme_set(old)
 ```
 
 ## References

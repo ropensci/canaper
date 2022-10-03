@@ -58,6 +58,10 @@ library(tidyverse) # For tidy code
 
 Next we will test the effects of `n_iterations`, using the [test dataset that comes with `canaper`](https://docs.ropensci.org/canaper/reference/biod_example.html) (and [Biodiverse](https://github.com/shawnlaffan/biodiverse/tree/master/data)). I will compare the percentage similarity between the original matrix and successive iterations of a randomized matrix. This can be done using the `cpr_iter_sim()` function:
 
+```{r theme-set, echo = FALSE}
+theme_set(theme_grey())
+```
+
 ```{r test-n-iter, fig.cap = "`iter_sim_res()` results"}
 # Conduct up to 10,000 iterations (swaps),
 # recording similarity every 10 iterations

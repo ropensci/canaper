@@ -11,5 +11,5 @@ for (vgnt in vgnts) {
 }
 
 # Move figures into vignettes/ folder
-figs <- list.files(pattern = "vigfig")
+figs <- list.files(pattern = "vigfig-")
 fs::file_move(figs, fs::path("vignettes/", figs))
