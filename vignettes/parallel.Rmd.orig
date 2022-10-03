@@ -2,7 +2,7 @@
 title: "Parallel computing"
 author: "Joel H. Nitta"
 output: rmarkdown::html_vignette
-date: "03 October, 2022"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 vignette: >
   %\VignetteIndexEntry{Parallel computing}
   %\VignetteEncoding{UTF-8}
@@ -11,7 +11,13 @@ editor_options:
   chunk_output_type: console
 ---
 
-
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "vigfig-"
+)
+```
 
 One feature of `canaper` is the ability to use parallel computing (running calculations on multiple CPUs simultaneously) to speed up analysis. The parallel computing is used during the randomizations carried out by `cpr_rand_test()`, since this function involves calculating the same values on many random replicates. This vignette shows how and when to use parallel computing to speed up `cpr_rand_test()`.
 
@@ -19,8 +25,7 @@ One feature of `canaper` is the ability to use parallel computing (running calcu
 
 Let's get started by loading the packages used in this vignette.
 
-
-```r
+```{r setup, message = FALSE}
 library(canaper) # This package
 library(tictoc) # For timing
 library(future) # For parallel computing
@@ -36,15 +41,13 @@ set.seed(12345)
 
 First, let's run an analysis in default sequential mode (without parallel computing). I'll use the `tictoc` package to time how long it takes to run.
 
-
-```r
+```{r sequential-1}
 tic()
 biod_res_seq <- cpr_rand_test(
   biod_example$comm, biod_example$phy,
   null_model = "swap", n_reps = 50
 )
 toc()
-#> 2.852 sec elapsed
 ```
 
 Since we have specified 50 random replicates and are not using parallel computing, `cpr_rand_test()` calculated the various phylogenetic diversity metrics for each of the 50 replicates one at a time.
@@ -53,19 +56,15 @@ Since we have specified 50 random replicates and are not using parallel computin
 
 Before trying the parallel version, let's check how many CPUs are available to use:
 
-
-```r
+```{r check-cores}
 availableCores()
-#> system 
-#>      6
 ```
 
 OK, we have verified that there are multiple cores available for parallel computing.
 
 To enable parallel computing, just add one line before `cpr_rand_test()`: `plan(multisession, workers = 2)` ^[Of course, the number of workers should be no greater than the number of available CPUs.]. Here, the `multisession, workers = 2` part is telling `future` that we want to use 2 CPUs in parallel on our local machine. See `future::plan()` for other options. Otherwise, **everything is the same**.
 
-
-```r
+```{r parallel-1}
 # Set up parallel computing with 2 CPUs
 plan(multisession, workers = 2)
 
@@ -75,7 +74,6 @@ biod_res_par <- cpr_rand_test(
   null_model = "swap", n_reps = 50
 )
 toc()
-#> 6.845 sec elapsed
 
 # Change back to default sequential mode
 plan(sequential)
@@ -91,47 +89,35 @@ Although it may seem to always be a good idea to speed things up by using parall
 
 If your dataset is small, this overhead may outweigh simply running the analysis sequentially. That is the case with the `biod_example` data. Let's check the size of this dataset:
 
-
-```r
+```{r check-size-biod-example}
 # dim() returns number of rows, then columns
 dim(biod_example$comm)
-#> [1] 127  31
 ```
 
 The `biod_example` dataset is small because it is entirely made-up and used only for testing code (and we want tests to run quickly).
 
 Let's see how that compares with another dataset included in `canaper`, the `acacia` dataset. The `acacia` dataset is "real-life" data of the genus *Acacia* in Australia:
 
-
-```r
+```{r check-size-acaia-example}
 # dim() returns number of rows, then columns
 dim(acacia$comm)
-#> [1] 3037  508
 ```
 
 Quite a bit larger! 
 
 Let's see how parallel computing works on the `acacia` dataset:
 
-
-```r
+```{r acacia-single}
 plan(sequential)
 tic()
 acacia_res_seq <- cpr_rand_test(
   acacia$comm, acacia$phy,
   null_model = "curveball", n_reps = 100
 )
-#> Warning: 'comm' is > 95% absences (zeros). Be sure that 'n_reps' and
-#> 'n_iterations' are sufficiently large to ensure adequate mixing of random
-#> communities
-#> Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: 
-#>  Pararchidendron_pruinosum, Paraserianthes_lophantha
 toc()
-#> 48.5 sec elapsed
 ```
 
-
-```r
+```{r acacia-parallel}
 # Run cpr_rand_test() in parallel with 2 CPUs
 plan(multisession, workers = 2)
 tic()
@@ -139,13 +125,7 @@ acacia_par_seq <- cpr_rand_test(
   acacia$comm, acacia$phy,
   null_model = "curveball", n_reps = 100
 )
-#> Warning: 'comm' is > 95% absences (zeros). Be sure that 'n_reps' and
-#> 'n_iterations' are sufficiently large to ensure adequate mixing of random
-#> communities
-#> Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: 
-#>  Pararchidendron_pruinosum, Paraserianthes_lophantha
 toc()
-#> 32.252 sec elapsed
 ```
 
 And now we start to see the performance improvements that be can be gained from parallel computing!^[The settings used here are chosen to demonstrate performance gains from parellelization with short overall computation time, not for accurately calculating CANAPE.]
@@ -156,8 +136,7 @@ If you'd like to track the progress of `cpr_rand_test()` in real time, you can e
 
 One way is to add `progressr::handlers(global = TRUE)` before `cpr_rand_test()`:
 
-
-```r
+```{r progress-example-1, eval = FALSE}
 progressr::handlers(global = TRUE)
 
 biod_res_long <- cpr_rand_test(
@@ -168,8 +147,7 @@ biod_res_long <- cpr_rand_test(
 
 The other way is to place `cpr_rand_test()` inside the `progressr::with_progress()` function:
 
-
-```r
+```{r progress-example-2, eval = FALSE}
 progressr::with_progress(
   biod_res_long <- cpr_rand_test(
     biod_example$comm, biod_example$phy,

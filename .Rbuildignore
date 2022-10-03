@@ -16,3 +16,7 @@
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
 ^Meta$
+^vignettes/precompile\.R$
+^vignettes/canape\.Rmd\.orig$
+^vignettes/how-many-rand\.Rmd\.orig$
+^vignettes/parallel\.Rmd\.orig$
