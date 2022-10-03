@@ -94,7 +94,7 @@
       <h1 data-toc-skip>CANAPE example</h1>
                         <h4 data-toc-skip class="author">Joel H. Nitta</h4>
             
-            <h4 data-toc-skip class="date">30 September, 2022</h4>
+            <h4 data-toc-skip class="date">03 October, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/canaper/blob/HEAD/vignettes/canape.Rmd" class="external-link"><code>vignettes/canape.Rmd</code></a></small>
       <div class="hidden name"><code>canape.Rmd</code></div>
@@ -192,33 +192,33 @@
 <span><span class="co">#&gt; Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: </span></span>
 <span><span class="co">#&gt;  Pararchidendron_pruinosum, Paraserianthes_lophantha</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># See how long it took</span></span>
-<span><span class="co">#&gt; 24.474 sec elapsed</span></span>
+<span><span class="co">#&gt; 18.502 sec elapsed</span></span>
 <span></span>
 <span><span class="co"># Switch back to sequential (non-parallel) mode</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></code></pre></div>
 <p>Let’s take a peek at the output.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">acacia_rand_res</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3,037 × 55</span></span></span>
+<span><span class="co">#&gt; # A tibble: 3,037 × 55</span></span>
 <span><span class="co">#&gt;    site   pd_obs pd_ra…¹ pd_ra…² pd_ob…³ pd_ob…⁴ pd_ob…⁵ pd_ob…⁶ pd_ob…⁷ pd_ob…⁸</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> -102… 0.014<span style="text-decoration: underline;">5</span>  0.024<span style="text-decoration: underline;">1</span>  0.005<span style="text-decoration: underline;">82</span> -<span style="color: #BB0000;">1.65</span>         1      19      20    0.05    0.95</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> -102… 0.038<span style="text-decoration: underline;">2</span>  0.048<span style="text-decoration: underline;">9</span>  0.007<span style="text-decoration: underline;">42</span> -<span style="color: #BB0000;">1.44</span>         1      19      20    0.05    0.95</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> -102… 0.037<span style="text-decoration: underline;">8</span>  0.037<span style="text-decoration: underline;">3</span>  0.005<span style="text-decoration: underline;">90</span>  0.080<span style="text-decoration: underline;">3</span>      10      10      20    0.5     0.5 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> -102… 0.057<span style="text-decoration: underline;">0</span>  0.062<span style="text-decoration: underline;">3</span>  0.009<span style="text-decoration: underline;">17</span> -<span style="color: #BB0000;">0.573</span>        7      13      20    0.35    0.65</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> -102… 0.040<span style="text-decoration: underline;">9</span>  0.041<span style="text-decoration: underline;">5</span>  0.005<span style="text-decoration: underline;">75</span> -<span style="color: #BB0000;">0.119</span>       11       9      20    0.55    0.45</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> -102… 0.009<span style="text-decoration: underline;">98</span> 0.010<span style="text-decoration: underline;">3</span>  0.001<span style="text-decoration: underline;">78</span> -<span style="color: #BB0000;">0.190</span>        8      12      20    0.4     0.6 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> -102… 0.018<span style="text-decoration: underline;">7</span>  0.021<span style="text-decoration: underline;">4</span>  0.003<span style="text-decoration: underline;">94</span> -<span style="color: #BB0000;">0.689</span>        6      14      20    0.3     0.7 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> -102… 0.043<span style="text-decoration: underline;">4</span>  0.056<span style="text-decoration: underline;">4</span>  0.007<span style="text-decoration: underline;">82</span> -<span style="color: #BB0000;">1.66</span>         1      19      20    0.05    0.95</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> -102… 0.011<span style="text-decoration: underline;">1</span>  0.009<span style="text-decoration: underline;">89</span> 0.001<span style="text-decoration: underline;">73</span>  0.704       17       3      20    0.85    0.15</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> -102… 0.090<span style="text-decoration: underline;">3</span>  0.087<span style="text-decoration: underline;">8</span>  0.010<span style="text-decoration: underline;">4</span>   0.246       11       9      20    0.55    0.45</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 3,027 more rows, 45 more variables: pd_alt_obs &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   pd_alt_rand_mean &lt;dbl&gt;, pd_alt_rand_sd &lt;dbl&gt;, pd_alt_obs_z &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   pd_alt_obs_c_upper &lt;dbl&gt;, pd_alt_obs_c_lower &lt;dbl&gt;, pd_alt_obs_q &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   pd_alt_obs_p_upper &lt;dbl&gt;, pd_alt_obs_p_lower &lt;dbl&gt;, rpd_obs &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   rpd_rand_mean &lt;dbl&gt;, rpd_rand_sd &lt;dbl&gt;, rpd_obs_z &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   rpd_obs_c_upper &lt;dbl&gt;, rpd_obs_c_lower &lt;dbl&gt;, rpd_obs_q &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   rpd_obs_p_upper &lt;dbl&gt;, rpd_obs_p_lower &lt;dbl&gt;, pe_obs &lt;dbl&gt;, …</span></span></span></code></pre></div>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 -102… 0.0145   0.0207 0.00432 -1.46         1      19      20    0.05    0.95</span></span>
+<span><span class="co">#&gt;  2 -102… 0.0382   0.0522 0.00704 -1.99         0      20      20    0       1   </span></span>
+<span><span class="co">#&gt;  3 -102… 0.0378   0.0371 0.00535  0.130       12       8      20    0.6     0.4 </span></span>
+<span><span class="co">#&gt;  4 -102… 0.0570   0.0606 0.00758 -0.480        6      14      20    0.3     0.7 </span></span>
+<span><span class="co">#&gt;  5 -102… 0.0409   0.0423 0.00836 -0.176       11       9      20    0.55    0.45</span></span>
+<span><span class="co">#&gt;  6 -102… 0.00998  0.0102 0.00206 -0.0890      11       9      20    0.55    0.45</span></span>
+<span><span class="co">#&gt;  7 -102… 0.0187   0.0230 0.00378 -1.14         3      17      20    0.15    0.85</span></span>
+<span><span class="co">#&gt;  8 -102… 0.0434   0.0516 0.00862 -0.955        4      16      20    0.2     0.8 </span></span>
+<span><span class="co">#&gt;  9 -102… 0.0111   0.0104 0.00172  0.418       17       3      20    0.85    0.15</span></span>
+<span><span class="co">#&gt; 10 -102… 0.0903   0.0896 0.0114   0.0601      13       7      20    0.65    0.35</span></span>
+<span><span class="co">#&gt; # … with 3,027 more rows, 45 more variables: pd_alt_obs &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   pd_alt_rand_mean &lt;dbl&gt;, pd_alt_rand_sd &lt;dbl&gt;, pd_alt_obs_z &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   pd_alt_obs_c_upper &lt;dbl&gt;, pd_alt_obs_c_lower &lt;dbl&gt;, pd_alt_obs_q &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   pd_alt_obs_p_upper &lt;dbl&gt;, pd_alt_obs_p_lower &lt;dbl&gt;, rpd_obs &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   rpd_rand_mean &lt;dbl&gt;, rpd_rand_sd &lt;dbl&gt;, rpd_obs_z &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   rpd_obs_c_upper &lt;dbl&gt;, rpd_obs_c_lower &lt;dbl&gt;, rpd_obs_q &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   rpd_obs_p_upper &lt;dbl&gt;, rpd_obs_p_lower &lt;dbl&gt;, pe_obs &lt;dbl&gt;, …</span></span></code></pre></div>
 <p><code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> produces <strong>a lot</strong> of columns. Here, <code>pd_obs</code> is the observed value of phylogenetic diversity (PD). Other columns starting with <code>pd</code> refer to aspects of the randomization: <code>pd_rand_mean</code> is the mean PD across the random communities, <code>pd_rand_sd</code> is the standard deviation of PD across the random communities, <code>pd_obs_z</code> is the standard effect size of PD, etc.</p>
 <p>For details about what each column means, see <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code>.</p>
 </div>
@@ -248,7 +248,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">acacia_canape</span><span class="op">$</span><span class="va">endem_type</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;           mixed             neo not significant           paleo           super </span></span>
-<span><span class="co">#&gt;             105              13            2791              58              70</span></span></code></pre></div>
+<span><span class="co">#&gt;              99              12            2783              68              75</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="classify-significance">Classify significance<a class="anchor" aria-label="anchor" href="#classify-significance"></a>
@@ -267,7 +267,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">acacia_canape</span><span class="op">$</span><span class="va">pd_signif</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;          &lt; 0.01          &gt; 0.99 not significant </span></span>
-<span><span class="co">#&gt;             609              95            2333</span></span></code></pre></div>
+<span><span class="co">#&gt;             582              91            2364</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="visualize-results">Visualize results<a class="anchor" aria-label="anchor" href="#visualize-results"></a>
@@ -282,40 +282,48 @@
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">separate</a></span><span class="op">(</span><span class="va">site</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"long"</span>, <span class="st">"lat"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">":"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span><span class="op">)</span>, <span class="va">parse_number</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_update</a></span><span class="op">(</span></span>
+<span>  panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span>,</span>
+<span>  panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"grey60"</span><span class="op">)</span>,</span>
+<span>  panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">acacia_canape</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, fill <span class="op">=</span> <span class="va">pd_signif</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># cpr_signif_cols is a color palette in canaper for significance colors</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_signif_cols</span>, name <span class="op">=</span> <span class="st">"Phylogenetic diversity"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># cpr_signif_cols_2 is a CVD-friendly color palette in canaper</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_signif_cols_2</span>, name <span class="op">=</span> <span class="st">"Phylogenetic diversity"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>title.position <span class="op">=</span> <span class="st">"top"</span>, label.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">acacia_canape</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, fill <span class="op">=</span> <span class="va">rpd_signif</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span></span>
-<span>    values <span class="op">=</span> <span class="va">cpr_signif_cols</span>, name <span class="op">=</span> <span class="st">"Relative phylogenetic diversity"</span></span>
+<span>    values <span class="op">=</span> <span class="va">cpr_signif_cols_2</span>, name <span class="op">=</span> <span class="st">"Relative phylogenetic diversity"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>title.position <span class="op">=</span> <span class="st">"top"</span>, label.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">acacia_canape</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, fill <span class="op">=</span> <span class="va">pe_signif</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_signif_cols</span>, name <span class="op">=</span> <span class="st">"Phylogenetic endemism"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_signif_cols_2</span>, name <span class="op">=</span> <span class="st">"Phylogenetic endemism"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>title.position <span class="op">=</span> <span class="st">"top"</span>, label.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">acacia_canape</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, fill <span class="op">=</span> <span class="va">rpe_signif</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span></span>
-<span>    values <span class="op">=</span> <span class="va">cpr_signif_cols</span>, name <span class="op">=</span> <span class="st">"Relative phylogenetic endemism"</span></span>
+<span>    values <span class="op">=</span> <span class="va">cpr_signif_cols_2</span>, name <span class="op">=</span> <span class="st">"Relative phylogenetic endemism"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>title.position <span class="op">=</span> <span class="st">"top"</span>, label.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span> <span class="op">+</span> <span class="va">c</span> <span class="op">+</span> <span class="va">d</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html" class="external-link">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="canape_files/figure-html/mishler2014-fig2-1.png" width="672"></p>
+<div class="figure">
+<img src="vigfig-mishler2014-fig2-1.png" alt=""><p class="caption">Significance results</p>
+</div>
 <p>And here is Figure 3, showing the results of CANAPE:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">acacia_canape</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, fill <span class="op">=</span> <span class="va">endem_type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># cpr_endem_cols is a color palette in canaper for endemism colors</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_endem_cols</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># cpr_endem_cols_4 is a CVD-friendly color palette in canaper</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_endem_cols_4</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span></span>
 <span>    fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>title.position <span class="op">=</span> <span class="st">"top"</span>, label.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
@@ -327,7 +335,7 @@
 <span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_abline</a></span><span class="op">(</span>slope <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"darkgrey"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_endem_cols</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cpr_endem_cols_4</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="st">"Phylogenetic endemism on comparison tree"</span>,</span>
 <span>    y <span class="op">=</span> <span class="st">"Phylogenetic endemism on actual tree"</span></span>
@@ -336,7 +344,9 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html" class="external-link">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="canape_files/figure-html/mishler2014-fig3-1.png" width="576"></p>
+<div class="figure">
+<img src="vigfig-mishler2014-fig3-1.png" alt=""><p class="caption">CANAPE results</p>
+</div>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
