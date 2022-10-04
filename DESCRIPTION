@@ -23,7 +23,12 @@ Authors@R:
            role = c("rev"),
            comment = c(ORCID = "0000-0003-2941-0161"))
            )
-Description: Provides functions to conduct categorical analysis of neo- and paleo-endemism (CANAPE).
+Description: Provides functions to analyze the spatial distribution of
+    biodiversity, in particular categorical analysis of neo- and paleo-endemism
+    (CANAPE) as described in Mishler et al (2014) <doi:10.1038/ncomms5473>.
+    'canaper' conducts statistical tests to determine the types of endemism that
+    occur in a study area while accounting for the evolutionary relationships of
+    species.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

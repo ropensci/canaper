@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Provides functions to conduct categorical analysis of neo- and paleo-endemism (CANAPE).
+Provides functions to analyze the spatial distribution of biodiversity, in particular categorical analysis of neo- and paleo-endemism (CANAPE) as described in Mishler et al (2014) \doi{10.1038/ncomms5473}. 'canaper' conducts statistical tests to determine the types of endemism that occur in a study area while accounting for the evolutionary relationships of species.
 }
 \seealso{
 Useful links:
