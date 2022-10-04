@@ -2,7 +2,7 @@
 title: "CANAPE example"
 author: "Joel H. Nitta"
 output: rmarkdown::html_vignette
-date: "03 October, 2022"
+date: "04 October, 2022"
 vignette: >
   %\VignetteIndexEntry{CANAPE example}
   %\VignetteEncoding{UTF-8}
@@ -124,7 +124,7 @@ acacia_rand_res <- cpr_rand_test(
 #> Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: 
 #>  Pararchidendron_pruinosum, Paraserianthes_lophantha
 toc() # See how long it took
-#> 18.502 sec elapsed
+#> 49.352 sec elapsed
 
 # Switch back to sequential (non-parallel) mode
 plan(sequential)

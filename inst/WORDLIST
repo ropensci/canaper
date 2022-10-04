@@ -1,3 +1,4 @@
+acaia
 Ackerly
 Affero
 AGPL
@@ -9,6 +10,7 @@ args
 assertr
 assertthat
 aut
+availableCores
 BD
 benchmarking
 biod
@@ -43,6 +45,7 @@ cpr
 cran
 cre
 ctb
+curveball
 CVD
 datePublished
 deps
@@ -122,6 +125,7 @@ Mishler
 mishler
 MNTD
 MPD
+multisession
 MYPKG
 ncomms
 neo
@@ -155,6 +159,7 @@ pc
 perl
 personList
 phangorn
+phy
 phylo
 Phylocom
 phylocom
@@ -225,18 +230,24 @@ sublicense
 sublicenses
 Sublicensing
 sudo
+Sys
 SystemRequirements
 testthat
 textVersion
 tibble
 tictoc
 tidyverse
+toc
 ubuntu
 Ulrich
 unifrac
 usethis
 vigenette
+vigfig
 VignetteBuilder
+VignetteEncoding
+VignetteEngine
+VignetteIndexEntry
 Wataru
 WIP
 wip

@@ -2,7 +2,7 @@
 title: "How many randomizations?"
 author: "Joel H. Nitta"
 output: rmarkdown::html_vignette
-date: "03 October, 2022"
+date: "04 October, 2022"
 vignette: >
   %\VignetteIndexEntry{How many randomizations?}
   %\VignetteEncoding{UTF-8}
@@ -117,7 +117,7 @@ res_10_1 <- cpr_rand_test(
   n_iterations = 1000, n_reps = 10, tbl_out = TRUE
 )
 toc()
-#> 0.348 sec elapsed
+#> 0.553 sec elapsed
 tic()
 res_100_1 <- cpr_rand_test(
   biod_example$comm, biod_example$phy,
@@ -125,7 +125,7 @@ res_100_1 <- cpr_rand_test(
   n_iterations = 1000, n_reps = 100, tbl_out = TRUE
 )
 toc()
-#> 1.609 sec elapsed
+#> 1.788 sec elapsed
 tic()
 res_1000_1 <- cpr_rand_test(
   biod_example$comm, biod_example$phy,
@@ -133,7 +133,7 @@ res_1000_1 <- cpr_rand_test(
   n_iterations = 1000, n_reps = 1000, tbl_out = TRUE
 )
 toc()
-#> 14.239 sec elapsed
+#> 18.732 sec elapsed
 
 # Second set
 set.seed(67890)

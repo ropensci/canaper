@@ -126,6 +126,7 @@ acacia_par_seq <- cpr_rand_test(
   null_model = "curveball", n_reps = 100
 )
 toc()
+plan(sequential)
 ```
 
 And now we start to see the performance improvements that be can be gained from parallel computing!^[The settings used here are chosen to demonstrate performance gains from parellelization with short overall computation time, not for accurately calculating CANAPE.]
