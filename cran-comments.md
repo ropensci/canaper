@@ -1,5 +1,13 @@
 # CRAN submission for canaper 1.0.0
 
+## Resubmission 2022-10-04
+
+This is a (second) resubmission. I have made the following changes:
+
+* Add more details to Description in DESCRIPTION, including doi of the original method.
+
+* Fix a problem where not all workers were shut down in the "parallel" vignette.
+
 ## Resubmission 2022-10-03
 
 This is a resubmission. I have made the following changes:
