@@ -14,7 +14,8 @@ active.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repos
 coverage](https://codecov.io/gh/ropensci/canaper/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ropensci/canaper?branch=main)
 [![ropensci
 review](https://badges.ropensci.org/475_status.svg)](https://github.com/ropensci/software-review/issues/475)
-![runiverse](https://ropensci.r-universe.dev/badges/canaper)
+![runiverse](https://ropensci.r-universe.dev/badges/canaper) [![CRAN
+status](https://www.r-pkg.org/badges/version/canaper)](https://CRAN.R-project.org/package=canaper)
 <!-- badges: end -->
 
 The goal of `canaper` is to enable [categorical analysis of neo- and
@@ -22,19 +23,22 @@ paleo-endemism (CANAPE)](https://doi.org/10.1038/ncomms5473) in **R**.
 
 ## Installation
 
-`canaper` is not currently available on CRAN.
-
-You can install `canaper` from [r-universe](https://r-universe.dev)
-with:
+The stable version can be installed from
+[CRAN](https://cran.r-project.org/web/packages/canaper/index.html):
 
 ``` r
-install.packages("canaper", repos = "https://ropensci.r-universe.dev")
+install.packages("canaper")
 ```
 
-or, you can install `canaper` from [GitHub](https://github.com/) with:
+The development version can be installed from
+[r-universe](https://ropensci.r-universe.dev/ui#package:canaper) or
+[github](https://github.com/ropensci/canaper/):
 
 ``` r
-# install.packages("remotes")
+# r-universe
+install.packages("canaper", repos = "https://ropensci.r-universe.dev")
+
+# github (requires `remotes` or `devtools`)
 remotes::install_github("ropensci/canaper")
 ```
 
