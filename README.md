@@ -21,8 +21,9 @@ status](https://www.r-pkg.org/badges/version/canaper)](https://CRAN.R-project.or
 The goal of `canaper` is to enable [categorical analysis of neo- and
 paleo-endemism (CANAPE)](https://doi.org/10.1038/ncomms5473) in **R**.
 
-For [tutorials](https://docs.ropensci.org/canaper/articles/canape.html),
-see the `canaper` [website](https://docs.ropensci.org/canaper/).
+- For
+  [tutorials](https://docs.ropensci.org/canaper/articles/canape.html),
+  see the `canaper` [website](https://docs.ropensci.org/canaper/).
 
 ## Installation
 
