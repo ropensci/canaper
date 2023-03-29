@@ -95,8 +95,11 @@
 <div class="page-header"><h1 id="canaper-">canaper <img src="reference/figures/logo.png" align="right" alt="" width="120"><a class="anchor" aria-label="anchor" href="#canaper-"></a>
 </h1></div>
 <!-- badges: start -->
+
 <p>The goal of <code>canaper</code> is to enable <a href="https://doi.org/10.1038/ncomms5473" class="external-link">categorical analysis of neo- and paleo-endemism (CANAPE)</a> in <strong>R</strong>.</p>
-<ul><li>For <a href="https://docs.ropensci.org/canaper/articles/canape.html">tutorials</a>, see the <code>canaper</code> <a href="https://docs.ropensci.org/canaper/">website</a>.</li></ul>
+<ul>
+<li>For <a href="https://docs.ropensci.org/canaper/articles/canape.html">tutorials</a>, see the <code>canaper</code> <a href="https://docs.ropensci.org/canaper/">website</a>.</li>
+</ul>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -156,7 +159,9 @@
 <span>  <span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span>,</span>
 <span>  null_model <span class="op">=</span> <span class="st">"swap"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: </span></span>
+<span><span class="co">#&gt; Warning: Abundance data detected. Results will be the same as if using</span></span>
+<span><span class="co">#&gt; presence/absence data (no abundance weighting is used).</span></span>
+<span><span class="co">#&gt; Warning: Dropping tips from the tree because they are not present in the community data: </span></span>
 <span><span class="co">#&gt;  sp16, sp23, sp27, sp28, sp30, sp31, sp32</span></span></code></pre></div>
 <p><code>cpr_rand_test</code> produces <strong>a lot</strong> of columns (nine per metric), so let’s just look at a subset of them:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -253,7 +258,9 @@
 <h2 id="citing-this-package">Citing this package<a class="anchor" aria-label="anchor" href="#citing-this-package"></a>
 </h2>
 <p>If you use this package, please cite it! Here is an example:</p>
-<ul><li>Nitta JH, Laffan SW, Mishler BD, Iwasaki W. (2021) canaper: Categorical analysis of neo- and paleo-endemism in R. doi: 10.5281/zenodo.5094032</li></ul>
+<ul>
+<li>Nitta JH, Laffan SW, Mishler BD, Iwasaki W. (2021) canaper: Categorical analysis of neo- and paleo-endemism in R. doi: 10.5281/zenodo.5094032</li>
+</ul>
 <p>The example DOI above is for the overall package.</p>
 <p>Here is the latest DOI, which you should use if you are using the latest version of the package:</p>
 <p><a href="https://zenodo.org/badge/latestdoi/359280907" class="external-link"><img src="https://zenodo.org/badge/359280907.svg" alt="DOI"></a></p>
@@ -289,7 +296,8 @@
 <ul>
 <li>Code: <a href="https://github.com/ropensci/canaper/blob/main/LICENSE.md" class="external-link">MIT</a>
 </li>
-<li>Example datasets<ul>
+<li>Example datasets
+<ul>
 <li>
 <code>acacia</code>, <code>biod_example</code>: <a href="https://github.com/ropensci/canaper/blob/main/data-raw/LICENSE-gpl-3.txt" class="external-link">GNU General Public License v3.0</a>
 </li>
@@ -371,7 +379,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

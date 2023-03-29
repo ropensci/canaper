@@ -92,7 +92,8 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Parallel computing</h1>
-                        <h4 data-toc-skip class="author">Joel H. Nitta</h4>
+                        <h4 data-toc-skip class="author">Joel H.
+Nitta</h4>
             
             <h4 data-toc-skip class="date">04 October, 2022</h4>
       
@@ -103,8 +104,17 @@
 
     
     
-<p>One feature of <code>canaper</code> is the ability to use parallel computing (running calculations on multiple CPUs simultaneously) to speed up analysis. The parallel computing is used during the randomizations carried out by <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code>, since this function involves calculating the same values on many random replicates. This vignette shows how and when to use parallel computing to speed up <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code>.</p>
-<p>(<strong>This vignette assumes a basic understanding of CANAPE, community data matrices, and randomizations</strong>. If you aren’t familiar with any of these, you should probably see the <a href="https://docs.ropensci.org/canaper/articles/canape.html">the CANAPE example vignette</a> first).</p>
+<p>One feature of <code>canaper</code> is the ability to use parallel
+computing (running calculations on multiple CPUs simultaneously) to
+speed up analysis. The parallel computing is used during the
+randomizations carried out by <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code>, since this
+function involves calculating the same values on many random replicates.
+This vignette shows how and when to use parallel computing to speed up
+<code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code>.</p>
+<p>(<strong>This vignette assumes a basic understanding of CANAPE,
+community data matrices, and randomizations</strong>. If you aren’t
+familiar with any of these, you should probably see the <a href="https://docs.ropensci.org/canaper/articles/canape.html">the CANAPE
+example vignette</a> first).</p>
 <p>Let’s get started by loading the packages used in this vignette.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/canaper">canaper</a></span><span class="op">)</span> <span class="co"># This package</span></span>
@@ -115,11 +125,18 @@
 <div class="section level2">
 <h2 id="how-to-parallelize">How to parallelize<a class="anchor" aria-label="anchor" href="#how-to-parallelize"></a>
 </h2>
-<p><code>canaper</code> uses the <code>future</code> package to handle parallel computing. In <code>future</code>, specification of sequential (i.e., no parallel computing) vs. parallel computing, and the number of CPUs (i.e., “cores”) to use in parallel is specified <strong>outside</strong> of other functions. This is easiest to see with an example.</p>
+<p><code>canaper</code> uses the <code>future</code> package to handle
+parallel computing. In <code>future</code>, specification of sequential
+(i.e., no parallel computing) vs. parallel computing, and the number of
+CPUs (i.e., “cores”) to use in parallel is specified
+<strong>outside</strong> of other functions. This is easiest to see with
+an example.</p>
 <div class="section level3">
 <h3 id="sequential-mode">Sequential mode<a class="anchor" aria-label="anchor" href="#sequential-mode"></a>
 </h3>
-<p>First, let’s run an analysis in default sequential mode (without parallel computing). I’ll use the <code>tictoc</code> package to time how long it takes to run.</p>
+<p>First, let’s run an analysis in default sequential mode (without
+parallel computing). I’ll use the <code>tictoc</code> package to time
+how long it takes to run.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">tic</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">biod_res_seq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span></span>
@@ -128,18 +145,29 @@
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 2.836 sec elapsed</span></span></code></pre></div>
-<p>Since we have specified 50 random replicates and are not using parallel computing, <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> calculated the various phylogenetic diversity metrics for each of the 50 replicates one at a time.</p>
+<p>Since we have specified 50 random replicates and are not using
+parallel computing, <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> calculated the various
+phylogenetic diversity metrics for each of the 50 replicates one at a
+time.</p>
 </div>
 <div class="section level3">
 <h3 id="parallel-mode">Parallel mode<a class="anchor" aria-label="anchor" href="#parallel-mode"></a>
 </h3>
-<p>Before trying the parallel version, let’s check how many CPUs are available to use:</p>
+<p>Before trying the parallel version, let’s check how many CPUs are
+available to use:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">availableCores</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; system </span></span>
 <span><span class="co">#&gt;      6</span></span></code></pre></div>
-<p>OK, we have verified that there are multiple cores available for parallel computing.</p>
-<p>To enable parallel computing, just add one line before <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code>: <code>plan(multisession, workers = 2)</code> <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Here, the <code>multisession, workers = 2</code> part is telling <code>future</code> that we want to use 2 CPUs in parallel on our local machine. See <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">future::plan()</a></code> for other options. Otherwise, <strong>everything is the same</strong>.</p>
+<p>OK, we have verified that there are multiple cores available for
+parallel computing.</p>
+<p>To enable parallel computing, just add one line before
+<code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code>:
+<code>plan(multisession, workers = 2)</code> <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Here, the
+<code>multisession, workers = 2</code> part is telling
+<code>future</code> that we want to use 2 CPUs in parallel on our local
+machine. See <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">future::plan()</a></code> for other options. Otherwise,
+<strong>everything is the same</strong>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Set up parallel computing with 2 CPUs</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -154,27 +182,42 @@
 <span></span>
 <span><span class="co"># Change back to default sequential mode</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></code></pre></div>
-<p>This time, the calculations were carried out in 2 batches in parallel.</p>
-<p>But there is no significant improvement in processing time<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. What is going on here?</p>
+<p>This time, the calculations were carried out in 2 batches in
+parallel.</p>
+<p>But there is no significant improvement in processing time<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. What is
+going on here?</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="when-to-parallelize">When to parallelize?<a class="anchor" aria-label="anchor" href="#when-to-parallelize"></a>
 </h2>
-<p>Although it may seem to always be a good idea to speed things up by using parallel computing, <strong>this is not the case</strong>. There is some computational overhead involved in splitting the job across multiple processes, coordinating those processes, and putting everything back together again.</p>
-<p>If your dataset is small, this overhead may outweigh simply running the analysis sequentially. That is the case with the <code>biod_example</code> data. Let’s check the size of this dataset:</p>
+<p>Although it may seem to always be a good idea to speed things up by
+using parallel computing, <strong>this is not the case</strong>. There
+is some computational overhead involved in splitting the job across
+multiple processes, coordinating those processes, and putting everything
+back together again.</p>
+<p>If your dataset is small, this overhead may outweigh simply running
+the analysis sequentially. That is the case with the
+<code>biod_example</code> data. Let’s check the size of this
+dataset:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># dim() returns number of rows, then columns</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 127  31</span></span></code></pre></div>
-<p>The <code>biod_example</code> dataset is small because it is entirely made-up and used only for testing code (and we want tests to run quickly).</p>
-<p>Let’s see how that compares with another dataset included in <code>canaper</code>, the <code>acacia</code> dataset. The <code>acacia</code> dataset is “real-life” data of the genus <em>Acacia</em> in Australia:</p>
+<p>The <code>biod_example</code> dataset is small because it is entirely
+made-up and used only for testing code (and we want tests to run
+quickly).</p>
+<p>Let’s see how that compares with another dataset included in
+<code>canaper</code>, the <code>acacia</code> dataset. The
+<code>acacia</code> dataset is “real-life” data of the genus
+<em>Acacia</em> in Australia:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># dim() returns number of rows, then columns</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">acacia</span><span class="op">$</span><span class="va">comm</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 3037  508</span></span></code></pre></div>
 <p>Quite a bit larger!</p>
-<p>Let’s see how parallel computing works on the <code>acacia</code> dataset:</p>
+<p>Let’s see how parallel computing works on the <code>acacia</code>
+dataset:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">tic</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -205,13 +248,19 @@
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 34.091 sec elapsed</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></code></pre></div>
-<p>And now we start to see the performance improvements that be can be gained from parallel computing!<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
+<p>And now we start to see the performance improvements that be can be
+gained from parallel computing!<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 </div>
 <div class="section level2">
 <h2 id="progress-bars">Progress bars<a class="anchor" aria-label="anchor" href="#progress-bars"></a>
 </h2>
-<p>If you’d like to track the progress of <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> in real time, you can enable a progress bar. There are two ways to do so (neither of these will show up on the webpage, but do try it at home!). Similar to parallelization, this is done outside of the actual function.</p>
-<p>One way is to add <code>progressr::handlers(global = TRUE)</code> before <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code>:</p>
+<p>If you’d like to track the progress of <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code>
+in real time, you can enable a progress bar. There are two ways to do so
+(neither of these will show up on the webpage, but do try it at home!).
+Similar to parallelization, this is done outside of the actual
+function.</p>
+<p>One way is to add <code>progressr::handlers(global = TRUE)</code>
+before <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">progressr</span><span class="fu">::</span><span class="fu"><a href="https://progressr.futureverse.org/reference/handlers.html" class="external-link">handlers</a></span><span class="op">(</span>global <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
@@ -219,7 +268,8 @@
 <span>  <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>,</span>
 <span>  null_model <span class="op">=</span> <span class="st">"swap"</span>, n_reps <span class="op">=</span> <span class="fl">500</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>The other way is to place <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> inside the <code><a href="https://progressr.futureverse.org/reference/with_progress.html" class="external-link">progressr::with_progress()</a></code> function:</p>
+<p>The other way is to place <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> inside the
+<code><a href="https://progressr.futureverse.org/reference/with_progress.html" class="external-link">progressr::with_progress()</a></code> function:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">progressr</span><span class="fu">::</span><span class="fu"><a href="https://progressr.futureverse.org/reference/with_progress.html" class="external-link">with_progress</a></span><span class="op">(</span></span>
 <span>  <span class="va">biod_res_long</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span></span>
@@ -231,14 +281,21 @@
 <div class="section level2">
 <h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
 </h2>
-<p>This vignette shows how easy it is to enable parallel computing in <code>canaper</code>, and when it makes sense to do so. I hope it helps your analyses run faster!</p>
+<p>This vignette shows how easy it is to enable parallel computing in
+<code>canaper</code>, and when it makes sense to do so. I hope it helps
+your analyses run faster!</p>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr>
 <ol>
-<li id="fn1"><p>Of course, the number of workers should be no greater than the number of available CPUs.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>Results vary each time this vignette is generated, but it is usually about the same; sometimes, the parallel version is even <strong>slower</strong>.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p>The settings used here are chosen to demonstrate performance gains from parellelization with short overall computation time, not for accurately calculating CANAPE.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>Of course, the number of workers should be no greater
+than the number of available CPUs.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Results vary each time this vignette is generated, but
+it is usually about the same; sometimes, the parallel version is even
+<strong>slower</strong>.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>The settings used here are chosen to demonstrate
+performance gains from parellelization with short overall computation
+time, not for accurately calculating CANAPE.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
@@ -260,7 +317,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

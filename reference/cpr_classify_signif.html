@@ -133,6 +133,7 @@ this, set <code>one_sided = FALSE</code>.</p>
 <span class="r-in"><span>  <span class="va">phylocom</span><span class="op">$</span><span class="va">comm</span>, <span class="va">phylocom</span><span class="op">$</span><span class="va">phy</span>,</span></span>
 <span class="r-in"><span>  null_model <span class="op">=</span> <span class="st">"curveball"</span>, metrics <span class="op">=</span> <span class="st">"pd"</span>, n_reps <span class="op">=</span> <span class="fl">50</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Abundance data detected. Results will be the same as if using presence/absence data (no abundance weighting is used).</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Dropping tips from the tree because they are not present in the community data: </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>  sp16, sp23, sp27, sp28, sp30, sp31, sp32</span>
 <span class="r-in"><span><span class="fu">cpr_classify_signif</span><span class="op">(</span><span class="va">rand_test</span>, <span class="st">"pd"</span><span class="op">)</span></span></span>
@@ -165,7 +166,7 @@ this, set <code>one_sided = FALSE</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

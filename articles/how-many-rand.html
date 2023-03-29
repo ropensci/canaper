@@ -92,7 +92,8 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>How many randomizations?</h1>
-                        <h4 data-toc-skip class="author">Joel H. Nitta</h4>
+                        <h4 data-toc-skip class="author">Joel H.
+Nitta</h4>
             
             <h4 data-toc-skip class="date">04 October, 2022</h4>
       
@@ -103,23 +104,68 @@
 
     
     
-<p>A central part of CANAPE is comparing observed values with randomizations. It is up to the user to set the number of randomizations… but how does one know if the number of randomizations is sufficient?</p>
-<p>(<strong>This vignette assumes a basic understanding of CANAPE, community data matrices, and randomizations</strong>. If you aren’t familiar with any of these, you should probably see the <a href="https://docs.ropensci.org/canaper/articles/canape.html">the CANAPE example vignette</a> first).</p>
+<p>A central part of CANAPE is comparing observed values with
+randomizations. It is up to the user to set the number of
+randomizations… but how does one know if the number of randomizations is
+sufficient?</p>
+<p>(<strong>This vignette assumes a basic understanding of CANAPE,
+community data matrices, and randomizations</strong>. If you aren’t
+familiar with any of these, you should probably see the <a href="https://docs.ropensci.org/canaper/articles/canape.html">the CANAPE
+example vignette</a> first).</p>
 <div class="section level2">
 <h2 id="a-word-about-randomization-algorithms">A word about randomization algorithms<a class="anchor" aria-label="anchor" href="#a-word-about-randomization-algorithms"></a>
 </h2>
-<p>There is a rich literature on choice of randomization algorithms in ecology (see references below), so I won’t go into this too much, but <strong>choice of algorithm can have a large impact on results</strong>, so it’s important to understand.</p>
-<p>As described by <span class="citation">Strona, Ulrich, and Gotelli (2018)</span>, randomization algorithms can vary in their degree of degree of conservation; that is, how closely they resemble the original data. At one extreme, some algorithms require row and column sums (i.e., marginal sums) to be perfectly preserved between the original data and the randomized data (more conservative)<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>; at the other, marginal sums may be completely different (less conservative). More conservative algorithms are less prone to type II error but more prone to type I error; the opposite is true for less conservative algorithms. Generally you want the randomization algorithm to only change the one aspect of the data that you are interested in testing. The ultimate choice of algorithm will depend on the data, ecological conditions, and computing restraints.</p>
-<p><code>canaper</code> uses the <a href="https://CRAN.R-project.org/package=vegan" class="external-link"><code>vegan</code> package</a> for randomizations. There are a large number of pre-defined randomization algorithms available in <code>vegan</code><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, as well as the option to provide a user-defined algorithm. For details about each pre-defined algorithm, see <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">vegan::commsim()</a></code>.</p>
-<p>For this vignette, I will use the <code>swap</code> algorithm, a “more conservative” algorithm that preserves marginal sums <span class="citation">(Gotelli and Entsminger 2003)</span> and has been widely used in ecological studies<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
+<p>There is a rich literature on choice of randomization algorithms in
+ecology (see references below), so I won’t go into this too much, but
+<strong>choice of algorithm can have a large impact on results</strong>,
+so it’s important to understand.</p>
+<p>As described by <span class="citation">Strona, Ulrich, and Gotelli
+(2018)</span>, randomization algorithms can vary in their degree of
+degree of conservation; that is, how closely they resemble the original
+data. At one extreme, some algorithms require row and column sums (i.e.,
+marginal sums) to be perfectly preserved between the original data and
+the randomized data (more conservative)<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>; at the other,
+marginal sums may be completely different (less conservative). More
+conservative algorithms are less prone to type II error but more prone
+to type I error; the opposite is true for less conservative algorithms.
+Generally you want the randomization algorithm to only change the one
+aspect of the data that you are interested in testing. The ultimate
+choice of algorithm will depend on the data, ecological conditions, and
+computing restraints.</p>
+<p><code>canaper</code> uses the <a href="https://CRAN.R-project.org/package=vegan" class="external-link"><code>vegan</code>
+package</a> for randomizations. There are a large number of pre-defined
+randomization algorithms available in <code>vegan</code><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, as well as the option
+to provide a user-defined algorithm. For details about each pre-defined
+algorithm, see <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">vegan::commsim()</a></code>.</p>
+<p>For this vignette, I will use the <code>swap</code> algorithm, a
+“more conservative” algorithm that preserves marginal sums <span class="citation">(Gotelli and Entsminger 2003)</span> and has been
+widely used in ecological studies<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 </div>
 <div class="section level2">
 <h2 id="replicates-vs--iterations">Replicates vs. iterations<a class="anchor" aria-label="anchor" href="#replicates-vs--iterations"></a>
 </h2>
-<p>Before proceeding, we need to clarify some terminology. <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> includes two arguments, <code>n_reps</code> and <code>n_iterations</code>. These sound similar but refer to two very different things.</p>
-<p><code>n_reps</code> is the number of random communities to simulate. For example, if <code>n_reps</code> is 100, will we be comparing each observed value (e.g., phylogenetic diversity, <code>pd_obs</code>), with 100 random replicates of <code>pd_obs</code>. If <code>n_reps</code> is too low, we will lack sufficiently statistical power to detect patterns in the data.</p>
-<p><code>n_iterations</code> is only used by some randomization algorithms, the “sequential” algorithms. Sequential algorithms randomize a community matrix by exchanging values between existing cells (“swapping”). As you might guess, the <code>swap</code> algorithm is a sequential algorithm. One such swap is a single “iteration”. If the total number of iterations, <code>n_iterations</code>, is too low, the randomized matrix won’t be sufficiently randomized, and will still resemble the original matrix<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>.</p>
-<p>If either <code>n_reps</code> or <code>n_iterations</code> are set too high, it will take overly long to finish the calculations. So our goal is to set them sufficiently high to achieve proper randomization, but not so high <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> never finishes.</p>
+<p>Before proceeding, we need to clarify some terminology.
+<code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> includes two arguments, <code>n_reps</code>
+and <code>n_iterations</code>. These sound similar but refer to two very
+different things.</p>
+<p><code>n_reps</code> is the number of random communities to simulate.
+For example, if <code>n_reps</code> is 100, will we be comparing each
+observed value (e.g., phylogenetic diversity, <code>pd_obs</code>), with
+100 random replicates of <code>pd_obs</code>. If <code>n_reps</code> is
+too low, we will lack sufficiently statistical power to detect patterns
+in the data.</p>
+<p><code>n_iterations</code> is only used by some randomization
+algorithms, the “sequential” algorithms. Sequential algorithms randomize
+a community matrix by exchanging values between existing cells
+(“swapping”). As you might guess, the <code>swap</code> algorithm is a
+sequential algorithm. One such swap is a single “iteration”. If the
+total number of iterations, <code>n_iterations</code>, is too low, the
+randomized matrix won’t be sufficiently randomized, and will still
+resemble the original matrix<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>.</p>
+<p>If either <code>n_reps</code> or <code>n_iterations</code> are set
+too high, it will take overly long to finish the calculations. So our
+goal is to set them sufficiently high to achieve proper randomization,
+but not so high <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> never finishes.</p>
 </div>
 <div class="section level2">
 <h2 id="effect-of-n_iterations">Effect of <code>n_iterations</code><a class="anchor" aria-label="anchor" href="#effect-of-n_iterations"></a>
@@ -129,7 +175,12 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/canaper">canaper</a></span><span class="op">)</span> <span class="co"># This package</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jabiru/tictoc" class="external-link">tictoc</a></span><span class="op">)</span> <span class="co"># For timing</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span> <span class="co"># For tidy code</span></span></code></pre></div>
-<p>Next we will test the effects of <code>n_iterations</code>, using the <a href="https://docs.ropensci.org/canaper/reference/biod_example.html">test dataset that comes with <code>canaper</code></a> (and <a href="https://github.com/shawnlaffan/biodiverse/tree/master/data" class="external-link">Biodiverse</a>). I will compare the percentage similarity between the original matrix and successive iterations of a randomized matrix. This can be done using the <code><a href="../reference/cpr_iter_sim.html">cpr_iter_sim()</a></code> function:</p>
+<p>Next we will test the effects of <code>n_iterations</code>, using the
+<a href="https://docs.ropensci.org/canaper/reference/biod_example.html">test
+dataset that comes with <code>canaper</code></a> (and <a href="https://github.com/shawnlaffan/biodiverse/tree/master/data" class="external-link">Biodiverse</a>).
+I will compare the percentage similarity between the original matrix and
+successive iterations of a randomized matrix. This can be done using the
+<code><a href="../reference/cpr_iter_sim.html">cpr_iter_sim()</a></code> function:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Conduct up to 10,000 iterations (swaps),</span></span>
 <span><span class="co"># recording similarity every 10 iterations</span></span>
@@ -165,15 +216,32 @@
 <div class="figure">
 <img src="vigfig-test-n-iter-1.png" alt=""><p class="caption"><code>iter_sim_res()</code> results</p>
 </div>
-<p>From this, we can see that the original community and the randomized community reach a maximum dissimilarity at ca. 500–1,000 iterations. After that, the randomized community doesn’t become any more different with additional “mixing”.</p>
-<p>Note that the number of iterations required <strong>will vary based on the dataset</strong>. Large matrices with many zeros will likely take more iterations, and even then still retain relatively high similarity between the original matrix and the randomized matrix. So I recommend exploring the data as above to determine the minimum number of iterations needed.</p>
-<p>Now that we’ve settled on the number of iterations per random replicate (1,000), let’s look into the number of replicates.</p>
+<p>From this, we can see that the original community and the randomized
+community reach a maximum dissimilarity at ca. 500–1,000 iterations.
+After that, the randomized community doesn’t become any more different
+with additional “mixing”.</p>
+<p>Note that the number of iterations required <strong>will vary based
+on the dataset</strong>. Large matrices with many zeros will likely take
+more iterations, and even then still retain relatively high similarity
+between the original matrix and the randomized matrix. So I recommend
+exploring the data as above to determine the minimum number of
+iterations needed.</p>
+<p>Now that we’ve settled on the number of iterations per random
+replicate (1,000), let’s look into the number of replicates.</p>
 </div>
 <div class="section level2">
 <h2 id="effect-of-n_reps">Effect of <code>n_reps</code><a class="anchor" aria-label="anchor" href="#effect-of-n_reps"></a>
 </h2>
-<p>With randomizations, there is no “right” answer, so we can’t test to see that <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> produces the exact answer we’re looking for. Rather, we will check that it starts to <strong>converge on approximately the same result</strong> once <code>n_reps</code> is high enough.</p>
-<p>Here, I will compare the percentile of observed phylogenetic diversity relative to random (<code>pd_obs_p_upper</code>, <a href="https://docs.ropensci.org/canaper/articles/canape.html#classify-endemism">one of the values used for calculating endemism type</a>) between pairs of random communities each generated with the same number of replicates<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>. I will also time calculations for one of each pair.</p>
+<p>With randomizations, there is no “right” answer, so we can’t test to
+see that <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> produces the exact answer we’re
+looking for. Rather, we will check that it starts to <strong>converge on
+approximately the same result</strong> once <code>n_reps</code> is high
+enough.</p>
+<p>Here, I will compare the percentile of observed phylogenetic
+diversity relative to random (<code>pd_obs_p_upper</code>, <a href="https://docs.ropensci.org/canaper/articles/canape.html#classify-endemism">one
+of the values used for calculating endemism type</a>) between pairs of
+random communities each generated with the same number of replicates<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>. I will
+also time calculations for one of each pair.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Specify a different random seed for each set of randomizations so they give</span></span>
 <span><span class="co"># different, reproducible results</span></span>
@@ -239,20 +307,26 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">plot_comp</span><span class="op">(</span><span class="va">res_10_1</span>, <span class="va">res_10_2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"10 replicates"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="vigfig-n-reps-plots-10-1.png" alt=""><p class="caption">Comparison of <code>pd_obs_p_upper</code> across runs, 10 reps</p>
+<img src="vigfig-n-reps-plots-10-1.png" alt=""><p class="caption">Comparison of <code>pd_obs_p_upper</code> across
+runs, 10 reps</p>
 </div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">plot_comp</span><span class="op">(</span><span class="va">res_100_1</span>, <span class="va">res_100_2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"100 replicates"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="vigfig-n-reps-plots-100-1.png" alt=""><p class="caption">Comparison of <code>pd_obs_p_upper</code> across runs, 100 reps</p>
+<img src="vigfig-n-reps-plots-100-1.png" alt=""><p class="caption">Comparison of <code>pd_obs_p_upper</code> across
+runs, 100 reps</p>
 </div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">plot_comp</span><span class="op">(</span><span class="va">res_1000_1</span>, <span class="va">res_1000_2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"1000 replicates"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="vigfig-n-reps-plots-1000-1.png" alt=""><p class="caption">Comparison of <code>pd_obs_p_upper</code> across runs, 1,000 reps</p>
+<img src="vigfig-n-reps-plots-1000-1.png" alt=""><p class="caption">Comparison of <code>pd_obs_p_upper</code> across
+runs, 1,000 reps</p>
 </div>
-<p>This visualization shows how the randomization results converge as <code>n_reps</code> increases.</p>
-<p>The above plots illustrate convergence for one particular aspect of CANAPE, but what about endemism type itself? We can look at that too.</p>
+<p>This visualization shows how the randomization results converge as
+<code>n_reps</code> increases.</p>
+<p>The above plots illustrate convergence for one particular aspect of
+CANAPE, but what about endemism type itself? We can look at that
+too.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Define a helper function that joins two datasets and calculates % agreement</span></span>
 <span><span class="co"># on endemism type between them</span></span>
@@ -270,7 +344,7 @@
 <span>    <span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span></span>
 <span>  <span class="fu">calc_agree_endem</span><span class="op">(</span><span class="va">res_10_1</span>, <span class="va">res_10_2</span>, <span class="fl">10</span><span class="op">)</span>,</span>
 <span>  <span class="fu">calc_agree_endem</span><span class="op">(</span><span class="va">res_100_1</span>, <span class="va">res_100_2</span>, <span class="fl">100</span><span class="op">)</span>,</span>
 <span>  <span class="fu">calc_agree_endem</span><span class="op">(</span><span class="va">res_1000_1</span>, <span class="va">res_1000_2</span>, <span class="fl">1000</span><span class="op">)</span>,</span>
@@ -281,36 +355,61 @@
 <span><span class="co">#&gt; 1   100   127   0.787     10</span></span>
 <span><span class="co">#&gt; 2   118   127   0.929    100</span></span>
 <span><span class="co">#&gt; 3   125   127   0.984   1000</span></span></code></pre></div>
-<p>At 1,000 replicates, we see very high agreement on endemism type between the two randomizations.</p>
-<p>Of course, another important consideration is <strong>how long</strong> calculations take. You can see that time increases with <code>n_reps</code>, but not exactly in a linear fashion. We don’t have the space to go into benchmarking here, but this illustrates the time / <code>n_reps</code> trade-off<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>.</p>
+<p>At 1,000 replicates, we see very high agreement on endemism type
+between the two randomizations.</p>
+<p>Of course, another important consideration is <strong>how
+long</strong> calculations take. You can see that time increases with
+<code>n_reps</code>, but not exactly in a linear fashion. We don’t have
+the space to go into benchmarking here, but this illustrates the time /
+<code>n_reps</code> trade-off<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>.</p>
 </div>
 <div class="section level2">
 <h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
 </h2>
-<p>In this case (the <a href="https://docs.ropensci.org/canaper/reference/biod_example.html">example dataset</a> that comes with <code>canaper</code>), we see that a minimum of 1,000 random replicates with 1,000 swapping iterations per replicate is probably needed to attain robust results.</p>
-<p>I hope this vignette helps you determine the settings to use for your own dataset!</p>
+<p>In this case (the <a href="https://docs.ropensci.org/canaper/reference/biod_example.html">example
+dataset</a> that comes with <code>canaper</code>), we see that a minimum
+of 1,000 random replicates with 1,000 swapping iterations per replicate
+is probably needed to attain robust results.</p>
+<p>I hope this vignette helps you determine the settings to use for your
+own dataset!</p>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Gotelli2003" class="csl-entry">
-Gotelli, Nicholas J., and Gary L. Entsminger. 2003. <span>“Swap Algorithms in Null Model Analysis.”</span> <em>Ecology</em> 84 (2): 532–35. <a href="https://doi.org/10.1890/0012-9658(2003)084%5B0532:sainma%5D2.0.co;2" class="external-link">https://doi.org/10.1890/0012-9658(2003)084[0532:sainma]2.0.co;2</a>.
+Gotelli, Nicholas J., and Gary L. Entsminger. 2003. <span>“Swap
+Algorithms in Null Model Analysis.”</span> <em>Ecology</em> 84 (2):
+532–35. <a href="https://doi.org/10.1890/0012-9658(2003)084%5B0532:sainma%5D2.0.co;2" class="external-link">https://doi.org/10.1890/0012-9658(2003)084[0532:sainma]2.0.co;2</a>.
 </div>
 <div id="ref-Strona2018" class="csl-entry">
-Strona, Giovanni, Werner Ulrich, and Nicholas J. Gotelli. 2018. <span>“Bi‐dimensional Null Model Analysis of Presence‐absence Binary Matrices.”</span> <em>Ecology</em> 99 (1): 103–15. <a href="https://doi.org/10.1002/ecy.2043" class="external-link">https://doi.org/10.1002/ecy.2043</a>.
+Strona, Giovanni, Werner Ulrich, and Nicholas J. Gotelli. 2018.
+<span>“Bi‐dimensional Null Model Analysis of Presence‐absence Binary
+Matrices.”</span> <em>Ecology</em> 99 (1): 103–15. <a href="https://doi.org/10.1002/ecy.2043" class="external-link">https://doi.org/10.1002/ecy.2043</a>.
 </div>
 </div>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr>
 <ol>
-<li id="fn1"><p>In the case of a community matrix with species as columns and rows as sites, the row sums are the total richness per site and the column sums are the total abundance per species. So preserving these means that rare species stay rare, sites with few species stay that way, etc. Only the species identity in each site changes.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>31 as of <code>vegan</code> v2.6.2, though not all may be applicable.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p>The <a href="http://biodiverse-analysis-software.blogspot.com/2020/12/biodiverse-now-includes-independent.html" class="external-link">Biodiverse blog has a nice explanation of the <code>swap</code> algorithm</a>.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p>A third argument, <code>thin</code>, only applies to a small number of algorithms; for details, see <code><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">vegan::commsim()</a></code><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
-<li id="fn5"><p>Other values based on the randomizations could be checked too (e.g., values ending in <code>_obs_z</code>, <code>_rand_mean</code>, or <code>_rand_sd</code>).<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
-<li id="fn6"><p>You may be able to speed things up with parallelization, depending on the dataset. For details, see <a href="https://docs.ropensci.org/canaper/articles/canape.html#randomization-test">the CANAPE example vignette</a>.<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>In the case of a community matrix with species as
+columns and rows as sites, the row sums are the total richness per site
+and the column sums are the total abundance per species. So preserving
+these means that rare species stay rare, sites with few species stay
+that way, etc. Only the species identity in each site changes.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>31 as of <code>vegan</code> v2.6.2, though not all may
+be applicable.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>The <a href="http://biodiverse-analysis-software.blogspot.com/2020/12/biodiverse-now-includes-independent.html" class="external-link">Biodiverse
+blog has a nice explanation of the <code>swap</code> algorithm</a>.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>A third argument, <code>thin</code>, only applies to a
+small number of algorithms; for details, see
+<code><a href="https://rdrr.io/pkg/vegan/man/commsim.html" class="external-link">vegan::commsim()</a></code><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>Other values based on the randomizations could be
+checked too (e.g., values ending in <code>_obs_z</code>,
+<code>_rand_mean</code>, or <code>_rand_sd</code>).<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>You may be able to speed things up with parallelization,
+depending on the dataset. For details, see <a href="https://docs.ropensci.org/canaper/articles/canape.html#randomization-test">the
+CANAPE example vignette</a>.<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
@@ -332,7 +431,7 @@ Strona, Giovanni, Werner Ulrich, and Nicholas J. Gotelli. 2018. <span>“Bi‐di
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
