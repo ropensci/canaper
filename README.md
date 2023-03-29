@@ -233,6 +233,13 @@ the right.
 
 ## Papers citing `canaper`
 
+- van Galen *et al.* 2023. “Correlated evolution in an ectomycorrhizal
+  host-symbiont system”. *New Phytologist*
+  <https://doi.org/10.1111/nph.18802>
+- Naranjo *et al.* 2023. “Ancestral area analyses reveal
+  Pleistocene-influenced evolution in a clade of coastal plain endemic
+  plants”. *Journal of Biogeography* 50, 393-405
+  <https://doi.org/10.1111/jbi.14541>
 - Ellepola *et al.* 2022. “The role of climate and islands in species
   diversification and reproductive-mode evolution of Old World tree
   frogs”. *Communications Biology* 5, 347
