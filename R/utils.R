@@ -221,7 +221,7 @@ NULL
 #' @param phy List of class "phylo"; input phylogeny
 #' @param comm Dataframe or matrix; community data, with species (taxa) in
 #'   columns and sites (communities) in rows.
-#' @param silent Logical vector of length 1; should warnings be silenced?
+#' @param quiet Logical vector of length 1; should warnings be silenced?
 #' Default FALSE.
 #'
 #' @return List with two items
@@ -231,7 +231,7 @@ NULL
 #'   `phy` and comm`
 #' @noRd
 #'
-match_phylo_comm <- function(phy, comm, silent = FALSE) {
+match_phylo_comm <- function(phy, comm, quiet = FALSE) {
   if (!(is.data.frame(comm) || is.matrix(comm))) {
     stop("Community data should be a data.frame or matrix with samples in rows and taxa in columns") # nolint
   }
@@ -241,23 +241,31 @@ match_phylo_comm <- function(phy, comm, silent = FALSE) {
   if (is.null(commtaxa)) {
     stop("Community data set lacks taxa (column) names, these are required to match phylogeny and community data") # nolint
   }
-  assertthat::assert_that(assertthat::is.flag(silent))
+  assertthat::assert_that(assertthat::is.flag(quiet))
   if (!all(commtaxa %in% phytaxa)) {
-    if (!silent) {
-      warning(paste(
-        "Dropping taxa from the community because they are not present in the phylogeny: \n", # nolint
-        paste(setdiff(commtaxa, phytaxa), collapse = ", ")
-      ))
+    if (!quiet) {
+      warning(
+        paste(
+          "Dropping taxa from the community because they are not present in the phylogeny: \n", # nolint
+          paste(setdiff(commtaxa, phytaxa), collapse = ", ")
+        ),
+        call. = FALSE,
+        immediate. = TRUE
+      )
     }
     comm <- comm[, intersect(commtaxa, phytaxa)]
     commtaxa <- colnames(comm)
   }
   if (any(!(phytaxa %in% commtaxa))) {
-    if (!silent) {
-      warning(paste(
-        "Dropping tips from the tree because they are not present in the community data: \n", # nolint
-        paste(setdiff(phytaxa, commtaxa), collapse = ", ")
-      ))
+    if (!quiet) {
+      warning(
+        paste(
+          "Dropping tips from the tree because they are not present in the community data: \n", # nolint
+          paste(setdiff(phytaxa, commtaxa), collapse = ", ")
+        ),
+        call. = FALSE,
+        immediate. = TRUE
+      )
     }
     res$phy <- ape::drop.tip(phy, setdiff(phytaxa, commtaxa))
   } else {
