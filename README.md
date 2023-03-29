@@ -102,7 +102,9 @@ rand_test_results <- cpr_rand_test(
   phylocom$comm, phylocom$phy,
   null_model = "swap"
 )
-#> Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: 
+#> Warning: Abundance data detected. Results will be the same as if using
+#> presence/absence data (no abundance weighting is used).
+#> Warning: Dropping tips from the tree because they are not present in the community data: 
 #>  sp16, sp23, sp27, sp28, sp30, sp31, sp32
 ```
 
