@@ -86,6 +86,7 @@ fmre
 fs
 fsf
 funder
+getenv
 getRversion
 gfortran
 ggplot
@@ -124,6 +125,7 @@ linux
 LTS
 Lubarsky
 macOS
+macos
 magrittr
 md
 MERCHANTABILITY
@@ -150,6 +152,7 @@ NOTEs
 nrand
 Num
 Okabe
+oldrel
 ORCID
 orcid
 Orozco
