@@ -53,7 +53,9 @@ First, let's load the packages used in this vignette.
 ```{r setup, message = FALSE}
 library(canaper) # This package
 library(tictoc) # For timing
-library(tidyverse) # For tidy code
+# For data-wrangling and plotting
+library(ggplot2)
+library(dplyr)
 ```
 
 Next we will test the effects of `n_iterations`, using the [test dataset that comes with `canaper`](https://docs.ropensci.org/canaper/reference/biod_example.html) (and [Biodiverse](https://github.com/shawnlaffan/biodiverse/tree/master/data)). I will compare the percentage similarity between the original matrix and successive iterations of a randomized matrix. This can be done using the `cpr_iter_sim()` function:
@@ -94,7 +96,7 @@ With randomizations, there is no "right" answer, so we can't test to see that `c
 
 Here, I will compare the percentile of observed phylogenetic diversity relative to random (`pd_obs_p_upper`, [one of the values used for calculating endemism type](https://docs.ropensci.org/canaper/articles/canape.html#classify-endemism)) between pairs of random communities each generated with the same number of replicates^[Other values based on the randomizations could be checked too (e.g., values ending in `_obs_z`, `_rand_mean`, or `_rand_sd`).]. I will also time calculations for one of each pair.
 
-```{r n-reps-sets}
+```{r n-reps-sets, warning = FALSE}
 # Specify a different random seed for each set of randomizations so they give
 # different, reproducible results
 

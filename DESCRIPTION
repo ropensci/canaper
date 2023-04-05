@@ -56,7 +56,6 @@ Suggests:
     future,
     tictoc,
     patchwork,
-    tidyverse,
     testthat (>= 3.0.0),
     stringr,
     magrittr,

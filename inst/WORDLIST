@@ -1,5 +1,7 @@
+abline
 acaia
 Ackerly
+aes
 Affero
 AGPL
 ajb
@@ -18,9 +20,12 @@ Biodiverse
 biodiverse
 Bioinformatics
 bioRxiv
+blogspot
 bootswatch
 branchlengths
 BugReports
+bw
+calc
 canaper
 centroids
 citEntry
@@ -32,6 +37,7 @@ codecov
 codemeta
 codeRepository
 colorBlindness
+commsim
 Commun
 Comparsion
 ComputerLanguage
@@ -47,12 +53,14 @@ cre
 ctb
 curveball
 CVD
+darkgrey
 datePublished
 deps
 desc
 dev
 developmentStatus
 devtools
+df
 dir
 DOI
 doi
@@ -80,6 +88,7 @@ fsf
 funder
 getRversion
 gfortran
+ggplot
 gh
 github
 givenName
@@ -127,6 +136,7 @@ MNTD
 MPD
 multisession
 MYPKG
+ncol
 ncomms
 neo
 neoendemic
@@ -137,6 +147,8 @@ noncommercially
 nonendemic
 NONINFRINGEMENT
 NOTEs
+nrand
+Num
 Okabe
 ORCID
 orcid
@@ -144,6 +156,7 @@ Orozco
 os
 outgroup
 packagemanager
+packageVersion
 palaeo
 Paleo
 paleo
@@ -156,6 +169,7 @@ parallelize
 params
 parellelization
 pc
+pe
 perl
 personList
 phangorn
@@ -182,6 +196,7 @@ Rds
 README
 readme
 readr
+rect
 regionalization
 relatedLink
 releaseNotes
@@ -203,7 +218,9 @@ roxygen
 RoxygenNote
 roxyglobals
 RPD
+rpd
 RPE
+rpe
 Rscript
 rspm
 rstudio
@@ -213,6 +230,9 @@ runtimePlatform
 sameAs
 saveRDS
 Schliep
+sd
+sep
+shawnlaffan
 signif
 SoftwareApplication
 softwareRequirements
@@ -232,14 +252,17 @@ Sublicensing
 sudo
 Sys
 SystemRequirements
+tbl
 testthat
 textVersion
 tibble
 tictoc
+tidyr
 tidyverse
 toc
 ubuntu
 Ulrich
+Uncomment
 unifrac
 usethis
 vigenette
@@ -255,4 +278,5 @@ WIPO
 withr
 writeLines
 www
+yaml
 zenodo
