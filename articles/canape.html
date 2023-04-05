@@ -95,7 +95,7 @@
                         <h4 data-toc-skip class="author">Joel H.
 Nitta</h4>
             
-            <h4 data-toc-skip class="date">04 October, 2022</h4>
+            <h4 data-toc-skip class="date">05 April, 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/canaper/blob/HEAD/vignettes/canape.Rmd" class="external-link"><code>vignettes/canape.Rmd</code></a></small>
       <div class="hidden name"><code>canape.Rmd</code></div>
@@ -124,8 +124,12 @@ use for this vignette:</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/canaper">canaper</a></span><span class="op">)</span> <span class="co"># This package :)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org" class="external-link">future</a></span><span class="op">)</span> <span class="co"># For parallel computing</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jabiru/tictoc" class="external-link">tictoc</a></span><span class="op">)</span> <span class="co"># For timing things</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span> <span class="co"># For composing mult-part plots</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span> <span class="co"># For data-wrangling and plotting</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span> <span class="co"># For composing multi-part plots</span></span>
+<span><span class="co"># For data-wrangling and plotting</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org" class="external-link">readr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="dataset">Dataset<a class="anchor" aria-label="anchor" href="#dataset"></a>
@@ -155,24 +159,15 @@ look at the first 8 rows and columns<a href="#fn1" class="footnote-ref" id="fnre
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">acacia</span><span class="op">$</span><span class="va">comm</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 3037  508</span></span>
 <span><span class="va">acacia</span><span class="op">$</span><span class="va">comm</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span></span>
-<span><span class="co">#&gt;                   abbreviata acanthaster acanthoclada acinacea aciphylla acoma</span></span>
-<span><span class="co">#&gt; -1025000:-1825000          0           0            0        0         0     0</span></span>
-<span><span class="co">#&gt; -1025000:-1875000          0           0            0        0         0     0</span></span>
-<span><span class="co">#&gt; -1025000:-1925000          0           0            0        0         0     0</span></span>
-<span><span class="co">#&gt; -1025000:-1975000          0           0            0        0         0     0</span></span>
-<span><span class="co">#&gt; -1025000:-2025000          0           0            0        0         0     0</span></span>
-<span><span class="co">#&gt; -1025000:-2075000          0           0            0        0         0     0</span></span>
-<span><span class="co">#&gt; -1025000:-2125000          0           0            0        0         0     0</span></span>
-<span><span class="co">#&gt; -1025000:-2225000          0           0            0        0         0     0</span></span>
-<span><span class="co">#&gt;                   acradenia acrionastes</span></span>
-<span><span class="co">#&gt; -1025000:-1825000         0           0</span></span>
-<span><span class="co">#&gt; -1025000:-1875000         0           0</span></span>
-<span><span class="co">#&gt; -1025000:-1925000         0           0</span></span>
-<span><span class="co">#&gt; -1025000:-1975000         0           0</span></span>
-<span><span class="co">#&gt; -1025000:-2025000         0           0</span></span>
-<span><span class="co">#&gt; -1025000:-2075000         0           0</span></span>
-<span><span class="co">#&gt; -1025000:-2125000         0           0</span></span>
-<span><span class="co">#&gt; -1025000:-2225000         0           0</span></span></code></pre></div>
+<span><span class="co">#&gt;                   abbreviata acanthaster acanthoclada acinacea aciphylla acoma acradenia acrionastes</span></span>
+<span><span class="co">#&gt; -1025000:-1825000          0           0            0        0         0     0         0           0</span></span>
+<span><span class="co">#&gt; -1025000:-1875000          0           0            0        0         0     0         0           0</span></span>
+<span><span class="co">#&gt; -1025000:-1925000          0           0            0        0         0     0         0           0</span></span>
+<span><span class="co">#&gt; -1025000:-1975000          0           0            0        0         0     0         0           0</span></span>
+<span><span class="co">#&gt; -1025000:-2025000          0           0            0        0         0     0         0           0</span></span>
+<span><span class="co">#&gt; -1025000:-2075000          0           0            0        0         0     0         0           0</span></span>
+<span><span class="co">#&gt; -1025000:-2125000          0           0            0        0         0     0         0           0</span></span>
+<span><span class="co">#&gt; -1025000:-2225000          0           0            0        0         0     0         0           0</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="randomization-test">Randomization test<a class="anchor" aria-label="anchor" href="#randomization-test"></a>
@@ -232,10 +227,11 @@ richness and abundance patterns while randomizing species identity <span class="
 <span>  n_reps <span class="op">=</span> <span class="fl">20</span>, n_iterations <span class="op">=</span> <span class="fl">100000</span>,</span>
 <span>  tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: </span></span>
+<span><span class="co">#&gt; Warning: Abundance data detected. Results will be the same as if using presence/absence data (no abundance weighting is used).</span></span>
+<span><span class="co">#&gt; Warning: Dropping tips from the tree because they are not present in the community data: </span></span>
 <span><span class="co">#&gt;  Pararchidendron_pruinosum, Paraserianthes_lophantha</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># See how long it took</span></span>
-<span><span class="co">#&gt; 49.352 sec elapsed</span></span>
+<span><span class="co">#&gt; 70.204 sec elapsed</span></span>
 <span></span>
 <span><span class="co"># Switch back to sequential (non-parallel) mode</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></code></pre></div>
@@ -243,25 +239,22 @@ richness and abundance patterns while randomizing species identity <span class="
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">acacia_rand_res</span></span>
 <span><span class="co">#&gt; # A tibble: 3,037 × 55</span></span>
-<span><span class="co">#&gt;    site   pd_obs pd_ra…¹ pd_ra…² pd_ob…³ pd_ob…⁴ pd_ob…⁵ pd_ob…⁶ pd_ob…⁷ pd_ob…⁸</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 -102… 0.0145   0.0207 0.00432 -1.46         1      19      20    0.05    0.95</span></span>
-<span><span class="co">#&gt;  2 -102… 0.0382   0.0522 0.00704 -1.99         0      20      20    0       1   </span></span>
-<span><span class="co">#&gt;  3 -102… 0.0378   0.0371 0.00535  0.130       12       8      20    0.6     0.4 </span></span>
-<span><span class="co">#&gt;  4 -102… 0.0570   0.0606 0.00758 -0.480        6      14      20    0.3     0.7 </span></span>
-<span><span class="co">#&gt;  5 -102… 0.0409   0.0423 0.00836 -0.176       11       9      20    0.55    0.45</span></span>
-<span><span class="co">#&gt;  6 -102… 0.00998  0.0102 0.00206 -0.0890      11       9      20    0.55    0.45</span></span>
-<span><span class="co">#&gt;  7 -102… 0.0187   0.0230 0.00378 -1.14         3      17      20    0.15    0.85</span></span>
-<span><span class="co">#&gt;  8 -102… 0.0434   0.0516 0.00862 -0.955        4      16      20    0.2     0.8 </span></span>
-<span><span class="co">#&gt;  9 -102… 0.0111   0.0104 0.00172  0.418       17       3      20    0.85    0.15</span></span>
-<span><span class="co">#&gt; 10 -102… 0.0903   0.0896 0.0114   0.0601      13       7      20    0.65    0.35</span></span>
-<span><span class="co">#&gt; # … with 3,027 more rows, 45 more variables: pd_alt_obs &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   pd_alt_rand_mean &lt;dbl&gt;, pd_alt_rand_sd &lt;dbl&gt;, pd_alt_obs_z &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   pd_alt_obs_c_upper &lt;dbl&gt;, pd_alt_obs_c_lower &lt;dbl&gt;, pd_alt_obs_q &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   pd_alt_obs_p_upper &lt;dbl&gt;, pd_alt_obs_p_lower &lt;dbl&gt;, rpd_obs &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   rpd_rand_mean &lt;dbl&gt;, rpd_rand_sd &lt;dbl&gt;, rpd_obs_z &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   rpd_obs_c_upper &lt;dbl&gt;, rpd_obs_c_lower &lt;dbl&gt;, rpd_obs_q &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   rpd_obs_p_upper &lt;dbl&gt;, rpd_obs_p_lower &lt;dbl&gt;, pe_obs &lt;dbl&gt;, …</span></span></code></pre></div>
+<span><span class="co">#&gt;    site       pd_obs pd_ra…¹ pd_ra…² pd_ob…³ pd_ob…⁴ pd_ob…⁵ pd_ob…⁶ pd_ob…⁷ pd_ob…⁸ pd_al…⁹ pd_al…˟ pd_al…˟ pd_al…˟ pd_al…˟ pd_al…˟ pd_al…˟ pd_al…˟ pd_al…˟ rpd_obs rpd_r…˟ rpd_r…˟ rpd_o…˟ rpd_o…˟ rpd_o…˟ rpd_o…˟ rpd_o…˟ rpd_o…˟  pe_obs pe_ra…˟ pe_ra…˟ pe_ob…˟ pe_ob…˟ pe_ob…˟ pe_ob…˟ pe_ob…˟ pe_ob…˟</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 -1025000… 0.0145   0.0207 0.00432 -1.46         1      19      20    0.05    0.95  0.0355  0.0414 0.00779  -0.753       5      14      20    0.25    0.7    0.407   0.514  0.129   -0.827       4      16      20    0.2     0.8  2.47e-5 6.14e-5 5.92e-5  -0.619       3      17      20    0.15    0.85</span></span>
+<span><span class="co">#&gt;  2 -1025000… 0.0382   0.0522 0.00704 -1.99         0      20      20    0       1     0.0680  0.0883 0.00651  -3.10        0      20      20    0       1      0.561   0.595  0.0944  -0.358       9      11      20    0.45    0.55 1.44e-4 2.82e-4 1.86e-4  -0.738       5      15      20    0.25    0.75</span></span>
+<span><span class="co">#&gt;  3 -1025000… 0.0378   0.0371 0.00535  0.130       12       8      20    0.6     0.4   0.0572  0.0631 0.00797  -0.743       2      17      20    0.1     0.85   0.661   0.593  0.0941   0.724      16       4      20    0.8     0.2  1.71e-4 2.42e-4 1.62e-4  -0.439       7      13      20    0.35    0.65</span></span>
+<span><span class="co">#&gt;  4 -1025000… 0.0570   0.0606 0.00758 -0.480        6      14      20    0.3     0.7   0.0858  0.104  0.0105   -1.77        0      20      20    0       1      0.664   0.586  0.0913   0.863      17       3      20    0.85    0.15 5.30e-4 3.56e-4 2.33e-4   0.748      17       3      20    0.85    0.15</span></span>
+<span><span class="co">#&gt;  5 -1025000… 0.0409   0.0423 0.00836 -0.176       11       9      20    0.55    0.45  0.0542  0.0713 0.00904  -1.89        0      19      20    0       0.95   0.753   0.596  0.102    1.55       19       1      20    0.95    0.05 1.25e-4 2.20e-4 1.31e-4  -0.728       6      14      20    0.3     0.7 </span></span>
+<span><span class="co">#&gt;  6 -1025000… 0.00998  0.0102 0.00206 -0.0890      11       9      20    0.55    0.45  0.0276  0.0173 0.00742   1.39       18       2      20    0.9     0.1    0.361   0.695  0.337   -0.989       2      18      20    0.1     0.9  1.17e-5 3.86e-5 4.82e-5  -0.557       3      17      20    0.15    0.85</span></span>
+<span><span class="co">#&gt;  7 -1025000… 0.0187   0.0230 0.00378 -1.14         3      17      20    0.15    0.85  0.0325  0.0390 0.00820  -0.782       2      16      20    0.1     0.8    0.575   0.619  0.189   -0.231      11       9      20    0.55    0.45 5.20e-5 9.07e-5 6.56e-5  -0.589       5      15      20    0.25    0.75</span></span>
+<span><span class="co">#&gt;  8 -1025000… 0.0434   0.0516 0.00862 -0.955        4      16      20    0.2     0.8   0.0779  0.0956 0.00995  -1.78        1      19      20    0.05    0.95   0.557   0.544  0.100    0.125      12       8      20    0.6     0.4  4.32e-4 3.14e-4 1.24e-4   0.944      16       4      20    0.8     0.2 </span></span>
+<span><span class="co">#&gt;  9 -1025000… 0.0111   0.0104 0.00172  0.418       17       3      20    0.85    0.15  0.0168  0.0211 0.00715  -0.607       6      14      20    0.3     0.7    0.662   0.558  0.227    0.461      16       4      20    0.8     0.2  2.73e-5 1.94e-5 1.53e-5   0.521      17       3      20    0.85    0.15</span></span>
+<span><span class="co">#&gt; 10 -1025000… 0.0903   0.0896 0.0114   0.0601      13       7      20    0.65    0.35  0.115   0.143  0.00775  -3.51        0      20      20    0       1      0.783   0.629  0.0760   2.02       19       1      20    0.95    0.05 5.07e-4 5.76e-4 2.10e-4  -0.328      10      10      20    0.5     0.5 </span></span>
+<span><span class="co">#&gt; # … with 3,027 more rows, 18 more variables: pe_alt_obs &lt;dbl&gt;, pe_alt_rand_mean &lt;dbl&gt;, pe_alt_rand_sd &lt;dbl&gt;, pe_alt_obs_z &lt;dbl&gt;, pe_alt_obs_c_upper &lt;dbl&gt;, pe_alt_obs_c_lower &lt;dbl&gt;, pe_alt_obs_q &lt;dbl&gt;, pe_alt_obs_p_upper &lt;dbl&gt;, pe_alt_obs_p_lower &lt;dbl&gt;, rpe_obs &lt;dbl&gt;, rpe_rand_mean &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   rpe_rand_sd &lt;dbl&gt;, rpe_obs_z &lt;dbl&gt;, rpe_obs_c_upper &lt;dbl&gt;, rpe_obs_c_lower &lt;dbl&gt;, rpe_obs_q &lt;dbl&gt;, rpe_obs_p_upper &lt;dbl&gt;, rpe_obs_p_lower &lt;dbl&gt;, and abbreviated variable names ¹​pd_rand_mean, ²​pd_rand_sd, ³​pd_obs_z, ⁴​pd_obs_c_upper, ⁵​pd_obs_c_lower, ⁶​pd_obs_q, ⁷​pd_obs_p_upper, ⁸​pd_obs_p_lower,</span></span>
+<span><span class="co">#&gt; #   ⁹​pd_alt_obs, ˟​pd_alt_rand_mean, ˟​pd_alt_rand_sd, ˟​pd_alt_obs_z, ˟​pd_alt_obs_c_upper, ˟​pd_alt_obs_c_lower, ˟​pd_alt_obs_q, ˟​pd_alt_obs_p_upper, ˟​pd_alt_obs_p_lower, ˟​rpd_rand_mean, ˟​rpd_rand_sd, ˟​rpd_obs_z, ˟​rpd_obs_c_upper, ˟​rpd_obs_c_lower, ˟​rpd_obs_q, ˟​rpd_obs_p_upper, ˟​rpd_obs_p_lower,</span></span>
+<span><span class="co">#&gt; #   ˟​pe_rand_mean, ˟​pe_rand_sd, ˟​pe_obs_z, ˟​pe_obs_c_upper, ˟​pe_obs_c_lower, ˟​pe_obs_q, ˟​pe_obs_p_upper, ˟​pe_obs_p_lower</span></span></code></pre></div>
 <p><code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> produces <strong>a lot</strong> of
 columns. Here, <code>pd_obs</code> is the observed value of phylogenetic
 diversity (PD). Other columns starting with <code>pd</code> refer to
@@ -457,7 +450,7 @@ Matrices.”</span> <em>Ecology</em> 99 (1): 103–15. <a href="https://doi.org/
 <ol>
 <li id="fn1"><p>You might think the dataset is all zeros, but that is
 not the case. It is just very sparse.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>31 as of <code>vegan</code> v2.6.2, though not all may
+<li id="fn2"><p>31 as of <code>vegan</code> v2.6.4, though not all may
 be applicable.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 <li id="fn3"><p>For a good review of randomization algorithms and their
 implications for analysis results, see <span class="citation">Strona,

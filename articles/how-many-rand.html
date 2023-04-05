@@ -95,7 +95,7 @@
                         <h4 data-toc-skip class="author">Joel H.
 Nitta</h4>
             
-            <h4 data-toc-skip class="date">04 October, 2022</h4>
+            <h4 data-toc-skip class="date">05 April, 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/canaper/blob/HEAD/vignettes/how-many-rand.Rmd" class="external-link"><code>vignettes/how-many-rand.Rmd</code></a></small>
       <div class="hidden name"><code>how-many-rand.Rmd</code></div>
@@ -174,7 +174,9 @@ but not so high <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()<
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/canaper">canaper</a></span><span class="op">)</span> <span class="co"># This package</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jabiru/tictoc" class="external-link">tictoc</a></span><span class="op">)</span> <span class="co"># For timing</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span> <span class="co"># For tidy code</span></span></code></pre></div>
+<span><span class="co"># For data-wrangling and plotting</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></code></pre></div>
 <p>Next we will test the effects of <code>n_iterations</code>, using the
 <a href="https://docs.ropensci.org/canaper/reference/biod_example.html">test
 dataset that comes with <code>canaper</code></a> (and <a href="https://github.com/shawnlaffan/biodiverse/tree/master/data" class="external-link">Biodiverse</a>).
@@ -255,7 +257,7 @@ also time calculations for one of each pair.</p>
 <span>  n_iterations <span class="op">=</span> <span class="fl">1000</span>, n_reps <span class="op">=</span> <span class="fl">10</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 0.553 sec elapsed</span></span>
+<span><span class="co">#&gt; 2.681 sec elapsed</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">tic</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">res_100_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span></span>
 <span>  <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>,</span>
@@ -263,7 +265,7 @@ also time calculations for one of each pair.</p>
 <span>  n_iterations <span class="op">=</span> <span class="fl">1000</span>, n_reps <span class="op">=</span> <span class="fl">100</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 1.788 sec elapsed</span></span>
+<span><span class="co">#&gt; 3.672 sec elapsed</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">tic</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">res_1000_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cpr_rand_test.html">cpr_rand_test</a></span><span class="op">(</span></span>
 <span>  <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>,</span>
@@ -271,7 +273,7 @@ also time calculations for one of each pair.</p>
 <span>  n_iterations <span class="op">=</span> <span class="fl">1000</span>, n_reps <span class="op">=</span> <span class="fl">1000</span>, tbl_out <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 18.732 sec elapsed</span></span>
+<span><span class="co">#&gt; 15.465 sec elapsed</span></span>
 <span></span>
 <span><span class="co"># Second set</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">67890</span><span class="op">)</span></span>
@@ -397,7 +399,7 @@ columns and rows as sites, the row sums are the total richness per site
 and the column sums are the total abundance per species. So preserving
 these means that rare species stay rare, sites with few species stay
 that way, etc. Only the species identity in each site changes.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>31 as of <code>vegan</code> v2.6.2, though not all may
+<li id="fn2"><p>31 as of <code>vegan</code> v2.6.4, though not all may
 be applicable.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 <li id="fn3"><p>The <a href="http://biodiverse-analysis-software.blogspot.com/2020/12/biodiverse-now-includes-independent.html" class="external-link">Biodiverse
 blog has a nice explanation of the <code>swap</code> algorithm</a>.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>

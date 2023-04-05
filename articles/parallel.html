@@ -95,7 +95,7 @@
                         <h4 data-toc-skip class="author">Joel H.
 Nitta</h4>
             
-            <h4 data-toc-skip class="date">04 October, 2022</h4>
+            <h4 data-toc-skip class="date">05 April, 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/canaper/blob/HEAD/vignettes/parallel.Rmd" class="external-link"><code>vignettes/parallel.Rmd</code></a></small>
       <div class="hidden name"><code>parallel.Rmd</code></div>
@@ -143,8 +143,9 @@ how long it takes to run.</p>
 <span>  <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>,</span>
 <span>  null_model <span class="op">=</span> <span class="st">"swap"</span>, n_reps <span class="op">=</span> <span class="fl">50</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Abundance data detected. Results will be the same as if using presence/absence data (no abundance weighting is used).</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2.836 sec elapsed</span></span></code></pre></div>
+<span><span class="co">#&gt; 5.131 sec elapsed</span></span></code></pre></div>
 <p>Since we have specified 50 random replicates and are not using
 parallel computing, <code><a href="../reference/cpr_rand_test.html">cpr_rand_test()</a></code> calculated the various
 phylogenetic diversity metrics for each of the 50 replicates one at a
@@ -177,8 +178,9 @@ machine. See <code><a href="https://future.futureverse.org/reference/plan.html" 
 <span>  <span class="va">biod_example</span><span class="op">$</span><span class="va">comm</span>, <span class="va">biod_example</span><span class="op">$</span><span class="va">phy</span>,</span>
 <span>  null_model <span class="op">=</span> <span class="st">"swap"</span>, n_reps <span class="op">=</span> <span class="fl">50</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Abundance data detected. Results will be the same as if using presence/absence data (no abundance weighting is used).</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 7.699 sec elapsed</span></span>
+<span><span class="co">#&gt; 9.136 sec elapsed</span></span>
 <span></span>
 <span><span class="co"># Change back to default sequential mode</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></code></pre></div>
@@ -225,13 +227,12 @@ dataset:</p>
 <span>  <span class="va">acacia</span><span class="op">$</span><span class="va">comm</span>, <span class="va">acacia</span><span class="op">$</span><span class="va">phy</span>,</span>
 <span>  null_model <span class="op">=</span> <span class="st">"curveball"</span>, n_reps <span class="op">=</span> <span class="fl">100</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: 'comm' is &gt; 95% absences (zeros). Be sure that 'n_reps' and</span></span>
-<span><span class="co">#&gt; 'n_iterations' are sufficiently large to ensure adequate mixing of random</span></span>
-<span><span class="co">#&gt; communities</span></span>
-<span><span class="co">#&gt; Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: </span></span>
+<span><span class="co">#&gt; Warning: Abundance data detected. Results will be the same as if using presence/absence data (no abundance weighting is used).</span></span>
+<span><span class="co">#&gt; Warning: 'comm' is &gt; 95% absences (zeros). Be sure that 'n_reps' and 'n_iterations' are sufficiently large to ensure adequate mixing of random communities</span></span>
+<span><span class="co">#&gt; Warning: Dropping tips from the tree because they are not present in the community data: </span></span>
 <span><span class="co">#&gt;  Pararchidendron_pruinosum, Paraserianthes_lophantha</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 61.353 sec elapsed</span></span></code></pre></div>
+<span><span class="co">#&gt; 107.131 sec elapsed</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run cpr_rand_test() in parallel with 2 CPUs</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -240,13 +241,12 @@ dataset:</p>
 <span>  <span class="va">acacia</span><span class="op">$</span><span class="va">comm</span>, <span class="va">acacia</span><span class="op">$</span><span class="va">phy</span>,</span>
 <span>  null_model <span class="op">=</span> <span class="st">"curveball"</span>, n_reps <span class="op">=</span> <span class="fl">100</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: 'comm' is &gt; 95% absences (zeros). Be sure that 'n_reps' and</span></span>
-<span><span class="co">#&gt; 'n_iterations' are sufficiently large to ensure adequate mixing of random</span></span>
-<span><span class="co">#&gt; communities</span></span>
-<span><span class="co">#&gt; Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: </span></span>
+<span><span class="co">#&gt; Warning: Abundance data detected. Results will be the same as if using presence/absence data (no abundance weighting is used).</span></span>
+<span><span class="co">#&gt; Warning: 'comm' is &gt; 95% absences (zeros). Be sure that 'n_reps' and 'n_iterations' are sufficiently large to ensure adequate mixing of random communities</span></span>
+<span><span class="co">#&gt; Warning: Dropping tips from the tree because they are not present in the community data: </span></span>
 <span><span class="co">#&gt;  Pararchidendron_pruinosum, Paraserianthes_lophantha</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tictoc/man/tic.html" class="external-link">toc</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 34.091 sec elapsed</span></span>
+<span><span class="co">#&gt; 90.475 sec elapsed</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">sequential</span><span class="op">)</span></span></code></pre></div>
 <p>And now we start to see the performance improvements that be can be
 gained from parallel computing!<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>

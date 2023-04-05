@@ -5,7 +5,7 @@ articles:
   canape: canape.html
   how-many-rand: how-many-rand.html
   parallel: parallel.html
-last_built: 2023-03-29T23:32Z
+last_built: 2023-04-05T20:32Z
 urls:
   reference: https://docs.ropensci.org/canaper/reference
   article: https://docs.ropensci.org/canaper/articles
