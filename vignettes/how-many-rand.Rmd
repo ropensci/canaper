@@ -2,7 +2,7 @@
 title: "How many randomizations?"
 author: "Joel H. Nitta"
 output: rmarkdown::html_vignette
-date: "04 October, 2022"
+date: "05 April, 2023"
 vignette: >
   %\VignetteIndexEntry{How many randomizations?}
   %\VignetteEncoding{UTF-8}
@@ -25,7 +25,7 @@ There is a rich literature on choice of randomization algorithms in ecology (see
 As described by @Strona2018, randomization algorithms can vary in their degree of degree of conservation; that is, how closely they resemble the original data. At one extreme, some algorithms require row and column sums (i.e., marginal sums) to be perfectly preserved between the original data and the randomized data (more conservative)^[In the case of a community matrix with species as columns and rows as sites, the row sums are the total richness per site and the column sums are the total abundance per species. So preserving these means that rare species stay rare, sites with few species stay that way, etc. Only the species identity in each site changes.]; 
 at the other, marginal sums may be completely different (less conservative). More conservative algorithms are less prone to type II error but more prone to type I error; the opposite is true for less conservative algorithms. Generally you want the randomization algorithm to only change the one aspect of the data that you are interested in testing. The ultimate choice of algorithm will depend on the data, ecological conditions, and computing restraints.
 
-`canaper` uses the [`vegan` package](https://CRAN.R-project.org/package=vegan) for randomizations. There are a large number of pre-defined randomization algorithms available in `vegan`^[31 as of `vegan` v2.6.2, though not all may be applicable.], as well as the option to provide a user-defined algorithm. For details about each pre-defined algorithm, see `vegan::commsim()`.
+`canaper` uses the [`vegan` package](https://CRAN.R-project.org/package=vegan) for randomizations. There are a large number of pre-defined randomization algorithms available in `vegan`^[31 as of `vegan` v2.6.4, though not all may be applicable.], as well as the option to provide a user-defined algorithm. For details about each pre-defined algorithm, see `vegan::commsim()`.
 
 For this vignette, I will use the `swap` algorithm, a "more conservative" algorithm that preserves marginal sums [@Gotelli2003] and has been widely used in ecological studies^[The [Biodiverse blog has a nice explanation of the `swap` algorithm](http://biodiverse-analysis-software.blogspot.com/2020/12/biodiverse-now-includes-independent.html).].
 
@@ -47,7 +47,9 @@ First, let's load the packages used in this vignette.
 ```r
 library(canaper) # This package
 library(tictoc) # For timing
-library(tidyverse) # For tidy code
+# For data-wrangling and plotting
+library(ggplot2)
+library(dplyr)
 ```
 
 Next we will test the effects of `n_iterations`, using the [test dataset that comes with `canaper`](https://docs.ropensci.org/canaper/reference/biod_example.html) (and [Biodiverse](https://github.com/shawnlaffan/biodiverse/tree/master/data)). I will compare the percentage similarity between the original matrix and successive iterations of a randomized matrix. This can be done using the `cpr_iter_sim()` function:
@@ -117,7 +119,7 @@ res_10_1 <- cpr_rand_test(
   n_iterations = 1000, n_reps = 10, tbl_out = TRUE
 )
 toc()
-#> 0.553 sec elapsed
+#> 2.681 sec elapsed
 tic()
 res_100_1 <- cpr_rand_test(
   biod_example$comm, biod_example$phy,
@@ -125,7 +127,7 @@ res_100_1 <- cpr_rand_test(
   n_iterations = 1000, n_reps = 100, tbl_out = TRUE
 )
 toc()
-#> 1.788 sec elapsed
+#> 3.672 sec elapsed
 tic()
 res_1000_1 <- cpr_rand_test(
   biod_example$comm, biod_example$phy,
@@ -133,7 +135,7 @@ res_1000_1 <- cpr_rand_test(
   n_iterations = 1000, n_reps = 1000, tbl_out = TRUE
 )
 toc()
-#> 18.732 sec elapsed
+#> 15.465 sec elapsed
 
 # Second set
 set.seed(67890)

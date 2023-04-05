@@ -2,7 +2,7 @@
 title: "Parallel computing"
 author: "Joel H. Nitta"
 output: rmarkdown::html_vignette
-date: "04 October, 2022"
+date: "05 April, 2023"
 vignette: >
   %\VignetteIndexEntry{Parallel computing}
   %\VignetteEncoding{UTF-8}
@@ -43,8 +43,9 @@ biod_res_seq <- cpr_rand_test(
   biod_example$comm, biod_example$phy,
   null_model = "swap", n_reps = 50
 )
+#> Warning: Abundance data detected. Results will be the same as if using presence/absence data (no abundance weighting is used).
 toc()
-#> 2.836 sec elapsed
+#> 5.131 sec elapsed
 ```
 
 Since we have specified 50 random replicates and are not using parallel computing, `cpr_rand_test()` calculated the various phylogenetic diversity metrics for each of the 50 replicates one at a time.
@@ -74,8 +75,9 @@ biod_res_par <- cpr_rand_test(
   biod_example$comm, biod_example$phy,
   null_model = "swap", n_reps = 50
 )
+#> Warning: Abundance data detected. Results will be the same as if using presence/absence data (no abundance weighting is used).
 toc()
-#> 7.699 sec elapsed
+#> 9.136 sec elapsed
 
 # Change back to default sequential mode
 plan(sequential)
@@ -121,13 +123,12 @@ acacia_res_seq <- cpr_rand_test(
   acacia$comm, acacia$phy,
   null_model = "curveball", n_reps = 100
 )
-#> Warning: 'comm' is > 95% absences (zeros). Be sure that 'n_reps' and
-#> 'n_iterations' are sufficiently large to ensure adequate mixing of random
-#> communities
-#> Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: 
+#> Warning: Abundance data detected. Results will be the same as if using presence/absence data (no abundance weighting is used).
+#> Warning: 'comm' is > 95% absences (zeros). Be sure that 'n_reps' and 'n_iterations' are sufficiently large to ensure adequate mixing of random communities
+#> Warning: Dropping tips from the tree because they are not present in the community data: 
 #>  Pararchidendron_pruinosum, Paraserianthes_lophantha
 toc()
-#> 61.353 sec elapsed
+#> 107.131 sec elapsed
 ```
 
 
@@ -139,13 +140,12 @@ acacia_par_seq <- cpr_rand_test(
   acacia$comm, acacia$phy,
   null_model = "curveball", n_reps = 100
 )
-#> Warning: 'comm' is > 95% absences (zeros). Be sure that 'n_reps' and
-#> 'n_iterations' are sufficiently large to ensure adequate mixing of random
-#> communities
-#> Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: 
+#> Warning: Abundance data detected. Results will be the same as if using presence/absence data (no abundance weighting is used).
+#> Warning: 'comm' is > 95% absences (zeros). Be sure that 'n_reps' and 'n_iterations' are sufficiently large to ensure adequate mixing of random communities
+#> Warning: Dropping tips from the tree because they are not present in the community data: 
 #>  Pararchidendron_pruinosum, Paraserianthes_lophantha
 toc()
-#> 34.091 sec elapsed
+#> 90.475 sec elapsed
 plan(sequential)
 ```
 

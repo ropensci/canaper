@@ -32,8 +32,12 @@ Start by loading `canaper` and some other packages we will use for this vignette
 library(canaper) # This package :)
 library(future) # For parallel computing
 library(tictoc) # For timing things
-library(patchwork) # For composing mult-part plots
-library(tidyverse) # For data-wrangling and plotting
+library(patchwork) # For composing multi-part plots
+# For data-wrangling and plotting
+library(dplyr)
+library(tidyr)
+library(readr)
+library(ggplot2)
 ```
 
 ## Dataset

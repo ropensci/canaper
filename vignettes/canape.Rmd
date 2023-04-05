@@ -2,7 +2,7 @@
 title: "CANAPE example"
 author: "Joel H. Nitta"
 output: rmarkdown::html_vignette
-date: "04 October, 2022"
+date: "05 April, 2023"
 vignette: >
   %\VignetteIndexEntry{CANAPE example}
   %\VignetteEncoding{UTF-8}
@@ -27,8 +27,12 @@ Start by loading `canaper` and some other packages we will use for this vignette
 library(canaper) # This package :)
 library(future) # For parallel computing
 library(tictoc) # For timing things
-library(patchwork) # For composing mult-part plots
-library(tidyverse) # For data-wrangling and plotting
+library(patchwork) # For composing multi-part plots
+# For data-wrangling and plotting
+library(dplyr)
+library(tidyr)
+library(readr)
+library(ggplot2)
 ```
 
 ## Dataset
@@ -61,24 +65,15 @@ The second, `comm`, is a community dataframe with species as columns and rows as
 dim(acacia$comm)
 #> [1] 3037  508
 acacia$comm[1:8, 1:8]
-#>                   abbreviata acanthaster acanthoclada acinacea aciphylla acoma
-#> -1025000:-1825000          0           0            0        0         0     0
-#> -1025000:-1875000          0           0            0        0         0     0
-#> -1025000:-1925000          0           0            0        0         0     0
-#> -1025000:-1975000          0           0            0        0         0     0
-#> -1025000:-2025000          0           0            0        0         0     0
-#> -1025000:-2075000          0           0            0        0         0     0
-#> -1025000:-2125000          0           0            0        0         0     0
-#> -1025000:-2225000          0           0            0        0         0     0
-#>                   acradenia acrionastes
-#> -1025000:-1825000         0           0
-#> -1025000:-1875000         0           0
-#> -1025000:-1925000         0           0
-#> -1025000:-1975000         0           0
-#> -1025000:-2025000         0           0
-#> -1025000:-2075000         0           0
-#> -1025000:-2125000         0           0
-#> -1025000:-2225000         0           0
+#>                   abbreviata acanthaster acanthoclada acinacea aciphylla acoma acradenia acrionastes
+#> -1025000:-1825000          0           0            0        0         0     0         0           0
+#> -1025000:-1875000          0           0            0        0         0     0         0           0
+#> -1025000:-1925000          0           0            0        0         0     0         0           0
+#> -1025000:-1975000          0           0            0        0         0     0         0           0
+#> -1025000:-2025000          0           0            0        0         0     0         0           0
+#> -1025000:-2075000          0           0            0        0         0     0         0           0
+#> -1025000:-2125000          0           0            0        0         0     0         0           0
+#> -1025000:-2225000          0           0            0        0         0     0         0           0
 ```
 
 ## Randomization test
@@ -93,7 +88,7 @@ Observed values that are in the extremes (e.g, the top or lower 5% for a one-sid
 
 The main purpose of `canaper` is to perform these randomization tests. 
 
-`canaper` generates random communities using the [`vegan` package](https://CRAN.R-project.org/package=vegan). There are a large number of pre-defined randomization algorithms available in `vegan`^[31 as of `vegan` v2.6.2, though not all may be applicable.], as well as an option to provide a user-defined algorithm. Selecting the appropriate algorithm is not trivial, and can greatly influence results^[For a good review of randomization algorithms and their implications for analysis results, see @Strona2018]. For details about the pre-defined algorithms, see `vegan::commsim()`.
+`canaper` generates random communities using the [`vegan` package](https://CRAN.R-project.org/package=vegan). There are a large number of pre-defined randomization algorithms available in `vegan`^[31 as of `vegan` v2.6.4, though not all may be applicable.], as well as an option to provide a user-defined algorithm. Selecting the appropriate algorithm is not trivial, and can greatly influence results^[For a good review of randomization algorithms and their implications for analysis results, see @Strona2018]. For details about the pre-defined algorithms, see `vegan::commsim()`.
 
 This example also demonstrates one of the strengths of `canaper`: the ability to run randomizations in parallel^[For more information on how and when to use parallel computing in `canaper`, [see the "Parallel computing" vignette](https://docs.ropensci.org/canaper/articles/parallel.html)]. 
 This is by far the most time-consuming part of CANAPE, since we have to repeat the calculations many (e.g., hundreds or more) times across the randomized communities to obtain reliable results. Here, we set the number of iterations (`n_iterations`; i.e., the number of swaps used to produce each randomized community) fairly high because this community matrix is large and includes many zeros; thorough mixing by swapping many times is required to completely randomize the matrix. 
@@ -121,10 +116,11 @@ acacia_rand_res <- cpr_rand_test(
   n_reps = 20, n_iterations = 100000,
   tbl_out = TRUE
 )
-#> Warning in match_phylo_comm(phy = phy, comm = comm): Dropping tips from the tree because they are not present in the community data: 
+#> Warning: Abundance data detected. Results will be the same as if using presence/absence data (no abundance weighting is used).
+#> Warning: Dropping tips from the tree because they are not present in the community data: 
 #>  Pararchidendron_pruinosum, Paraserianthes_lophantha
 toc() # See how long it took
-#> 49.352 sec elapsed
+#> 70.204 sec elapsed
 
 # Switch back to sequential (non-parallel) mode
 plan(sequential)
@@ -136,25 +132,22 @@ Let's take a peek at the output.
 ```r
 acacia_rand_res
 #> # A tibble: 3,037 × 55
-#>    site   pd_obs pd_ra…¹ pd_ra…² pd_ob…³ pd_ob…⁴ pd_ob…⁵ pd_ob…⁶ pd_ob…⁷ pd_ob…⁸
-#>    <chr>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
-#>  1 -102… 0.0145   0.0207 0.00432 -1.46         1      19      20    0.05    0.95
-#>  2 -102… 0.0382   0.0522 0.00704 -1.99         0      20      20    0       1   
-#>  3 -102… 0.0378   0.0371 0.00535  0.130       12       8      20    0.6     0.4 
-#>  4 -102… 0.0570   0.0606 0.00758 -0.480        6      14      20    0.3     0.7 
-#>  5 -102… 0.0409   0.0423 0.00836 -0.176       11       9      20    0.55    0.45
-#>  6 -102… 0.00998  0.0102 0.00206 -0.0890      11       9      20    0.55    0.45
-#>  7 -102… 0.0187   0.0230 0.00378 -1.14         3      17      20    0.15    0.85
-#>  8 -102… 0.0434   0.0516 0.00862 -0.955        4      16      20    0.2     0.8 
-#>  9 -102… 0.0111   0.0104 0.00172  0.418       17       3      20    0.85    0.15
-#> 10 -102… 0.0903   0.0896 0.0114   0.0601      13       7      20    0.65    0.35
-#> # … with 3,027 more rows, 45 more variables: pd_alt_obs <dbl>,
-#> #   pd_alt_rand_mean <dbl>, pd_alt_rand_sd <dbl>, pd_alt_obs_z <dbl>,
-#> #   pd_alt_obs_c_upper <dbl>, pd_alt_obs_c_lower <dbl>, pd_alt_obs_q <dbl>,
-#> #   pd_alt_obs_p_upper <dbl>, pd_alt_obs_p_lower <dbl>, rpd_obs <dbl>,
-#> #   rpd_rand_mean <dbl>, rpd_rand_sd <dbl>, rpd_obs_z <dbl>,
-#> #   rpd_obs_c_upper <dbl>, rpd_obs_c_lower <dbl>, rpd_obs_q <dbl>,
-#> #   rpd_obs_p_upper <dbl>, rpd_obs_p_lower <dbl>, pe_obs <dbl>, …
+#>    site       pd_obs pd_ra…¹ pd_ra…² pd_ob…³ pd_ob…⁴ pd_ob…⁵ pd_ob…⁶ pd_ob…⁷ pd_ob…⁸ pd_al…⁹ pd_al…˟ pd_al…˟ pd_al…˟ pd_al…˟ pd_al…˟ pd_al…˟ pd_al…˟ pd_al…˟ rpd_obs rpd_r…˟ rpd_r…˟ rpd_o…˟ rpd_o…˟ rpd_o…˟ rpd_o…˟ rpd_o…˟ rpd_o…˟  pe_obs pe_ra…˟ pe_ra…˟ pe_ob…˟ pe_ob…˟ pe_ob…˟ pe_ob…˟ pe_ob…˟ pe_ob…˟
+#>    <chr>       <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
+#>  1 -1025000… 0.0145   0.0207 0.00432 -1.46         1      19      20    0.05    0.95  0.0355  0.0414 0.00779  -0.753       5      14      20    0.25    0.7    0.407   0.514  0.129   -0.827       4      16      20    0.2     0.8  2.47e-5 6.14e-5 5.92e-5  -0.619       3      17      20    0.15    0.85
+#>  2 -1025000… 0.0382   0.0522 0.00704 -1.99         0      20      20    0       1     0.0680  0.0883 0.00651  -3.10        0      20      20    0       1      0.561   0.595  0.0944  -0.358       9      11      20    0.45    0.55 1.44e-4 2.82e-4 1.86e-4  -0.738       5      15      20    0.25    0.75
+#>  3 -1025000… 0.0378   0.0371 0.00535  0.130       12       8      20    0.6     0.4   0.0572  0.0631 0.00797  -0.743       2      17      20    0.1     0.85   0.661   0.593  0.0941   0.724      16       4      20    0.8     0.2  1.71e-4 2.42e-4 1.62e-4  -0.439       7      13      20    0.35    0.65
+#>  4 -1025000… 0.0570   0.0606 0.00758 -0.480        6      14      20    0.3     0.7   0.0858  0.104  0.0105   -1.77        0      20      20    0       1      0.664   0.586  0.0913   0.863      17       3      20    0.85    0.15 5.30e-4 3.56e-4 2.33e-4   0.748      17       3      20    0.85    0.15
+#>  5 -1025000… 0.0409   0.0423 0.00836 -0.176       11       9      20    0.55    0.45  0.0542  0.0713 0.00904  -1.89        0      19      20    0       0.95   0.753   0.596  0.102    1.55       19       1      20    0.95    0.05 1.25e-4 2.20e-4 1.31e-4  -0.728       6      14      20    0.3     0.7 
+#>  6 -1025000… 0.00998  0.0102 0.00206 -0.0890      11       9      20    0.55    0.45  0.0276  0.0173 0.00742   1.39       18       2      20    0.9     0.1    0.361   0.695  0.337   -0.989       2      18      20    0.1     0.9  1.17e-5 3.86e-5 4.82e-5  -0.557       3      17      20    0.15    0.85
+#>  7 -1025000… 0.0187   0.0230 0.00378 -1.14         3      17      20    0.15    0.85  0.0325  0.0390 0.00820  -0.782       2      16      20    0.1     0.8    0.575   0.619  0.189   -0.231      11       9      20    0.55    0.45 5.20e-5 9.07e-5 6.56e-5  -0.589       5      15      20    0.25    0.75
+#>  8 -1025000… 0.0434   0.0516 0.00862 -0.955        4      16      20    0.2     0.8   0.0779  0.0956 0.00995  -1.78        1      19      20    0.05    0.95   0.557   0.544  0.100    0.125      12       8      20    0.6     0.4  4.32e-4 3.14e-4 1.24e-4   0.944      16       4      20    0.8     0.2 
+#>  9 -1025000… 0.0111   0.0104 0.00172  0.418       17       3      20    0.85    0.15  0.0168  0.0211 0.00715  -0.607       6      14      20    0.3     0.7    0.662   0.558  0.227    0.461      16       4      20    0.8     0.2  2.73e-5 1.94e-5 1.53e-5   0.521      17       3      20    0.85    0.15
+#> 10 -1025000… 0.0903   0.0896 0.0114   0.0601      13       7      20    0.65    0.35  0.115   0.143  0.00775  -3.51        0      20      20    0       1      0.783   0.629  0.0760   2.02       19       1      20    0.95    0.05 5.07e-4 5.76e-4 2.10e-4  -0.328      10      10      20    0.5     0.5 
+#> # … with 3,027 more rows, 18 more variables: pe_alt_obs <dbl>, pe_alt_rand_mean <dbl>, pe_alt_rand_sd <dbl>, pe_alt_obs_z <dbl>, pe_alt_obs_c_upper <dbl>, pe_alt_obs_c_lower <dbl>, pe_alt_obs_q <dbl>, pe_alt_obs_p_upper <dbl>, pe_alt_obs_p_lower <dbl>, rpe_obs <dbl>, rpe_rand_mean <dbl>,
+#> #   rpe_rand_sd <dbl>, rpe_obs_z <dbl>, rpe_obs_c_upper <dbl>, rpe_obs_c_lower <dbl>, rpe_obs_q <dbl>, rpe_obs_p_upper <dbl>, rpe_obs_p_lower <dbl>, and abbreviated variable names ¹​pd_rand_mean, ²​pd_rand_sd, ³​pd_obs_z, ⁴​pd_obs_c_upper, ⁵​pd_obs_c_lower, ⁶​pd_obs_q, ⁷​pd_obs_p_upper, ⁸​pd_obs_p_lower,
+#> #   ⁹​pd_alt_obs, ˟​pd_alt_rand_mean, ˟​pd_alt_rand_sd, ˟​pd_alt_obs_z, ˟​pd_alt_obs_c_upper, ˟​pd_alt_obs_c_lower, ˟​pd_alt_obs_q, ˟​pd_alt_obs_p_upper, ˟​pd_alt_obs_p_lower, ˟​rpd_rand_mean, ˟​rpd_rand_sd, ˟​rpd_obs_z, ˟​rpd_obs_c_upper, ˟​rpd_obs_c_lower, ˟​rpd_obs_q, ˟​rpd_obs_p_upper, ˟​rpd_obs_p_lower,
+#> #   ˟​pe_rand_mean, ˟​pe_rand_sd, ˟​pe_obs_z, ˟​pe_obs_c_upper, ˟​pe_obs_c_lower, ˟​pe_obs_q, ˟​pe_obs_p_upper, ˟​pe_obs_p_lower
 ```
 
 `cpr_rand_test()` produces **a lot** of columns. Here, `pd_obs` is the observed value of phylogenetic diversity (PD). Other columns starting with `pd` refer to aspects of the randomization: `pd_rand_mean` is the mean PD across the random communities, `pd_rand_sd` is the standard deviation of PD across the random communities, `pd_obs_z` is the standard effect size of PD, etc. 
