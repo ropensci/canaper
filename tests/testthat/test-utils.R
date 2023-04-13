@@ -3,9 +3,9 @@ test_that("counting higher values works", {
   expect_equal(count_higher(4, 1:10), 3L)
   expect_equal(count_higher(4, 1:10), 3)
   expect_equal(count_higher(4, c(1:10, NA)), 3)
-  expect_equal(count_higher(4, c(1:10, NA), na_rm = FALSE), NaN)
+  expect_equal(count_higher(4, c(1:10, NA), na_rm = FALSE), NA_integer_)
   expect_equal(count_higher(4, c(1:10, NaN)), 3)
-  expect_equal(count_higher(4, c(1:10, NaN), na_rm = FALSE), NaN)
+  expect_equal(count_higher(4, c(1:10, NaN), na_rm = FALSE), NA_integer_)
   expect_equal(count_higher(4, vector("numeric", 0)), NaN)
 })
 
@@ -14,9 +14,9 @@ test_that("counting lower values works", {
   expect_equal(count_lower(4, 1:10), 6L)
   expect_equal(count_lower(4, 1:10), 6)
   expect_equal(count_lower(4, c(1:10, NA)), 6)
-  expect_equal(count_lower(4, c(1:10, NA), na_rm = FALSE), NaN)
+  expect_equal(count_lower(4, c(1:10, NA), na_rm = FALSE), NA_integer_)
   expect_equal(count_lower(4, c(1:10, NaN)), 6)
-  expect_equal(count_lower(4, c(1:10, NaN), na_rm = FALSE), NaN)
+  expect_equal(count_lower(4, c(1:10, NaN), na_rm = FALSE), NA_integer_)
   expect_equal(count_lower(4, vector("numeric", 0)), NaN)
 })
 
