@@ -27,7 +27,7 @@ count_higher <- function(x, y, na_rm = TRUE) {
 
   # if comparison is zero length, return NA
   if (length(y) == 0) {
-    return(NaN)
+    return(NA_integer_)
   }
 
   sum((x > y))
@@ -62,7 +62,7 @@ count_lower <- function(x, y, na_rm = TRUE) {
 
   # if comparison is zero length, return NA
   if (length(y) == 0) {
-    return(NaN)
+    return(NA_integer_)
   }
 
   sum((x < y))
