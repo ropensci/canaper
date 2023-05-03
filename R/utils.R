@@ -25,6 +25,11 @@ count_higher <- function(x, y, na_rm = TRUE) {
   # remove any NAs before making comparison
   if (isTRUE(na_rm)) y <- y[!is.na(y)]
 
+  # or return NA_integer_ otherwise if y includes NA
+  if (!isTRUE(na_rm) && any(is.na(y))) {
+    return(NA_integer_)
+  }
+
   # if comparison is zero length, return NA
   if (length(y) == 0) {
     return(NA_integer_)
@@ -59,6 +64,11 @@ count_lower <- function(x, y, na_rm = TRUE) {
 
   # remove any NAs before making comparison
   if (isTRUE(na_rm)) y <- y[!is.na(y)]
+
+  # or return NA_integer_ otherwise if y includes NA
+  if (!isTRUE(na_rm) && any(is.na(y))) {
+    return(NA_integer_)
+  }
 
   # if comparison is zero length, return NA
   if (length(y) == 0) {
