@@ -1,3 +1,20 @@
+canaper 1.0.1
+===============
+
+### DOCUMENTATION
+
+Fix installation of dependencies when installing from r-universe repo (https://github.com/ropensci/canaper/commit/774d89f58af8c55dda178fff3d324b2e48b749fd)
+
+Add warning for abundance data, since CANAPE analysis in canaper treats it the same as presence-absence data. Thanks to an anonymous reviewer for the suggestion (https://github.com/ropensci/canaper/commit/143cadee62a9bf3c5256e3d92240c6243bf803e4)
+
+### BUG FIXES
+
+Fix internal functions `count_higher()` and `count_lower()` that did not distinguish between `NA` and `NA_integer_`. Thanks to @hadley (Hadley Wickham) (https://github.com/ropensci/canaper/commit/ff6012d6b817d3ba8765d8c8b009e2818da2ab9f)
+
+### OTHER
+
+Remove tidyverse from vignettes and Suggests. Thanks to @hadley for pointing this out. (https://github.com/ropensci/canaper/commit/49aa94b418ad9e85f30e6f751651386674a367d8)
+
 canaper 1.0.0
 ===============
 
