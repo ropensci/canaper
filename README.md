@@ -40,7 +40,13 @@ The development version can be installed from
 
 ``` r
 # r-universe
-install.packages("canaper", repos = "https://ropensci.r-universe.dev")
+options(repos = c(
+  ropensci = "https://ropensci.r-universe.dev/", 
+  CRAN = "https://cran.rstudio.com/"
+))
+install.packages("canaper", dep = TRUE)
+
+# OR
 
 # github (requires `remotes` or `devtools`)
 remotes::install_github("ropensci/canaper")
