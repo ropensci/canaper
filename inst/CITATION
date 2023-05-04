@@ -1,9 +1,9 @@
 citHeader("This is how you can cite canaper in publications (please replace the DOI below with the one matching the version in use; for more information, see the README at https://github.com/ropensci/canaper)")
 
-citEntry(
-  entry    = "Manual",
+bibentry(
+  bibtype  = "Manual",
   title    = "canaper: Categorical analysis of neo- and paleo-endemism in {R}",
-  author   = personList(as.person("Joel H. Nitta"),
+  author   = c(as.person("Joel H. Nitta"),
                      as.person("Wataru Iwasaki")
           ),
   year     = "2021",
