@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">canaper</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.1</span>
       </span>
     </div>
 
@@ -63,6 +63,22 @@
       <small>Source: <a href="https://github.com/ropensci/canaper/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.1" id="canaper-101">canaper 1.0.1<a class="anchor" aria-label="anchor" href="#canaper-101"></a></h2>
+<div class="section level4">
+<h4 id="documentation-1-0-1">DOCUMENTATION<a class="anchor" aria-label="anchor" href="#documentation-1-0-1"></a></h4>
+<p>Fix installation of dependencies when installing from r-universe repo (<a href="https://github.com/ropensci/canaper/commit/774d89f58af8c55dda178fff3d324b2e48b749fd" class="external-link uri">https://github.com/ropensci/canaper/commit/774d89f58af8c55dda178fff3d324b2e48b749fd</a>)</p>
+<p>Add warning for abundance data, since CANAPE analysis in canaper treats it the same as presence-absence data. Thanks to an anonymous reviewer for the suggestion (<a href="https://github.com/ropensci/canaper/commit/143cadee62a9bf3c5256e3d92240c6243bf803e4" class="external-link uri">https://github.com/ropensci/canaper/commit/143cadee62a9bf3c5256e3d92240c6243bf803e4</a>)</p>
+</div>
+<div class="section level4">
+<h4 id="bug-fixes-1-0-1">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-1-0-1"></a></h4>
+<p>Fix internal functions <code>count_higher()</code> and <code>count_lower()</code> that did not distinguish between <code>NA</code> and <code>NA_integer_</code>. Thanks to <a href="https://github.com/hadley" class="external-link">@hadley</a> (Hadley Wickham) (<a href="https://github.com/ropensci/canaper/commit/ff6012d6b817d3ba8765d8c8b009e2818da2ab9f" class="external-link uri">https://github.com/ropensci/canaper/commit/ff6012d6b817d3ba8765d8c8b009e2818da2ab9f</a>)</p>
+</div>
+<div class="section level4">
+<h4 id="other-1-0-1">OTHER<a class="anchor" aria-label="anchor" href="#other-1-0-1"></a></h4>
+<p>Remove tidyverse from vignettes and Suggests. Thanks to <a href="https://github.com/hadley" class="external-link">@hadley</a> for pointing this out. (<a href="https://github.com/ropensci/canaper/commit/49aa94b418ad9e85f30e6f751651386674a367d8" class="external-link uri">https://github.com/ropensci/canaper/commit/49aa94b418ad9e85f30e6f751651386674a367d8</a>)</p>
+</div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.0" id="canaper-100">canaper 1.0.0<small>2022-10-04</small><a class="anchor" aria-label="anchor" href="#canaper-100"></a></h2>
 <div class="section level4">
