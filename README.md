@@ -28,14 +28,14 @@ paleo-endemism (CANAPE)](https://doi.org/10.1038/ncomms5473) in **R**.
 ## Installation
 
 The stable version can be installed from
-[CRAN](https://cran.r-project.org/web/packages/canaper/index.html):
+[CRAN](https://CRAN.R-project.org/package=canaper):
 
 ``` r
 install.packages("canaper")
 ```
 
 The development version can be installed from
-[r-universe](https://ropensci.r-universe.dev/ui#package:canaper) or
+[r-universe](http://ropensci.r-universe.dev/ui/#package:canaper) or
 [github](https://github.com/ropensci/canaper/):
 
 ``` r

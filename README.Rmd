@@ -37,13 +37,16 @@ The goal of `canaper` is to enable [categorical analysis of neo- and paleo-endem
 
 ## Installation
 
-The stable version can be installed from [CRAN](https://cran.r-project.org/web/packages/canaper/index.html):
+The stable version can be installed from
+[CRAN](https://CRAN.R-project.org/package=canaper):
 
 ```r
 install.packages("canaper")
 ```
 
-The development version can be installed from [r-universe](https://ropensci.r-universe.dev/ui#package:canaper) or [github](https://github.com/ropensci/canaper/):
+The development version can be installed from
+[r-universe](http://ropensci.r-universe.dev/ui/#package:canaper) or
+[github](https://github.com/ropensci/canaper/):
 
 ``` r
 # r-universe
