@@ -88,6 +88,17 @@
 #' @param tbl_out Logical vector of length 1; should the output be returned as
 #' a tibble? If `FALSE`, will return a dataframe. Defaults to `TRUE` if `comm`
 #' is a tibble.
+#' @param save_rand Character vector of length 1 or NULL; optional file path
+#'   where randomization results should be saved as a parquet file. If provided,
+#'   randomization results will be written to this path after computation,
+#'   allowing reuse in future sessions. Requires the `arrow` package. Default
+#'   is NULL (no saving).
+#' @param load_rand Character vector of length 1 or NULL; optional file path
+#'   to a parquet file containing previously saved randomization results. If
+#'   provided, randomization will be skipped and results loaded from this file
+#'   instead. The loaded results must match the input community matrix (same
+#'   sites) and requested metrics. Requires the `arrow` package. Default is
+#'   NULL (compute randomizations normally).
 #' @param quiet Logical vector of length 1; if `TRUE`, suppress all warnings and
 #' messages that would be emitted by this function.
 #'
@@ -143,15 +154,50 @@
 #'   phylocom$comm, phylocom$phy,
 #'   null_model = "curveball", tbl_out = TRUE, n_reps = 10
 #' )
+#'
+#' \dontshow{if (requireNamespace("arrow", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf} # nolint
+#' # Save randomizations to avoid expensive recomputation
+#' temp_file <- tempfile(fileext = ".parquet")
+#' results <- cpr_rand_test(
+#'   phylocom$comm, phylocom$phy,
+#'   null_model = "curveball",
+#'   metrics = "pd",
+#'   n_reps = 10,
+#'   save_rand = temp_file
+#' )
+#'
+#' # Load previously saved randomizations
+#' results_loaded <- cpr_rand_test(
+#'   phylocom$comm, phylocom$phy,
+#'   null_model = "curveball",
+#'   metrics = "pd",
+#'   load_rand = temp_file
+#' )
+#'
+#' # Results are identical
+#' all.equal(results, results_loaded)
+#'
+#' # Clean up
+#' unlink(temp_file)
+#' \dontshow{\}) # examplesIf} # nolint
 #' }
 #' @srrstats {G1.4} uses roxygen
 #'
 #' @export
-cpr_rand_test <- function(comm, phy, null_model,
-                          n_reps = 100, n_iterations = 10000, thin = 1,
-                          metrics = c("pd", "rpd", "pe", "rpe"),
-                          site_col = "site", tbl_out = tibble::is_tibble(comm),
-                          quiet = FALSE) {
+cpr_rand_test <- function(
+  comm,
+  phy,
+  null_model,
+  n_reps = 100,
+  n_iterations = 10000,
+  thin = 1,
+  metrics = c("pd", "rpd", "pe", "rpe"),
+  site_col = "site",
+  tbl_out = tibble::is_tibble(comm),
+  save_rand = NULL,
+  load_rand = NULL,
+  quiet = FALSE
+) {
   # First check `quiet` flag
   assertthat::assert_that(assertthat::is.flag(quiet))
 
@@ -203,6 +249,33 @@ cpr_rand_test <- function(comm, phy, null_model,
   )
   # - tbl_out
   assertthat::assert_that(assertthat::is.flag(tbl_out))
+  # - save_rand
+  if (!is.null(save_rand)) {
+    assertthat::assert_that(
+      assertthat::is.string(save_rand),
+      msg = "'save_rand' must be a character vector of length 1 or NULL"
+    )
+  }
+  # - load_rand
+  if (!is.null(load_rand)) {
+    assertthat::assert_that(
+      assertthat::is.string(load_rand),
+      msg = "'load_rand' must be a character vector of length 1 or NULL"
+    )
+    assertthat::assert_that(
+      file.exists(load_rand),
+      msg = paste0("File specified in 'load_rand' not found: ", load_rand)
+    )
+  }
+  # - Check that save_rand and load_rand are not both provided
+  if (!is.null(save_rand) && !is.null(load_rand)) {
+    stop(
+      "Cannot specify both 'save_rand' and 'load_rand'. ",
+      "Use 'load_rand' to load existing randomizations, ",
+      "or 'save_rand' to save new randomizations.",
+      call. = FALSE
+    )
+  }
   # Check input: `comm` ----
   #' @srrstats {UL1.1} assert that all input data is of the expected form
   assertthat::assert_that(
@@ -266,7 +339,9 @@ cpr_rand_test <- function(comm, phy, null_model,
   #' @srrstats {G2.15, UL1.1} don't assume non-missingness
   assertthat::assert_that(
     assertr::assert(
-      comm, assertr::not_na, dplyr::everything(),
+      comm,
+      assertr::not_na,
+      dplyr::everything(),
       success_fun = assertr::success_logical,
       error_fun = assertr::error_logical
     ),
@@ -330,7 +405,8 @@ cpr_rand_test <- function(comm, phy, null_model,
   if (
     percent_present < 0.05 &&
       n_reps_input == 100 &&
-      n_iterations_input == 10000 && !quiet
+      n_iterations_input == 10000 &&
+      !quiet
   ) {
     # nolint
     warning(
@@ -402,8 +478,14 @@ cpr_rand_test <- function(comm, phy, null_model,
   # Make alternative tree with equal branch lengths
   phy_alt <- phy
   # convert **non-zero** branch lengths to same value (1)
-  non_zero_branches <- purrr::map_lgl(phy_alt$edge.length, ~ !isTRUE(all.equal(., 0))) # nolint
-  phy_alt$edge.length[non_zero_branches] <- rep(x = 1, times = length(phy_alt$edge.length[non_zero_branches])) # nolint
+  non_zero_branches <- purrr::map_lgl(
+    phy_alt$edge.length,
+    ~ !isTRUE(all.equal(., 0))
+  ) # nolint
+  phy_alt$edge.length[non_zero_branches] <- rep(
+    x = 1,
+    times = length(phy_alt$edge.length[non_zero_branches])
+  ) # nolint
   # rescale so total phy length is 1
   phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length) # nolint
   # rescale original phy so total length is 1
@@ -429,23 +511,100 @@ cpr_rand_test <- function(comm, phy, null_model,
     msg = "alternative phylogeny not rescaled to total length 1"
   )
   # Calculate biodiversity metrics ----
-  ## Loop over random communities
-  pb <- progressr::progressor(steps = n_reps) # Set up a progress bar
-  random_vals <-
-    future.apply::future_lapply(
-      1:n_reps,
-      function(x) {
-        pb()
-        calc_biodiv_random(
-          comm = comm, phy = phy, phy_alt = phy_alt,
-          null_model = null_model,
-          n_iterations = n_iterations,
-          thin = thin,
-          metrics = metrics
-        )
-      },
-      future.seed = TRUE
+  ## Load or generate random community values
+  if (!is.null(load_rand)) {
+    # Load randomization results from parquet file
+    if (!isTRUE(quiet)) {
+      message("Loading randomization results from: ", load_rand)
+    }
+    rand_df <- cpr_read_rand_parquet(load_rand, as_tibble = FALSE)
+
+    # Validate loaded data matches expected structure
+    sites_in_file <- unique(rand_df$site)
+    assertthat::assert_that(
+      length(sites_in_file) == nrow(comm),
+      msg = paste0(
+        "Number of sites in loaded file (",
+        length(sites_in_file),
+        ") ",
+        "does not match number of sites in comm (",
+        nrow(comm),
+        ")"
+      )
     )
+    assertthat::assert_that(
+      all(sort(sites_in_file) == sort(rownames(comm))),
+      msg = "Site names in loaded file do not match site names in comm"
+    )
+
+    # Check that requested metrics are available
+    available_metrics <- setdiff(colnames(rand_df), c("site", "replicate"))
+    missing_metrics <- setdiff(metrics, available_metrics)
+    if (length(missing_metrics) > 0) {
+      stop(
+        "Requested metrics not found in loaded file: ",
+        paste(missing_metrics, collapse = ", "),
+        "\nAvailable metrics: ",
+        paste(available_metrics, collapse = ", "),
+        call. = FALSE
+      )
+    }
+
+    # Get number of replicates from loaded data
+    n_reps_loaded <- max(rand_df$replicate)
+    if (!isTRUE(quiet) && n_reps_loaded != n_reps) {
+      message(
+        "Note: Using ",
+        n_reps_loaded,
+        " replicates from loaded file ",
+        "(n_reps parameter = ",
+        n_reps,
+        " is ignored)"
+      )
+    }
+    n_reps <- n_reps_loaded
+
+    # Convert parquet data to list format
+    random_vals <- parquet_to_rand_list(
+      rand_df,
+      sites = rownames(comm),
+      n_reps = n_reps
+    )
+  } else {
+    # Generate random community values
+    pb <- progressr::progressor(steps = n_reps) # Set up a progress bar
+    random_vals <-
+      future.apply::future_lapply(
+        1:n_reps,
+        function(x) {
+          pb()
+          calc_biodiv_random(
+            comm = comm,
+            phy = phy,
+            phy_alt = phy_alt,
+            null_model = null_model,
+            n_iterations = n_iterations,
+            thin = thin,
+            metrics = metrics
+          )
+        },
+        future.seed = TRUE
+      )
+
+    # Save randomization results if requested
+    if (!is.null(save_rand)) {
+      if (!isTRUE(quiet)) {
+        message("Saving randomization results to: ", save_rand)
+      }
+      cpr_write_rand_parquet(
+        rand_results = random_vals,
+        sites = rownames(comm),
+        path = save_rand,
+        compression = "zstd"
+      )
+    }
+  }
+
   # Calculate biodiversity metrics for observed community
   # - set up null vectors first
   ses_pd <- NULL
@@ -460,7 +619,9 @@ cpr_rand_test <- function(comm, phy, null_model,
     ses_pd <- get_ses(random_vals, pd_obs, "pd")
   }
   if ("rpd" %in% metrics) {
-    if (!exists("pd_obs")) pd_obs <- phyloregion::PD(comm_sparse, phy)
+    if (!exists("pd_obs")) {
+      pd_obs <- phyloregion::PD(comm_sparse, phy)
+    }
     pd_alt_obs <- phyloregion::PD(comm_sparse, phy_alt)
     ses_pd_alt <- get_ses(random_vals, pd_alt_obs, "pd_alt")
     rpd_obs <- pd_obs / pd_alt_obs
@@ -476,7 +637,8 @@ cpr_rand_test <- function(comm, phy, null_model,
         phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
     }
     pe_alt_obs <- phyloregion::phylo_endemism(
-      comm_sparse, phy_alt,
+      comm_sparse,
+      phy_alt,
       weighted = TRUE
     )
     ses_pe_alt <- get_ses(random_vals, pe_alt_obs, "pe_alt")
@@ -500,7 +662,9 @@ cpr_rand_test <- function(comm, phy, null_model,
     results_tbl <- tibble::rownames_to_column(results_df, site_col)
     results_tbl <- tibble::as_tibble(results_tbl)
     results_tbl <- dplyr::select(
-      results_tbl, dplyr::all_of(site_col), dplyr::everything()
+      results_tbl,
+      dplyr::all_of(site_col),
+      dplyr::everything()
     )
     return(results_tbl)
   } else {

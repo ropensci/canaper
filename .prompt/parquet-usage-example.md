@@ -1,7 +1,7 @@
 # Parquet I/O for Randomizations - Usage Example
 
-This document demonstrates how to use the new `cpr_write_rand_parquet()` and
-`cpr_read_rand_parquet()` functions to save and load randomization results.
+This document demonstrates how to use parquet I/O functionality to save and
+load randomization results in `cpr_rand_test()`.
 
 ## Background
 
@@ -15,20 +15,10 @@ allow you to:
 
 ## Basic Workflow
 
-### Step 1: Note - Current Limitation
+### Integrated Usage (Recommended)
 
-**Important**: The current MVP implementation provides low-level functions for
-writing and reading randomization data. These functions work with the internal
-randomization structure and are designed for future integration into
-`cpr_rand_test()`.
-
-For now, these functions are primarily useful for:
-- Advanced users who want to manually save/load intermediate results
-- Future development of integrated workflows
-
-### Step 2: Potential Future Integration
-
-In a future version, you might be able to use these functions like this:
+The easiest way to use parquet I/O is through the `save_rand` and `load_rand`
+parameters in `cpr_rand_test()`:
 
 ```r
 library(canaper)
@@ -43,29 +33,44 @@ results <- cpr_rand_test(
   phylocom$phy,
   null_model = "swap",
   n_reps = 1000,
-  save_rand = "my_randomizations.parquet"  # Future feature
+  save_rand = "my_randomizations.parquet"
 )
 
-# Later, in a new session, resume analysis:
+# Later, in a new session, load previously saved randomizations
 results <- cpr_rand_test(
   phylocom$comm,
   phylocom$phy,
   null_model = "swap",
-  load_rand = "my_randomizations.parquet"  # Future feature
+  load_rand = "my_randomizations.parquet"
 )
 ```
 
-### Current Usage (Advanced)
+**Note**: When using `load_rand`, the `null_model` and `n_reps` parameters
+are ignored since the randomizations are loaded from the file. However,
+`null_model` is still required syntactically.
 
-Currently, these functions can be used to work with the internal randomization
-structure if you need to save/load intermediate results:
+### Advanced Usage (Low-level Functions)
+
+For advanced users who need more control, the low-level functions
+`cpr_write_rand_parquet()` and `cpr_read_rand_parquet()` are also available
+for working with the internal randomization structure:
 
 ```r
-# The functions are available but require working with internal structures
+# The functions are available for working with internal structures
 # See function documentation for details:
 ?cpr_write_rand_parquet
 ?cpr_read_rand_parquet
 ```
+
+## Validation and Error Handling
+
+The integration includes comprehensive validation:
+
+- **Mutual exclusivity**: Cannot specify both `save_rand` and `load_rand`
+- **File existence**: `load_rand` checks that the specified file exists
+- **Site name matching**: Loaded randomizations must match the sites in `comm`
+- **Metric availability**: Loaded file must contain all requested metrics
+- **Arrow package**: Clear error message if `arrow` is not installed
 
 ## Data Format
 
@@ -88,7 +93,7 @@ Example structure:
 
 ## Advantages of Parquet Format
 
-- **Efficient storage**: Compressed format saves disk space
+- **Efficient storage**: Compressed format saves disk space (zstd compression)
 - **Fast I/O**: Optimized for reading/writing tabular data
 - **Cross-platform**: Works on Windows, Mac, Linux
 - **Language-agnostic**: Can be read by Python, R, Julia, etc.
@@ -102,16 +107,15 @@ The parquet functionality requires the `arrow` package:
 install.packages("arrow")
 ```
 
-If `arrow` is not installed, the functions will provide a clear error message.
+If `arrow` is not installed, the functions will provide a clear error message
+with installation instructions.
 
 ## Future Enhancements
 
 Potential future improvements could include:
 
-1. Direct integration with `cpr_rand_test()` via `save_rand` and `load_rand`
-   parameters
-2. Support for partitioned datasets (by site or replicate)
-3. Metadata storage (null_model, n_iterations, seed, timestamp)
-4. Progress indicators for large files
-5. Compression level options
-6. Cloud storage backend support (S3, GCS, etc.)
+1. Support for partitioned datasets (by site or replicate)
+2. Metadata storage (null_model, n_iterations, seed, timestamp)
+3. Progress indicators for large files
+4. Compression level options
+5. Cloud storage backend support (S3, GCS, etc.)

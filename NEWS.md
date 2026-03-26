@@ -6,6 +6,8 @@ canaper 1.0.1.9000
 * Add `cpr_write_rand_parquet()` and `cpr_read_rand_parquet()` for saving
   and loading randomization results to/from parquet files. This enables
   reusing computationally expensive randomizations across sessions.
+  `cpr_rand_test()` now supports `save_rand` and `load_rand` parameters to
+  save/load randomization results directly from the analysis function.
   (https://github.com/ropensci/canaper/issues/XXX)
 
 canaper 1.0.1

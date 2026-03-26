@@ -14,6 +14,8 @@ cpr_rand_test(
   metrics = c("pd", "rpd", "pe", "rpe"),
   site_col = "site",
   tbl_out = tibble::is_tibble(comm),
+  save_rand = NULL,
+  load_rand = NULL,
   quiet = FALSE
 )
 }
@@ -52,6 +54,19 @@ contains the site names; only used if \code{comm} is a tibble (object of class
 \item{tbl_out}{Logical vector of length 1; should the output be returned as
 a tibble? If \code{FALSE}, will return a dataframe. Defaults to \code{TRUE} if \code{comm}
 is a tibble.}
+
+\item{save_rand}{Character vector of length 1 or NULL; optional file path
+where randomization results should be saved as a parquet file. If provided,
+randomization results will be written to this path after computation,
+allowing reuse in future sessions. Requires the \code{arrow} package. Default
+is NULL (no saving).}
+
+\item{load_rand}{Character vector of length 1 or NULL; optional file path
+to a parquet file containing previously saved randomization results. If
+provided, randomization will be skipped and results loaded from this file
+instead. The loaded results must match the input community matrix (same
+sites) and requested metrics. Requires the \code{arrow} package. Default is
+NULL (compute randomizations normally).}
 
 \item{quiet}{Logical vector of length 1; if \code{TRUE}, suppress all warnings and
 messages that would be emitted by this function.}
@@ -154,6 +169,32 @@ cpr_rand_test(
   phylocom$comm, phylocom$phy,
   null_model = "curveball", tbl_out = TRUE, n_reps = 10
 )
+
+\dontshow{if (requireNamespace("arrow", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf} # nolint
+# Save randomizations to avoid expensive recomputation
+temp_file <- tempfile(fileext = ".parquet")
+results <- cpr_rand_test(
+  phylocom$comm, phylocom$phy,
+  null_model = "curveball",
+  metrics = "pd",
+  n_reps = 10,
+  save_rand = temp_file
+)
+
+# Load previously saved randomizations
+results_loaded <- cpr_rand_test(
+  phylocom$comm, phylocom$phy,
+  null_model = "curveball",
+  metrics = "pd",
+  load_rand = temp_file
+)
+
+# Results are identical
+all.equal(results, results_loaded)
+
+# Clean up
+unlink(temp_file)
+\dontshow{\}) # examplesIf} # nolint
 }
 }
 \references{
