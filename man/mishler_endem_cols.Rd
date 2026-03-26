@@ -37,13 +37,13 @@ Australian Acacia. Nat Commun, 5: 4473. \doi{10.1038/ncomms5473}
 }
 \seealso{
 Other colors: 
+\code{\link{cpr_endem_cols}},
 \code{\link{cpr_endem_cols_2}},
 \code{\link{cpr_endem_cols_3}},
 \code{\link{cpr_endem_cols_4}},
-\code{\link{cpr_endem_cols}},
 \code{\link{cpr_make_pal}()},
-\code{\link{cpr_signif_cols_2}},
 \code{\link{cpr_signif_cols}},
+\code{\link{cpr_signif_cols_2}},
 \code{\link{mishler_signif_cols}}
 }
 \concept{colors}

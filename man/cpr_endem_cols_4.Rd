@@ -31,12 +31,12 @@ scales::show_col(cpr_endem_cols_4)
 }
 \seealso{
 Other colors: 
+\code{\link{cpr_endem_cols}},
 \code{\link{cpr_endem_cols_2}},
 \code{\link{cpr_endem_cols_3}},
-\code{\link{cpr_endem_cols}},
 \code{\link{cpr_make_pal}()},
-\code{\link{cpr_signif_cols_2}},
 \code{\link{cpr_signif_cols}},
+\code{\link{cpr_signif_cols_2}},
 \code{\link{mishler_endem_cols}},
 \code{\link{mishler_signif_cols}}
 }

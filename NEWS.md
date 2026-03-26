@@ -1,3 +1,13 @@
+canaper 1.0.1.9000
+==================
+
+### NEW FEATURES
+
+* Add `cpr_write_rand_parquet()` and `cpr_read_rand_parquet()` for saving
+  and loading randomization results to/from parquet files. This enables
+  reusing computationally expensive randomizations across sessions.
+  (https://github.com/ropensci/canaper/issues/XXX)
+
 canaper 1.0.1
 ===============
 

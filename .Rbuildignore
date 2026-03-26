@@ -20,3 +20,4 @@
 ^vignettes/canape\.Rmd\.orig$
 ^vignettes/how-many-rand\.Rmd\.orig$
 ^vignettes/parallel\.Rmd\.orig$
+^\.prompt$
