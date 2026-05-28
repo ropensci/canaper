@@ -81,13 +81,15 @@ test_that("Random seeds work", {
     seed = 456
   )
   expect_equal(
-    res_1$similarity, res_2$similarity
+    res_1$similarity,
+    res_2$similarity
   )
   # Different seeds produce different output
   expect_false(
     isTRUE(
       all.equal(
-        res_1$similarity, res_3$similarity
+        res_1$similarity,
+        res_3$similarity
       )
     )
   )
@@ -100,8 +102,10 @@ test_that("Custom models work", {
   }
   cs_object <- vegan::commsim(
     "r00_model",
-    fun = randomizer, binary = TRUE,
-    isSeq = FALSE, mode = "integer"
+    fun = randomizer,
+    binary = TRUE,
+    isSeq = FALSE,
+    mode = "integer"
   )
   expect_error(
     cpr_iter_sim(

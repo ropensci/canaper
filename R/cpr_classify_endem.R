@@ -48,9 +48,11 @@ cpr_classify_endem <- function(df) {
   assertthat::assert_that(
     isTRUE(all(
       c(
-        "pe_obs_p_upper", "pe_alt_obs_p_upper",
+        "pe_obs_p_upper",
+        "pe_alt_obs_p_upper",
         "rpe_obs_p_upper"
-      ) %in% colnames(df)
+      ) %in%
+        colnames(df)
     )),
     msg = "'df' must include the following columns: 'pe_obs_p_upper', 'pe_alt_obs_p_upper', 'rpe_obs_p_upper'" # nolint
   )
@@ -91,11 +93,20 @@ cpr_classify_endem <- function(df) {
     #' @srrstats {G3.0} use appropriate tolerances for approximate equality
     #' (see utils.R)
     endem_type = dplyr::case_when(
-      is.na(pe_obs_p_upper) | is.na(pe_alt_obs_p_upper) | is.na(rpe_obs_p_upper) | is.na(rpe_obs_p_lower) ~ NA_character_, # nolint
-      (pe_obs_p_upper %greater% 0.95 | pe_alt_obs_p_upper %greater% 0.95) & rpe_obs_p_upper %greater% 0.975 ~ "paleo", # nolint
-      (pe_obs_p_upper %greater% 0.95 | pe_alt_obs_p_upper %greater% 0.95) & rpe_obs_p_lower %greater% 0.975 ~ "neo", # nolint
-      pe_obs_p_upper %greater% 0.99 & pe_alt_obs_p_upper %greater% 0.99 ~ "super", # nolint
-      pe_obs_p_upper %greater% 0.95 | pe_alt_obs_p_upper %greater% 0.95 ~ "mixed", # nolint
+      is.na(pe_obs_p_upper) |
+        is.na(pe_alt_obs_p_upper) |
+        is.na(rpe_obs_p_upper) |
+        is.na(rpe_obs_p_lower) ~ NA_character_, # nolint
+      (pe_obs_p_upper %greater% 0.95 | pe_alt_obs_p_upper %greater% 0.95) &
+        rpe_obs_p_upper %greater% 0.975 ~ "paleo", # nolint
+      (pe_obs_p_upper %greater% 0.95 | pe_alt_obs_p_upper %greater% 0.95) &
+        rpe_obs_p_lower %greater% 0.975 ~ "neo", # nolint
+      pe_obs_p_upper %greater%
+        0.99 &
+        pe_alt_obs_p_upper %greater% 0.99 ~ "super", # nolint
+      pe_obs_p_upper %greater%
+        0.95 |
+        pe_alt_obs_p_upper %greater% 0.95 ~ "mixed", # nolint
       TRUE ~ "not significant"
     )
   )

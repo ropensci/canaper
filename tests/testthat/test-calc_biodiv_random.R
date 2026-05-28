@@ -17,11 +17,19 @@ test_that("Random seeds work", {
   # Should be able to pass seed as an argument
   set.seed(42)
   res3 <- calc_biodiv_random(
-    comm, phy, phy_alt, "curveball", 100L,
+    comm,
+    phy,
+    phy_alt,
+    "curveball",
+    100L,
     seed = 12345
   )
   res4 <- calc_biodiv_random(
-    comm, phy, phy_alt, "curveball", 100L,
+    comm,
+    phy,
+    phy_alt,
+    "curveball",
+    100L,
     seed = 67890
   )
   # Different seeds should give different results
@@ -89,31 +97,59 @@ test_that("Output is formatted as expected", {
 })
 
 test_that("Selected metric shows up in output", {
-  expect_named(calc_biodiv_random(
-    comm, phy, phy_alt, "swap", 10L,
-    metrics = "pd"
-  ), "pd")
-  expect_named(calc_biodiv_random(
-    comm, phy, phy_alt, "swap", 10L,
-    metrics = "pe"
-  ), "pe")
-  expect_named(calc_biodiv_random(
-    comm, phy, phy_alt, "swap", 10L,
-    metrics = "rpd"
-  ),
-  c("pd", "pd_alt", "rpd"),
-  ignore.order = TRUE
-  )
-  expect_named(calc_biodiv_random(
-    comm, phy, phy_alt, "swap", 10L,
-    metrics = "rpe"
-  ),
-  c("pe", "pe_alt", "rpe"),
-  ignore.order = TRUE
+  expect_named(
+    calc_biodiv_random(
+      comm,
+      phy,
+      phy_alt,
+      "swap",
+      10L,
+      metrics = "pd"
+    ),
+    "pd"
   )
   expect_named(
     calc_biodiv_random(
-      comm, phy, phy_alt, "swap", 10L,
+      comm,
+      phy,
+      phy_alt,
+      "swap",
+      10L,
+      metrics = "pe"
+    ),
+    "pe"
+  )
+  expect_named(
+    calc_biodiv_random(
+      comm,
+      phy,
+      phy_alt,
+      "swap",
+      10L,
+      metrics = "rpd"
+    ),
+    c("pd", "pd_alt", "rpd"),
+    ignore.order = TRUE
+  )
+  expect_named(
+    calc_biodiv_random(
+      comm,
+      phy,
+      phy_alt,
+      "swap",
+      10L,
+      metrics = "rpe"
+    ),
+    c("pe", "pe_alt", "rpe"),
+    ignore.order = TRUE
+  )
+  expect_named(
+    calc_biodiv_random(
+      comm,
+      phy,
+      phy_alt,
+      "swap",
+      10L,
       metrics = c("rpd", "rpe")
     ),
     c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe"),
@@ -121,7 +157,11 @@ test_that("Selected metric shows up in output", {
   )
   expect_named(
     calc_biodiv_random(
-      comm, phy, phy_alt, "swap", 10L,
+      comm,
+      phy,
+      phy_alt,
+      "swap",
+      10L,
       metrics = c("pd", "pe")
     ),
     c("pd", "pe"),
@@ -129,7 +169,11 @@ test_that("Selected metric shows up in output", {
   )
   expect_named(
     calc_biodiv_random(
-      comm, phy, phy_alt, "swap", 10L,
+      comm,
+      phy,
+      phy_alt,
+      "swap",
+      10L,
       metrics = c("pd", "pe", "pd_alt")
     ),
     c("pd", "pe", "pd_alt"),

@@ -147,11 +147,18 @@
 #' @srrstats {G1.4} uses roxygen
 #'
 #' @export
-cpr_rand_test <- function(comm, phy, null_model,
-                          n_reps = 100, n_iterations = 10000, thin = 1,
-                          metrics = c("pd", "rpd", "pe", "rpe"),
-                          site_col = "site", tbl_out = tibble::is_tibble(comm),
-                          quiet = FALSE) {
+cpr_rand_test <- function(
+  comm,
+  phy,
+  null_model,
+  n_reps = 100,
+  n_iterations = 10000,
+  thin = 1,
+  metrics = c("pd", "rpd", "pe", "rpe"),
+  site_col = "site",
+  tbl_out = tibble::is_tibble(comm),
+  quiet = FALSE
+) {
   # First check `quiet` flag
   assertthat::assert_that(assertthat::is.flag(quiet))
 
@@ -266,7 +273,9 @@ cpr_rand_test <- function(comm, phy, null_model,
   #' @srrstats {G2.15, UL1.1} don't assume non-missingness
   assertthat::assert_that(
     assertr::assert(
-      comm, assertr::not_na, dplyr::everything(),
+      comm,
+      assertr::not_na,
+      dplyr::everything(),
       success_fun = assertr::success_logical,
       error_fun = assertr::error_logical
     ),
@@ -330,7 +339,8 @@ cpr_rand_test <- function(comm, phy, null_model,
   if (
     percent_present < 0.05 &&
       n_reps_input == 100 &&
-      n_iterations_input == 10000 && !quiet
+      n_iterations_input == 10000 &&
+      !quiet
   ) {
     # nolint
     warning(
@@ -402,8 +412,14 @@ cpr_rand_test <- function(comm, phy, null_model,
   # Make alternative tree with equal branch lengths
   phy_alt <- phy
   # convert **non-zero** branch lengths to same value (1)
-  non_zero_branches <- purrr::map_lgl(phy_alt$edge.length, ~ !isTRUE(all.equal(., 0))) # nolint
-  phy_alt$edge.length[non_zero_branches] <- rep(x = 1, times = length(phy_alt$edge.length[non_zero_branches])) # nolint
+  non_zero_branches <- purrr::map_lgl(
+    phy_alt$edge.length,
+    ~ !isTRUE(all.equal(., 0))
+  ) # nolint
+  phy_alt$edge.length[non_zero_branches] <- rep(
+    x = 1,
+    times = length(phy_alt$edge.length[non_zero_branches])
+  ) # nolint
   # rescale so total phy length is 1
   phy_alt$edge.length <- phy_alt$edge.length / sum(phy_alt$edge.length) # nolint
   # rescale original phy so total length is 1
@@ -437,7 +453,9 @@ cpr_rand_test <- function(comm, phy, null_model,
       function(x) {
         pb()
         calc_biodiv_random(
-          comm = comm, phy = phy, phy_alt = phy_alt,
+          comm = comm,
+          phy = phy,
+          phy_alt = phy_alt,
           null_model = null_model,
           n_iterations = n_iterations,
           thin = thin,
@@ -460,7 +478,9 @@ cpr_rand_test <- function(comm, phy, null_model,
     ses_pd <- get_ses(random_vals, pd_obs, "pd")
   }
   if ("rpd" %in% metrics) {
-    if (!exists("pd_obs")) pd_obs <- phyloregion::PD(comm_sparse, phy)
+    if (!exists("pd_obs")) {
+      pd_obs <- phyloregion::PD(comm_sparse, phy)
+    }
     pd_alt_obs <- phyloregion::PD(comm_sparse, phy_alt)
     ses_pd_alt <- get_ses(random_vals, pd_alt_obs, "pd_alt")
     rpd_obs <- pd_obs / pd_alt_obs
@@ -476,7 +496,8 @@ cpr_rand_test <- function(comm, phy, null_model,
         phyloregion::phylo_endemism(comm_sparse, phy, weighted = TRUE)
     }
     pe_alt_obs <- phyloregion::phylo_endemism(
-      comm_sparse, phy_alt,
+      comm_sparse,
+      phy_alt,
       weighted = TRUE
     )
     ses_pe_alt <- get_ses(random_vals, pe_alt_obs, "pe_alt")
@@ -500,7 +521,9 @@ cpr_rand_test <- function(comm, phy, null_model,
     results_tbl <- tibble::rownames_to_column(results_df, site_col)
     results_tbl <- tibble::as_tibble(results_tbl)
     results_tbl <- dplyr::select(
-      results_tbl, dplyr::all_of(site_col), dplyr::everything()
+      results_tbl,
+      dplyr::all_of(site_col),
+      dplyr::everything()
     )
     return(results_tbl)
   } else {

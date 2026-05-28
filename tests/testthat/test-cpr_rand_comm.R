@@ -61,11 +61,15 @@ test_that("Different seeds produce different random communities", {
   rand_comm_2 <- cpr_rand_comm_intern(phylocom$comm, "curveball", 100)
   expect_false(isTRUE(all.equal(rand_comm_1, rand_comm_2)))
   rand_comm_3 <- cpr_rand_comm_intern(
-    phylocom$comm, "curveball", 100,
+    phylocom$comm,
+    "curveball",
+    100,
     seed = 2020
   )
   rand_comm_4 <- cpr_rand_comm_intern(
-    phylocom$comm, "curveball", 100,
+    phylocom$comm,
+    "curveball",
+    100,
     seed = 2121
   )
   expect_false(isTRUE(all.equal(rand_comm_3, rand_comm_4)))
@@ -78,11 +82,15 @@ test_that("The same seed produces the same random communities", {
   rand_comm_2 <- cpr_rand_comm_intern(phylocom$comm, "curveball", 100)
   expect_true(isTRUE(all.equal(rand_comm_1, rand_comm_2)))
   rand_comm_3 <- cpr_rand_comm_intern(
-    phylocom$comm, "curveball", 100,
+    phylocom$comm,
+    "curveball",
+    100,
     seed = 2020
   )
   rand_comm_4 <- cpr_rand_comm_intern(
-    phylocom$comm, "curveball", 100,
+    phylocom$comm,
+    "curveball",
+    100,
     seed = 2020
   )
   expect_true(isTRUE(all.equal(rand_comm_3, rand_comm_4)))
@@ -90,7 +98,9 @@ test_that("The same seed produces the same random communities", {
   rand_comm_5 <- cpr_rand_comm_intern(phylocom$comm, "curveball", 100)
   set.seed(42)
   rand_comm_6 <- cpr_rand_comm_intern(
-    phylocom$comm, "curveball", 100,
+    phylocom$comm,
+    "curveball",
+    100,
     seed = 2323
   )
   expect_true(isTRUE(all.equal(rand_comm_5, rand_comm_6)))
@@ -101,13 +111,24 @@ test_that("Silencing warnings works", {
     cpr_rand_test(
       # use pres/abs data to avoid abun warning
       vegan::decostand(phylocom$comm, "pa"),
-      phylocom$phy, "r00", 1, 1, 1, "pd"
+      phylocom$phy,
+      "r00",
+      1,
+      1,
+      1,
+      "pd"
     ),
     "Dropping tips from the tree because they are not present in the community data" # nolint
   )
   expect_warning(
     cpr_rand_test(
-      phylocom$comm, phylocom$phy, "r00", 1, 1, 1, "pd",
+      phylocom$comm,
+      phylocom$phy,
+      "r00",
+      1,
+      1,
+      1,
+      "pd",
       quiet = TRUE
     ),
     NA

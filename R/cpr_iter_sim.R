@@ -62,8 +62,13 @@
 #' @autoglobal
 #' @srrstats {G1.4, G1.4a} uses roxygen
 #' @export
-cpr_iter_sim <- function(comm, null_model = "curveball", n_iterations = 100,
-                         thin = 1, seed = NULL) {
+cpr_iter_sim <- function(
+  comm,
+  null_model = "curveball",
+  n_iterations = 100,
+  thin = 1,
+  seed = NULL
+) {
   #' @srrstats {G2.1, G2.6} Check input types and lengths
   # - comm
   assertthat::assert_that(
@@ -88,7 +93,8 @@ cpr_iter_sim <- function(comm, null_model = "curveball", n_iterations = 100,
       isTRUE(null_model %in% vegan::make.commsim()),
       msg = paste0(
         "'null_model' must be one of: '",
-        paste0(vegan::make.commsim(), collapse = "', '"), "'"
+        paste0(vegan::make.commsim(), collapse = "', '"),
+        "'"
       )
     )
   }
@@ -130,7 +136,7 @@ cpr_iter_sim <- function(comm, null_model = "curveball", n_iterations = 100,
   comm_bin <- m2bin(comm)
   similarity <- NULL
   for (i in seq_len(dim(sims)[3])) {
-    similarity[i] <- matrix_sim(comm_bin, m2bin(sims[, , i]))
+    similarity[i] <- matrix_sim(comm_bin, m2bin(sims[,, i]))
   }
   # Format output
   tibble::tibble(

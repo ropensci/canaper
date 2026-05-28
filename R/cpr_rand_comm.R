@@ -52,7 +52,11 @@
 #' # 3. Generate the null community
 #' cpr_rand_comm(phylocom$comm, cs_object, 100)
 cpr_rand_comm <- function(
-  comm, null_model, n_iterations = 1, thin = 1, seed = NULL
+  comm,
+  null_model,
+  n_iterations = 1,
+  thin = 1,
+  seed = NULL
 ) {
   #' @srrstats {G2.1, G2.6} Check input types and lengths
   # - comm
@@ -78,7 +82,8 @@ cpr_rand_comm <- function(
       isTRUE(null_model %in% vegan::make.commsim()),
       msg = paste0(
         "'null_model' must be one of: '",
-        paste0(vegan::make.commsim(), collapse = "', '"), "'"
+        paste0(vegan::make.commsim(), collapse = "', '"),
+        "'"
       )
     )
   }
@@ -101,9 +106,11 @@ cpr_rand_comm <- function(
 
   # Randomize matrix
   cpr_rand_comm_intern(
-    comm = comm, null_model = null_model,
+    comm = comm,
+    null_model = null_model,
     n_iterations = n_iterations,
-    thin = thin, seed = seed
+    thin = thin,
+    seed = seed
   )
 }
 
@@ -117,7 +124,11 @@ cpr_rand_comm <- function(
 #'
 #' @noRd
 cpr_rand_comm_intern <- function(
-  comm, null_model, n_iterations = 1, thin = 1, seed = NULL
+  comm,
+  null_model,
+  n_iterations = 1,
+  thin = 1,
+  seed = NULL
 ) {
   # Convert to matrix
   comm <- as.matrix(comm)
@@ -129,6 +140,9 @@ cpr_rand_comm_intern <- function(
   # just take the first simulated community after n_iterations - 1
   stats::simulate(
     null_model,
-    nsim = 1, thin = thin, burnin = n_iterations - 1, seed = seed
-  )[, , 1]
+    nsim = 1,
+    thin = thin,
+    burnin = n_iterations - 1,
+    seed = seed
+  )[,, 1]
 }

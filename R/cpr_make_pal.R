@@ -51,7 +51,8 @@ cpr_make_pal <- function(name, type) {
     msg = "'type' may only include 'endem' or 'signif'"
   )
   color_spec <- paste(type, name, sep = "_")
-  switch(color_spec,
+  switch(
+    color_spec,
     endem_mishler2014 = mishler_endem_cols,
     endem_canaper1 = cpr_endem_cols,
     endem_canaper2 = cpr_endem_cols_2,

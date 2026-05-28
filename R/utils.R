@@ -23,7 +23,9 @@ count_higher <- function(x, y, na_rm = TRUE) {
   assertthat::assert_that(is.numeric(y))
 
   # remove any NAs before making comparison
-  if (isTRUE(na_rm)) y <- y[!is.na(y)]
+  if (isTRUE(na_rm)) {
+    y <- y[!is.na(y)]
+  }
 
   # or return NA_integer_ otherwise if y includes NA
   if (!isTRUE(na_rm) && any(is.na(y))) {
@@ -63,7 +65,9 @@ count_lower <- function(x, y, na_rm = TRUE) {
   assertthat::assert_that(is.numeric(y))
 
   # remove any NAs before making comparison
-  if (isTRUE(na_rm)) y <- y[!is.na(y)]
+  if (isTRUE(na_rm)) {
+    y <- y[!is.na(y)]
+  }
 
   # or return NA_integer_ otherwise if y includes NA
   if (!isTRUE(na_rm) && any(is.na(y))) {
@@ -243,13 +247,17 @@ NULL
 #'
 match_phylo_comm <- function(phy, comm, quiet = FALSE) {
   if (!(is.data.frame(comm) || is.matrix(comm))) {
-    stop("Community data should be a data.frame or matrix with samples in rows and taxa in columns") # nolint
+    stop(
+      "Community data should be a data.frame or matrix with samples in rows and taxa in columns"
+    ) # nolint
   }
   res <- list()
   phytaxa <- phy$tip.label
   commtaxa <- colnames(comm)
   if (is.null(commtaxa)) {
-    stop("Community data set lacks taxa (column) names, these are required to match phylogeny and community data") # nolint
+    stop(
+      "Community data set lacks taxa (column) names, these are required to match phylogeny and community data"
+    ) # nolint
   }
   assertthat::assert_that(assertthat::is.flag(quiet))
   if (!all(commtaxa %in% phytaxa)) {

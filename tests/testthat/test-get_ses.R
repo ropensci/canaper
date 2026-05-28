@@ -23,10 +23,12 @@ test_that("Input is valid", {
   )
   expect_error(
     get_ses(
-      random_vals, purrr::set_names(
+      random_vals,
+      purrr::set_names(
         pe_obs,
         ~ stringr::str_replace_all(., "0", "1")
-      ), "pe"
+      ),
+      "pe"
     ),
     "Names don't match between 'obs_vals' and 'random_vals'"
   )
@@ -54,8 +56,15 @@ test_that("Output is formatted as expected", {
   expect_named(
     get_ses(random_vals, pe_obs, "pe"),
     c(
-      "pe_obs", "pe_rand_mean", "pe_rand_sd", "pe_obs_z", "pe_obs_c_upper",
-      "pe_obs_c_lower", "pe_obs_q", "pe_obs_p_upper", "pe_obs_p_lower"
+      "pe_obs",
+      "pe_rand_mean",
+      "pe_rand_sd",
+      "pe_obs_z",
+      "pe_obs_c_upper",
+      "pe_obs_c_lower",
+      "pe_obs_q",
+      "pe_obs_p_upper",
+      "pe_obs_p_lower"
     )
   )
   for (i in 1:9) {

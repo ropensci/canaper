@@ -19,13 +19,15 @@ test_that("Input is valid", {
   )
   expect_error(
     cpr_classify_signif(
-      data.frame(pd_obs_p_upper = 2, pd_obs_p_lower = 0.5), "pd"
+      data.frame(pd_obs_p_upper = 2, pd_obs_p_lower = 0.5),
+      "pd"
     ),
     "Values for percentage of times observed value was higher than random values should be between 0 and 1, inclusive" # nolint
   )
   expect_error(
     cpr_classify_signif(
-      data.frame(pd_obs_p_upper = 0.5, pd_obs_p_lower = 2), "pd"
+      data.frame(pd_obs_p_upper = 0.5, pd_obs_p_lower = 2),
+      "pd"
     ),
     "Values for percentage of times observed value was lower than random values should be between 0 and 1, inclusive" # nolint
   )
@@ -131,14 +133,18 @@ test_that("Output is formatted as expected", {
   )
   expect_true(
     isTRUE(
-      all(random_results_two_sided[["pd_signif"]] %in%
-        c("< 0.01", "< 0.025", "> 0.975", "> 0.99", "not significant"))
+      all(
+        random_results_two_sided[["pd_signif"]] %in%
+          c("< 0.01", "< 0.025", "> 0.975", "> 0.99", "not significant")
+      )
     )
   )
   expect_true(
     isTRUE(
-      all(random_results_one_sided[["pd_signif"]] %in%
-        c("< 0.01", "< 0.05", "> 0.99", "> 0.95", "not significant"))
+      all(
+        random_results_one_sided[["pd_signif"]] %in%
+          c("< 0.01", "< 0.05", "> 0.99", "> 0.95", "not significant")
+      )
     )
   )
 })

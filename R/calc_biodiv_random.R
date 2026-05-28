@@ -38,7 +38,12 @@
 #'
 #' @noRd
 calc_biodiv_random <- function(
-  comm, phy, phy_alt, null_model, n_iterations = 1, thin = 1,
+  comm,
+  phy,
+  phy_alt,
+  null_model,
+  n_iterations = 1,
+  thin = 1,
   metrics = c("pd", "rpd", "pe", "rpe", "pd_alt", "pe_alt"),
   seed = NULL
 ) {
@@ -46,7 +51,9 @@ calc_biodiv_random <- function(
   random_comm <- cpr_rand_comm_intern(
     comm,
     null_model = null_model,
-    n_iterations = n_iterations, thin = thin, seed = seed
+    n_iterations = n_iterations,
+    thin = thin,
+    seed = seed
   )
   random_comm_sparse <- phyloregion::dense2sparse(random_comm)
 
@@ -60,40 +67,50 @@ calc_biodiv_random <- function(
   rpe <- NULL
 
   # - calculate selected metrics
-  if ("pd" %in% metrics) pd <- phyloregion::PD(random_comm_sparse, phy)
+  if ("pd" %in% metrics) {
+    pd <- phyloregion::PD(random_comm_sparse, phy)
+  }
   if ("pd_alt" %in% metrics) {
     pd_alt <-
       phyloregion::PD(random_comm_sparse, phy_alt)
   }
   # pd_alt is inferred by rpd
   if ("rpd" %in% metrics) {
-    if (is.null(pd)) pd <- phyloregion::PD(random_comm_sparse, phy)
-    if (is.null(pd_alt)) pd_alt <- phyloregion::PD(random_comm_sparse, phy_alt)
+    if (is.null(pd)) {
+      pd <- phyloregion::PD(random_comm_sparse, phy)
+    }
+    if (is.null(pd_alt)) {
+      pd_alt <- phyloregion::PD(random_comm_sparse, phy_alt)
+    }
     rpd <- pd / pd_alt
   }
   # pe_alt is inferred by rpe
   if ("pe" %in% metrics) {
     pe <- phyloregion::phylo_endemism(
-      random_comm_sparse, phy,
+      random_comm_sparse,
+      phy,
       weighted = TRUE
     )
   }
   if ("pe_alt" %in% metrics) {
     pe_alt <- phyloregion::phylo_endemism(
-      random_comm_sparse, phy_alt,
+      random_comm_sparse,
+      phy_alt,
       weighted = TRUE
     )
   }
   if ("rpe" %in% metrics) {
     if (is.null(pe)) {
       pe <- phyloregion::phylo_endemism(
-        random_comm_sparse, phy,
+        random_comm_sparse,
+        phy,
         weighted = TRUE
       )
     }
     if (is.null(pe_alt)) {
       pe_alt <- phyloregion::phylo_endemism(
-        random_comm_sparse, phy_alt,
+        random_comm_sparse,
+        phy_alt,
         weighted = TRUE
       )
     }

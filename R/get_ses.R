@@ -40,9 +40,11 @@
 #' @srrstats {G1.4, G1.4a} uses roxygen
 #'
 #' @noRd
-get_ses <- function(random_vals, obs_vals,
-                    metric = c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")) {
-
+get_ses <- function(
+  random_vals,
+  obs_vals,
+  metric = c("pd", "pd_alt", "rpd", "pe", "pe_alt", "rpe")
+) {
   # Check input
   #' @srrstats {G2.1, G2.6} Check input types
   assertthat::assert_that(is.list(random_vals))
@@ -100,11 +102,15 @@ get_ses <- function(random_vals, obs_vals,
     obs_z = (obs_val - rand_mean) / rand_sd,
     # Count number of times observed value is higher than random values
     obs_c_upper = purrr::map2_dbl(
-      .x = obs_val, .y = random_values, ~ count_higher(.x, .y)
+      .x = obs_val,
+      .y = random_values,
+      ~ count_higher(.x, .y)
     ),
     # Count number of times observed value is lower than random values
     obs_c_lower = purrr::map2_dbl(
-      .x = obs_val, .y = random_values, ~ count_lower(.x, .y)
+      .x = obs_val,
+      .y = random_values,
+      ~ count_lower(.x, .y)
     ),
     # Count the number of non-NA random values used for comparison
     obs_q = purrr::map_dbl(random_values, ~ sum(!is.na(.))),
