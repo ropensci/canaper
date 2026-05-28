@@ -659,16 +659,49 @@ test_that("Custom randomization algorithms work", {
   }
   cs_object <- vegan::commsim(
     "r00_model",
-    fun = randomizer, binary = TRUE,
-    isSeq = FALSE, mode = "integer"
+    fun = randomizer,
+    binary = TRUE,
+    isSeq = FALSE,
+    mode = "integer"
   )
   set.seed(12345)
-  expect_snapshot(
-    cpr_rand_test(
-      phylocom$comm, phylocom$phy, cs_object,
-      n_reps = 10, quiet = TRUE
+  res_1 <- cpr_rand_test(
+    phylocom$comm,
+    phylocom$phy,
+    cs_object,
+    n_reps = 10,
+    quiet = TRUE
+  )
+
+  set.seed(12345)
+  res_2 <- cpr_rand_test(
+    phylocom$comm,
+    phylocom$phy,
+    cs_object,
+    n_reps = 10,
+    quiet = TRUE
+  )
+
+  set.seed(67890)
+  res_3 <- cpr_rand_test(
+    phylocom$comm,
+    phylocom$phy,
+    cs_object,
+    n_reps = 10,
+    quiet = TRUE
+  )
+
+  expect_s3_class(res_1, "data.frame")
+  expect_true(
+    assertr::assert(
+      res_1,
+      is.numeric,
+      dplyr::everything(),
+      success_fun = assertr::success_logical
     )
   )
+  expect_true(isTRUE(all.equal(res_1, res_2)))
+  expect_false(isTRUE(all.equal(res_1, res_3)))
 })
 
 # Cleanup ----
