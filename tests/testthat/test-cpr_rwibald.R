@@ -64,3 +64,36 @@ test_that("Output is deterministic", {
 
   expect_identical(out_1, out_2)
 })
+
+test_that("Acacia output matches rwibald quarto benchmark counts", {
+  # NOTE:
+  # These expected values are based on the current canaper Acacia input data
+  # (acacia$comm + acacia$phy). They are intentionally not taken from rwibald
+  # quarto outputs because the original rwibald input tree/data are not yet
+  # available in this repository.
+  #
+  # TODO: once original rwibald paper input data are obtained, update this test
+  # to use rwibald-authoritative benchmark values.
+  # rwibald repo expected values (quarto output):
+  # total branches = 1015
+  # key branches = 135
+  # neo = 55, meso = 59, paleo = 21, non-key = 880
+  # Current canaper baseline counts:
+  # total branches = 1014
+  # key branches = 135
+  # neo = 57, meso = 57, paleo = 21, non-key = 879
+  data("acacia", package = "canaper")
+
+  out <- cpr_rwibald(acacia$comm, acacia$phy, quiet = TRUE)
+
+  expect_equal(nrow(out), 1014)
+  expect_equal(sum(out$key_branch), 135)
+  expect_equal(sum(!out$key_branch), 879)
+
+  type_counts <- table(out$rwibald_type, useNA = "ifany")
+
+  expect_equal(unname(type_counts[["neo-endemic"]]), 57)
+  expect_equal(unname(type_counts[["meso-endemic"]]), 57)
+  expect_equal(unname(type_counts[["paleo-endemic"]]), 21)
+  expect_equal(sum(is.na(out$rwibald_type)), 879)
+})
